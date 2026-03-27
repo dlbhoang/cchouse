@@ -1,0 +1,62 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto"
+  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "complexity": {
+        "noBannedTypes": "error",
+        "noEmptyTypeParameters": "error",
+        "useArrowFunction": "error",
+        "useFlatMap": "error"
+      },
+      "correctness": {
+        "noUnusedVariables": "warn",
+        "noUnusedImports": "error"
+      },
+      "style": {
+        "noParameterAssign": "off",
+        "useBlockStatements": "off",
+        "useImportType": "off",
+        "useNamingConvention": {
+          "level": "off",
+          "options": {
+            "strictCase": false
+          }
+        },
+        "useTemplate": {
+          "level": "error"
+        }
+      },
+      "suspicious": {
+        "noAsyncPromiseExecutor": "error",
+        "noExplicitAny": "off",
+        "noConsole": { "level": "off", "options": { "allow": ["log"] } }
+      }
+    },
+    "includes": ["**", "!**/src/pages/api/auth/\\[...nextauth\\].ts"]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto"
+    }
+  }
+}
