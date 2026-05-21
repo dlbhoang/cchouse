@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { ETransType } from "@/lib/core/enum";
 import ApartmentUnitPage from "@/lib/pages/apartment/unit";
+import FloatBtn from "@/lib/components/shared/FloatBtn";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -22,6 +23,10 @@ export async function generateMetadata({
 
 export default async function Page({ searchParams }: Props) {
   const sParams = await searchParams;
-  return <ApartmentUnitPage searchParams={sParams} />;
+  return (
+    <>
+      <FloatBtn href={`${AppRoutes.apartmentUnit.url}/add`} />
+      <ApartmentUnitPage searchParams={sParams} />
+    </>
+  );
 }
-
