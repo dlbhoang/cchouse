@@ -59,7 +59,7 @@ const LogoModal = ({ form, open, onOpenChange }: Props) => {
               form={form}
               name={logoName}
               maxCount={1}
-              model={{ tableName: ETableName.Property }}
+              model={{ TableName: ETableName.Property }}
               accept="image/*"
             />
           </Space>

@@ -242,7 +242,7 @@ const ApartmentUnitForm = ({ model }: Props) => {
                       </Button>
                       <DeletedImgModal
                         contentId={model.Id}
-                        tableName={ETableName.ApartmentUnit}
+                        TableName={ETableName.ApartmentUnit}
                         isOpen={openDeletedImg}
                         onClose={() => setOpenDeletedImg(false)}
                       />
@@ -257,7 +257,7 @@ const ApartmentUnitForm = ({ model }: Props) => {
                   form={form}
                   name={"Images"}
                   listType="picture"
-                  model={{ tableName: ETableName.ApartmentUnit }}
+                  model={{ TableName: ETableName.ApartmentUnit }}
                   accept="image/*"
                 />
               </MyCard>
@@ -279,9 +279,9 @@ const ApartmentUnitForm = ({ model }: Props) => {
                     accept="video/*"
                     action={imagesApi.uploadVideoUrl}
                     model={{
-                      tableName: ETableName.ApartmentUnit,
-                      resize: false,
-                      watermark: false,
+                      TableName: ETableName.ApartmentUnit,
+                      Resize: false,
+                      Watermark: false,
                     }}
                     showUploadList={false}
                     onDelete={(uid) => {

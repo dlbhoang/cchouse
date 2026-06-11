@@ -9,7 +9,7 @@ const { useToken } = theme;
 const { Text, Paragraph } = Typography;
 type Props = {
   instanceId: number;
-  tableName: string;
+  TableName: string;
   oldTableName?: string;
   noteOnly?: boolean;
   refresh?: boolean;

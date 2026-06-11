@@ -120,7 +120,7 @@ const AddEditDocument = ({ types, model, isOpen, onOpenChange }: Props) => {
               isFile
               label="File PDF"
               name="PdfFile"
-              model={{ tableName: ETableName.Document }}
+              model={{ TableName: ETableName.Document }}
             />
           </Col>
           <Col xl={12} lg={12} md={24} xs={24}>
@@ -130,7 +130,7 @@ const AddEditDocument = ({ types, model, isOpen, onOpenChange }: Props) => {
               isFile
               label="File Word"
               name="DocFile"
-              model={{ tableName: ETableName.Document }}
+              model={{ TableName: ETableName.Document }}
             />
           </Col>
         </Row>

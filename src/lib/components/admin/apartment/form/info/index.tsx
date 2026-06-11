@@ -71,7 +71,7 @@ const ApartmentInfoForm = ({
           maxCount={10}
           multiple
           name="Images"
-          model={{ tableName: ETableName.Apartment }}
+          model={{ TableName: ETableName.Apartment }}
           accept="image/*"
         />
       </Col>
@@ -93,7 +93,7 @@ const ApartmentInfoForm = ({
             accept="video/*"
             action={imagesApi.uploadVideoUrl}
             model={{
-              tableName: ETableName.Apartment,
+              TableName: ETableName.Apartment,
               resize: false,
               watermark: false,
             }}

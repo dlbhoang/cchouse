@@ -56,7 +56,7 @@ const NoteModal = ({
             <HistoryTree
               refresh={activeTab === "2"}
               instanceId={historyId}
-              tableName={tableName || "tblProp"}
+              TableName={tableName || "tblProp"}
               oldTableName="tblProperty"
               noteOnly
             />

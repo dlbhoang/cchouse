@@ -10,7 +10,7 @@ import ImagesPreview from "../../ImagesPreview";
 type Props = {
   isOpen: boolean;
   contentId: number;
-  tableName: ETableName;
+  TableName: ETableName;
   onClose: () => void;
 };
 

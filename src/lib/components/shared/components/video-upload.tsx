@@ -5,10 +5,10 @@ import ReactPlayer from "react-player";
 import { fileServices } from "@/services/api/services/fileServices";
 
 type UploadModel = {
-  tableName: number;
-  resize?: boolean;
-  watermark?: boolean;
-  type?: string;
+  TableName: number;
+  Resize?: boolean;
+  Watermark?: boolean;
+  Type?: string;
 };
 
 type Props = {

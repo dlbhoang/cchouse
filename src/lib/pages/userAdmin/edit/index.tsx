@@ -169,7 +169,7 @@ const EditUserAdminPage = ({ id }: Props) => {
                 form={form}
                 name="Images"
                 multiple
-                model={{ tableName: ETableName.User }}
+                model={{ TableName: ETableName.User }}
                 accept="image/*"
               />
             </MyCard>

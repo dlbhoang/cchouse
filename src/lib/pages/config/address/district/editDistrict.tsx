@@ -111,7 +111,7 @@ const EditDistrict = ({ isModalOpen, model, handleCancel }: Props) => {
                 accept="image/*"
                 action={imagesApi.uploadUrl}
                 model={{
-                  tableName: ETableName.Address,
+                  TableName: ETableName.Address,
                   resize: false,
                   watermark: false,
                 }}

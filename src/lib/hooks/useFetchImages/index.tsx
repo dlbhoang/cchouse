@@ -8,7 +8,7 @@ export const useFetchImages = ({
   tableName,
 }: {
   contentId: number;
-  tableName: ETableName;
+  TableName: ETableName;
 }) => {
   const [images, setImages] = useState<IFileUploadResponse[]>([]);
 

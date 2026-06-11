@@ -144,7 +144,7 @@ const NewsForm = ({ model }: Props) => {
                 accept="image/*"
                 action={imagesApi.uploadUrl}
                 model={{
-                  tableName: ETableName.News,
+                  TableName: ETableName.News,
                   resize: false,
                   watermark: false,
                 }}

@@ -106,7 +106,7 @@ const AddNoti = ({ model, isOpen, onOpenChange }: Props) => {
               isFile
               label="Tệp đính kèm"
               name="AttachFiles"
-              model={{ tableName: ETableName.Notification }}
+              model={{ TableName: ETableName.Notification }}
             />
           </Col>
           <Col xs={24}>

@@ -64,7 +64,7 @@ const ApartmentForm = ({ mode, model }: Props) => {
             maxCount={10}
             multiple
             name="LawImages"
-            model={{ tableName: ETableName.Apartment }}
+            model={{ TableName: ETableName.Apartment }}
           />
         </Space>
       ),

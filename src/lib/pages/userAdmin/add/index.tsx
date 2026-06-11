@@ -77,7 +77,7 @@ const AddUserAdminPage = () => {
             accept="image/*"
             action={imagesApi.uploadUrl}
             model={{
-              tableName: ETableName.User,
+              TableName: ETableName.User,
               resize: false,
               watermark: false,
             }}

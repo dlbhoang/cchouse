@@ -13,9 +13,9 @@ import imagesApi from "@/services/api/imagesApi";
 import { fileServices } from "../../../../../services/api/services/fileServices";
 
 type UploadModel = {
-  tableName: number;
-  resize?: boolean;
-  watermark?: boolean;
+  TableName: number;
+  Resize?: boolean;
+  Watermark?: boolean;
 };
 
 type Props = {

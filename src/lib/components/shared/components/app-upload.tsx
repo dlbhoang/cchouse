@@ -6,7 +6,7 @@ import { fileServices } from "@/services/api/services/fileServices";
 import ImagesPreview from "../ImagesPreview";
 
 type UploadModel = {
-  tableName: number;
+  TableName: number;
   resize?: boolean;
   watermark?: boolean;
 };

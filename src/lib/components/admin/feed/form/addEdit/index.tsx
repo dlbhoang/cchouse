@@ -130,7 +130,7 @@ const AddEditForm = ({ model }: Props) => {
 
   const propImages = useFetchImages({
     contentId: Number(model?.Property?.RefPropId ?? 0),
-    tableName: ETableName.Property,
+    TableName: ETableName.Property,
   });
 
   const handleSelectImages = (uid: string, checked: boolean) => {
@@ -475,7 +475,7 @@ const AddEditForm = ({ model }: Props) => {
                   accept="image/*"
                   action={imagesApi.uploadUrl}
                   model={{
-                    tableName: ETableName.Feed,
+                    TableName: ETableName.Feed,
                     watermark: true,
                   }}
                   showUploadList={false}
@@ -509,7 +509,7 @@ const AddEditForm = ({ model }: Props) => {
                   accept="video/*"
                   action={imagesApi.uploadVideoUrl}
                   model={{
-                    tableName: ETableName.Feed,
+                    TableName: ETableName.Feed,
                   }}
                   showUploadList={false}
                   onDelete={(uid) => {

@@ -489,7 +489,7 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
                     </Button>
                     <DeletedImgModal
                       contentId={model.Id}
-                      tableName={ETableName.Property}
+                      TableName={ETableName.Property}
                       isOpen={openDeletedImg}
                       onClose={() => setOpenDeletedImg(false)}
                     />
@@ -514,7 +514,7 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
                   accept="image/*"
                   action={imagesApi.uploadUrl}
                   model={{
-                    tableName: ETableName.Property,
+                    TableName: ETableName.Property,
                     resize: false,
                     watermark: true,
                   }}
@@ -549,7 +549,7 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
                   accept="video/*"
                   action={imagesApi.uploadVideoUrl}
                   model={{
-                    tableName: ETableName.Property,
+                    TableName: ETableName.Property,
                     resize: false,
                     watermark: false,
                   }}

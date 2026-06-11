@@ -218,6 +218,7 @@ const uploadImages = async (
 ): Promise<string[]> => {
   const files = await handleFilesV2({ images, type, compress: true });
   if (files.newFiles.has("files")) {
+    files.newFiles.append("TableName", type);
     const result = await utilsApi.upload(files.newFiles);
     if (result?.data) {
       return files.curFiles ? [...files.curFiles, ...result.data] : result.data;
@@ -228,7 +229,7 @@ const uploadImages = async (
 
 const uploadOriginImages = async (
   images: File[],
-  tableName: number,
+  TableName: number,
   resize?: boolean,
   watermark?: boolean
 ): Promise<string[]> => {
@@ -264,6 +265,7 @@ const uploadFiles = async (
 ): Promise<string[]> => {
   const files = await handleFilesV2({ images, type, compress: false });
   if (files.newFiles.has("files")) {
+    files.newFiles.append("TableName", type);
     const result = await utilsApi.upload(files.newFiles);
     if (result?.data) {
       return files.curFiles ? [...files.curFiles, ...result.data] : result.data;

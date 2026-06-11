@@ -153,7 +153,7 @@ const RegisterForm = ({ onModeChange, style }: Props) => {
         rules={[{ required: true, message: "Vui lòng tải đủ 2 hình" }]}
         listType="picture"
         multiple
-        model={{ tableName: ETableName.User }}
+        model={{ TableName: ETableName.User }}
         accept="image/*"
         action={imagesApi.uploadUrl}
       />

@@ -8,7 +8,7 @@
 // const historyApi = {
 //   get(params: {
 //     instanceId: number;
-//     tableName: string;
+//     TableName: string;
 //     pageIndex: number;
 //     noteOnly?: boolean;
 //   }) {
