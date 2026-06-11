@@ -1,5 +1,4 @@
 import { Select, type SelectProps } from "antd";
-
 import apartmentApi from "@/services/api/apartment/apartmentApi";
 
 export const ApartmentSelect = ({ ...props }: SelectProps) => {
@@ -13,6 +12,10 @@ export const ApartmentSelect = ({ ...props }: SelectProps) => {
       style={{ width: "100%" }}
       loading={isLoading}
       placeholder="Chọn chung cư"
+      showSearch
+      filterOption={(input, option) =>
+        (option?.desc as string)?.toLowerCase().includes(input.toLowerCase())
+      }
       options={data?.data.map((e) => ({
         label: `${e.Name}`,
         value: e.Id ?? 0,
