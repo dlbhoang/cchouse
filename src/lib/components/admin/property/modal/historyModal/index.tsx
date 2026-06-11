@@ -80,7 +80,7 @@ const HistoryModel = ({ isModalOpen, model, handleCancel }: Props) => {
       {model && (
         <HistoryTree
           instanceId={model.Id}
-          tableName="tblProp"
+          TableName="tblProp"
           oldTableName="tblProperty"
         />
       )}

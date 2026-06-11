@@ -550,8 +550,8 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
                   action={imagesApi.uploadVideoUrl}
                   model={{
                     TableName: ETableName.Property,
-                    resize: false,
-                    watermark: false,
+                    Resize: false,
+                    Watermark: false,
                   }}
                   showUploadList={false}
                   onDelete={(uid) => {

@@ -59,7 +59,7 @@ const HistoryModel = ({ isModalOpen, model, handleCancel }: Props) => {
         Lịch sử thay đổi
       </Text>
       {model && (
-        <HistoryTree instanceId={model.Id} tableName="tblApartmentUnit" />
+        <HistoryTree instanceId={model.Id} TableName="tblApartmentUnit" />
       )}
     </Modal>
   );

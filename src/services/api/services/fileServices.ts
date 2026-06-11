@@ -234,7 +234,7 @@ const uploadOriginImages = async (
   watermark?: boolean
 ): Promise<string[]> => {
   const filesData = new FormData();
-  filesData.append("tableName", tableName.toString());
+  filesData.append("tableName", TableName.toString());
   filesData.append("resize", resize?.toString() ?? "false");
   filesData.append("watermark", watermark?.toString() ?? "false");
   const compressPromises = images.map((e) => {

@@ -16,7 +16,7 @@ type Props = {
 };
 const HistoryTree = ({
   instanceId,
-  tableName,
+  TableName: tableName,
   oldTableName,
   noteOnly,
   refresh,

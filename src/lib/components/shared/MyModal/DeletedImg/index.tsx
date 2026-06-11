@@ -18,7 +18,7 @@ export const DeletedImgModal = ({
   onClose,
   isOpen,
   contentId,
-  tableName,
+  TableName: tableName,
 }: Props) => {
   const [images, setImages] = useState<IMyUploadFile[]>([]);
 

@@ -5,7 +5,7 @@ import imagesApi, { type IFileUploadResponse } from "@/services/api/imagesApi";
 
 export const useFetchImages = ({
   contentId,
-  tableName,
+  TableName: tableName,
 }: {
   contentId: number;
   TableName: ETableName;

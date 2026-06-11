@@ -13,7 +13,7 @@ export const LeaveRequestSchema = z
     }),
     RequestNotes: z
       .string()
-      .min(100, { message: 'Lý do không được để trống, tối thiểu 100 ký tự' })
+      .min(10, { message: 'Lý do không được để trống, tối thiểu 10 ký tự' })
       .max(300, { message: 'Lý do không được vượt quá 300 ký tự' }),
     Type: z.union([z.number(), z.null()]).optional(),
   })

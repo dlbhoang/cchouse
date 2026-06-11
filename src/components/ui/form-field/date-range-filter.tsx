@@ -1,6 +1,4 @@
 "use client";
-
-import type { TimeRangePickerProps } from "antd";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
 import { useFormContext } from "react-hook-form";
@@ -12,8 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { appConst } from "@/lib/core/configs/appConst";
-
-const { RangePicker } = DatePicker;
 
 interface DateRangeFilterProps {
   name: string;
@@ -27,13 +23,6 @@ interface DateRangeFilterProps {
   hidePresets?: boolean;
 }
 
-const rangePresets: TimeRangePickerProps["presets"] = [
-  { label: "Hôm nay", value: [dayjs(), dayjs()] },
-  { label: "3 ngày trước", value: [dayjs().add(-3, "d"), dayjs()] },
-  { label: "7 ngày trước", value: [dayjs().add(-7, "d"), dayjs()] },
-  { label: "30 ngày trước", value: [dayjs().add(-30, "d"), dayjs()] },
-];
-
 export function DateRangeFilter({
   name,
   isRequired = false,
@@ -43,7 +32,6 @@ export function DateRangeFilter({
   placeholder = ["Từ ngày", "Đến hết ngày"],
   className,
   showLabel = false,
-  hidePresets = false,
 }: DateRangeFilterProps) {
   const form = useFormContext();
 
@@ -54,35 +42,76 @@ export function DateRangeFilter({
       render={({ field }) => {
         const fromDate = form.watch(fromDateName);
         const toDate = form.watch(toDateName);
-
         return (
           <FormItem className={className}>
             {showLabel && (
               <FormLabel isRequired={isRequired}>{label}</FormLabel>
             )}
             <FormControl>
-              <RangePicker
-                value={[
-                  fromDate ? dayjs(fromDate) : null,
-                  toDate ? dayjs(toDate) : null,
-                ]}
-                onChange={(values) => {
-                  form.setValue(
-                    fromDateName,
-                    values?.[0]?.format("YYYY-MM-DD") || null
-                  );
-                  form.setValue(
-                    toDateName,
-                    values?.[1]?.format("YYYY-MM-DD") || null
-                  );
-                  field.onChange(values);
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 8,
                 }}
-                presets={hidePresets ? undefined : rangePresets}
-                allowEmpty={[true, true]}
-                placeholder={placeholder}
-                format={appConst.DATE_FORMAT}
-                style={{ width: "100%" }}
-              />
+                className="date-range-booking"
+              >
+                {/* Ngày bắt đầu */}
+                <div
+                  style={{
+                    border: "1px solid #d9d9d9",
+                    borderRadius: 8,
+                    padding: "10px 12px",
+                    cursor: "pointer",
+                    background: "#fff",
+                  }}
+                >
+                  <div style={{ fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase", marginBottom: 2 }}>
+                    Ngày bắt đầu
+                  </div>
+                  <DatePicker
+                    value={fromDate ? dayjs(fromDate) : null}
+                    onChange={(val) => {
+                      form.setValue(fromDateName, val?.format("YYYY-MM-DD") || null);
+                      field.onChange([val, toDate ? dayjs(toDate) : null]);
+                    }}
+                    format={appConst.DATE_FORMAT}
+                    placeholder={placeholder[0]}
+                    disabledDate={(d) => toDate ? d.isAfter(dayjs(toDate)) : false}
+                    style={{ width: "100%", border: "none", boxShadow: "none", padding: 0 }}
+                    variant="borderless"
+                    inputReadOnly
+                  />
+                </div>
+
+                {/* Ngày kết thúc */}
+                <div
+                  style={{
+                    border: "1px solid #d9d9d9",
+                    borderRadius: 8,
+                    padding: "10px 12px",
+                    cursor: "pointer",
+                    background: "#fff",
+                  }}
+                >
+                  <div style={{ fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase", marginBottom: 2 }}>
+                    Ngày kết thúc
+                  </div>
+                  <DatePicker
+                    value={toDate ? dayjs(toDate) : null}
+                    onChange={(val) => {
+                      form.setValue(toDateName, val?.format("YYYY-MM-DD") || null);
+                      field.onChange([fromDate ? dayjs(fromDate) : null, val]);
+                    }}
+                    format={appConst.DATE_FORMAT}
+                    placeholder={placeholder[1]}
+                    disabledDate={(d) => fromDate ? d.isBefore(dayjs(fromDate)) : false}
+                    style={{ width: "100%", border: "none", boxShadow: "none", padding: 0 }}
+                    variant="borderless"
+                    inputReadOnly
+                  />
+                </div>
+              </div>
             </FormControl>
             <FormMessage />
           </FormItem>

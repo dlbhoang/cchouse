@@ -76,7 +76,7 @@ const NotiDetailPage = ({ id }: Props) => {
                 <Typography.Text strong>Lịch sử thay đổi</Typography.Text>
                 <HistoryTree
                   instanceId={Number(data.ReferenceId)}
-                  tableName="tblProp"
+                  TableName="tblProp"
                   oldTableName="tblProperty"
                 />
               </Col>

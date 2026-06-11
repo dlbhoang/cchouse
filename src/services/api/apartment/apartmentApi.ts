@@ -11,9 +11,9 @@ const url = "Apartment";
 const apartmentApi = {
   mutateKey: url,
   useGet(params: ISearchOptions) {
-    return useSWR(url, async (route) => {
+    return useSWR([url, params], async ([route, p]) => {
       return axiosClient.get<any, IListData<IApartmentResponse>>(route, {
-        params,
+        params: p,
       });
     });
   },
