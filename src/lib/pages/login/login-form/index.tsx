@@ -32,27 +32,22 @@ const LoginForm = ({ onModeChange, style }: Props) => {
   const router = useRouter();
 
   const onFinish = async (values: IUserLogin) => {
-    // await signOut();
     try {
       setLoading(true);
       const result = await signIn("credentials", {
         redirect: false,
         ...values,
       });
-      console.log("result", result);
       if (result?.ok) {
         NotiBase(
           "success",
           "Đăng nhập thành công, hệ thống đang chuyển hướng..."
         );
-        setTimeout(
-          () => router.push(`${AppRoutes.property.url}?TransType=1`),
-          1000
-        );
+        setTimeout(() => {
+          window.location.href = `${AppRoutes.property.url}?TransType=1`;
+        }, 1000);
         showHappyBirthdayModal();
       } else {
-        console.log("result", result);
-
         NotiBase("error", result?.error ?? "");
         setLoading(false);
       }
@@ -110,7 +105,6 @@ const LoginForm = ({ onModeChange, style }: Props) => {
   return (
     <Form
       name="login-form"
-      // initialValues={init}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
@@ -129,14 +123,14 @@ const LoginForm = ({ onModeChange, style }: Props) => {
         name="username"
         rules={[{ required: true, message: "Vui lòng nhập tài khoản" }]}
       >
-        <Input size="large" />
+        <Input size="large" autoComplete="username" />
       </Form.Item>
       <Form.Item
         label="Mật khẩu"
         name="password"
         rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
       >
-        <Input.Password size="large" />
+        <Input.Password size="large" autoComplete="current-password" />
       </Form.Item>
       <Space direction="vertical" style={{ width: "100%" }}>
         <Row justify={"space-between"}>
