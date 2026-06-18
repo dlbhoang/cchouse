@@ -9,7 +9,6 @@ import { appConst } from "../configs/appConst";
 export const convertToNumber = (
   value?: string | number
 ): number | undefined => {
-  // Check if the value is defined before converting
   return value !== undefined ? Number(value) : undefined;
 };
 
@@ -39,35 +38,60 @@ export const CombineAddress = (data?: {
   WardName?: string;
   DistrictName?: string;
   ProvinceName?: string;
-}) => {
-  if (data) {
-    const {
-      AddressNumber,
-      SubAddressName,
-      StreetName,
-      WardName,
-      DistrictName,
-      ProvinceName,
-    } = data;
-    if (
-      !(AddressNumber || StreetName || WardName || DistrictName || ProvinceName)
-    )
-      return undefined;
-
-    const result: string[] = [];
-    if (StreetName)
-      result.push(
-        `${AddressNumber ?? ""} ${
-          SubAddressName ? `(${SubAddressName})` : ""
-        }${StreetName}`
-      );
-    if (WardName) result.push(WardName);
-    if (DistrictName) result.push(DistrictName);
-    if (ProvinceName) result.push(ProvinceName);
-
-    return result.join(", ");
+}): string => {
+  if (!data) {
+    return "";
   }
-  return undefined;
+
+  const {
+    AddressNumber,
+    SubAddressName,
+    StreetName,
+    WardName,
+    DistrictName,
+    ProvinceName,
+  } = data;
+
+  if (
+    !(
+      AddressNumber ||
+      StreetName ||
+      WardName ||
+      DistrictName ||
+      ProvinceName
+    )
+  ) {
+    return "";
+  }
+
+  const result: string[] = [];
+
+  const addressLine = [
+    AddressNumber,
+    SubAddressName ? `(${SubAddressName})` : "",
+    StreetName,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .trim();
+
+  if (addressLine) {
+    result.push(addressLine);
+  }
+
+  if (WardName) {
+    result.push(WardName);
+  }
+
+  if (DistrictName) {
+    result.push(DistrictName);
+  }
+
+  if (ProvinceName) {
+    result.push(ProvinceName);
+  }
+
+  return result.join(", ");
 };
 
 export const CombineStructures = (
@@ -78,18 +102,18 @@ export const CombineStructures = (
     data.Basement === undefined &&
     data.Floors === undefined &&
     data.Structures === undefined
-  )
+  ) {
     return undefined;
+  }
 
   const parts: string[] = [];
-  // Handle basement
+
   if (data.Basement && data.Basement > 0) {
     parts.push(`${data.Basement} hầm`);
   }
 
   parts.push("trệt");
 
-  // Process structures and handle 'lửng' (mezzanine) special case
   const structureNames = data.Structures?.toString()
     .split(",")
     .map((value) =>
@@ -101,7 +125,6 @@ export const CombineStructures = (
 
   const hasLung = structureNames?.includes("lửng");
 
-  // Handle floors with mezzanine
   if (data.Floors && data.Floors > 0) {
     if (hasLung) {
       parts.push("lửng", `${data.Floors} lầu`);
@@ -111,7 +134,9 @@ export const CombineStructures = (
   }
 
   const remainingStructures = parts.includes("lửng")
-    ? structureNames?.filter((name) => name !== "lửng" && name !== undefined)
+    ? structureNames?.filter(
+        (name) => name !== "lửng" && name !== undefined
+      )
     : structureNames?.filter((name) => name !== undefined);
 
   if (remainingStructures?.length) {
@@ -128,8 +153,13 @@ export const ConvertToDisplayPrice = (
   if (paymentMethod === 4) {
     return `${price} USD`;
   }
+
   const method = price >= 1000000000 ? "Tỷ" : "Triệu";
-  if (price >= 1000000000) return `${price / 1000000000} ${method}`;
+
+  if (price >= 1000000000) {
+    return `${price / 1000000000} ${method}`;
+  }
+
   return `${price / 1000000} ${method}`;
 };
 
@@ -137,7 +167,10 @@ export const ConvertUsdToVnd = (price: number): string => {
   const value = price * 23000;
   const method = value >= 1000000000 ? "Tỷ" : "Triệu";
 
-  if (value >= 1000000000) return `${value / 1000000000} ${method}`;
+  if (value >= 1000000000) {
+    return `${value / 1000000000} ${method}`;
+  }
+
   return `${value / 1000000} ${method}`;
 };
 
@@ -153,11 +186,14 @@ export const formatTimeAgo = (date: Dayjs) => {
   if (days > 0) {
     return `${days} ngày trước`;
   }
+
   if (hours > 0) {
     return `${hours} giờ trước`;
   }
+
   if (minutes > 0) {
     return `${minutes} phút trước`;
   }
+
   return `${seconds} giây trước`;
 };

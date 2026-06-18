@@ -112,6 +112,7 @@ const columns = ({
             </Link>
             {record.Note && (
               <NoteModal
+                  readOnly
                 title={`Mã căn: ${record?.Code}`}
                 historyId={record.Id}
                 tableName="tblApartmentUnit"

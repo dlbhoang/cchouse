@@ -5,6 +5,7 @@ import {
   Edit,
   FileSearch2,
   Home,
+  ImageIcon,
   Settings2,
   ShieldCheckIcon,
   Users,
@@ -32,7 +33,6 @@ export const navigationData: NavigationItem[] = [
         url: `${AppRoutes.property.url}?TransType=${ETransType.rent}`,
         description: "Danh sách bất động sản cho thuê",
       },
-
       {
         title: "Bản đồ",
         url: AppRoutes.map.url,
@@ -66,6 +66,18 @@ export const navigationData: NavigationItem[] = [
         url: AppRoutes.apartment.url,
         description: "Danh sách chung cư",
         acceptedRoles: MANAGER_ROLES,
+      },
+    ],
+  },
+  {
+    title: "Cài đặt ảnh",
+    url: "#",
+    icon: ImageIcon,
+    items: [
+      {
+        title: "Quản lý Banner",
+        url: AppRoutes.banner.url,
+        description: "Chỉnh sửa ảnh banner trang chủ",
       },
     ],
   },
@@ -172,7 +184,6 @@ export const navigationData: NavigationItem[] = [
     url: "#",
     icon: FileSearch2,
     acceptedRoles: MANAGER_ROLES,
-
     items: [
       {
         title: "Tin tức",

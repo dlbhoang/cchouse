@@ -1,15 +1,7 @@
-import {
-  Button,
-  Divider,
-  Form,
-  Input,
-  Select,
-  Space,
-  Typography,
-  type UploadFile,
-} from "antd";
+import { Button, Divider, Form, Input, Select, Space, Typography, type UploadFile } from "antd";
 import dayjs from "dayjs";
-import { type CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import { PhoneNumber, UploadItem } from "@/lib/components/shared/MyFormItem";
 import { ETableName } from "@/lib/core/enum";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -23,37 +15,24 @@ const { Text, Title, Link } = Typography;
 const hiddenFields = ["Name", "Sex", "Address", "TempAddress", "DateOfBirth"];
 
 type Props = {
-  style?: CSSProperties;
+  isVisible: boolean;
   onModeChange: () => void;
 };
 
-const RegisterForm = ({ onModeChange, style }: Props) => {
+const RegisterForm = ({ isVisible, onModeChange }: Props) => {
+  const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
   const [form] = Form.useForm<IRegisterAdmin>();
   const [loading, setLoading] = useState(false);
-
   const [qrDone, setQrDone] = useState(false);
   const identitiesWatch = Form.useWatch("IdentityImages", form);
 
   const onFinish = async (values: IRegisterAdmin) => {
     try {
       setLoading(true);
-
-      console.log(values);
       if (Array.isArray(values.IdentityImages)) {
-        // vướng authen
-        values.IdentityImages = await fileServices.uploadFilesNoAuth(
-          values.IdentityImages,
-          "User"
-        );
+        values.IdentityImages = await fileServices.uploadFilesNoAuth(values.IdentityImages, "User");
       }
-
-      console.log(values);
-
-      await authApi.register({
-        ...values,
-        Email: `${values.Email}${values.EmailExt}`,
-      });
-
+      await authApi.register({ ...values, Email: `${values.Email}${values.EmailExt}` });
       form.resetFields();
     } finally {
       setLoading(false);
@@ -71,16 +50,12 @@ const RegisterForm = ({ onModeChange, style }: Props) => {
               const temp = qrData.split("|");
               if (temp.length > 0) {
                 form.setFieldValue("Name", temp[2]);
-                form.setFieldValue(
-                  "Sex",
-                  temp[4].toLocaleLowerCase() === "nam" ? 1 : 2
-                );
+                form.setFieldValue("Sex", temp[4].toLocaleLowerCase() === "nam" ? 1 : 2);
                 form.setFieldValue("Address", temp[5]);
                 form.setFieldValue("TempAddress", temp[5]);
                 form.setFieldValue("DateOfBirth", dayjs(temp[3], "DDMMYYYY"));
               }
               setQrDone(true);
-              console.log(temp);
             }
           } catch (e) {
             console.log(e);
@@ -91,37 +66,37 @@ const RegisterForm = ({ onModeChange, style }: Props) => {
     handleReadQR();
   }, [form, identitiesWatch, qrDone]);
 
+  if (!isVisible) return null;
+
   return (
     <Form
       name="register-form"
       form={form}
-      // initialValues={init}
       onFinish={onFinish}
       onFinishFailed={globalHandleFailed(form)}
       autoComplete="off"
       layout="vertical"
       disabled={loading}
-      style={style ?? { display: "none" }}
       initialValues={{ EmailExt: "@cchouse.vn" }}
+      style={{ fontSize: isMobile ? 13 : 14 }}
     >
       {hiddenFields.map((e) => (
-        <Form.Item key={e.toString()} name={e} hidden>
+        <Form.Item key={e} name={e} hidden>
           <Input />
         </Form.Item>
       ))}
-      <Space direction="vertical" size="small">
-        <Text>Xin chào bạn,</Text>
-        <Title level={4} style={{ margin: 0 }}>
-          Đăng ký tài khoản
-        </Title>
-      </Space>
-      <Divider />
+
+      <Divider style={{ margin: "12px 0" }} />
+
       <Form.Item
         label="Email"
         name="Email"
         rules={[{ required: true, message: "Vui lòng nhập Email" }]}
+        style={{ marginBottom: isMobile ? 12 : 16 }}
       >
         <Input
+          size={isMobile ? "middle" : "large"}
+          style={{ borderRadius: 8 }}
           addonAfter={
             <Form.Item
               label="EmailExt"
@@ -129,7 +104,7 @@ const RegisterForm = ({ onModeChange, style }: Props) => {
               name="EmailExt"
               rules={[{ required: true, message: "Vui lòng nhập Email" }]}
             >
-              <Select>
+              <Select style={{ width: isMobile ? 120 : 140 }}>
                 <Select.Option value="@gmail.com">@gmail.com</Select.Option>
                 <Select.Option value="@cchouse.vn">@cchouse.vn</Select.Option>
               </Select>
@@ -137,17 +112,24 @@ const RegisterForm = ({ onModeChange, style }: Props) => {
           }
         />
       </Form.Item>
+
       <Form.Item
         label="Mật khẩu"
         name="Password"
         rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
+        style={{ marginBottom: isMobile ? 12 : 16 }}
       >
-        <Input.Password />
+        <Input.Password
+          size={isMobile ? "middle" : "large"}
+          style={{ borderRadius: 8 }}
+        />
       </Form.Item>
-      <PhoneNumber label="SĐT" name={"Phone"} required />
+
+      <PhoneNumber label="SĐT" name="Phone" required />
+
       <UploadItem
         form={form}
-        name={"IdentityImages"}
+        name="IdentityImages"
         label="Hình CCCD (2 mặt)"
         maxCount={2}
         rules={[{ required: true, message: "Vui lòng tải đủ 2 hình" }]}
@@ -158,11 +140,23 @@ const RegisterForm = ({ onModeChange, style }: Props) => {
         action={imagesApi.uploadUrl}
       />
 
-      <Space direction="vertical" style={{ width: "100%" }}>
-        <Button type="link" onClick={onModeChange}>
+      <Space direction="vertical" style={{ width: "100%", marginTop: 4 }} size={8}>
+        <Link onClick={onModeChange} style={{ fontSize: isMobile ? 12 : 13 }}>
           Đã có tài khoản, đăng nhập ngay
-        </Button>
-        <Button block size="large" type="primary" htmlType="submit">
+        </Link>
+        <Button
+          block
+          size={isMobile ? "middle" : "large"}
+          type="primary"
+          htmlType="submit"
+          style={{
+            background: "#0A0B1E",
+            borderColor: "#0A0B1E",
+            borderRadius: 8,
+            height: isMobile ? 42 : 46,
+            fontWeight: 600,
+          }}
+        >
           Đăng ký
         </Button>
       </Space>

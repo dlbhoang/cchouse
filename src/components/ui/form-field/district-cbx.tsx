@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, ChevronDown, SearchX } from "lucide-react";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {
   FormControl,
@@ -30,18 +31,23 @@ const DistrictCbxField = ({
   isRequired = false,
   placeholder = "Chọn",
   parentName,
+  popoverModal = true,
+  portalContainer,
 }: IFormFieldProps & {
   parentName: string;
+  popoverModal?: boolean;
+  portalContainer?: React.RefObject<HTMLElement | null>;
 }) => {
   const label = "Quận / Huyện";
 
   const { districts } = useAdminContext();
   const form = useFormContext();
+  const [open, setOpen] = useState(false);
 
   const provinceId = form.watch(parentName);
 
   const options = districts
-    .filter((e) => e.ProvinceId === provinceId)
+    .filter((e) => Number(e.ProvinceId) === Number(provinceId))
     .map((e) => ({
       label: e.Name,
       value: e.Id,
@@ -56,29 +62,37 @@ const DistrictCbxField = ({
           {!hiddenLabel && (
             <FormLabel isRequired={isRequired}>{label}</FormLabel>
           )}
-          <Popover modal={true}>
+          <Popover modal={popoverModal} open={open} onOpenChange={setOpen}>
             <FormControl>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
                   role="combobox"
+                  aria-expanded={open}
                   className={cn(
                     "justify-between text-left min-w-0",
-                    !field.value && "text-muted-foreground",
+                    !field.value && placeholder && "text-muted-foreground",
                     className
                   )}
                 >
                   <span className="truncate flex-1">
-                    {field.value
-                      ? options.find((item) => item.value === field.value)
-                          ?.label
+                    {Number(field.value) > 0
+                      ? options.find(
+                          (item) => Number(item.value) === Number(field.value)
+                        )?.label
                       : placeholder}
                   </span>
                   <ChevronDown className="opacity-50 flex-shrink-0 ml-2" />
                 </Button>
               </PopoverTrigger>
             </FormControl>
-            <PopoverContent className="w-full p-0">
+            <PopoverContent
+              container={portalContainer?.current}
+              className="w-[var(--radix-popover-trigger-width)] p-0"
+              align="start"
+              onOpenAutoFocus={(e) => e.preventDefault()}
+              onCloseAutoFocus={(e) => e.preventDefault()}
+            >
               <Command>
                 <CommandInput placeholder={"Tìm kiếm..."} className="h-9" />
                 <CommandList>
@@ -94,8 +108,11 @@ const DistrictCbxField = ({
                         value={option.value?.toString() || ""}
                         key={option.value}
                         keywords={[option.label]}
+                        className="rounded-lg cursor-pointer data-[selected=true]:bg-[#E8F4FE] data-[selected=true]:text-[#0588F0]"
                         onSelect={() => {
-                          form.setValue(name, option.value);
+                          field.onChange(option.value);
+                          form.setValue("WardId", 0);
+                          setOpen(false);
                         }}
                       >
                         {option.label}

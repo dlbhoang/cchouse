@@ -1,3 +1,4 @@
+// src/services/auth/auth.ts
 import axios from "axios";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -5,27 +6,19 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { IUserLogin } from "@/lib/interfaces/IUser";
 import { authConfig } from "@/services/auth/auth.config";
 
-// At request level
-// const agent = new https.Agent({
-//     rejectUnauthorized: false
-//   });
-
 const axiosConfig = {
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "origin",
   },
-  //   httpsAgent: agent
 };
-
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
     CredentialsProvider({
       name: "Credentials",
-
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
@@ -35,10 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const res = await axios.post(
             "/AdminAuth",
-            {
-              Username: username,
-              Password: password,
-            },
+            { Username: username, Password: password },
             axiosConfig
           );
 
@@ -46,10 +36,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const user = await axios.get("/Me", {
             ...axiosConfig,
-            headers: {
-              Authorization: `Bearer ${Token}`,
-            },
+            headers: { Authorization: `Bearer ${Token}` },
           });
+
           if (user?.data?.data) {
             return {
               ...user?.data?.data,
@@ -59,13 +48,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           }
 
           return null;
-        } catch (e) {
-          throw new Error((e as any)?.response?.data?.message);
+        } catch (e: any) {
+          const apiMessage =
+            e?.response?.data?.message ?? "Đăng nhập thất bại";
+          throw new Error(apiMessage);
         }
       },
     }),
   ],
-  debug: true,
+  debug: process.env.NODE_ENV === "development",
   logger: {
     error(code, ...message) {
       console.error(code, message);
@@ -78,5 +69,3 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 });
-
-

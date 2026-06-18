@@ -150,6 +150,7 @@ Props): ColumnsType<IPropResponse> => {
             )}
             {record.Note && (
               <NoteModal
+                  readOnly
                 title={`Mã BĐS: ${record?.Id}`}
                 historyId={record.Id}
                 value={record.Note}

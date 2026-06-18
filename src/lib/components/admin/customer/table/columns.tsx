@@ -120,6 +120,7 @@ const columns = ({
         </Typography.Text>
         {r[reqType]?.Note && (
           <NoteModal
+                  readOnly
             value={r[reqType]?.Note ?? ""}
             handleChange={(note) => {
               customerApi.updateRequirement(r.Id, {
