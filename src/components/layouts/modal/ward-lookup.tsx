@@ -604,7 +604,7 @@ const WardLookupDialog = ({
             </span>
           </div>
 
-          <div className="flex flex-1 min-h-0 flex-col self-stretch bg-white px-6 pt-4 pb-6 gap-6 overflow-y-auto">
+          <div className="flex flex-1 min-h-0 flex-col self-stretch bg-white px-6 pt-4 pb-6 gap-6 overflow-hidden">
 
             {/* ── Tabs ── */}
             <div className="flex items-center self-stretch border-b border-neutral-200">
@@ -689,75 +689,94 @@ const WardLookupDialog = ({
                 </Form>
               </div>
 
-              {/* ── RIGHT ── */}
-              <div className="flex flex-1 flex-col items-start min-w-0">
-                <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
-                  Kết quả chuyên đổi
-                </span>
+           {/* ── RIGHT ── */}
+<div className="flex flex-1 flex-col min-w-0 min-h-0 h-[600px]">
+  <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
+    Kết quả chuyên đổi
+  </span>
 
-                {!hasResult && (
-                  <div className="flex flex-col items-center justify-center self-stretch min-h-[280px] bg-white py-11 rounded-xl border border-solid border-neutral-200">
-                    <Image 
-                      src="/icon.png" 
-                      alt="Search icon" 
-                      width={124} 
-                      height={142}
-                      className="mb-4"
-                    />
-                    <span className="text-neutral-500 text-sm">
-                      Kết quả sẽ hiển thị tại đây
-                    </span>
-                  </div>
-                )}
+  <div
+  className="
+    flex-1 w-full overflow-y-auto pr-2
+    scrollbar-thin
+    scrollbar-thumb-neutral-300
+    scrollbar-track-transparent
+    hover:scrollbar-thumb-neutral-400
+  "
+>
+      {!hasResult && (
+      <div className="flex flex-col items-center justify-center self-stretch min-h-[280px] bg-white py-11 rounded-xl border border-solid border-neutral-200">
+        <Image
+          src="/icon.png"
+          alt="Search icon"
+          width={124}
+          height={142}
+          className="mb-4"
+        />
+        <span className="text-neutral-500 text-sm">
+          Kết quả sẽ hiển thị tại đây
+        </span>
+      </div>
+    )}
 
-                {hasResult && tab === "ward" && wards.map((ward) => (
-                  <div
-                    key={ward.WardId}
-                    className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200"
-                  >
-                    <p className="text-neutral-950 text-sm m-0">
-                      <span className="font-bold">Thông tin chuyên đổi: </span>
-                      <span className="text-[#0588F0] font-medium">
-                        {originalAddress || "—"}
-                      </span>
-                    </p>
-                    <ul className="flex flex-col gap-2 list-none m-0 p-0 pl-1">
-                      <li className="text-sm text-neutral-950">
-                        <span className="text-[#0588F0] mr-2">•</span>
-                        <span className="font-bold">Tên Phường / Xã mới: </span>
-                        <span className="text-[#0588F0] font-medium">
-                          Phường {ward.WardName}
-                          {selectedDistrict ? `, ${selectedDistrict}` : ""}, Thành phố Hồ Chí Minh
-                        </span>
-                      </li>
-                      <li className="text-sm text-neutral-950">
-                        <span className="text-[#0588F0] mr-2">•</span>
-                        <span className="font-bold">Sắp nhập từ: </span>
-                        {ward.MergedFrom.join(", ")}
-                      </li>
-                    </ul>
-                  </div>
-                ))}
+    {hasResult &&
+      tab === "ward" &&
+      wards.map((ward) => (
+        <div
+          key={ward.WardId}
+          className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200 mb-4"
+        >
+          <p className="text-neutral-950 text-sm m-0">
+            <span className="font-bold">Thông tin chuyên đổi: </span>
+            <span className="text-[#0588F0] font-medium">
+              {originalAddress || "—"}
+            </span>
+          </p>
 
-                {hasResult && tab === "agency" && (
-                  <div className="flex flex-col items-start self-stretch gap-4 w-full">
-                    {filteredAgencyGroups.length > 0 ? (
-                      filteredAgencyGroups.map((group) => (
-                        <AgencyCard key={group.label} group={group} />
-                      ))
-                    ) : (
-                      <div className="flex flex-col items-center self-stretch bg-white py-6 rounded-xl border border-solid border-neutral-200">
-                        <span className="text-neutral-500 text-sm">
-                          {agencyGroups.length > 0
-                            ? "Không tìm thấy cơ quan phù hợp với bộ lọc hiện tại."
-                            : "Không có dữ liệu cơ quan cho lựa chọn phường hiện tại."}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
+          <ul className="flex flex-col gap-2 list-none m-0 p-0 pl-1">
+            <li className="text-sm text-neutral-950">
+              <span className="text-[#0588F0] mr-2">•</span>
+              <span className="font-bold">
+                Tên Phường / Xã mới:
+              </span>{" "}
+              <span className="text-[#0588F0] font-medium">
+                Phường {ward.WardName}
+                {selectedDistrict ? `, ${selectedDistrict}` : ""}
+                , Thành phố Hồ Chí Minh
+              </span>
+            </li>
 
+            <li className="text-sm text-neutral-950">
+              <span className="text-[#0588F0] mr-2">•</span>
+              <span className="font-bold">Sắp nhập từ: </span>
+              {ward.MergedFrom.join(", ")}
+            </li>
+          </ul>
+        </div>
+      ))}
+
+    {hasResult && tab === "agency" && (
+      <div className="flex flex-col items-start self-stretch gap-4 w-full">
+        {filteredAgencyGroups.length > 0 ? (
+          filteredAgencyGroups.map((group) => (
+            <AgencyCard
+              key={group.label}
+              group={group}
+            />
+          ))
+        ) : (
+          <div className="flex flex-col items-center self-stretch bg-white py-6 rounded-xl border border-solid border-neutral-200">
+            <span className="text-neutral-500 text-sm">
+              {agencyGroups.length > 0
+                ? "Không tìm thấy cơ quan phù hợp với bộ lọc hiện tại."
+                : "Không có dữ liệu cơ quan cho lựa chọn phường hiện tại."}
+            </span>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+</div>
             </div>
           </div>
         </div>
