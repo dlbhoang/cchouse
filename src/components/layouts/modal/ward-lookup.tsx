@@ -593,7 +593,7 @@ const WardLookupDialog = ({
     <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
       <DialogContent
         ref={dialogBodyRef}
-        className="p-0 gap-0 w-[1152px] max-w-[95vw] h-[956px] max-h-[90vh] flex flex-col overflow-visible rounded-xl"
+        className="p-0 gap-0 w-[1152px] max-w-[95vw] max-h-[min(956px,90vh)] flex flex-col overflow-visible rounded-xl"
       >
         <div className="flex flex-1 min-h-0 flex-col bg-white overflow-visible">
 
