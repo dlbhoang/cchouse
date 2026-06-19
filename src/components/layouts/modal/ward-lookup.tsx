@@ -271,7 +271,7 @@ function TagButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex shrink-0 items-center text-left py-1 px-4 rounded-full border border-solid transition-all duration-200 font-[family-name:var(--font-figtree,Figtree,sans-serif)] text-sm",
+        "flex shrink-0 items-center text-left py-1 px-4 rounded-full border border-solid transition-all duration-200 font-[family-name:var(--font-inter,Inter,sans-serif)] text-sm",
         active
           ? "bg-[#E8F4FE] border-[#0588F0] shadow-[0_0_0_1px_#0588F0]"
           : "bg-neutral-100 border-neutral-200 hover:border-neutral-300"
@@ -292,7 +292,7 @@ function AgencyCard({ group }: { group: AgencyGroup }) {
 
   return (
     <div className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200">
-      <span className="text-neutral-950 text-base font-bold font-[family-name:var(--font-figtree,Figtree,sans-serif)]">{group.label}</span>
+      <span className="text-neutral-950 text-base font-bold font-[family-name:var(--font-inter,Inter,sans-serif)]">{group.label}</span>
       <ul className="flex flex-col self-stretch gap-3 list-none m-0 p-0">
         {group.items.map((item, i) => (
           <li key={i} className="flex items-start self-stretch gap-3">
@@ -565,7 +565,7 @@ const WardLookupDialog = ({
                   <SelectItem
                     key={option.value}
                     value={option.value}
-                    className="rounded-md cursor-pointer text-sm text-neutral-950 focus:bg-[#E8F4FE] focus:text-[#0588F0] data-[state=checked]:bg-[#E8F4FE] data-[state=checked]:text-[#0588F0] font-[family-name:var(--font-figtree,Figtree,sans-serif)]"
+                    className="rounded-md cursor-pointer text-sm text-neutral-950 focus:bg-[#E8F4FE] focus:text-[#0588F0] data-[state=checked]:bg-[#E8F4FE] data-[state=checked]:text-[#0588F0] font-[family-name:var(--font-inter,Inter,sans-serif)]"
                   >
                     {option.label}
                   </SelectItem>
@@ -599,7 +599,7 @@ const WardLookupDialog = ({
 
           {/* ── Header ── */}
           <div className="flex items-center self-stretch bg-white py-4 px-6 border-b border-neutral-200 rounded-tl-xl rounded-tr-xl">
-            <span className="flex-1 text-neutral-950 text-lg font-bold font-[family-name:var(--font-figtree,Figtree,sans-serif)] tracking-wide">
+            <span className="flex-1 text-neutral-950 text-lg font-bold font-[family-name:var(--font-inter,Inter,sans-serif)] tracking-wide">
               TRA CỨU THÔNG TIN
             </span>
           </div>
@@ -641,12 +641,12 @@ const WardLookupDialog = ({
                   <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
 
                     <div className="flex flex-col items-start self-stretch">
-                      <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
+                      <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
                         Chọn địa chỉ cần chuyên đổi
                       </span>
 
                       <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-md px-4 py-3 mb-4">
-                        <span className="text-neutral-950 text-sm font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
+                        <span className="text-neutral-950 text-sm font-[family-name:var(--font-inter,Inter,sans-serif)]">
                           Tìm theo địa chỉ mới sau sắp nhập
                         </span>
                         <ToggleSwitch
@@ -662,7 +662,7 @@ const WardLookupDialog = ({
                     <div className="flex items-center self-stretch gap-3">
                       <button
                         type="button"
-                        className="flex shrink-0 items-center bg-white text-left py-2 px-6 gap-2 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-figtree,Figtree,sans-serif)]"
+                        className="flex shrink-0 items-center bg-white text-left py-2 px-6 gap-2 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]"
                         onClick={handleReset}
                       >
                         <RefreshCw className="w-4 h-4 text-neutral-950" />
@@ -672,7 +672,7 @@ const WardLookupDialog = ({
                       <button
                         type="submit"
                         disabled={form.formState.isSubmitting}
-                        className={`flex flex-1 justify-center items-center py-2 gap-2 rounded-md border-0 transition-colors font-[family-name:var(--font-figtree,Figtree,sans-serif)]
+                        className={`flex flex-1 justify-center items-center py-2 gap-2 rounded-md border-0 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]
                           ${form.formState.isSubmitting
                             ? "bg-blue-300 cursor-not-allowed"
                             : "bg-[#0588F0] hover:bg-[#0471cc]"
@@ -691,7 +691,7 @@ const WardLookupDialog = ({
 
            {/* ── RIGHT ── */}
 <div className="flex flex-1 flex-col min-w-0 min-h-0 h-[600px]">
-  <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
+  <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
     Kết quả chuyên đổi
   </span>
 
@@ -786,7 +786,7 @@ const WardLookupDialog = ({
           <DialogClose asChild>
             <button
               type="button"
-              className="flex items-center bg-white py-2 px-4 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-figtree,Figtree,sans-serif)]"
+              className="flex items-center bg-white py-2 px-4 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]"
             >
               <span className="text-neutral-950 text-sm">Đóng</span>
             </button>

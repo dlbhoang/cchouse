@@ -26,6 +26,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
         <link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap"
+  rel="stylesheet"
+/>
+        <link
           href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.2.5/400.css"
           rel="stylesheet"
         />
