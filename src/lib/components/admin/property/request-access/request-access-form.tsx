@@ -61,7 +61,11 @@ const RequestAccessForm = ({
       toast.success("Gửi thông tin thành công", {
         description: "Bộ phận kiểm duyệt sẽ liên hệ với bạn sớm nhất có thể",
       });
-      router.push(AppRoutes.property.url);
+      if (onClose) {
+        onClose();
+      } else {
+        router.push(AppRoutes.property.url);
+      }
     } catch (error) {
       console.log(error);
     }

@@ -45,7 +45,7 @@ const RolePage = () => {
   const handleSaveRole = async (val: IRoleRequest) => {
     const result = await roleApi.update(val);
     mutate();
-    NotiBase("success", result.message);
+    NotiBase("success", result.message ?? "Cập nhật thành công");
   };
 
   const [confirmLoading, setConfirmLoading] = useState(false);
@@ -55,7 +55,7 @@ const RolePage = () => {
     try {
       setConfirmLoading(true);
       const result = await roleApi.add(item);
-      NotiBase("success", result.message);
+      NotiBase("success", result.message ?? "Thêm thành công");
       setOpenCreateModal(false);
     } finally {
       mutate();
@@ -65,7 +65,7 @@ const RolePage = () => {
 
   const handleDelete = async (item: IRoleRequest) => {
     const result = await roleApi.delete(item.Id);
-    NotiBase("success", result.message);
+    NotiBase("success", result.message ?? "Xóa thành công");
     mutate();
   };
 

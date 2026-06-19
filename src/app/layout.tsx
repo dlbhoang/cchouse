@@ -25,6 +25,14 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.2.5/400.css"
+          rel="stylesheet"
+        />
+        <link
+          href="https://cdn.jsdelivr.net/npm/@fontsource/geist-mono@5.2.5/600.css"
+          rel="stylesheet"
+        />
 
         <script src="/assets/libs/tinymce/tinymce.min.js"></script>
       </head>

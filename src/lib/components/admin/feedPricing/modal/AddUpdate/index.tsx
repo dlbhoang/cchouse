@@ -1,6 +1,5 @@
 import { Col, Form, Input, InputNumber, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
-
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
 import { FormatNumber } from "@/lib/core/utils/myFormat";
@@ -11,6 +10,7 @@ import {
 import feedPricingApi from "@/services/api/feedPricingApi";
 
 const { TextArea } = Input;
+
 type Props = {
   isModalOpen: boolean;
   arrDays: number[];
@@ -35,12 +35,11 @@ const AddUpdateFeedPricingModal = ({
       setConfirmLoading(true);
       if (item.Id > 0) {
         const result = await feedPricingApi.update(item);
-        NotiBase("success", result.message);
+        NotiBase("success", result.message ?? "Cập nhật thành công");
       } else {
         const result = await feedPricingApi.add(item);
-        NotiBase("success", result.message);
+        NotiBase("success", result.message ?? "Thêm thành công");
       }
-
       handleMutate();
     } finally {
       setConfirmLoading(false);
@@ -96,7 +95,6 @@ const AddUpdateFeedPricingModal = ({
               <TextArea />
             </Form.Item>
           </Col>
-
           {arrDays.map((e, idx) => (
             <Col span={12}>
               <Form.Item

@@ -214,8 +214,8 @@ const SearchCommand = ({ isIconOnly = false }: { isIconOnly?: boolean }) => {
       setCheckAddress(res.data);
     } catch (error) {
       console.error(error);
-      NotiBase("error", error?.toString());
-    } finally {
+      NotiBase("error", error?.toString() ?? "Đã xảy ra lỗi");
+        } finally {
       setIsLoading(false);
     }
   };

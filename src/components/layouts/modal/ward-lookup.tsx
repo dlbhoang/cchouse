@@ -25,7 +25,7 @@ import {
 import type { ISearchWardDto } from "@/lib/interfaces/ConfigAddress/IConfigAddress";
 import { cn } from "@/lib/utils";
 import wardApi from "@/services/api/wardApi";
-import { WARD_AGENCIES_MAP } from "@/data/ward-agencies";
+import { findWardAgencyData } from "@/data/ward-agencies";
 
 // ─────────────────────────────────────────────
 // Types
@@ -86,7 +86,7 @@ const cbxFieldClass = [
   "[&_button]:h-[42px]",
   "[&_button]:min-h-[42px]",
   "[&_button]:max-h-[42px]",
-  "[&_button]:rounded-[8px]",
+  "[&_button]:rounded-md",
   "[&_button]:border-0",
   "[&_button]:bg-transparent",
   "[&_button]:text-sm",
@@ -101,7 +101,7 @@ const cbxFieldClass = [
   "[&_button]:hover:bg-transparent",
   "[&_[role=combobox]]:w-full",
   "[&_[role=combobox]]:h-[42px]",
-  "[&_[role=combobox]]:rounded-[8px]",
+  "[&_[role=combobox]]:rounded-md",
   "[&_[role=combobox]]:border-0",
   "[&_[role=combobox]]:bg-transparent",
   "[&_[role=combobox]]:text-sm",
@@ -116,11 +116,17 @@ const cbxFieldClass = [
 ].join(" ");
 
 const selectTriggerClass =
-  "w-full h-[42px] rounded-[8px] border-0 bg-transparent text-sm shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0";
+  "w-full h-[42px] rounded-md border-0 bg-transparent text-sm shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0";
 
-/** Build agency groups from WARD_AGENCIES_MAP for a given wardId + active tags */
-function buildAgencyGroups(wardId: number, activeTags: Set<string>): AgencyGroup[] {
-  const data = WARD_AGENCIES_MAP.get(wardId);
+/** Build agency groups from WARD_AGENCIES_MAP for a given wardId + active tags.
+ *  wardName được truyền kèm để fallback tra cứu theo tên khi WardId từ
+ *  backend không khớp với ID tự đánh số trong file dữ liệu tĩnh. */
+function buildAgencyGroups(
+  wardId: number,
+  wardName: string,
+  activeTags: Set<string>
+): AgencyGroup[] {
+  const data = findWardAgencyData(wardId, wardName);
   if (!data) return [];
   return Array.from(activeTags)
     .map((tag) => {
@@ -134,8 +140,8 @@ function buildAgencyGroups(wardId: number, activeTags: Set<string>): AgencyGroup
     .filter((g) => g.items.length > 0);
 }
 
-function getAgencyOptions(wardId: number, agencyType: string) {
-  const data = WARD_AGENCIES_MAP.get(wardId);
+function getAgencyOptions(wardId: number, wardName: string, agencyType: string) {
+  const data = findWardAgencyData(wardId, wardName);
   if (!data) return [];
   const key = agencyType as keyof typeof data.Agencies;
   return (data.Agencies[key] ?? []).map((item, index) => ({
@@ -169,7 +175,7 @@ function FloatingField({
     <div className={cn("flex flex-col items-start self-stretch", className)}>
       <div
         className={cn(
-          "group/float relative w-full rounded-[10px] bg-white border-2 transition-[border-color] duration-200",
+          "group/float relative w-full rounded-md bg-white border-2 transition-[border-color] duration-200",
           isError
             ? "border-[#DC3E42]"
             : [
@@ -264,13 +270,13 @@ function TagButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex shrink-0 items-center text-left py-1 px-4 rounded-[99px] border border-solid transition-all duration-200",
+        "flex shrink-0 items-center text-left py-1 px-4 rounded border border-solid transition-all duration-200 font-[family-name:var(--font-figtree,Figtree,sans-serif)] text-sm",
         active
           ? "bg-[#E8F4FE] border-[#0588F0] shadow-[0_0_0_1px_#0588F0]"
           : "bg-neutral-100 border-neutral-200 hover:border-neutral-300"
       )}
     >
-      <span className={cn("text-sm transition-colors duration-200", active ? "text-[#0588F0]" : "text-neutral-950")}>
+      <span className={cn("transition-colors duration-200", active ? "text-[#0588F0]" : "text-neutral-950")}>
         {label}
       </span>
     </button>
@@ -284,8 +290,8 @@ function AgencyCard({ group }: { group: AgencyGroup }) {
   const showMapPin = group.label !== "Chi cục thuế";
 
   return (
-    <div className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-lg border border-solid border-neutral-200">
-      <span className="text-neutral-950 text-base font-bold">{group.label}</span>
+    <div className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200">
+      <span className="text-neutral-950 text-base font-bold font-[family-name:var(--font-figtree,Figtree,sans-serif)]">{group.label}</span>
       <ul className="flex flex-col self-stretch gap-3 list-none m-0 p-0">
         {group.items.map((item, i) => (
           <li key={i} className="flex items-start self-stretch gap-3">
@@ -346,6 +352,10 @@ const WardLookupDialog = ({
   const [wards, setWards] = useState<ISearchWardDto[]>([]);
   const [agencyGroups, setAgencyGroups] = useState<AgencyGroup[]>([]);
   const [originalAddress, setOriginalAddress] = useState<string>("");
+  // ID + Tên của phường MỚI sau khi tra cứu — dùng để lookup WARD_AGENCIES_MAP.
+  // Lưu cả tên để fallback khi WardId từ backend lệch với ID trong file tĩnh.
+  const [resolvedNewWardId, setResolvedNewWardId] = useState<number>(0);
+  const [resolvedNewWardName, setResolvedNewWardName] = useState<string>("");
   const dialogBodyRef = useRef<HTMLDivElement>(null);
 
   const form = useForm<z.infer<typeof schema>>({
@@ -379,8 +389,9 @@ const WardLookupDialog = ({
       const next = new Set(prev);
       next.has(tag) ? next.delete(tag) : next.add(tag);
 
-      if (wardId > 0 && wards.length > 0) {
-        setAgencyGroups(buildAgencyGroups(wardId, next));
+      // Dung resolvedNewWardId + resolvedNewWardName (phuong moi), khong dung wardId cu tu form
+      if (resolvedNewWardId > 0 && wards.length > 0) {
+        setAgencyGroups(buildAgencyGroups(resolvedNewWardId, resolvedNewWardName, next));
       }
 
       return next;
@@ -408,6 +419,8 @@ const WardLookupDialog = ({
     setSelectedDistrict("");
     setAgencySelections({});
     setSearchByNewAddress(false);
+    setResolvedNewWardId(0);
+    setResolvedNewWardName("");
   };
 
   const handleClose = () => {
@@ -418,11 +431,12 @@ const WardLookupDialog = ({
 
   const onSubmit = async (data: z.infer<typeof schema>) => {
     if (tab === "agency") {
-      if (data.WardId < 1) {
-        toast.warning("Vui lòng chọn phường/xã ở tab Chuyển đổi Phường/Xã trước");
+      // Can phai co ket qua chuyen doi phuong truoc (resolvedNewWardId/Name la phuong moi)
+      if (resolvedNewWardId < 1 && !resolvedNewWardName) {
+        toast.warning("Vui lòng chuyển đổi phường/xã ở tab Chuyển đổi Phường/Xã trước");
         return;
       }
-      setAgencyGroups(buildAgencyGroups(data.WardId, activeTags));
+      setAgencyGroups(buildAgencyGroups(resolvedNewWardId, resolvedNewWardName, activeTags));
       return;
     }
 
@@ -448,7 +462,13 @@ const WardLookupDialog = ({
         toast.warning("Không tìm thấy dữ liệu");
       }
       setWards(result.data);
-      setAgencyGroups(buildAgencyGroups(data.WardId, activeTags));
+      // Lay ID + Ten cua phuong MOI tu ket qua API, khong dung ID phuong cu tu form.
+      // Ten duoc dung de fallback tra cuu neu WardId tu backend lech voi file tinh.
+      const newWardId = result.data[0]?.WardId ?? 0;
+      const newWardName = result.data[0]?.WardName ?? "";
+      setResolvedNewWardId(newWardId);
+      setResolvedNewWardName(newWardName);
+      setAgencyGroups(buildAgencyGroups(newWardId, newWardName, activeTags));
     }
   };
 
@@ -516,7 +536,11 @@ const WardLookupDialog = ({
   const renderAgencyDropdowns = () => (
     <>
       {AGENCY_DROPDOWN_FIELDS.map((field) => {
-        const options = wardId > 0 ? getAgencyOptions(wardId, field) : [];
+        // Dung resolvedNewWardId + resolvedNewWardName (phuong moi) de lay options dung
+        const options =
+          resolvedNewWardId > 0 || resolvedNewWardName
+            ? getAgencyOptions(resolvedNewWardId, resolvedNewWardName, field)
+            : [];
         return (
           <FloatingField
             key={field}
@@ -530,17 +554,17 @@ const WardLookupDialog = ({
               onValueChange={(value) =>
                 setAgencySelections((prev) => ({ ...prev, [field]: value }))
               }
-              disabled={wardId <= 0}
+              disabled={resolvedNewWardId <= 0 && !resolvedNewWardName}
             >
               <SelectTrigger className={selectTriggerClass}>
                 <SelectValue placeholder="" />
               </SelectTrigger>
-              <SelectContent className="rounded-[10px] border-neutral-200 p-1">
+              <SelectContent className="rounded-xl border-neutral-200 p-1">
                 {options.map((option) => (
                   <SelectItem
                     key={option.value}
                     value={option.value}
-                    className="rounded-lg cursor-pointer text-sm text-neutral-950 focus:bg-[#E8F4FE] focus:text-[#0588F0] data-[state=checked]:bg-[#E8F4FE] data-[state=checked]:text-[#0588F0]"
+                    className="rounded-md cursor-pointer text-sm text-neutral-950 focus:bg-[#E8F4FE] focus:text-[#0588F0] data-[state=checked]:bg-[#E8F4FE] data-[state=checked]:text-[#0588F0] font-[family-name:var(--font-figtree,Figtree,sans-serif)]"
                   >
                     {option.label}
                   </SelectItem>
@@ -568,13 +592,13 @@ const WardLookupDialog = ({
     <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
       <DialogContent
         ref={dialogBodyRef}
-        className="p-0 gap-0 sm:max-w-[960px] overflow-visible rounded-[10px]"
+        className="p-0 gap-0 sm:max-w-[960px] overflow-visible rounded-xl"
       >
         <div className="flex flex-col bg-white overflow-visible">
 
           {/* ── Header ── */}
-          <div className="flex items-center self-stretch bg-white py-4 px-6 border-b border-neutral-200 rounded-tl-[10px] rounded-tr-[10px]">
-            <span className="flex-1 text-neutral-950 text-lg font-bold">
+          <div className="flex items-center self-stretch bg-white py-4 px-6 border-b border-neutral-200 rounded-tl-xl rounded-tr-xl">
+            <span className="flex-1 text-neutral-950 text-lg font-bold font-[family-name:var(--font-figtree,Figtree,sans-serif)] tracking-wide">
               TRA CỨU THÔNG TIN
             </span>
           </div>
@@ -616,12 +640,12 @@ const WardLookupDialog = ({
                   <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
 
                     <div className="flex flex-col items-start self-stretch">
-                      <span className="text-neutral-950 text-sm font-bold mb-4">
+                      <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
                         Chọn địa chỉ cần chuyển đổi
                       </span>
 
-                      <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-lg px-4 py-3 mb-4">
-                        <span className="text-neutral-950 text-sm">
+                      <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-md px-4 py-3 mb-4">
+                        <span className="text-neutral-950 text-sm font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
                           Tìm theo địa chỉ mới sau sáp nhập
                         </span>
                         <ToggleSwitch
@@ -637,7 +661,7 @@ const WardLookupDialog = ({
                     <div className="flex items-center self-stretch gap-3">
                       <button
                         type="button"
-                        className="flex shrink-0 items-center bg-white text-left py-2 px-6 gap-2 rounded-[10px] border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors"
+                        className="flex shrink-0 items-center bg-white text-left py-2 px-6 gap-2 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-figtree,Figtree,sans-serif)]"
                         onClick={handleReset}
                       >
                         <RefreshCw className="w-4 h-4 text-neutral-950" />
@@ -647,7 +671,7 @@ const WardLookupDialog = ({
                       <button
                         type="submit"
                         disabled={form.formState.isSubmitting}
-                        className={`flex flex-1 justify-center items-center py-2 gap-2 rounded-[10px] border-0 transition-colors
+                        className={`flex flex-1 justify-center items-center py-2 gap-2 rounded-md border-0 transition-colors font-[family-name:var(--font-figtree,Figtree,sans-serif)]
                           ${form.formState.isSubmitting
                             ? "bg-blue-300 cursor-not-allowed"
                             : "bg-[#0588F0] hover:bg-[#0471cc]"
@@ -666,12 +690,12 @@ const WardLookupDialog = ({
 
               {/* ── RIGHT ── */}
               <div className="flex flex-1 flex-col items-start min-w-0">
-                <span className="text-neutral-950 text-sm font-bold mb-4">
+                <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
                   Kết quả chuyển đổi
                 </span>
 
                 {!hasResult && (
-                  <div className="flex flex-col items-center justify-center self-stretch min-h-[280px] bg-white py-11 rounded-lg border border-solid border-neutral-200">
+                  <div className="flex flex-col items-center justify-center self-stretch min-h-[280px] bg-white py-11 rounded-xl border border-solid border-neutral-200">
                     <span className="text-neutral-500 text-sm">
                       Kết quả sẽ hiển thị tại đây
                     </span>
@@ -681,7 +705,7 @@ const WardLookupDialog = ({
                 {hasResult && tab === "ward" && wards.map((ward) => (
                   <div
                     key={ward.WardId}
-                    className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-lg border border-solid border-neutral-200"
+                    className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200"
                   >
                     <p className="text-neutral-950 text-sm m-0">
                       <span className="font-bold">Thông tin chuyển đổi: </span>
@@ -714,7 +738,7 @@ const WardLookupDialog = ({
                         <AgencyCard key={group.label} group={group} />
                       ))
                     ) : (
-                      <div className="flex flex-col items-center self-stretch bg-white py-6 rounded-lg border border-solid border-neutral-200">
+                      <div className="flex flex-col items-center self-stretch bg-white py-6 rounded-xl border border-solid border-neutral-200">
                         <span className="text-neutral-500 text-sm">
                           {agencyGroups.length > 0
                             ? "Không tìm thấy cơ quan phù hợp với bộ lọc hiện tại."
@@ -731,11 +755,11 @@ const WardLookupDialog = ({
         </div>
 
         {/* ── Footer ── */}
-        <DialogFooter className="flex flex-col items-end self-stretch bg-white px-6 py-4 rounded-br-lg rounded-bl-lg border-t border-neutral-200 sm:justify-end">
+        <DialogFooter className="flex flex-col items-end self-stretch bg-white px-6 py-4 rounded-br-xl rounded-bl-xl border-t border-neutral-200 sm:justify-end">
           <DialogClose asChild>
             <button
               type="button"
-              className="flex items-center bg-white py-2 px-4 rounded-[10px] border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors"
+              className="flex items-center bg-white py-2 px-4 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-figtree,Figtree,sans-serif)]"
             >
               <span className="text-neutral-950 text-sm">Đóng</span>
             </button>

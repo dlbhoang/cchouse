@@ -24,11 +24,24 @@ type Props = {
   isPropCart?: boolean;
   searchOptions: IPropAdminOpts;
   onPageIndexChange: (pageIndex: number, pageSize: number) => void;
+  onOpenDetail?: (id: number) => void;
+  onOpenAdd?: (opts?: {
+    transType?: number;
+    query?: {
+      AddressNumber?: string;
+      ProvinceId?: string;
+      DistrictId?: string;
+      WardId?: string;
+      StreetId?: string;
+    };
+  }) => void;
 };
 export const PropertyTable = ({
   isPropCart,
   searchOptions,
   onPageIndexChange,
+  onOpenDetail,
+  onOpenAdd,
 }: Props) => {
   const { data, isLoading, isValidating, mutate } =
     isPropCart === true
@@ -76,6 +89,9 @@ export const PropertyTable = ({
     handleOpenHistory: (id: number) => {
       setOpenHistory(true);
       setSeletedData(data?.data?.find((x) => x.Id === id));
+    },
+    handleOpenDetail: (id: number) => {
+      onOpenDetail?.(id);
     },
   });
   const handleContactCancel = () => {
@@ -138,6 +154,7 @@ export const PropertyTable = ({
             isModalOpen={openContact}
             handleCancel={handleContactCancel}
             model={selectedData}
+            onOpenDetail={onOpenDetail}
           />
           <HistoryModel
             isModalOpen={openHistory}

@@ -87,8 +87,18 @@ type Props = {
     WardId?: string;
     StreetId?: string;
   };
+  inModal?: boolean;
+  onClose?: () => void;
+  onSuccess?: () => void;
 };
-const PropAddEdit = ({ transType, model, query }: Props) => {
+const PropAddEdit = ({
+  transType,
+  model,
+  query,
+  inModal,
+  onClose,
+  onSuccess,
+}: Props) => {
   const router = useRouter();
   const { smallScreen } = useAdminContext();
   const [form] = Form.useForm<IPropRequest>();
@@ -251,7 +261,13 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
         await propertyApi.update(result);
       } else await propertyApi.add(result);
 
-      router.push(`${AppRoutes.property.url}?TransType=${transTypeWatch}`);
+      mutate(propertyApi.mutateKey);
+
+      if (onSuccess) {
+        onSuccess();
+      } else {
+        router.push(`${AppRoutes.property.url}?TransType=${transTypeWatch}`);
+      }
     } catch {
       setIsSubmit(false);
     } finally {
@@ -285,30 +301,41 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
           calculateArea(form, allValues);
         }
       }}
-      style={{ display: "flex", justifyContent: "center" }}
+      style={
+        inModal ? undefined : { display: "flex", justifyContent: "center" }
+      }
     >
       {hiddenFields.map((e) => (
         <Form.Item key={e.toString()} name={e} hidden>
           <Input />
         </Form.Item>
       ))}
-      <Card bodyStyle={{ width: cardWidth }}>
-        <Row justify="space-between">
-          <Col>
-            <TitlePage
-              title={
-                model?.Id
-                  ? `Chi tiết bất động sản - Mã: ${model?.Id}`
-                  : "Thêm bất động sản mới"
-              }
-            />
-          </Col>
-          {model && model.Id > 0 && (
+      <Card bodyStyle={{ width: inModal ? undefined : cardWidth }}>
+        {!inModal && (
+          <Row justify="space-between">
+            <Col>
+              <TitlePage
+                title={
+                  model?.Id
+                    ? `Chi tiết bất động sản - Mã: ${model?.Id}`
+                    : "Thêm bất động sản mới"
+                }
+              />
+            </Col>
+            {model && model.Id > 0 && (
+              <Col xs={24} lg={14}>
+                <EditInfo model={model} />
+              </Col>
+            )}
+          </Row>
+        )}
+        {inModal && model && model.Id > 0 && (
+          <Row justify="end" style={{ marginBottom: 12 }}>
             <Col xs={24} lg={14}>
               <EditInfo model={model} />
             </Col>
-          )}
-        </Row>
+          </Row>
+        )}
         <Row gutter={[12, 12]} style={{ marginTop: 12 }}>
           <Col xs={24} lg={18}>
             <Form.Item
@@ -324,11 +351,16 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
               <Text style={{ padding: 10 }}>Loại giao dịch: </Text>
               <Radio.Group
                 value={model?.TransType ?? Number(transType)}
-                onChange={(e) =>
+                onChange={(e) => {
+                  if (inModal && !model) {
+                    form.setFieldValue("TransType", e.target.value);
+                    form.setFieldValue("PaymentMethod", e.target.value);
+                    return;
+                  }
                   router.push(
                     `${AppRoutes.property.url}/add?TransType=${e.target.value}`
-                  )
-                }
+                  );
+                }}
               >
                 <Radio value={ETransType.sell}>Mua bán</Radio>
                 <Radio value={ETransType.rent}>Cho thuê</Radio>
@@ -569,34 +601,81 @@ const PropAddEdit = ({ transType, model, query }: Props) => {
           </Col>
         </Row>
       </Card>
-      <BottomFixed>
-        <Space>
-          <Button
-            type="primary"
-            size="large"
-            block={smallScreen}
-            loading={isSubmit}
-            htmlType="submit"
-          >
-            {model && model.Id > 0 ? "Cập nhật" : "Thêm mới"}
-          </Button>
-          {(model?.Id ?? 0) > 0 && (
+      {inModal ? (
+        <Row
+          justify="center"
+          style={{
+            position: "sticky",
+            bottom: 0,
+            padding: "12px 0",
+            marginTop: 12,
+            background: "var(--ant-color-bg-container, #fff)",
+            borderTop: "1px solid var(--ant-color-border-secondary, #f0f0f0)",
+            zIndex: 1,
+          }}
+        >
+          <Space wrap>
+            {onClose && (
+              <Button size="large" block={smallScreen} onClick={onClose}>
+                Đóng
+              </Button>
+            )}
             <Button
               type="primary"
               size="large"
-              style={{ backgroundColor: "orange" }}
               block={smallScreen}
               loading={isSubmit}
-              htmlType="button"
-              onClick={() =>
-                router.push(`${AppRoutes.feed.url}/add?propId=${model?.Id}`)
-              }
+              htmlType="submit"
             >
-              Đăng tin
+              {model && model.Id > 0 ? "Cập nhật" : "Thêm mới"}
             </Button>
-          )}
-        </Space>
-      </BottomFixed>
+            {(model?.Id ?? 0) > 0 && (
+              <Button
+                type="primary"
+                size="large"
+                style={{ backgroundColor: "orange" }}
+                block={smallScreen}
+                loading={isSubmit}
+                htmlType="button"
+                onClick={() =>
+                  router.push(`${AppRoutes.feed.url}/add?propId=${model?.Id}`)
+                }
+              >
+                Đăng tin
+              </Button>
+            )}
+          </Space>
+        </Row>
+      ) : (
+        <BottomFixed>
+          <Space>
+            <Button
+              type="primary"
+              size="large"
+              block={smallScreen}
+              loading={isSubmit}
+              htmlType="submit"
+            >
+              {model && model.Id > 0 ? "Cập nhật" : "Thêm mới"}
+            </Button>
+            {(model?.Id ?? 0) > 0 && (
+              <Button
+                type="primary"
+                size="large"
+                style={{ backgroundColor: "orange" }}
+                block={smallScreen}
+                loading={isSubmit}
+                htmlType="button"
+                onClick={() =>
+                  router.push(`${AppRoutes.feed.url}/add?propId=${model?.Id}`)
+                }
+              >
+                Đăng tin
+              </Button>
+            )}
+          </Space>
+        </BottomFixed>
+      )}
 
       {previewData && (
         <PropPreviewModal

@@ -23,9 +23,10 @@ import RequestAccessForm from "./request-access-form";
 
 type Props = {
   model: IPropAccess;
+  onClose?: () => void;
 };
 
-const RequestAccess = ({ model }: Props) => {
+const RequestAccess = ({ model, onClose }: Props) => {
   const property = model.Prop;
   const [showForm, setShowForm] = useState(false);
 
@@ -138,7 +139,10 @@ const RequestAccess = ({ model }: Props) => {
               <RequestAccessForm
                 propertyId={property?.Id ?? 0}
                 transType={property?.TransType ?? ETransType.sell}
-                onClose={() => setShowForm(false)}
+                onClose={() => {
+                  onClose?.();
+                  setShowForm(false);
+                }}
               />
             </CardContent>
           </Card>

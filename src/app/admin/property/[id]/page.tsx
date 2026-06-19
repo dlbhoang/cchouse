@@ -1,24 +1,23 @@
-import type { Metadata } from "next";
-
-import PropDetailPage from "@/lib/pages/property/prop-detail";
+import { redirect } from "next/navigation";
+import { AppRoutes } from "@/lib/core/configs/appRoutes";
+import { ETransType } from "@/lib/core/enum";
 
 type Props = {
   params: Promise<{ id: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-
-  return {
-    title: `Chi tiết bất động sản - Mã: ${id}`,
-  };
-}
-
 export default async function Page({ params, searchParams }: Props) {
   const { id } = await params;
   const sParams = await searchParams;
-  const propertyId = Number(id);
+  const transType = sParams.TransType
+    ? Number(sParams.TransType)
+    : ETransType.sell;
 
-  return <PropDetailPage id={propertyId} query={sParams} />;
+  const query = new URLSearchParams({
+    TransType: String(transType),
+    openPropId: id,
+  });
+
+  redirect(`${AppRoutes.property.url}?${query.toString()}`);
 }

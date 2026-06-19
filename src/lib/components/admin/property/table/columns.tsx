@@ -9,7 +9,7 @@ import {
   Trash2Icon,
   VideoIcon,
 } from "lucide-react";
-import Link from "next/link";
+import { ReactNode } from "react";
 import { mutate } from "swr";
 import { Button } from "@/components/ui/button";
 import CopyButton from "@/components/ui/button/copy-btn";
@@ -17,7 +17,6 @@ import CustomerPhoneButton from "@/lib/components/shared/Button/customer-phone";
 import RenderArea from "@/lib/components/shared/CustomRender/RenderArea";
 import NoteModal from "@/lib/components/shared/noteModal";
 import { appConst } from "@/lib/core/configs/appConst";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { ETransType } from "@/lib/core/enum";
 import { CopyProp } from "@/lib/core/utils/actionCopy";
 import { IPropResponse } from "@/lib/interfaces/Property/IProp";
@@ -54,6 +53,7 @@ type Props = {
   handleOpenVideo: (val: string) => void;
   handleOpenContact: (id: number) => void;
   handleOpenHistory: (id: number) => void;
+  handleOpenDetail: (id: number) => void;
 };
 
 const columns = ({
@@ -64,9 +64,17 @@ const columns = ({
   handleOpenVideo,
   handleOpenContact,
   handleOpenHistory,
+  handleOpenDetail,
 }: // eslint-disable-next-line sonarjs/cognitive-complexity
 Props): ColumnsType<IPropResponse> => {
-  const { url } = AppRoutes.property;
+  const detailLink = (id: number, children: ReactNode) => (
+    <span
+      className="cursor-pointer hover:text-blue-500"
+      onClick={() => handleOpenDetail(id)}
+    >
+      {children}
+    </span>
+  );
 
   return [
     {
@@ -76,9 +84,7 @@ Props): ColumnsType<IPropResponse> => {
       render(value, record) {
         return (
           <Space direction="vertical">
-            <Link href={`${url}/${record.Id}`}>
-              <Text>{value}</Text>
-            </Link>
+            {detailLink(record.Id, <Text>{value}</Text>)}
             <Button
               variant="ghost"
               size="sm"
@@ -99,9 +105,10 @@ Props): ColumnsType<IPropResponse> => {
       render(value, record) {
         return (
           <Space direction="vertical">
-            <Link href={`${url}/${record.Id}`}>
+            {detailLink(
+              record.Id,
               <Text style={{ whiteSpace: "nowrap" }}>{value}</Text>
-            </Link>
+            )}
             <Text
               type="secondary"
               style={{ fontSize: 12, whiteSpace: "nowrap" }}
@@ -122,31 +129,37 @@ Props): ColumnsType<IPropResponse> => {
         return (
           <Space direction="vertical">
             {LandNumber ? (
-              <Link href={`${url}/${record.Id}`}>
-                <Text
-                  style={{ whiteSpace: "nowrap" }}
-                >{`Thửa đất: ${LandNumber}`}</Text>
-                <br />
-                <Text style={{ whiteSpace: "nowrap" }}>
-                  {`Tờ bản đồ: ${MapNumber}`}
-                </Text>
-              </Link>
-            ) : (
-              <Link href={`${url}/${record.Id}`}>
-                <Text style={{ whiteSpace: "nowrap" }}>{`${
-                  record.PropAddress.AddressNumber
-                } ${
-                  record.PropAddress.SubAddressName
-                    ? `(${record.PropAddress.SubAddressName})`
-                    : ""
-                }`}</Text>
-                <br />
-                {record.PropAddress.OldAddressNumber && (
-                  <Text type="secondary" style={{ fontSize: 12 }}>
-                    Số cũ: {record.PropAddress.OldAddressNumber}
+              detailLink(
+                record.Id,
+                <>
+                  <Text
+                    style={{ whiteSpace: "nowrap" }}
+                  >{`Thửa đất: ${LandNumber}`}</Text>
+                  <br />
+                  <Text style={{ whiteSpace: "nowrap" }}>
+                    {`Tờ bản đồ: ${MapNumber}`}
                   </Text>
-                )}
-              </Link>
+                </>
+              )
+            ) : (
+              detailLink(
+                record.Id,
+                <>
+                  <Text style={{ whiteSpace: "nowrap" }}>{`${
+                    record.PropAddress.AddressNumber
+                  } ${
+                    record.PropAddress.SubAddressName
+                      ? `(${record.PropAddress.SubAddressName})`
+                      : ""
+                  }`}</Text>
+                  <br />
+                  {record.PropAddress.OldAddressNumber && (
+                    <Text type="secondary" style={{ fontSize: 12 }}>
+                      Số cũ: {record.PropAddress.OldAddressNumber}
+                    </Text>
+                  )}
+                </>
+              )
             )}
             {record.Note && (
               <NoteModal
@@ -171,8 +184,9 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Đường",
       dataIndex: ["PropAddress", "StreetName"],
-      render: (value, record) => (
-        <Link href={`${url}/${record.Id}`}>
+      render: (value, record) =>
+        detailLink(
+          record.Id,
           <Space direction="vertical">
             <Text>{value}</Text>
             {record.PropAddress.OldStreetName && (
@@ -180,59 +194,59 @@ Props): ColumnsType<IPropResponse> => {
                 ({record.PropAddress.OldStreetName})
               </Text>
             )}
-            {/* {record.CustomerTypeName === 'Đấu giá' && (
-              <Tag color="orange">Đấu giá</Tag>
-            )} */}
           </Space>
-        </Link>
-      ),
+        ),
     },
     {
       title: "Phường / Xã",
       dataIndex: ["PropAddress", "WardName"],
-      render: (value, record) => (
-        <Link href={`${url}/${record.Id}`}>
-          <Text>{value}</Text>
-          <br />
-          {record.PropAddress.OldWardName &&
-            record.PropAddress.WardId !== record.PropAddress.OldWardId && (
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                ({record.PropAddress.OldWardName})
-              </Text>
-            )}
-        </Link>
-      ),
+      render: (value, record) =>
+        detailLink(
+          record.Id,
+          <>
+            <Text>{value}</Text>
+            <br />
+            {record.PropAddress.OldWardName &&
+              record.PropAddress.WardId !== record.PropAddress.OldWardId && (
+                <Text type="secondary" style={{ fontSize: 12 }}>
+                  ({record.PropAddress.OldWardName})
+                </Text>
+              )}
+          </>
+        ),
     },
     {
       title: "Quận / Huyện",
       dataIndex: ["PropAddress", "DistrictName"],
-      render: (value, record) => (
-        <Link href={`${url}/${record.Id}`}>
-          <Text>{value}</Text>
-          <br />
-          {record.PropAddress.OldDistrictName &&
-            record.PropAddress.DistrictId !==
-              record.PropAddress.OldDistrictId && (
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                ({record.PropAddress.OldDistrictName})
-              </Text>
-            )}
-        </Link>
-      ),
+      render: (value, record) =>
+        detailLink(
+          record.Id,
+          <>
+            <Text>{value}</Text>
+            <br />
+            {record.PropAddress.OldDistrictName &&
+              record.PropAddress.DistrictId !==
+                record.PropAddress.OldDistrictId && (
+                <Text type="secondary" style={{ fontSize: 12 }}>
+                  ({record.PropAddress.OldDistrictName})
+                </Text>
+              )}
+          </>
+        ),
     },
     {
       title: "Loại BĐS",
       dataIndex: ["PropAddress", "PropTypeName"],
-      render: (value, record) => (
-        <Link href={`${url}/${record.Id}`}>
+      render: (value, record) =>
+        detailLink(
+          record.Id,
           <Space direction="vertical">
             <Text>{value}</Text>
             {record.PropAddress?.PropName && (
               <Tag color="processing">{record.PropAddress?.PropName}</Tag>
             )}
-          </Space>{" "}
-        </Link>
-      ),
+          </Space>
+        ),
     },
     {
       title: "Kết cấu",
@@ -240,9 +254,7 @@ Props): ColumnsType<IPropResponse> => {
       render(value, record) {
         return (
           <Space direction="vertical">
-            <Link href={`${url}/${record.Id}`}>
-              <Text>{value?.toString()}</Text>
-            </Link>
+            {detailLink(record.Id, <Text>{value?.toString()}</Text>)}
             <Space>
               {record.MainImage && (
                 <Button
@@ -307,28 +319,25 @@ Props): ColumnsType<IPropResponse> => {
       title: "Vị trí",
       dataIndex: ["PropAddress", "LocationName"],
       render(value, record) {
-        return (
-          <Link href={`${url}/${record.Id}`}>
-            <Space direction="vertical">
-              <Text>
-                {value} {record.PropAddress.IsOneWay && "(1 chiều)"}{" "}
-                {record.PropAddress.AlleyTurns === 1 &&
-                  record.PropAddress.AlleyValues?.length === 1 &&
-                  `${record.PropAddress.AlleyValues[0] ?? 0}m`}
-              </Text>
-              {record.PropAddress.StreetWidth > 0 && (
-                <Text>Độ rộng: {record.PropAddress.StreetWidth} m</Text>
-              )}
-              {record.PropAddress.AlleyTurns > 1 && (
-                <AlleyInfo record={record} />
-              )}
-              {record.PropAddress.LocationFeatureName && (
-                <Tag color="success">
-                  {record.PropAddress.LocationFeatureName}
-                </Tag>
-              )}
-            </Space>
-          </Link>
+        return detailLink(
+          record.Id,
+          <Space direction="vertical">
+            <Text>
+              {value} {record.PropAddress.IsOneWay && "(1 chiều)"}{" "}
+              {record.PropAddress.AlleyTurns === 1 &&
+                record.PropAddress.AlleyValues?.length === 1 &&
+                `${record.PropAddress.AlleyValues[0] ?? 0}m`}
+            </Text>
+            {record.PropAddress.StreetWidth > 0 && (
+              <Text>Độ rộng: {record.PropAddress.StreetWidth} m</Text>
+            )}
+            {record.PropAddress.AlleyTurns > 1 && <AlleyInfo record={record} />}
+            {record.PropAddress.LocationFeatureName && (
+              <Tag color="success">
+                {record.PropAddress.LocationFeatureName}
+              </Tag>
+            )}
+          </Space>
         );
       },
     },

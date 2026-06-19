@@ -2723,3 +2723,65 @@ export const WARD_AGENCIES: WardAgencyData[] = [
 export const WARD_AGENCIES_MAP = new Map<number, WardAgencyData>(
   WARD_AGENCIES.map((w) => [w.WardId, w])
 );
+
+/**
+ * Chuẩn hoá tên phường/xã để so khớp không phụ thuộc dấu, hoa/thường,
+ * hay tiền tố "Phường/Xã/Đặc khu" (vd: "Phường Sài Gòn" và "Sài Gòn"
+ * đều normalize về "sai gon").
+ */
+function normalizeWardName(name: string): string {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .replace(/^(phuong|xa|dac khu)\s+/i, "")
+    .trim();
+}
+
+/** Lookup dự phòng theo tên phường/xã (đã chuẩn hoá) */
+export const WARD_AGENCIES_MAP_BY_NAME = new Map<string, WardAgencyData>(
+  WARD_AGENCIES.map((w) => [normalizeWardName(w.WardName), w])
+);
+
+/**
+ * Tìm dữ liệu cơ quan cho 1 phường/xã.
+ *
+ * Ưu tiên khớp theo WardId (nhanh + chính xác KHI ID trả về từ backend
+ * (`wardApi.getMergedTo`) đồng bộ với ID tự đánh số 1-168 trong file này).
+ *
+ * Nếu không tìm thấy theo ID, fallback sang khớp theo WardName — phòng
+ * trường hợp ID của backend lệch với ID trong file tĩnh (thường gặp ở
+ * nhóm phường/xã mới nhập như Bình Dương, Bà Rịa - Vũng Tàu cũ, do dữ
+ * liệu được đồng bộ vào hệ thống muộn hơn so với lúc file này được biên soạn).
+ *
+ * Khi fallback xảy ra, sẽ log cảnh báo ra console để dev biết mà đối
+ * chiếu/đồng bộ lại ID giữa 2 nguồn dữ liệu — KHÔNG nên coi fallback
+ * theo tên là giải pháp lâu dài.
+ */
+export function findWardAgencyData(
+  wardId?: number,
+  wardName?: string
+): WardAgencyData | undefined {
+  if (wardId) {
+    const byId = WARD_AGENCIES_MAP.get(wardId);
+    if (byId) return byId;
+  }
+
+  if (wardName) {
+    const byName = WARD_AGENCIES_MAP_BY_NAME.get(normalizeWardName(wardName));
+    if (byName) {
+      if (wardId) {
+        console.warn(
+          `[ward-agencies] WardId=${wardId} (từ backend) không khớp dữ liệu tĩnh. ` +
+            `Đã fallback theo tên "${wardName}" → WardId trong file tĩnh = ${byName.WardId}. ` +
+            `Cân nhắc đồng bộ lại ID giữa backend và ward-agencies.ts.`
+        );
+      }
+      return byName;
+    }
+  }
+
+  return undefined;
+}

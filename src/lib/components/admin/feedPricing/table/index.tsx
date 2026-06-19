@@ -16,7 +16,6 @@ type Props = {
   total: number;
   loading: boolean;
   searchOptions: ISearchOptions;
-
   onPageIndexChange: (pageIndex: number, pageSize: number) => void;
   OpenModalUpdate: (item: IFeedPricingResponse) => void;
   handleMutate: () => void;
@@ -126,7 +125,7 @@ const FeedPricingTable = ({
               icon={<Trash2Icon className="size-4" />}
               onOkClick={async () => {
                 const result = await feedPricingApi.delete(value);
-                NotiBase("success", result.message);
+                NotiBase("success", result.message ?? "Xóa thành công");
                 handleMutate();
               }}
             />

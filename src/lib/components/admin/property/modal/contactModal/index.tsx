@@ -32,9 +32,15 @@ type Props = {
   isModalOpen: boolean;
   model: IPropResponse;
   handleCancel: () => void;
+  onOpenDetail?: (id: number) => void;
 };
 
-const ContactModal = ({ isModalOpen, model, handleCancel }: Props) => {
+const ContactModal = ({
+  isModalOpen,
+  model,
+  handleCancel,
+  onOpenDetail,
+}: Props) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [showMap, setShowMap] = useState<boolean>(false);
@@ -97,9 +103,14 @@ const ContactModal = ({ isModalOpen, model, handleCancel }: Props) => {
                   Đăng tin
                 </Button>
                 <Button
-                  onClick={() =>
-                    router.push(`${AppRoutes.property.url}/${data.Id}`)
-                  }
+                  onClick={() => {
+                    handleCancel();
+                    if (onOpenDetail) {
+                      onOpenDetail(data.Id);
+                    } else {
+                      router.push(`${AppRoutes.property.url}/${data.Id}`);
+                    }
+                  }}
                 >
                   Chỉnh sửa
                 </Button>

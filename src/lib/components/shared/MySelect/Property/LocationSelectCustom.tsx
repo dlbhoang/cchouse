@@ -128,7 +128,7 @@ export const LocationSelectCustom = ({
         >
           {location && feature
             ? `${location}, ${feature}`
-            : location || feature || "Chọn vị trí"}
+            : location || feature || "Chọn"}
         </Typography.Text>
         <Typography.Text type="secondary">
           <DownOutlined />

@@ -81,7 +81,7 @@ export const AreaFilter = ({ form }: Props) => {
       onClick={() => setIsDropdownOpen(true)}
       onChange={handleDropdownChange}
       onDropdownVisibleChange={setIsDropdownOpen}
-      placeholder="Diện tích"
+      placeholder="Chọn"
       value={selectValue}
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdownRender={(menu) => (
