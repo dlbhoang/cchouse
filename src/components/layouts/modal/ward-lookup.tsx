@@ -593,9 +593,9 @@ const WardLookupDialog = ({
     <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
       <DialogContent
         ref={dialogBodyRef}
-        className="p-0 gap-0 sm:max-w-[960px] overflow-visible rounded-xl"
+        className="p-0 gap-0 sm:max-w-[960px] max-h-[85vh] flex flex-col overflow-visible rounded-xl"
       >
-        <div className="flex flex-col bg-white overflow-visible">
+        <div className="flex flex-1 min-h-0 flex-col bg-white overflow-visible">
 
           {/* ── Header ── */}
           <div className="flex items-center self-stretch bg-white py-4 px-6 border-b border-neutral-200 rounded-tl-xl rounded-tr-xl">
@@ -604,7 +604,7 @@ const WardLookupDialog = ({
             </span>
           </div>
 
-          <div className="flex flex-col self-stretch bg-white px-6 pt-4 pb-6 gap-6">
+          <div className="flex flex-1 min-h-0 flex-col self-stretch bg-white px-6 pt-4 pb-6 gap-6 overflow-y-auto">
 
             {/* ── Tabs ── */}
             <div className="flex items-center self-stretch border-b border-neutral-200">
