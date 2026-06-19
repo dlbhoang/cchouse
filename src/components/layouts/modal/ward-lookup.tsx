@@ -1,6 +1,7 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Copy, Loader2, MapPin, RefreshCw, ArrowLeftRight } from "lucide-react";
+import Image from "next/image";
 import { useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -270,7 +271,7 @@ function TagButton({
       type="button"
       onClick={onClick}
       className={cn(
-        "flex shrink-0 items-center text-left py-1 px-4 rounded border border-solid transition-all duration-200 font-[family-name:var(--font-figtree,Figtree,sans-serif)] text-sm",
+        "flex shrink-0 items-center text-left py-1 px-4 rounded-full border border-solid transition-all duration-200 font-[family-name:var(--font-figtree,Figtree,sans-serif)] text-sm",
         active
           ? "bg-[#E8F4FE] border-[#0588F0] shadow-[0_0_0_1px_#0588F0]"
           : "bg-neutral-100 border-neutral-200 hover:border-neutral-300"
@@ -616,7 +617,7 @@ const WardLookupDialog = ({
                 }`}
                 onClick={() => setTab("ward")}
               >
-                Chuyển đổi Phường/Xã
+                Chuyên đổi Phường/Xã
               </button>
               <button
                 type="button"
@@ -641,12 +642,12 @@ const WardLookupDialog = ({
 
                     <div className="flex flex-col items-start self-stretch">
                       <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
-                        Chọn địa chỉ cần chuyển đổi
+                        Chọn địa chỉ cần chuyên đổi
                       </span>
 
                       <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-md px-4 py-3 mb-4">
                         <span className="text-neutral-950 text-sm font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
-                          Tìm theo địa chỉ mới sau sáp nhập
+                          Tìm theo địa chỉ mới sau sắp nhập
                         </span>
                         <ToggleSwitch
                           checked={searchByNewAddress}
@@ -681,7 +682,7 @@ const WardLookupDialog = ({
                           ? <Loader2 className="w-4 h-4 animate-spin text-white" />
                           : <ArrowLeftRight className="w-4 h-4 text-white" />
                         }
-                        <span className="text-white text-sm font-medium">Chuyển đổi ngay</span>
+                        <span className="text-white text-sm font-medium">Chuyên đổi ngay</span>
                       </button>
                     </div>
                   </form>
@@ -691,11 +692,18 @@ const WardLookupDialog = ({
               {/* ── RIGHT ── */}
               <div className="flex flex-1 flex-col items-start min-w-0">
                 <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-figtree,Figtree,sans-serif)]">
-                  Kết quả chuyển đổi
+                  Kết quả chuyên đổi
                 </span>
 
                 {!hasResult && (
                   <div className="flex flex-col items-center justify-center self-stretch min-h-[280px] bg-white py-11 rounded-xl border border-solid border-neutral-200">
+                    <Image 
+                      src="/icon.png" 
+                      alt="Search icon" 
+                      width={124} 
+                      height={142}
+                      className="mb-4"
+                    />
                     <span className="text-neutral-500 text-sm">
                       Kết quả sẽ hiển thị tại đây
                     </span>
@@ -708,7 +716,7 @@ const WardLookupDialog = ({
                     className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200"
                   >
                     <p className="text-neutral-950 text-sm m-0">
-                      <span className="font-bold">Thông tin chuyển đổi: </span>
+                      <span className="font-bold">Thông tin chuyên đổi: </span>
                       <span className="text-[#0588F0] font-medium">
                         {originalAddress || "—"}
                       </span>
@@ -724,7 +732,7 @@ const WardLookupDialog = ({
                       </li>
                       <li className="text-sm text-neutral-950">
                         <span className="text-[#0588F0] mr-2">•</span>
-                        <span className="font-bold">Sáp nhập từ: </span>
+                        <span className="font-bold">Sắp nhập từ: </span>
                         {ward.MergedFrom.join(", ")}
                       </li>
                     </ul>
