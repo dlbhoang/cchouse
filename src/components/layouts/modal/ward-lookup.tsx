@@ -593,7 +593,7 @@ const WardLookupDialog = ({
     <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
       <DialogContent
         ref={dialogBodyRef}
-        className="p-0 gap-0 sm:max-w-[960px] max-h-[85vh] flex flex-col overflow-visible rounded-xl"
+        className="p-0 gap-0 w-[1152px] max-w-[95vw] h-[956px] max-h-[90vh] flex flex-col overflow-visible rounded-xl"
       >
         <div className="flex flex-1 min-h-0 flex-col bg-white overflow-visible">
 
@@ -633,33 +633,38 @@ const WardLookupDialog = ({
             </div>
 
             {/* ── Two-column body ── */}
-            <div className="flex items-start self-stretch gap-6">
+            <div className="flex flex-1 min-h-0 items-stretch self-stretch gap-6">
 
               {/* ── LEFT ── */}
-              <div className="flex flex-1 flex-col gap-6 min-w-0">
+              <div className="flex flex-1 flex-col min-w-0 min-h-0">
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
-
-                    <div className="flex flex-col items-start self-stretch">
-                      <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
-                        Chọn địa chỉ cần chuyên đổi
-                      </span>
-
-                      <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-md px-4 py-3 mb-4">
-                        <span className="text-neutral-950 text-sm font-[family-name:var(--font-inter,Inter,sans-serif)]">
-                          Tìm theo địa chỉ mới sau sắp nhập
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="flex flex-1 min-h-0 flex-col gap-4"
+                  >
+                    {/* Scrollable selection area */}
+                    <div className="flex-1 min-h-0 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent hover:scrollbar-thumb-neutral-400">
+                      <div className="flex flex-col items-start self-stretch">
+                        <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
+                          Chọn địa chỉ cần chuyên đổi
                         </span>
-                        <ToggleSwitch
-                          checked={searchByNewAddress}
-                          onChange={handleSearchModeChange}
-                        />
-                      </div>
 
-                      {tab === "ward" ? renderAddressFields() : renderAgencyDropdowns()}
+                        <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-md px-4 py-3 mb-4">
+                          <span className="text-neutral-950 text-sm font-[family-name:var(--font-inter,Inter,sans-serif)]">
+                            Tìm theo địa chỉ mới sau sắp nhập
+                          </span>
+                          <ToggleSwitch
+                            checked={searchByNewAddress}
+                            onChange={handleSearchModeChange}
+                          />
+                        </div>
+
+                        {tab === "ward" ? renderAddressFields() : renderAgencyDropdowns()}
+                      </div>
                     </div>
 
-                    {/* Action buttons */}
-                    <div className="flex items-center self-stretch gap-3">
+                    {/* Action buttons — pinned outside the scroll area, always visible */}
+                    <div className="flex items-center self-stretch gap-3 shrink-0">
                       <button
                         type="button"
                         className="flex shrink-0 items-center bg-white text-left py-2 px-6 gap-2 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]"
@@ -690,14 +695,14 @@ const WardLookupDialog = ({
               </div>
 
            {/* ── RIGHT ── */}
-<div className="flex flex-1 flex-col min-w-0 min-h-0 h-[600px]">
+<div className="flex flex-1 flex-col min-w-0 min-h-0">
   <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
     Kết quả chuyên đổi
   </span>
 
   <div
   className="
-    flex-1 w-full overflow-y-auto pr-2
+    flex-1 min-h-0 w-full overflow-y-auto pr-2
     scrollbar-thin
     scrollbar-thumb-neutral-300
     scrollbar-track-transparent
