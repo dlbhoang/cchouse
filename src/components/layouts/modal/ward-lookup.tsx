@@ -178,7 +178,7 @@ function FloatingField({
         className={cn(
           "group/float relative w-full rounded-md bg-white border-2 transition-[border-color] duration-200",
           isError
-            ? "border-[#DC3E42]"
+            ? "border-[#EF4444]"
             : [
                 "border-neutral-200 hover:border-neutral-300",
                 "focus-within:border-[#0588F0]",
@@ -208,18 +208,18 @@ function FloatingField({
             "group-focus-within/float:top-0 group-focus-within/float:-translate-y-1/2 group-focus-within/float:text-xs",
             "group-has-[button[data-state=open]]/float:top-0 group-has-[button[data-state=open]]/float:-translate-y-1/2 group-has-[button[data-state=open]]/float:text-xs",
             isError
-              ? "text-[#DC3E42] group-focus-within/float:text-[#DC3E42] group-has-[button[data-state=open]]/float:text-[#DC3E42]"
+              ? "text-[#EF4444] group-focus-within/float:text-[#EF4444] group-has-[button[data-state=open]]/float:text-[#EF4444]"
               : "group-focus-within/float:text-[#0588F0] group-has-[button[data-state=open]]/float:text-[#0588F0]"
           )}
         >
           <span>{label}</span>
           {required && (
-            <span className="text-[#DC3E42] text-[10px] leading-none">*</span>
+            <span className="text-[#EF4444] text-[10px] leading-none">*</span>
           )}
         </div>
       </div>
       {error && (
-        <span className="text-[#DC3E42] text-xs mt-1 ml-1">{error}</span>
+        <span className="text-[#EF4444] text-xs mt-1 ml-1">{error}</span>
       )}
     </div>
   );
@@ -667,11 +667,11 @@ const WardLookupDialog = ({
                     <div className="flex items-center self-stretch gap-3 shrink-0">
                       <button
                         type="button"
-                        className="flex shrink-0 items-center bg-white text-left py-2 px-6 gap-2 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]"
+                        className="flex shrink-0 items-center bg-white text-left py-2 px-6 gap-2 rounded-[10px] border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]"
                         onClick={handleReset}
                       >
                         <RefreshCw className="w-4 h-4 text-neutral-950" />
-                        <span className="text-neutral-950 text-sm">Đặt lại</span>
+                        <span className="text-neutral-950 text-base font-medium">Đặt lại</span>
                       </button>
 
                       <button
@@ -687,7 +687,7 @@ const WardLookupDialog = ({
                           ? <Loader2 className="w-4 h-4 animate-spin text-white" />
                           : <ArrowLeftRight className="w-4 h-4 text-white" />
                         }
-                        <span className="text-white text-sm font-medium">Chuyên đổi ngay</span>
+                        <span className="text-white text-base font-medium">Chuyên đổi ngay</span>
                       </button>
                     </div>
                   </form>
@@ -697,7 +697,7 @@ const WardLookupDialog = ({
            {/* ── RIGHT ── */}
 <div className="flex flex-1 flex-col min-w-0 min-h-0">
   <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
-    Kết quả chuyên đổi
+    Kết quả chuyển đổi
   </span>
 
   <div
@@ -714,8 +714,8 @@ const WardLookupDialog = ({
         <Image
           src="/icon.png"
           alt="Search icon"
-          width={124}
-          height={142}
+          width={100}
+          height={100}
           className="mb-4"
         />
         <span className="text-neutral-500 text-sm">
@@ -791,7 +791,7 @@ const WardLookupDialog = ({
           <DialogClose asChild>
             <button
               type="button"
-              className="flex items-center bg-white py-2 px-4 rounded-md border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]"
+              className="flex items-center bg-white py-2 px-4 rounded-[10px] border border-solid border-neutral-200 hover:bg-neutral-50 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]"
             >
               <span className="text-neutral-950 text-sm">Đóng</span>
             </button>
