@@ -2783,5 +2783,12 @@ export function findWardAgencyData(
     }
   }
 
+  console.warn(
+    `[ward-agencies] KHÔNG tìm thấy dữ liệu cơ quan cho wardId=${wardId ?? "(none)"}, ` +
+      `wardName="${wardName ?? "(none)"}". Cả tra theo ID và theo tên (chuẩn hoá: ` +
+      `"${wardName ? normalizeWardName(wardName) : "(none)"}") đều thất bại. ` +
+      `Kiểm tra console này khi gặp "Không có dữ liệu" để biết chính xác giá trị backend trả về.`
+  );
+
   return undefined;
 }
