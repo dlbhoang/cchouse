@@ -671,7 +671,7 @@ const WardLookupDialog = ({
           className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200 mb-4"
         >
           <p className="text-neutral-950 text-sm m-0">
-            <span className="font-bold">Thông tin chuyên đổi: </span>
+            <span className="font-bold">Phường/Quận(Cũ): </span>
             <span className="text-[#0588F0] font-medium">
               {originalAddress || "—"}
             </span>
