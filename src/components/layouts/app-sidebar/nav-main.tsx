@@ -32,6 +32,7 @@ export function NavMain({ items }: { items: NavigationItem[] }) {
   const { data: session } = useSession();
 
   const userRoleId = session?.user.RoleId || 0;
+  const userEmail = session?.user.Email ?? null;
   const filteredNavigationData = filterNavigationByRole(items, userRoleId);
 
   return (

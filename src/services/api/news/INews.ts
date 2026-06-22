@@ -20,4 +20,6 @@ export interface INewsResponse extends INewsRequest {
   CreatedBy: string;
   CreatedDate: string;
   UpdatedDate: string;
+  ApprovedBy?: string;
+  ApprovedDate?: string;
 }

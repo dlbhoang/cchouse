@@ -1,60 +1,35 @@
-import { MoreOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Card,
-  Col,
-  Empty,
-  Input,
-  type InputRef,
-  Modal,
-  Row,
-  Space,
-  Tag,
-  Typography,
-} from "antd";
+import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Input, type InputRef, Modal, Typography } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { mutate } from "swr";
 
-import AppPagination from "@/lib/components/shared/pagination";
+import MyBreadcrumb from "@/lib/components/shared/MyBreadcrumb";
+import TableBase from "@/lib/components/shared/TableBase";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import type { INewsResponse } from "@/services/api/news/INews";
 import newsApi from "@/services/api/news/newsApi";
 import newsTypeApi from "@/services/api/news/newsTypeApi";
 import { NewsTypeTable } from "../../newsType/table";
 import NewsFilter from "../filter";
-import NewItem from "../newItem";
-import NewPreview from "../preview";
+import columns from "../table/columns";
 
-const NewsTypeTags = ({
+const NewsTypeTabs = ({
   opts,
   onSubmit,
 }: {
   opts: INewsOpts;
   onSubmit: (values: INewsOpts) => void;
 }) => {
-  const selectedTags = opts.NewsTypeIds?.split(",") ?? [];
+  const selectedTags = opts.NewsTypeIds?.split(",").filter(Boolean) ?? [];
   const [newTag, setNewTag] = useState<string>();
   const [inputVisible, setInputVisible] = useState(false);
   const inputRef = useRef<InputRef>(null);
-
   const [openModal, setOpenModal] = useState(false);
 
   const { data } = newsTypeApi.useGet({ pageIndex: 1, pageSize: 50 });
-
-  const handleChange = (tag: string, checked: boolean) => {
-    const nextSelectedTags = checked
-      ? [...selectedTags, tag]
-      : selectedTags.filter((t) => t !== tag);
-
-    onSubmit({
-      ...opts,
-      NewsTypeIds: nextSelectedTags.filter((x) => x !== "").join(","),
-    });
-  };
-  const tagsData = data?.data.map((e) => e) ?? [];
+  const tagsData = data?.data ?? [];
 
   useEffect(() => {
     if (inputVisible) {
@@ -62,13 +37,30 @@ const NewsTypeTags = ({
     }
   }, [inputVisible]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTag(e.target.value);
+  const handleSelectAll = () => {
+    onSubmit({
+      ...opts,
+      NewsTypeIds: "",
+      pageIndex: 1,
+    });
+  };
+
+  const handleChange = (tagId: string) => {
+    const isSelected = selectedTags.includes(tagId);
+    const nextSelectedTags = isSelected
+      ? selectedTags.filter((t) => t !== tagId)
+      : [...selectedTags, tagId];
+
+    onSubmit({
+      ...opts,
+      NewsTypeIds: nextSelectedTags.join(","),
+      pageIndex: 1,
+    });
   };
 
   const handleInputConfirm = async () => {
-    if (newTag && newTag !== "") {
-      await newsTypeApi.add({ Name: newTag });
+    if (newTag?.trim()) {
+      await newsTypeApi.add({ Name: newTag.trim() });
       mutate(newsTypeApi.mutateKey);
     }
     setInputVisible(false);
@@ -76,45 +68,59 @@ const NewsTypeTags = ({
   };
 
   return (
-    <Space>
-      {tagsData.map((e) => (
-        <Tag.CheckableTag
-          key={e.Id}
-          checked={selectedTags.includes(e.Id?.toString() ?? "")}
-          onChange={(checked) => handleChange(e.Id?.toString() ?? "", checked)}
-          style={{ borderStyle: "dashed", fontSize: 14 }}
+    <div className="news-type-tabs-bar">
+      <div className="news-type-tabs-list">
+        <button
+          type="button"
+          className={`news-type-tab ${selectedTags.length === 0 ? "active" : ""}`}
+          onClick={handleSelectAll}
         >
-          {e.Name}
-        </Tag.CheckableTag>
-      ))}
-      {inputVisible ? (
-        <Input
-          ref={inputRef}
-          style={{ width: 70 }}
-          type="text"
-          size="small"
-          value={newTag}
-          onChange={handleInputChange}
-          onBlur={handleInputConfirm}
-          onPressEnter={handleInputConfirm}
-        />
-      ) : (
-        <Tag
-          onClick={() => {
-            setInputVisible(true);
-          }}
-        >
-          + Thêm
-        </Tag>
-      )}
+          Tất cả
+        </button>
+        {tagsData.map((item) => {
+          const tagId = item.Id?.toString() ?? "";
+          return (
+            <button
+              key={item.Id}
+              type="button"
+              className={`news-type-tab ${
+                selectedTags.includes(tagId) ? "active" : ""
+              }`}
+              onClick={() => handleChange(tagId)}
+            >
+              {item.Name}
+            </button>
+          );
+        })}
+      </div>
 
-      <Button
-        icon={<MoreOutlined />}
-        size="small"
-        type="dashed"
-        shape="circle"
-        onClick={() => setOpenModal(true)}
-      />
+      <div className="news-type-tabs-actions">
+        {inputVisible ? (
+          <Input
+            ref={inputRef}
+            className="news-add-type-input"
+            type="text"
+            size="small"
+            value={newTag}
+            onChange={(e) => setNewTag(e.target.value)}
+            onBlur={handleInputConfirm}
+            onPressEnter={handleInputConfirm}
+          />
+        ) : (
+          <Button
+            className="news-add-type-btn"
+            icon={<PlusOutlined />}
+            onClick={() => setInputVisible(true)}
+          >
+            Thêm
+          </Button>
+        )}
+        <Button
+          className="news-more-btn"
+          icon={<MoreOutlined />}
+          onClick={() => setOpenModal(true)}
+        />
+      </div>
 
       <Modal
         title="LOẠI TIN TỨC"
@@ -128,10 +134,9 @@ const NewsTypeTags = ({
           <Typography.Text strong>{data?.data?.length ?? 0}</Typography.Text>{" "}
           KẾT QUẢ
         </span>
-
         <NewsTypeTable loading={false} data={data?.data ?? []} />
       </Modal>
-    </Space>
+    </div>
   );
 };
 
@@ -141,81 +146,59 @@ const NewsList = () => {
   const query = useSearchParams();
   const opts = {
     ...Object.fromEntries(query?.entries() ?? []),
-  } as any as INewsOpts;
-
-  const [preview, setPreview] = useState<INewsResponse>();
-  const [openPreview, setOpenPreview] = useState(false);
+  } as unknown as INewsOpts;
 
   const handleFilter = (values: INewsOpts) => {
-    console.log("filter ", values);
-    router.push(`${pathname}?${objToQueryString(values)}`);
+    router.push(`${pathname}?${objToQueryString({ ...values, pageIndex: 1 })}`);
   };
 
-  const { data } = newsApi.useGet(opts);
+  const handlePageIndexChange = (pageIndex: number, pageSize: number) => {
+    router.push(
+      `${pathname}?${objToQueryString({ ...opts, pageIndex, pageSize })}`
+    );
+  };
+
+  const { data, isLoading, isValidating } = newsApi.useGet(opts);
 
   useEffect(() => {
     mutate(newsApi.mutateKey);
   }, [query]);
+
   return (
-    <Row gutter={[12, 12]}>
-      <Col span={24}>
-        <Card>
-          <Space direction="vertical">
-            <NewsFilter onSubmit={handleFilter} />
-            <NewsTypeTags opts={opts} onSubmit={handleFilter} />
-            <Typography.Text>
-              Tìm được{" "}
-              <Typography.Text strong>{data?.totalRow ?? 0}</Typography.Text>{" "}
-              kết quả
-            </Typography.Text>
-          </Space>
-        </Card>
-      </Col>
-      <Col span={24}></Col>
-      {data?.totalRow === 0 ? (
-        <Col span={24}>
-          <Empty
-            image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-            imageStyle={{ height: 60 }}
-            description={<span>Không tìm thấy dữ liệu</span>}
-          >
-            <Button
-              type="primary"
-              onClick={() => router.push(`${AppRoutes.news.url}/add`)}
-            >
-              + Tạo tin mới
-            </Button>
-          </Empty>
-        </Col>
-      ) : (
-        data?.data.map((e) => (
-          <Col xs={24} md={12} lg={12} xl={6} key={e.Id}>
-            <NewItem
-              item={e}
-              onPreview={async (item) => {
-                const res = await newsApi.getById(item.Id ?? 0);
-                if (res.data) {
-                  setPreview(res.data);
-                  setOpenPreview(true);
-                }
-              }}
-            />
-          </Col>
-        ))
-      )}
-      {data?.totalRow !== 0 && (
-        <Col span={24} style={{ textAlign: "center" }}>
-          <AppPagination total={data?.totalRow ?? 0} />
-          {preview && (
-            <NewPreview
-              model={preview}
-              isModalOpen={openPreview}
-              handleCancel={() => setOpenPreview(false)}
-            />
-          )}
-        </Col>
-      )}
-    </Row>
+    <div className="news-listing">
+      <MyBreadcrumb
+        items={[{ url: AppRoutes.config.url, name: "Quản lý nội dung" }]}
+        current={AppRoutes.news.name}
+      />
+
+      <Typography.Title level={3} className="news-page-title">
+        {AppRoutes.news.name}
+      </Typography.Title>
+
+      <div className="news-filter-row">
+        <NewsFilter model={opts} onSubmit={handleFilter} />
+        <Button
+          type="primary"
+          className="news-create-btn"
+          onClick={() => router.push(`${AppRoutes.news.url}/add`)}
+        >
+          + Tạo bài viết mới
+        </Button>
+      </div>
+
+      <NewsTypeTabs opts={opts} onSubmit={handleFilter} />
+
+      <div className="news-table">
+        <TableBase
+          loading={isLoading || isValidating}
+          total={data?.totalRow ?? 0}
+          searchOptions={opts}
+          data={data?.data ?? []}
+          cols={columns}
+          onPageIndexChange={handlePageIndexChange}
+        />
+      </div>
+    </div>
   );
 };
 

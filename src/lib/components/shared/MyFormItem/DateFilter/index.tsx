@@ -7,6 +7,8 @@ import { appConst } from "@/lib/core/configs/appConst";
 const { RangePicker } = DatePicker;
 type Props = {
   form: FormInstance;
+  placeholder?: [string, string];
+  onValueChange?: () => void;
 };
 
 const hiddenFields = ["fromDate", "toDate"];
@@ -18,7 +20,11 @@ const rangePresets: TimeRangePickerProps["presets"] = [
   { label: "30 ngày trước", value: [dayjs().add(-30, "d"), dayjs()] },
 ];
 
-export const DateFilter = ({ form }: Props) => {
+export const DateFilter = ({
+  form,
+  placeholder = ["Từ ngày", "Đến ngày"],
+  onValueChange,
+}: Props) => {
   const fromDateWatch = Form.useWatch("fromDate", form);
   const toDateWatch = Form.useWatch("toDate", form);
 
@@ -37,10 +43,11 @@ export const DateFilter = ({ form }: Props) => {
         onChange={(values) => {
           form.setFieldValue("fromDate", values?.[0]?.format("YYYY-MM-DD"));
           form.setFieldValue("toDate", values?.[1]?.format("YYYY-MM-DD"));
+          onValueChange?.();
         }}
         presets={rangePresets}
         allowEmpty={[true, true]}
-        placeholder={["Từ ngày", "Đến ngày"]}
+        placeholder={placeholder}
         format={appConst.DATE_FORMAT}
         style={{ width: "100%" }}
       />

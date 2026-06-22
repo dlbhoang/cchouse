@@ -1,73 +1,116 @@
-/* eslint-disable no-nested-ternary */
-
-import { Space, Typography } from "antd";
-import { ColumnsType } from "antd/lib/table";
-import { Trash2Icon } from "lucide-react";
+import { Image, Space, Typography } from "antd";
+import type { ColumnsType } from "antd/lib/table";
+import dayjs from "dayjs";
+import { SquarePenIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { mutate } from "swr";
 import BtnConfirm from "@/lib/components/shared/BtnConfirm";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
-import { FormatDateTime } from "@/lib/core/utils/myFormat";
-import { INewsResponse } from "@/services/api/news/INews";
+import type { INewsResponse } from "@/services/api/news/INews";
 import newsApi from "@/services/api/news/newsApi";
 
 const { Text } = Typography;
 
+const formatDateCell = (value?: string) => {
+  if (!value) {
+    return null;
+  }
+
+  const date = dayjs(value);
+  return (
+    <div className="news-date-cell">
+      <span>{date.format("DD/MM/YYYY")}</span>
+      <span>{date.format("HH:mm:ss")}</span>
+    </div>
+  );
+};
+
 const columns: ColumnsType<INewsResponse> = [
   {
-    title: "Mã",
+    title: "Mã tin",
     dataIndex: "Id",
+    width: 120,
     align: "center",
-    render(value, record) {
+    render(value) {
+      return <span className="news-id-badge">Mã: {value}</span>;
+    },
+  },
+  {
+    title: "Hình ảnh",
+    dataIndex: "Thumbnail",
+    width: 80,
+    align: "center",
+    render(value) {
+      if (!value) {
+        return null;
+      }
+
       return (
-        <Space direction="vertical">
-          <Link href={`${AppRoutes.news.url}/edit/${record.Id}`}>
-            <Text>{value}</Text>
-          </Link>
-        </Space>
+        <Image
+          src={value.toString()}
+          alt=""
+          width={48}
+          height={48}
+          className="news-thumbnail"
+          preview={false}
+        />
       );
     },
   },
   {
     title: "Tiêu đề",
     dataIndex: "Title",
+    ellipsis: true,
     render(value, record) {
       return (
-        <Space direction="vertical">
-          <Link href={`${AppRoutes.news.url}/edit/${record.Id}`}>
-            <Text>{value}</Text>
-          </Link>
-        </Space>
+        <Link href={`${AppRoutes.news.url}/edit/${record.Id}`}>
+          <Text className="news-title-link">{value}</Text>
+        </Link>
       );
     },
   },
   {
-    title: "Nội dung tóm tắt",
-    dataIndex: "Summary",
-    render(value, record) {
-      return (
-        <Space direction="vertical">
-          <Link href={`${AppRoutes.news.url}/edit/${record.Id}`}>
-            <Text>{value}</Text>
-          </Link>
-        </Space>
-      );
+    title: "Người viết",
+    dataIndex: "CreatedBy",
+    width: 140,
+    render(value) {
+      return <Text>{value || "—"}</Text>;
     },
   },
   {
-    title: "Ngày tạo",
-    dataIndex: "CreadtedDate",
+    title: "Ngày ra tin",
+    dataIndex: "CreatedDate",
+    width: 120,
+    render: (_, record) => formatDateCell(record.CreatedDate),
+  },
+  {
+    title: "Người duyệt",
+    dataIndex: "ApprovedBy",
+    width: 140,
     render(value, record) {
-      return <Space direction="vertical">{FormatDateTime(value)}</Space>;
+      const approver =
+        value || (record.Status !== 0 ? record.CreatedBy : undefined);
+      return <Text>{approver || "—"}</Text>;
+    },
+  },
+  {
+    title: "Ngày duyệt",
+    dataIndex: "ApprovedDate",
+    width: 120,
+    render(value, record) {
+      const date =
+        value || (record.Status !== 0 ? record.UpdatedDate : undefined);
+      return formatDateCell(date);
     },
   },
   {
     key: "Action",
-    title: "Thao tác",
-    dataIndex: "CreatedDate",
-    render(value, record) {
+    title: "Chức năng",
+    width: 100,
+    align: "center",
+    render(_, record) {
       return (
-        <Space>
+        <Space size={8}>
           <BtnConfirm
             onOkClick={async () => {
               await newsApi.delete(record.Id ?? 0);
@@ -75,8 +118,14 @@ const columns: ColumnsType<INewsResponse> = [
             }}
             type="icon"
             danger
-            icon={<Trash2Icon className="size-4" />}
+            style={{ width: 32, height: 32 }}
+            icon={<Trash2Icon className="size-4 text-[#ff4d4f]" />}
           />
+          <Link href={`${AppRoutes.news.url}/edit/${record.Id}`}>
+            <button type="button" className="news-action-btn">
+              <SquarePenIcon className="size-4" />
+            </button>
+          </Link>
         </Space>
       );
     },

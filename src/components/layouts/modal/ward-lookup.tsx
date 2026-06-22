@@ -50,14 +50,19 @@ const AGENCY_TAGS = [
   "Văn phòng đất đai",
   "Chi cục thuế",
   "Ủy ban nhân dân phường",
+  "Tòa án",
   "Sở tư pháp",
+  "Thừa phát lại",
 ] as const;
 
 const AGENCY_DROPDOWN_FIELDS = [
   "Văn phòng công chứng",
   "Văn phòng đất đai",
-  "Sở tư pháp",
   "Chi cục thuế",
+  "Ủy ban nhân dân phường",
+  "Tòa án",
+  "Sở tư pháp",
+  "Thừa phát lại",
 ] as const;
 
 // ─────────────────────────────────────────────
