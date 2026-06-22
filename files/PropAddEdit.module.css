@@ -1,0 +1,292 @@
+/* ============================================================
+   PropAddEdit — C.C.House Figma Design System
+   Node: 1606-76212 · Chi tiết Bất động sản
+   ============================================================ */
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+.pageWrapper {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding-bottom: 80px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* ── Outer card ───────────────────────────────────────────── */
+.pageWrapper :global(.ant-card) {
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8e8e8;
+  background: #ffffff;
+}
+
+/* ── Section cards (MyCard) ───────────────────────────────── */
+.myCard {
+  border-radius: 10px;
+  border: 1px solid #e8e8e8;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.myCard:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Card header — title strip */
+.pageWrapper :global(.ant-card-head) {
+  background: linear-gradient(135deg, #fff7e6 0%, #fff3e0 100%);
+  border-bottom: 2px solid #fa8c16;
+  padding: 0 16px;
+  min-height: 44px;
+}
+
+.pageWrapper :global(.ant-card-head-title) {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d46b08;
+  letter-spacing: 0.2px;
+  padding: 10px 0;
+  text-transform: uppercase;
+}
+
+.pageWrapper :global(.ant-card-extra) {
+  padding: 8px 0;
+}
+
+/* Card body */
+.pageWrapper :global(.ant-card-body) {
+  padding: 16px;
+}
+
+/* ── Form labels ──────────────────────────────────────────── */
+.pageWrapper :global(.ant-form-item-label > label) {
+  font-size: 12px;
+  font-weight: 600;
+  color: #595959;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.pageWrapper :global(.ant-form-item-label > label.ant-form-item-required::before) {
+  color: #ff4d4f;
+}
+
+/* ── Inputs ───────────────────────────────────────────────── */
+.pageWrapper :global(.ant-input),
+.pageWrapper :global(.ant-input-number),
+.pageWrapper :global(.ant-select-selector),
+.pageWrapper :global(.ant-picker) {
+  border-radius: 8px !important;
+  border-color: #d9d9d9;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.pageWrapper :global(.ant-input:hover),
+.pageWrapper :global(.ant-input-number:hover),
+.pageWrapper :global(.ant-select-selector:hover),
+.pageWrapper :global(.ant-picker:hover) {
+  border-color: #fa8c16 !important;
+}
+
+.pageWrapper :global(.ant-input:focus),
+.pageWrapper :global(.ant-input-number-focused),
+.pageWrapper :global(.ant-select-focused .ant-select-selector),
+.pageWrapper :global(.ant-picker-focused) {
+  border-color: #fa8c16 !important;
+  box-shadow: 0 0 0 2px rgba(250, 140, 22, 0.15) !important;
+}
+
+.pageWrapper :global(.ant-input::placeholder) {
+  color: #bfbfbf;
+  font-family: 'Inter', sans-serif;
+}
+
+.pageWrapper :global(textarea.ant-input) {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Radio group ─────────────────────────────────────────── */
+.pageWrapper :global(.ant-radio-button-wrapper-checked) {
+  background-color: #fa8c16 !important;
+  border-color: #fa8c16 !important;
+  color: #ffffff !important;
+}
+
+.pageWrapper :global(.ant-radio-button-wrapper-checked::before) {
+  background-color: #fa8c16 !important;
+}
+
+.pageWrapper :global(.ant-radio-button-wrapper) {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* ── Checkbox ────────────────────────────────────────────── */
+.pageWrapper :global(.ant-checkbox-checked .ant-checkbox-inner) {
+  background-color: #fa8c16;
+  border-color: #fa8c16;
+}
+
+.pageWrapper :global(.ant-checkbox-inner) {
+  border-radius: 4px;
+}
+
+.pageWrapper :global(.ant-checkbox + span) {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* ── Primary button override ─────────────────────────────── */
+.pageWrapper :global(.ant-btn-primary) {
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  font-family: 'Inter', sans-serif;
+}
+
+.pageWrapper :global(.ant-btn) {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+/* ── Tags/Select multi ───────────────────────────────────── */
+.pageWrapper :global(.ant-select-selection-item) {
+  border-radius: 4px;
+  background: #fff7e6;
+  border-color: #ffd591;
+  color: #d46b08;
+}
+
+/* ── Textarea ────────────────────────────────────────────── */
+.pageWrapper :global(.ant-input[class*="textarea"]),
+.pageWrapper :global(textarea.ant-input) {
+  border-radius: 8px;
+  resize: vertical;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* ── Upload area ─────────────────────────────────────────── */
+.pageWrapper :global(.ant-upload-drag) {
+  border-radius: 10px;
+  border-color: #d9d9d9;
+  background: #fafafa;
+  transition: all 0.2s ease;
+}
+
+.pageWrapper :global(.ant-upload-drag:hover) {
+  border-color: #fa8c16;
+  background: #fff7e6;
+}
+
+.pageWrapper :global(.ant-upload-drag-icon) {
+  color: #fa8c16;
+}
+
+/* ── Form item spacing ───────────────────────────────────── */
+.pageWrapper :global(.ant-form-item) {
+  margin-bottom: 14px;
+}
+
+/* ── InputNumber full width ──────────────────────────────── */
+.pageWrapper :global(.ant-input-number) {
+  width: 100%;
+}
+
+/* ── Select full width ──────────────────────────────────── */
+.pageWrapper :global(.ant-select) {
+  width: 100%;
+}
+
+/* ── Section divider color ───────────────────────────────── */
+.sectionDivider {
+  border-bottom: 2px solid #f0f0f0;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+}
+
+/* ── TransType bar ───────────────────────────────────────── */
+.transTypeBar {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+}
+
+/* ── Form item checkbox layout ─────────────────────────── */
+.formItemCheckbox {
+  margin-bottom: 0;
+}
+
+.formItemCheckbox :global(.ant-form-item-label) {
+  display: none;
+}
+
+/* ── Bottom sticky bar (modal mode) ─────────────────────── */
+.stickyBottom {
+  position: sticky;
+  bottom: 0;
+  padding: 14px 24px;
+  margin-top: 16px;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* ── Typography ──────────────────────────────────────────── */
+.pageWrapper {
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding-bottom: 100px;
+  }
+
+  .stickyBottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stickyBottom :global(.ant-btn) {
+    width: 100%;
+  }
+}
+
+/* ── Dark mode support (optional) ────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  .pageWrapper {
+    background: #141414;
+  }
+
+  .pageWrapper :global(.ant-card),
+  .myCard {
+    background: #1f1f1f;
+    border-color: #424242;
+  }
+
+  .pageWrapper :global(.ant-form-item-label > label) {
+    color: #bfbfbf;
+  }
+
+  .sectionDivider {
+    border-bottom-color: #303030;
+  }
+
+  .stickyBottom {
+    background: #1f1f1f;
+    border-top-color: #303030;
+  }
+}

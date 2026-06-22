@@ -1,0 +1,240 @@
+/**
+ * PropAddEdit Component - CSS Variables Reference
+ * 
+ * Sử dụng file này để customize màu sắc, font, spacing, etc.
+ * Tất cả giá trị ở đây đều có thể override trong globals.css hoặc PropAddEdit.module.css
+ */
+
+:root {
+  /* ── Typography ────────────────────────────────── */
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --font-size-base: 14px;
+  --font-size-sm: 12px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --line-height-base: 1.5;
+  
+  /* ── Colors - Primary Palette ──────────────────── */
+  --color-primary: #fa8c16;           /* Orange */
+  --color-primary-dark: #d46b08;      /* Dark Orange */
+  --color-primary-light: #ffd591;     /* Light Orange */
+  --color-primary-lighter: #fff7e6;   /* Very Light Orange */
+  
+  /* ── Colors - Neutral Palette ──────────────────── */
+  --color-background: #f5f5f5;        /* Page background */
+  --color-background-card: #ffffff;   /* Card background */
+  --color-text-primary: #141414;      /* Primary text */
+  --color-text-secondary: #595959;    /* Secondary text */
+  --color-text-tertiary: #8c8c8c;     /* Tertiary text */
+  --color-text-disabled: #bfbfbf;     /* Disabled text */
+  
+  /* ── Colors - Border & Dividers ────────────────– */
+  --color-border: #e8e8e8;            /* Border color */
+  --color-border-light: #f0f0f0;      /* Light border */
+  --color-divider: #f0f0f0;           /* Divider color */
+  
+  /* ── Colors - Input States ─────────────────────– */
+  --color-input-bg: #ffffff;          /* Input background */
+  --color-input-border: #d9d9d9;      /* Input border */
+  --color-input-border-hover: #fa8c16; /* Input border on hover */
+  --color-input-border-focus: #fa8c16; /* Input border on focus */
+  
+  /* ── Colors - Semantic Colors ──────────────────– */
+  --color-success: #52c41a;           /* Success color */
+  --color-warning: #faad14;           /* Warning color */
+  --color-error: #ff4d4f;             /* Error color */
+  --color-info: #1890ff;              /* Info color */
+  
+  /* ── Spacing ───────────────────────────────────– */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  
+  /* ── Border Radius ─────────────────────────────– */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-full: 100px;
+  
+  /* ── Shadows ───────────────────────────────────– */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 8px 24px rgba(0, 0, 0, 0.15);
+  
+  /* ── Transitions ───────────────────────────────– */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-slow: 0.3s ease;
+  
+  /* ── Z-Index Scale ─────────────────────────────– */
+  --z-dropdown: 1050;
+  --z-sticky: 10;
+  --z-fixed: 1000;
+  --z-modal: 1000;
+  --z-popover: 1030;
+  --z-tooltip: 1070;
+}
+
+/* ── Dark Mode Variables (Optional) ──────────────── */
+.dark {
+  --color-background: #141414;
+  --color-background-card: #1f1f1f;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #bfbfbf;
+  --color-text-tertiary: #8c8c8c;
+  --color-border: #424242;
+  --color-border-light: #303030;
+  --color-input-bg: #262626;
+  --color-input-border: #434343;
+}
+
+/* ── Usage Examples ────────────────────────────────– */
+
+/*
+ * 1. Override Primary Color
+ * ─────────────────────────
+ * :root {
+ *   --color-primary: #1890ff;           // Blue
+ *   --color-primary-dark: #0050b3;      // Dark Blue
+ *   --color-primary-light: #177ddc;     // Light Blue
+ *   --color-primary-lighter: #e6f7ff;   // Very Light Blue
+ * }
+ */
+
+/*
+ * 2. Increase Font Size
+ * ────────────────────
+ * :root {
+ *   --font-size-base: 16px;
+ *   --font-size-sm: 14px;
+ *   --font-size-lg: 18px;
+ * }
+ */
+
+/*
+ * 3. Change Border Radius
+ * ───────────────────────
+ * :root {
+ *   --radius-md: 12px;
+ *   --radius-lg: 16px;
+ *   --radius-xl: 20px;
+ * }
+ */
+
+/*
+ * 4. Adjust Spacing
+ * ────────────────
+ * :root {
+ *   --spacing-md: 14px;
+ *   --spacing-lg: 18px;
+ *   --spacing-xl: 28px;
+ * }
+ */
+
+/* ── Color Reference Grid ──────────────────────────── */
+
+/*
+ * Primary Colors Palette:
+ * ─────────────────────
+ * #fa8c16  - Primary Orange (Button, Active state)
+ * #d46b08  - Primary Dark (Headings, Text emphasis)
+ * #ffd591  - Primary Light (Tags, Highlight)
+ * #fff7e6  - Primary Lighter (Background, Hover)
+ */
+
+/*
+ * Neutral Colors Palette:
+ * ──────────────────────
+ * #141414  - Text Primary (Headings, Body text)
+ * #595959  - Text Secondary (Labels, Helper text)
+ * #8c8c8c  - Text Tertiary (Disabled, Placeholder)
+ * #bfbfbf  - Text Disabled (Disabled state)
+ * #ffffff  - White (Cards, Backgrounds)
+ * #f5f5f5  - Gray Light (Page background)
+ * #e8e8e8  - Border (Input borders, Dividers)
+ * #f0f0f0  - Light Border (Subtle dividers)
+ */
+
+/*
+ * Semantic Colors:
+ * ──────────────
+ * #52c41a  - Success (Green)
+ * #faad14  - Warning (Yellow)
+ * #ff4d4f  - Error (Red)
+ * #1890ff  - Info (Blue)
+ */
+
+/* ── Font Stacks ───────────────────────────────────── */
+
+/*
+ * System Font Stack:
+ * ─────────────────
+ * 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif
+ * 
+ * Fallback Options:
+ * - Poppins: 'Poppins', sans-serif
+ * - Roboto: 'Roboto', sans-serif
+ * - Open Sans: 'Open Sans', sans-serif
+ * - Lato: 'Lato', sans-serif
+ */
+
+/* ── Responsive Breakpoints ────────────────────────– */
+
+/*
+ * Mobile First Approach:
+ * ─────────────────────
+ * xs: 0px - Extra Small
+ * sm: 576px - Small (Mobile)
+ * md: 768px - Medium (Tablet)
+ * lg: 992px - Large (Desktop)
+ * xl: 1200px - Extra Large (Wide Desktop)
+ * 2xl: 1600px - 2X Large (Ultra Wide)
+ */
+
+/* ── How to Apply Custom Variables ─────────────────– */
+
+/*
+ * In any CSS file:
+ * ────────────────
+ * 
+ * .my-button {
+ *   background-color: var(--color-primary);
+ *   border-radius: var(--radius-md);
+ *   padding: var(--spacing-lg);
+ *   font-family: var(--font-inter);
+ *   box-shadow: var(--shadow-md);
+ *   transition: all var(--transition-base);
+ * }
+ * 
+ * .my-button:hover {
+ *   background-color: var(--color-primary-dark);
+ *   box-shadow: var(--shadow-lg);
+ * }
+ */
+
+/* ── Quick Customization Template ──────────────────– */
+
+/*
+ * Copy this to globals.css to customize:
+ * ────────────────────────────────────
+ * 
+ * :root {
+ *   / * Primary Color Theme * /
+ *   --color-primary: #fa8c16;
+ *   --color-primary-dark: #d46b08;
+ *   --color-primary-light: #ffd591;
+ *   --color-primary-lighter: #fff7e6;
+ *   
+ *   / * Adjust Border Radius * /
+ *   --radius-md: 8px;
+ *   --radius-lg: 12px;
+ *   
+ *   / * Font Customization * /
+ *   --font-inter: 'Your-Font-Name', sans-serif;
+ * }
+ */

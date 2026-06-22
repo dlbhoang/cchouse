@@ -418,3 +418,56 @@
   border-radius: 8px;
   border: 1px solid #e8e8e8;
 }
+
+/* ===== Figma Style Quick Fix ===== */
+
+.property-detail-modal .ant-card {
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+}
+
+.property-detail-modal .ant-form-item-label > label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
+.property-detail-modal .ant-input,
+.property-detail-modal .ant-input-number,
+.property-detail-modal .ant-select-selector,
+.property-detail-modal .ant-picker {
+  border-radius: 8px !important;
+}
+
+.property-detail-modal .ant-input:hover,
+.property-detail-modal .ant-input-number:hover,
+.property-detail-modal .ant-select-selector:hover,
+.property-detail-modal .ant-picker:hover {
+  border-color: #fa8c16 !important;
+}
+
+.property-detail-modal .ant-input:focus,
+.property-detail-modal .ant-input-number-focused,
+.property-detail-modal .ant-select-focused .ant-select-selector,
+.property-detail-modal .ant-picker-focused {
+  border-color: #fa8c16 !important;
+  box-shadow: 0 0 0 2px rgba(250,140,22,.15) !important;
+}
+
+.property-detail-modal .ant-checkbox-checked .ant-checkbox-inner {
+  background: #fa8c16;
+  border-color: #fa8c16;
+}
+
+.property-detail-modal .ant-btn-primary {
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.property-detail-modal .ant-btn-primary:hover {
+  background: #fa8c16 !important;
+  border-color: #fa8c16 !important;
+}
+

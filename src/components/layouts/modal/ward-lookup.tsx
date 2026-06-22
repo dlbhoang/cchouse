@@ -50,9 +50,7 @@ const AGENCY_TAGS = [
   "Văn phòng đất đai",
   "Chi cục thuế",
   "Ủy ban nhân dân phường",
-  "Tòa án",
   "Sở tư pháp",
-  "Thừa phát lại",
 ] as const;
 
 const AGENCY_DROPDOWN_FIELDS = [
@@ -61,14 +59,6 @@ const AGENCY_DROPDOWN_FIELDS = [
   "Sở tư pháp",
   "Chi cục thuế",
 ] as const;
-
-const DEFAULT_ACTIVE_TAGS = new Set<string>([
-  "Văn phòng công chứng",
-  "Văn phòng đất đai",
-  "Chi cục thuế",
-  "Ủy ban nhân dân phường",
-  "Sở tư pháp",
-]);
 
 // ─────────────────────────────────────────────
 // Schema
@@ -119,17 +109,16 @@ const cbxFieldClass = [
 const selectTriggerClass =
   "w-full h-[42px] rounded-md border-0 bg-transparent text-sm shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0";
 
-/** Build agency groups from WARD_AGENCIES_MAP for a given wardId + active tags.
+/** Build agency groups from WARD_AGENCIES_MAP for a given wardId.
  *  wardName được truyền kèm để fallback tra cứu theo tên khi WardId từ
  *  backend không khớp với ID tự đánh số trong file dữ liệu tĩnh. */
 function buildAgencyGroups(
   wardId: number,
-  wardName: string,
-  activeTags: Set<string>
+  wardName: string
 ): AgencyGroup[] {
   const data = findWardAgencyData(wardId, wardName);
   if (!data) return [];
-  return Array.from(activeTags)
+  return AGENCY_TAGS
     .map((tag) => {
       const key = tag as keyof typeof data.Agencies;
       const items: AgencyItem[] = (data.Agencies[key] ?? []).map((a) => ({
@@ -255,36 +244,6 @@ function ToggleSwitch({
 }
 
 // ─────────────────────────────────────────────
-// TagButton
-// ─────────────────────────────────────────────
-function TagButton({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "flex shrink-0 items-center text-left py-1 px-4 rounded-full border border-solid transition-all duration-200 font-[family-name:var(--font-inter,Inter,sans-serif)] text-sm",
-        active
-          ? "bg-[#E8F4FE] border-[#0588F0] shadow-[0_0_0_1px_#0588F0]"
-          : "bg-neutral-100 border-neutral-200 hover:border-neutral-300"
-      )}
-    >
-      <span className={cn("transition-colors duration-200", active ? "text-[#0588F0]" : "text-neutral-950")}>
-        {label}
-      </span>
-    </button>
-  );
-}
-
-// ─────────────────────────────────────────────
 // AgencyCard
 // ─────────────────────────────────────────────
 function AgencyCard({ group }: { group: AgencyGroup }) {
@@ -347,7 +306,6 @@ const WardLookupDialog = ({
 }) => {
   const [tab, setTab] = useState<Tab>("ward");
   const [searchByNewAddress, setSearchByNewAddress] = useState(false);
-  const [activeTags, setActiveTags] = useState<Set<string>>(new Set(DEFAULT_ACTIVE_TAGS));
   const [agencySelections, setAgencySelections] = useState<Record<string, string>>({});
   const [selectedDistrict, setSelectedDistrict] = useState<string>("");
   const [wards, setWards] = useState<ISearchWardDto[]>([]);
@@ -384,20 +342,6 @@ const WardLookupDialog = ({
       })
       .filter((group) => group.items.length > 0);
   }, [agencyGroups, agencySelections]);
-
-  const toggleTag = (tag: string) => {
-    setActiveTags((prev) => {
-      const next = new Set(prev);
-      next.has(tag) ? next.delete(tag) : next.add(tag);
-
-      // Dung resolvedNewWardId + resolvedNewWardName (phuong moi), khong dung wardId cu tu form
-      if (resolvedNewWardId > 0 && wards.length > 0) {
-        setAgencyGroups(buildAgencyGroups(resolvedNewWardId, resolvedNewWardName, next));
-      }
-
-      return next;
-    });
-  };
 
   const handleSearchModeChange = (checked: boolean) => {
     setSearchByNewAddress(checked);
@@ -437,7 +381,7 @@ const WardLookupDialog = ({
         toast.warning("Vui lòng chuyển đổi phường/xã ở tab Chuyển đổi Phường/Xã trước");
         return;
       }
-      setAgencyGroups(buildAgencyGroups(resolvedNewWardId, resolvedNewWardName, activeTags));
+      setAgencyGroups(buildAgencyGroups(resolvedNewWardId, resolvedNewWardName));
       return;
     }
 
@@ -469,7 +413,7 @@ const WardLookupDialog = ({
       const newWardName = result.data[0]?.WardName ?? "";
       setResolvedNewWardId(newWardId);
       setResolvedNewWardName(newWardName);
-      setAgencyGroups(buildAgencyGroups(newWardId, newWardName, activeTags));
+      setAgencyGroups(buildAgencyGroups(newWardId, newWardName));
     }
   };
 
@@ -576,16 +520,6 @@ const WardLookupDialog = ({
         );
       })}
 
-      <div className="flex flex-wrap items-center gap-2 mb-2">
-        {AGENCY_TAGS.map((tag) => (
-          <TagButton
-            key={tag}
-            label={tag}
-            active={activeTags.has(tag)}
-            onClick={() => toggleTag(tag)}
-          />
-        ))}
-      </div>
     </>
   );
 
@@ -617,7 +551,7 @@ const WardLookupDialog = ({
                 }`}
                 onClick={() => setTab("ward")}
               >
-                Chuyên đổi Phường/Xã
+                Chuyển đổi Phường/Xã
               </button>
               <button
                 type="button"
@@ -628,7 +562,7 @@ const WardLookupDialog = ({
                 }`}
                 onClick={() => setTab("agency")}
               >
-                Cơ quan hành chính
+                Tra cứu hành chính
               </button>
             </div>
 
@@ -646,7 +580,7 @@ const WardLookupDialog = ({
                     <div className="flex-1 min-h-0 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent hover:scrollbar-thumb-neutral-400">
                       <div className="flex flex-col items-start self-stretch">
                         <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
-                          Chọn địa chỉ cần chuyên đổi
+                          Chọn địa chỉ cần chuyển đổi
                         </span>
 
                         <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-md px-4 py-3 mb-4">
@@ -745,9 +679,7 @@ const WardLookupDialog = ({
                 Tên Phường / Xã mới:
               </span>{" "}
               <span className="text-[#0588F0] font-medium">
-                Phường {ward.WardName}
-                {selectedDistrict ? `, ${selectedDistrict}` : ""}
-                , Thành phố Hồ Chí Minh
+                Phường {ward.WardName}, Thành phố Hồ Chí Minh
               </span>
             </li>
 
