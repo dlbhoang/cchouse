@@ -108,6 +108,7 @@ const cbxFieldClass = [
   "[&_[role=combobox]]:ring-0",
   "[&_.form-item]:m-0",
   "[&_.form-item]:p-0",
+  "[&_.form-message]:hidden",
   "w-full",
 ].join(" ");
 
@@ -183,6 +184,10 @@ function FloatingField({
         <div
           className={cn(
             "relative w-full min-h-[42px]",
+            // ── ẩn toàn bộ error/message bên trong box ──
+            "[&_.form-message]:hidden",
+            "[&_[role=alert]]:hidden",
+            "[&_.text-destructive]:hidden",
             !isFloating &&
               "[&:not(:focus-within):not(:has([data-state=open]))]:[&_button>span:first-child]:opacity-0",
             !isFloating &&
@@ -212,13 +217,14 @@ function FloatingField({
           )}
         </div>
       </div>
+
+      {/* ── Error bên ngoài box ── */}
       {error && (
         <span className="text-[#EF4444] text-xs mt-1 ml-1">{error}</span>
       )}
     </div>
   );
 }
-
 // ─────────────────────────────────────────────
 // ToggleSwitch
 // ─────────────────────────────────────────────
@@ -671,6 +677,7 @@ const WardLookupDialog = ({
           className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200 mb-4"
         >
           <p className="text-neutral-950 text-sm m-0">
+          <span className="text-[#0588F0] mr-2">•</span>
             <span className="font-bold">Phường/Quận(Cũ): </span>
             <span className="text-[#0588F0] font-medium">
               {originalAddress || "—"}
@@ -678,6 +685,11 @@ const WardLookupDialog = ({
           </p>
 
           <ul className="flex flex-col gap-2 list-none m-0 p-0 pl-1">
+          <li className="text-sm text-neutral-950">
+              <span className="text-[#0588F0] mr-2">•</span>
+              <span className="font-bold">Sáp nhập từ: </span>
+              {ward.MergedFrom.join(", ")}
+            </li>
             <li className="text-sm text-neutral-950">
               <span className="text-[#0588F0] mr-2">•</span>
               <span className="font-bold">
@@ -688,11 +700,7 @@ const WardLookupDialog = ({
               </span>
             </li>
 
-            <li className="text-sm text-neutral-950">
-              <span className="text-[#0588F0] mr-2">•</span>
-              <span className="font-bold">Sắp nhập từ: </span>
-              {ward.MergedFrom.join(", ")}
-            </li>
+            
           </ul>
         </div>
       ))}
