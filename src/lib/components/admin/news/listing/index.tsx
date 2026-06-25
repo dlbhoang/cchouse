@@ -3,6 +3,7 @@ import { Button, Input, type InputRef, Modal, Typography } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { mutate } from "swr";
+import { ConfigProvider } from "antd";
 
 import MyBreadcrumb from "@/lib/components/shared/MyBreadcrumb";
 import TableBase from "@/lib/components/shared/TableBase";
@@ -178,8 +179,7 @@ const NewsList = () => {
       <div className="news-filter-row">
         <NewsFilter model={opts} onSubmit={handleFilter} />
         <Button
-          type="primary"
-          className="news-create-btn"
+                    className="news-create-btn"
           onClick={() => router.push(`${AppRoutes.news.url}/add`)}
         >
           + Tạo bài viết mới

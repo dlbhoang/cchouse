@@ -35,7 +35,7 @@ const NewsFilter = ({ model, onSubmit }: Props) => {
 
   const filterFields = (
     <Row gutter={12}>
-      <Col {...colStyle}>
+      <Col {...colStyle} className="news-filter-col--user">
         <Form.Item name="CreatedBy">
           <UserAdminSelect
             valueAsName
@@ -90,7 +90,7 @@ const NewsFilter = ({ model, onSubmit }: Props) => {
             }}
           >
             <Row gutter={12} wrap={false}>
-              <Col flex="200px">
+              <Col flex="200px" className="news-filter-col--user">
                 <Form.Item name="CreatedBy">
                   <UserAdminSelect
                     valueAsName

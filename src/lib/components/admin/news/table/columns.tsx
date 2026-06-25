@@ -32,7 +32,7 @@ const columns: ColumnsType<INewsResponse> = [
     width: 120,
     align: "center",
     render(value) {
-      return <span className="news-id-badge">Mã: {value}</span>;
+  return <span className="news-id-badge">{value}</span>;
     },
   },
   {
