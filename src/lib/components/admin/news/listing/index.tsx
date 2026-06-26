@@ -1,17 +1,20 @@
+"use client";
+
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Input, type InputRef, Modal, Typography } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { mutate } from "swr";
-import { ConfigProvider } from "antd";
 
 import MyBreadcrumb from "@/lib/components/shared/MyBreadcrumb";
 import TableBase from "@/lib/components/shared/TableBase";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
+import type { INewsRequest } from "@/services/api/news/INews";
 import newsApi from "@/services/api/news/newsApi";
 import newsTypeApi from "@/services/api/news/newsTypeApi";
+import NewsForm from "@/lib/components/admin/news/form";
 import { NewsTypeTable } from "../../newsType/table";
 import NewsFilter from "../filter";
 import columns from "../table/columns";
@@ -145,6 +148,9 @@ const NewsList = () => {
   const router = useRouter();
   const pathname = usePathname();
   const query = useSearchParams();
+  const [isNewsFormModalOpen, setIsNewsFormModalOpen] = useState(false);
+  const [selectedNews, setSelectedNews] = useState<INewsRequest | undefined>();
+
   const opts = {
     ...Object.fromEntries(query?.entries() ?? []),
   } as unknown as INewsOpts;
@@ -165,6 +171,18 @@ const NewsList = () => {
     mutate(newsApi.mutateKey);
   }, [query]);
 
+  // Handle opening form modal for new news
+  const handleOpenNewNewsForm = () => {
+    setSelectedNews(undefined);
+    setIsNewsFormModalOpen(true);
+  };
+
+  // Handle closing the form modal
+  const handleCloseNewsFormModal = () => {
+    setIsNewsFormModalOpen(false);
+    setSelectedNews(undefined);
+  };
+
   return (
     <div className="news-listing">
       <MyBreadcrumb
@@ -179,10 +197,12 @@ const NewsList = () => {
       <div className="news-filter-row">
         <NewsFilter model={opts} onSubmit={handleFilter} />
         <Button
-                    className="news-create-btn"
-          onClick={() => router.push(`${AppRoutes.news.url}/add`)}
+          type="primary"
+          className="news-create-btn"
+          icon={<PlusOutlined />}
+          onClick={handleOpenNewNewsForm}
         >
-          + Tạo bài viết mới
+          Tạo bài viết mới
         </Button>
       </div>
 
@@ -198,6 +218,91 @@ const NewsList = () => {
           onPageIndexChange={handlePageIndexChange}
         />
       </div>
+
+      {/* News Form Modal */}
+      <Modal
+        title=""
+        open={isNewsFormModalOpen}
+        onCancel={handleCloseNewsFormModal}
+        footer={null}
+        width={900}
+        style={{ top: 20 }}
+        styles={{
+          body: {
+            padding: 0,
+            height: "100%",
+            maxHeight: "100%",
+            overflow: "hidden",
+          },
+        }}
+        className="news-form-modal"
+        centered={false}
+        closeIcon={null}
+      >
+        <NewsForm
+          model={selectedNews}
+          onClose={handleCloseNewsFormModal}
+        />
+      </Modal>
+
+      <style jsx>{`
+        .news-form-modal :global(.ant-modal-header) {
+          display: none !important;
+        }
+
+        .news-form-modal :global(.ant-modal-close) {
+          display: none !important;
+        }
+
+        .news-form-modal :global(.ant-modal-content) {
+          border-radius: 8px;
+          overflow: hidden;
+          height: 90vh;
+          max-height: 90vh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .news-form-modal :global(.ant-modal-body) {
+          padding: 0 !important;
+          height: 100%;
+          max-height: 100%;
+          min-height: 0;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          padding-bottom: 0 !important;
+        }
+
+        .news-form-modal :global(.ant-modal-wrap) {
+          z-index: 1000 !important;
+        }
+
+        @media (max-width: 1024px) {
+          .news-form-modal :global(.ant-modal) {
+            width: 90vw !important;
+            margin: 0 auto !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .news-form-modal :global(.ant-modal) {
+            width: 95vw !important;
+            margin: 0 auto !important;
+            top: 10px !important;
+          }
+
+          .news-form-modal :global(.ant-modal-content) {
+            max-height: 95vh;
+            height: 95vh;
+          }
+
+          .news-form-modal :global(.ant-modal-body) {
+            height: 100% !important;
+            max-height: 100% !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };

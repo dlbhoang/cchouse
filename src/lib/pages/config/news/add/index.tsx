@@ -1,14 +1,20 @@
 "use client";
-import { Card } from "antd";
 
+import { useRouter } from "next/navigation";
 import NewsForm from "@/lib/components/admin/news/form";
-import TitlePage from "@/lib/core/layout/components/TitlePage";
+import { AppRoutes } from "@/lib/core/configs/appRoutes";
 
 const AddNewsPage = () => {
+  const router = useRouter();
+
+  const handleClose = () => {
+    router.back();
+  };
+
   return (
-    <Card title={<TitlePage title="Thêm bài viết" />}>
-      <NewsForm />
-    </Card>
+    <div className="add-news-page">
+      <NewsForm onClose={handleClose} />
+    </div>
   );
 };
 
