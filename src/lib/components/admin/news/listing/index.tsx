@@ -227,6 +227,7 @@ const NewsList = () => {
         footer={null}
         width={900}
         style={{ top: 20 }}
+        wrapClassName="news-form-modal-wrap"
         styles={{
           body: {
             padding: 0,
@@ -274,8 +275,32 @@ const NewsList = () => {
           padding-bottom: 0 !important;
         }
 
-        .news-form-modal :global(.ant-modal-wrap) {
-          z-index: 1000 !important;
+        .news-form-modal-wrap {
+          height: 100vh !important;
+          max-height: 100vh !important;
+          overflow: hidden !important;
+          touch-action: pan-y !important;
+          -webkit-overflow-scrolling: touch !important;
+        }
+
+        .news-form-modal-wrap :global(.ant-modal-wrap) {
+          height: 100% !important;
+          max-height: 100% !important;
+          overflow: hidden !important;
+        }
+
+        .news-form-modal-wrap :global(.ant-modal) {
+          min-height: 0 !important;
+          max-height: 100vh !important;
+        }
+
+        .news-form-modal :global(.ant-modal-content) {
+          overscroll-behavior: contain;
+        }
+
+        .news-form-modal :global(.ant-modal-body) {
+          touch-action: pan-y;
+          overscroll-behavior: contain;
         }
 
         @media (max-width: 1024px) {

@@ -309,8 +309,11 @@ const NewsForm = ({ model, onClose }: Props) => {
           display: flex;
           flex-direction: column;
           height: 100%;
+          min-height: 0;
           background-color: #fff;
           overflow: hidden;
+          touch-action: pan-y;
+          overscroll-behavior: contain;
         }
 
         .news-form-header {
@@ -375,6 +378,8 @@ const NewsForm = ({ model, onClose }: Props) => {
           overflow-x: hidden;
           padding: 16px;
           -webkit-overflow-scrolling: touch;
+          touch-action: pan-y;
+          overscroll-behavior: contain;
         }
 
         .news-form-bottom-fixed {
@@ -439,17 +444,28 @@ const NewsForm = ({ model, onClose }: Props) => {
         }
 
         .preview-button {
-          border-color: #d9d9d9;
-          color: #333;
+          border-color: #89bf04;
+          color: #89bf04;
+          background: #fff;
         }
 
         .preview-button:hover {
-          border-color: #1890ff;
-          color: #1890ff;
+          border-color: #7aad03;
+          color: #7aad03;
+          background: #fafbf1;
         }
 
         .submit-button {
           min-width: 100px;
+          background: #89bf04;
+          border-color: #89bf04;
+          color: #fff;
+        }
+
+        .submit-button:hover {
+          background: #7aad03;
+          border-color: #7aad03;
+          color: #fff;
         }
 
         /* Compact styling for form items */
