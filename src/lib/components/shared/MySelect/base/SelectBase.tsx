@@ -6,11 +6,11 @@ const onSearch = (value: string) => {
 };
 
 type SelectBaseProps = Omit<SelectProps, "options" | "onChange" | "mode"> & {
-  value?: number | number[] | string | string[] | null;
+  value?: SelectProps["value"];
   loading?: boolean;
   mode?: "multiple" | "tags";
   allowClear?: SelectProps["allowClear"];
-  placeholder?: string;
+  placeholder?: SelectProps["placeholder"];
   options?: SelectProps["options"];
   onChange?: (val: any, opts: any) => void;
   dropdownRender?: (
@@ -19,9 +19,9 @@ type SelectBaseProps = Omit<SelectProps, "options" | "onChange" | "mode"> & {
 };
 
 const normalizeValue = (
-  value: any,
+  value: SelectProps["value"],
   options?: SelectProps["options"]
-): number | number[] | string | string[] | null | undefined => {
+): SelectProps["value"] => {
   if (value === undefined || value === null || value === "") {
     return value;
   }
