@@ -1,7 +1,5 @@
-"use client";
-
-import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Input, type InputRef, Modal, Typography } from "antd";
+import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { mutate } from "swr";
@@ -26,7 +24,12 @@ const NewsTypeTabs = ({
   opts: INewsOpts;
   onSubmit: (values: INewsOpts) => void;
 }) => {
-  const selectedTags = opts.NewsTypeIds?.split(",").filter(Boolean) ?? [];
+  const selectedTags =
+    Array.isArray(opts.NewsTypeIds)
+      ? opts.NewsTypeIds.map((id) => String(id))
+      : typeof opts.NewsTypeIds === "string"
+        ? opts.NewsTypeIds.split(",").filter(Boolean)
+        : [];
   const [newTag, setNewTag] = useState<string>();
   const [inputVisible, setInputVisible] = useState(false);
   const inputRef = useRef<InputRef>(null);
@@ -52,7 +55,7 @@ const NewsTypeTabs = ({
   const handleChange = (tagId: string) => {
     const isSelected = selectedTags.includes(tagId);
     const nextSelectedTags = isSelected
-      ? selectedTags.filter((t) => t !== tagId)
+      ? selectedTags.filter((tag) => tag !== tagId)
       : [...selectedTags, tagId];
 
     onSubmit({
@@ -171,17 +174,63 @@ const NewsList = () => {
     mutate(newsApi.mutateKey);
   }, [query]);
 
-  // Handle opening form modal for new news
   const handleOpenNewNewsForm = () => {
     setSelectedNews(undefined);
     setIsNewsFormModalOpen(true);
   };
 
-  // Handle closing the form modal
   const handleCloseNewsFormModal = () => {
     setIsNewsFormModalOpen(false);
     setSelectedNews(undefined);
   };
+
+  const createNewsButton = (
+    <button
+      type="button"
+      onClick={handleOpenNewNewsForm}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "8px",
+
+        padding: "8px 16px",
+        borderRadius: "10px",
+
+        background: "#0588f0",
+        color: "#fff",
+
+        border: "none",
+        cursor: "pointer",
+
+        fontSize: "13px",
+        fontWeight: 500,
+        lineHeight: 1,
+        whiteSpace: "nowrap",
+
+        boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+        transition: "all 0.2s ease",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = "#0477d6";
+        e.currentTarget.style.transform = "translateY(-1px)";
+        e.currentTarget.style.boxShadow =
+          "0 6px 14px rgba(5, 136, 240, 0.25)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "#0588f0";
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow =
+          "0 1px 2px rgba(0,0,0,0.05)";
+      }}
+      onMouseDown={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
+      }}
+    >
+      <PlusOutlined />
+      <span>Viết bài</span>
+    </button>
+  );
 
   return (
     <div className="news-listing">
@@ -190,24 +239,33 @@ const NewsList = () => {
         current={AppRoutes.news.name}
       />
 
-      <Typography.Title level={3} className="news-page-title">
+      <Typography.Title
+        level={4}
+        style={{
+          margin: "16px 0 12px",
+          color: "var(--Text-Main, #0A0A0A)",
+          fontFamily: "var(--Font-family-Text, Inter)",
+          fontSize: "var(--Font-sizes-text-2xl, 24px)",
+          fontStyle: "normal",
+          fontWeight: 700,
+          lineHeight: "var(--Line-height-text-2xl, 32px)",
+        }}
+      >
         {AppRoutes.news.name}
       </Typography.Title>
 
-      <div className="news-filter-row">
-        <NewsFilter model={opts} onSubmit={handleFilter} />
-        <Button
-          type="primary"
-          className="news-create-btn"
-          icon={<PlusOutlined />}
-          onClick={handleOpenNewNewsForm}
-        >
-          Tạo bài viết mới
-        </Button>
-      </div>
+      {/* Filter + nút Viết bài cùng một hàng */}
+      <NewsFilter model={opts} onSubmit={handleFilter} extra={createNewsButton} />
 
+      {/* News Type Tabs */}
       <NewsTypeTabs opts={opts} onSubmit={handleFilter} />
 
+      {/* Results count */}
+      <div className="news-result-count">
+        Tìm được <span className="news-result-count-strong">{data?.totalRow ?? 0}</span> kết quả
+      </div>
+
+      {/* News Table */}
       <div className="news-table">
         <TableBase
           loading={isLoading || isValidating}
@@ -247,6 +305,29 @@ const NewsList = () => {
       </Modal>
 
       <style jsx>{`
+        .news-listing {
+          padding: 0;
+        }
+
+        .news-result-count {
+          margin-bottom: 14px;
+          padding-left: 0;
+          font-size: 13px;
+          color: #737373;
+        }
+
+        .news-result-count-strong {
+          color: #171717;
+          font-weight: 600;
+        }
+
+        .news-table {
+          background: #ffffff;
+          border-radius: 10px;
+          box-shadow: 0 1px 2px rgba(16, 16, 16, 0.04);
+          overflow: hidden;
+        }
+
         .news-form-modal :global(.ant-modal-header) {
           display: none !important;
         }
@@ -278,7 +359,7 @@ const NewsList = () => {
         .news-form-modal-wrap {
           height: 100vh !important;
           max-height: 100vh !important;
-          overflow: hidden !important;
+          overflow: auto !important;
           touch-action: pan-y !important;
           -webkit-overflow-scrolling: touch !important;
         }
@@ -286,10 +367,11 @@ const NewsList = () => {
         .news-form-modal-wrap :global(.ant-modal-wrap) {
           height: 100% !important;
           max-height: 100% !important;
-          overflow: hidden !important;
+          overflow: auto !important;
+          touch-action: pan-y !important;
         }
 
-        .news-form-modal-wrap :global(.ant-modal) {
+        .news-form-modal :global(.ant-modal) {
           min-height: 0 !important;
           max-height: 100vh !important;
         }

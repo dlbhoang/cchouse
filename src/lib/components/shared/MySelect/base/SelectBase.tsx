@@ -1,24 +1,56 @@
-import { Select, SelectProps, Spin } from "antd";
-import { JSXElementConstructor, ReactElement } from "react";
-
-import { OptionType } from "@/lib/types/common";
+import { Select, type SelectProps, Spin } from "antd";
+import type { JSXElementConstructor, ReactElement } from "react";
 
 const onSearch = (value: string) => {
   console.log("search:", value);
 };
 
-type Props = {
-  value?: any; // number | number[] | string | string[] | null;
+type SelectBaseProps = Omit<SelectProps, "options" | "onChange" | "mode"> & {
+  value?: number | number[] | string | string[] | null;
   loading?: boolean;
-  labelInValue?: boolean;
   mode?: "multiple" | "tags";
-  allowClear?: boolean;
-  placeholder: string;
-  options: OptionType[] | undefined;
-  onChange?: (val: any, opts: OptionType | OptionType[]) => void;
+  allowClear?: SelectProps["allowClear"];
+  placeholder?: string;
+  options?: SelectProps["options"];
+  onChange?: (val: any, opts: any) => void;
   dropdownRender?: (
     menu: ReactElement<any, string | JSXElementConstructor<any>>
   ) => ReactElement<any, string | JSXElementConstructor<any>>;
+};
+
+const normalizeValue = (
+  value: any,
+  options?: SelectProps["options"]
+): number | number[] | string | string[] | null | undefined => {
+  if (value === undefined || value === null || value === "") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizeValue(item, options)) as Array<string | number>;
+  }
+
+  if (typeof value === "string") {
+    const trimmedValue = value.trim();
+    if (!trimmedValue) {
+      return value;
+    }
+
+    const matchedOption = options?.find(
+      (option) => String(option?.value) === trimmedValue
+    );
+
+    if (matchedOption) {
+      return matchedOption.value as number | string;
+    }
+
+    const numericValue = Number(trimmedValue);
+    if (!Number.isNaN(numericValue) && String(numericValue) === trimmedValue) {
+      return numericValue;
+    }
+  }
+
+  return value;
 };
 
 const SelectBase = ({
@@ -28,43 +60,37 @@ const SelectBase = ({
   placeholder,
   allowClear = true,
   options,
-  labelInValue,
   showSearch = true,
   onChange,
-
   ...props
-}: SelectProps) => {
+}: SelectBaseProps) => {
+  const normalizedValue = normalizeValue(value, options);
+
   return (
     <Select
       {...props}
       showSearch={showSearch}
       allowClear={allowClear}
-      // style={{ width: '100%' }}
       mode={mode}
-      value={value}
+      value={normalizedValue}
       placeholder={placeholder}
       optionFilterProp="children"
-      // onChange={onChange}
       onChange={(val, opts) => {
         if (onChange) {
           if (Array.isArray(val) && val?.includes("all")) {
-            onChange(
-              (options ?? []).filter((x) => !x.disabled).map((e) => e.value),
-              options ?? []
-            );
+            const optionList = (options ?? []).filter((item: any) => !item.disabled);
+            onChange(optionList.map((item: any) => item.value), optionList);
           } else {
-            onChange(val, opts);
+            onChange(normalizeValue(val, options), opts);
           }
         }
       }}
       onSearch={onSearch}
-      filterOption={(input, option) =>
-        (option?.label ?? "")
-          .toString()
-          .toLowerCase()
-          .includes(input.toLowerCase()) ||
-        (option?.slug ?? "").toLowerCase().includes(input.toLowerCase())
-      }
+      filterOption={(input, option) => {
+        const label = (option?.label ?? "").toString().toLowerCase();
+        const slug = ((option as any)?.slug ?? "").toLowerCase();
+        return label.includes(input.toLowerCase()) || slug.includes(input.toLowerCase());
+      }}
       maxTagCount="responsive"
       options={
         mode === "multiple"
@@ -75,7 +101,7 @@ const SelectBase = ({
               },
               ...(options ?? []),
             ]
-          : options
+          : (options ?? [])
       }
       loading={loading}
       notFoundContent={loading ? <Spin size="small" /> : "Không có dữ liệu"}

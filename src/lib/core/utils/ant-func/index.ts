@@ -1,12 +1,17 @@
-import { FormInstance } from 'antd';
-import { ValidateErrorEntity } from 'rc-field-form/lib/interface';
+import { FormInstance } from "antd";
+import { ValidateErrorEntity } from "rc-field-form/lib/interface";
 
 export function globalHandleFailed(form: FormInstance) {
-  return (errorInfo: ValidateErrorEntity) => {
-    console.log('errorInfo', errorInfo);
-    form.scrollToField(errorInfo.errorFields[0].name, {
-      block: 'center',
-      behavior: 'smooth',
+  return ({ errorFields }: ValidateErrorEntity) => {
+    console.log("errorInfo", errorFields);
+
+    const firstField = errorFields?.[0];
+
+    if (!firstField?.name?.length) return;
+
+    form.scrollToField(firstField.name, {
+      block: "center",
+      behavior: "smooth",
     });
   };
 }
@@ -14,32 +19,31 @@ export function globalHandleFailed(form: FormInstance) {
 const calculateAreaValue = (width: number, length: number) =>
   Math.round(width * length * 100) / 100;
 
-const getDimensions = (values: any, key?: string) => {
-  return key
-    ? { width: values[key]?.Width, length: values[key]?.Length }
-    : { width: values?.Width, length: values?.Length };
-};
+const getDimensions = (values: any, key?: string) =>
+  key
+    ? {
+        width: values?.[key]?.Width,
+        length: values?.[key]?.Length,
+      }
+    : {
+        width: values?.Width,
+        length: values?.Length,
+      };
 
 export const calculateArea = (
-  form: FormInstance<any>,
+  form: FormInstance,
   allValues: any,
   key?: string
 ) => {
   const { width, length } = getDimensions(allValues, key);
 
-  if (width && length) {
-    const newValues = key
-      ? {
-          [key]: {
-            ...allValues[key],
-            Area: calculateAreaValue(width, length),
-          },
-        }
-      : { Area: calculateAreaValue(width, length) };
+  if (!width || !length) return;
 
-    form.setFieldsValue({
-      ...allValues,
-      ...newValues,
-    });
+  const area = calculateAreaValue(width, length);
+
+  if (key) {
+    form.setFieldValue([key, "Area"], area);
+  } else {
+    form.setFieldValue("Area", area);
   }
 };

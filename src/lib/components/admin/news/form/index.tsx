@@ -219,6 +219,24 @@ const NewsForm = ({ model, onClose }: Props) => {
                     className="textarea-input"
                   />
                 </Form.Item>
+
+                {/* Source */}
+                <Form.Item
+                  label={
+                    <span className="form-label">
+                      Nguồn thông tin <span className="required">*</span>
+                    </span>
+                  }
+                  name="Source"
+                  rules={[
+                    { required: true, message: "Vui lòng nhập nguồn thông tin" },
+                  ]}
+                >
+                  <Input
+                    placeholder="Nhập tên nguồn (VD: báo Đại Đoàn Kết, VTC News)..."
+                    className="input-source"
+                  />
+                </Form.Item>
               </Col>
 
               {/* Right Column - Main Content */}
@@ -434,6 +452,16 @@ const NewsForm = ({ model, onClose }: Props) => {
           box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
         }
 
+        .input-source {
+          font-size: 13px;
+          border-radius: 4px;
+        }
+
+        .input-source:focus {
+          border-color: #1890ff;
+          box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+
         .bottom-actions {
           display: flex;
           justify-content: flex-end;
@@ -547,6 +575,10 @@ const NewsForm = ({ model, onClose }: Props) => {
           .textarea-input {
             font-size: 12px;
             min-height: 80px !important;
+          }
+
+          .input-source {
+            font-size: 12px;
           }
 
           .bottom-actions {

@@ -398,6 +398,7 @@ button:not(:disabled),
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .news-filter-row .news-filter-form {
@@ -405,47 +406,132 @@ button:not(:disabled),
   min-width: 0;
 }
 
+.news-filter-form {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  margin-bottom: 20px;
+}
+
+.news-filter-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.news-filter-field {
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.news-filter-field--user {
+  width: 168px;
+}
+
+.news-filter-field--source {
+  width: 128px;
+}
+
+.news-filter-field--date {
+  width: 148px;
+}
+
+.news-filter-field--status {
+  width: 128px;
+}
+
+.news-filter-field--search {
+  flex: 1 1 200px;
+  min-width: 160px;
+}
+
+.news-filter-form .news-filter-floating-field {
+  position: relative;
+  width: 100%;
+}
+
+.news-filter-form .news-filter-floating-label {
+  position: absolute;
+  top: -7px;
+  left: 10px;
+  background: #fff;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  pointer-events: none;
+  z-index: 2;
+  font-size: 11px;
+  color: #a1a1aa;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.news-filter-form .news-filter-floating-label .required {
+  color: #ef4444;
+  font-size: 10px;
+}
+
+.news-filter-form .ant-select {
+  width: 100% !important;
+}
+
+.news-filter-form .ant-picker {
+  width: 100% !important;
+}
+
 .news-filter-form .ant-row {
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
 }
 
 .news-filter-form .ant-col {
-  flex: 0 0 auto;
-  width: auto;
-  max-width: 240px;
+  flex-shrink: 0;
 }
 
 .news-filter-form .ant-form-item {
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 
 .news-filter-form .ant-input-affix-wrapper {
-  border-radius: 999px !important;
-  border-color: #e5e7eb !important;
-  min-height: 40px !important;
-  padding-inline: 16px !important;
+  border-radius: 8px !important;
+  border: 1px solid #e5e7eb !important;
+  height: 40px !important;
+  padding: 0 12px !important;
   background: #fff !important;
   display: flex;
   align-items: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.news-filter-form .ant-input-affix-wrapper .ant-input-prefix {
+  margin-inline-end: 8px;
+  color: #bfbfbf;
 }
 
 .news-filter-form .ant-input-affix-wrapper .ant-input {
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
-  min-height: unset !important;
+  height: auto !important;
   background: transparent !important;
+  font-size: 14px;
 }
 
 .news-filter-form .ant-input:not(.ant-input-affix-wrapper .ant-input),
 .news-filter-form .ant-picker,
 .news-filter-form .ant-select-selector {
-  border-radius: 999px !important;
-  border-color: #e5e7eb !important;
-  min-height: 40px !important;
-  padding-inline: 16px !important;
+  border-radius: 8px !important;
+  border: 1px solid #e5e7eb !important;
+  height: 40px !important;
+  padding: 0 12px !important;
   background: #fff !important;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-size: 14px;
+  box-shadow: none !important;
 }
 
 .news-filter-form .ant-input-affix-wrapper:hover,
@@ -456,28 +542,45 @@ button:not(:disabled),
 .news-filter-form .ant-input:focus,
 .news-filter-form .ant-picker-focused {
   border-color: #1677ff !important;
-  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.08) !important;
+  box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.1) !important;
 }
 
 .news-filter-form .ant-select-selection-item,
 .news-filter-form .ant-select-selection-placeholder {
   line-height: 38px !important;
+  font-size: 14px;
+  color: #bfbfbf;
 }
 
+.news-filter-form .ant-select-selection-item {
+  color: #262626;
+}
+
+.news-filter-form .ant-select-clear,
+.news-filter-form .ant-input-clear-icon {
+  color: #bfbfbf;
+}
+
+.news-filter-form .ant-picker-input {
+  font-size: 14px;
+}
+
+.news-filter-form .ant-picker-input::placeholder {
+  color: #999;
+}
 
 button.news-create-btn.ant-btn {
   background: #1677ff !important;
   border-color: #1677ff !important;
   color: #ffffff !important;
-  border-radius: 999px !important;
+  border-radius: 8px !important;
   height: 40px;
-  padding-inline: 22px;
+  padding: 0 20px;
   font-weight: 500;
   white-space: nowrap;
   flex-shrink: 0;
-  margin-top: 0;
-  box-shadow: 0 2px 6px rgba(22, 119, 255, 0.25);
-  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  box-shadow: none !important;
+  transition: background 0.2s ease;
 }
 
 button.news-create-btn.ant-btn span {
@@ -949,11 +1052,7 @@ button.news-create-btn.ant-btn:active {
   box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.12) !important;
 }
 
-/* Ô "Người đăng" - rộng hơn để chứa tên dài, mũi tên căn giữa đúng */
-.news-filter-form .news-filter-col--user {
-  max-width: 280px;
-}
-
+/* Select & date picker alignment */
 .news-filter-form .ant-select-selector {
   display: flex !important;
   align-items: center !important;
@@ -963,8 +1062,7 @@ button.news-create-btn.ant-btn:active {
   top: 50% !important;
   transform: translateY(-50%) !important;
   margin-top: 0 !important;
-  display: flex;
-  align-items: center;
+  color: #bfbfbf;
 }
 
 .news-filter-form .ant-select-selection-item {
@@ -974,27 +1072,11 @@ button.news-create-btn.ant-btn:active {
   max-width: calc(100% - 24px);
 }
 
-/* Ô "Người đăng" - rộng hơn để chứa tên dài, mũi tên căn giữa đúng */
-.news-filter-form .news-filter-col--user {
-  max-width: 280px;
+.news-filter-form .ant-picker-input > input {
+  font-size: 14px;
 }
 
-.news-filter-form .ant-select-selector {
-  display: flex !important;
-  align-items: center !important;
+.news-filter-form .ant-picker-input > input::placeholder {
+  color: #bfbfbf;
 }
 
-.news-filter-form .ant-select-arrow {
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  margin-top: 0 !important;
-  display: flex;
-  align-items: center;
-}
-
-.news-filter-form .ant-select-selection-item {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: calc(100% - 24px);
-}

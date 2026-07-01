@@ -15,6 +15,7 @@ export { FloorSelect } from './FloorSelect';
 export { FurnitureSelect } from './FurnitureSelect';
 export { LocationSelect } from './LocationSelect';
 export { MobileNetworkSelect } from './MobileNetworkSelect';
+export { NewsTypeSelect } from './News/NewsTypeSelect';
 export { PaymentMethodSelect } from './PaymentMethodSelect';
 export { PriceSelect } from './PriceSelect';
 export {

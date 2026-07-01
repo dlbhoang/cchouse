@@ -28,8 +28,8 @@ export interface IRecruitmentOpts extends ISearchOptions {
 }
 
 export interface INewsOpts extends ISearchOptions {
-  CreatedBy?: string;
-  NewsTypeIds?: string;
+  CreatedBy?: string | number;
+  NewsTypeIds?: string | number | number[];
   Status?: number;
 }
 
