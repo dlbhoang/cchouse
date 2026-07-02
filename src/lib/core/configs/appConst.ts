@@ -7,7 +7,7 @@ export const appRegex = {
     /^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1}).*$/,
 };
 export const appConst = {
-  MANAGER_ROLES: [1, 2],
+  MANAGER_ROLES: [1, 2, 6],
 
   TEXT_DEFAULT: "Chưa cập nhật",
   ARR_DAYS_FEED: [1, 3, 7, 15, 30, 45, 60, 90], // Số ngày đăng tin

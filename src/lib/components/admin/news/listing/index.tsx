@@ -38,6 +38,13 @@ const NewsTypeTabs = ({
   const { data } = newsTypeApi.useGet({ pageIndex: 1, pageSize: 50 });
   const tagsData = data?.data ?? [];
 
+  // Tổng số tin của "Tất cả" — cộng dồn count của từng loại
+  // Đổi thành data?.total nếu API trả sẵn tổng số không phụ thuộc loại tin
+  const allCount = tagsData.reduce(
+    (sum, item) => sum + (item.NewsCount ?? 0),
+    0
+  );
+
   useEffect(() => {
     if (inputVisible) {
       inputRef.current?.focus();
@@ -82,10 +89,11 @@ const NewsTypeTabs = ({
           className={`news-type-tab ${selectedTags.length === 0 ? "active" : ""}`}
           onClick={handleSelectAll}
         >
-          Tất cả
+          Tất cả ({allCount})
         </button>
         {tagsData.map((item) => {
           const tagId = item.Id?.toString() ?? "";
+          const count = item.NewsCount ?? 0;
           return (
             <button
               key={item.Id}
@@ -95,7 +103,7 @@ const NewsTypeTabs = ({
               }`}
               onClick={() => handleChange(tagId)}
             >
-              {item.Name}
+              {item.Name} ({count})
             </button>
           );
         })}
@@ -143,6 +151,127 @@ const NewsTypeTabs = ({
         </span>
         <NewsTypeTable loading={false} data={data?.data ?? []} />
       </Modal>
+
+      <style jsx>{`
+        .news-type-tabs-bar {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-bottom: 16px;
+        }
+
+        .news-type-tabs-list {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .news-type-tab {
+          display: inline-flex;
+          align-items: center;
+          height: 32px;
+          padding: 0 14px;
+          border: none;
+          border-radius: 16px;
+          background-color: #f0f0f0;
+          color: #1f1f1f;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          white-space: nowrap;
+          outline: none;
+          box-shadow: none;
+          -webkit-tap-highlight-color: transparent;
+          transition: background-color 0.15s ease, color 0.15s ease;
+        }
+
+        .news-type-tab:hover {
+          background-color: #e6e6e6;
+        }
+
+        .news-type-tab:focus,
+        .news-type-tab:focus-visible {
+          outline: none;
+          box-shadow: none;
+        }
+
+        .news-type-tab.active {
+          background-color: #1a1a1a;
+          color: #ffffff;
+        }
+
+        .news-type-tab.active:hover {
+          background-color: #000000;
+        }
+
+        .news-type-tabs-actions {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-left: auto;
+        }
+
+        .news-add-type-input {
+          height: 32px;
+          width: 140px;
+          border-radius: 16px;
+        }
+      `}</style>
+      <style jsx global>{`
+        .news-add-type-btn.ant-btn {
+          height: 32px;
+          border-radius: 16px;
+          border: 1px solid #d9d9d9;
+          background-color: #ffffff;
+          color: #1f1f1f;
+          font-size: 13px;
+          font-weight: 500;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          box-shadow: none;
+          outline: none;
+        }
+
+        .news-add-type-btn.ant-btn:hover,
+        .news-add-type-btn.ant-btn:focus {
+          border-color: #bfbfbf;
+          color: #1f1f1f;
+          box-shadow: none;
+          outline: none;
+        }
+
+        .news-more-btn.ant-btn {
+          height: 32px;
+          width: 32px;
+          min-width: 32px;
+          border-radius: 8px;
+          border: 1px solid #d9d9d9;
+          background-color: #ffffff;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          box-shadow: none;
+          outline: none;
+        }
+
+        .news-more-btn.ant-btn:hover,
+        .news-more-btn.ant-btn:focus {
+          border-color: #bfbfbf;
+          box-shadow: none;
+          outline: none;
+        }
+
+        /* Tắt hiệu ứng "wave" (viền sóng xanh khi click) mặc định của antd cho 2 nút này */
+        .news-add-type-btn .ant-wave,
+        .news-more-btn .ant-wave {
+          display: none !important;
+        }
+      `}</style>
     </div>
   );
 };

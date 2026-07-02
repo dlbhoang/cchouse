@@ -26,40 +26,32 @@ const FLOATING_FIELD_CSS = `
   .news-filter-toolbar {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
-    margin-top: -20px;
+    margin-top: 0;
   }
 
   /* ── Khung field bọc ngoài: cố định width nhỏ gọn ── */
   .news-filter-field {
-    flex: 0 0 160px;
-    width: 160px;
+    flex: 0 0 220px;
+    width: 220px;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
   }
-  .news-filter-field--user {
-    flex: 0 0 160px;
-    width: 160px;
-    max-width: 160px;
-  }
-  .news-filter-field--source {
-    flex: 0 0 160px;
-    width: 160px;
-    max-width: 160px;
-  }
-  .news-filter-field--date {
-    flex: 0 0 160px;
-    width: 160px;
-    max-width: 160px;
-  }
+  .news-filter-field--user,
+  .news-filter-field--source,
+  .news-filter-field--date,
   .news-filter-field--status {
-    flex: 0 0 160px;
-    width: 160px;
-    max-width: 160px;
+    flex: 0 0 220px;
+    width: 220px;
+    max-width: 220px;
   }
   .news-filter-field--search {
-    flex: 0 0 200px;
-    width: 200px;
-    max-width: 200px;
+    flex: 1 1 360px;
+    min-width: 360px;
+    width: 360px;
+    max-width: 360px;
   }
 
   /* ── Box chính ── */
@@ -68,9 +60,10 @@ const FLOATING_FIELD_CSS = `
     display: flex;
     align-items: center;
     gap: 6px;
-    width: 160px;
-    height: 32px;
-    padding: 6px 10px;
+    width: 100%;
+    min-height: 46px;
+    height: 46px;
+    padding: 10px 14px;
     box-sizing: border-box;
     border-radius: 8px;
     background: #ffffff;
@@ -95,6 +88,8 @@ const FLOATING_FIELD_CSS = `
   .news-filter-floating-field .ant-input-affix-wrapper,
   .news-filter-floating-field > .ant-input {
     width: 100%;
+    height: 100%;
+    min-height: 46px;
   }
   .news-filter-floating-field .ant-select-selector,
   .news-filter-floating-field .ant-select-selector:hover,
@@ -118,6 +113,23 @@ const FLOATING_FIELD_CSS = `
     padding: 0 !important;
     display: flex !important;
     align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+  .news-filter-floating-field .ant-select-selector,
+  .news-filter-floating-field .ant-picker {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  .news-filter-floating-field .ant-select-selector {
+    padding: 0 10px !important;
+  }
+  .news-filter-floating-field .ant-select-selection-item,
+  .news-filter-floating-field .ant-picker-input > input {
+    line-height: 1.4 !important;
+  }
+  .news-filter-floating-field .ant-select-selection-search-input {
+    box-shadow: none !important;
   }
   .news-filter-floating-field .ant-select-selection-search-input {
     box-shadow: none !important;
@@ -141,7 +153,7 @@ const FLOATING_FIELD_CSS = `
   /* ── Label nổi: mặc định nằm GIỮA box, làm placeholder ── */
   .news-filter-floating-label {
     position: absolute !important;
-    left: 10px;
+    left: 12px;
     top: 50% !important;
     transform: translateY(-50%) !important;
     display: flex;
@@ -204,24 +216,45 @@ const FLOATING_FIELD_CSS = `
   }
 
   /* ── Ô tìm kiếm: đồng bộ phong cách với các box phía trên ── */
+  .news-filter-field--search {
+    flex: 1 1 360px !important;
+    min-width: 360px !important;
+    width: 360px !important;
+    max-width: 360px !important;
+  }
+  .news-filter-field--search .news-filter-search-field {
+    min-width: 360px !important;
+    width: 100% !important;
+  }
+  .news-filter-toolbar {
+    align-items: center;
+    min-height: 56px;
+  }
+  .news-filter-extra {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    flex: 0 0 auto;
+    min-height: 44px;
+  }
   .news-filter-search-field {
-    flex: 0 0 200px;
-    width: 200px;
-    max-width: 200px;
+    width: 100% !important;
+    min-width: 300px !important;
   }
   .news-filter-search-field .ant-input-affix-wrapper {
     width: 100% !important;
-    height: 32px !important;
-    min-height: 32px !important;
-    max-height: 32px !important;
+    min-width: 300px !important;
+    height: 46px !important;
+    min-height: 46px !important;
+    max-height: 46px !important;
     box-sizing: border-box !important;
-    border-radius: 8px !important;
+    border-radius: 10px !important;
     border: 1px solid #e5e5e5 !important;
     background: #ffffff !important;
-    padding: 0 10px !important;
+    padding: 0 14px !important;
     display: flex !important;
     align-items: center !important;
-    box-shadow: 0 1px 2px rgba(16, 16, 16, 0.03) !important;
+    box-shadow: 0 1px 4px rgba(16, 16, 16, 0.06) !important;
     transition: border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -527,7 +560,11 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
       filled={isFilledValue(createdByWatch)}
     >
       <Form.Item name="CreatedBy" noStyle>
-        <UserAdminSelect placeholder="" onChange={submitOnChange} />
+        <UserAdminSelect
+          valueAsName
+          placeholder=""
+          onChange={submitOnChange}
+        />
       </Form.Item>
     </FloatingField>
   );
