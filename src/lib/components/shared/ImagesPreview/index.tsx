@@ -35,9 +35,12 @@ const ImagesPreview = ({
 }: Props) => {
   const [download, setDownload] = useState(false);
 
+  // Ensure images is always an array
+  const imagesList = Array.isArray(images) ? images : [];
+
   const onDownloadMultiple = async () => {
     if (download) return;
-    const blobNames = images
+    const blobNames = imagesList
       .map((e) => e.blobName)
       .filter((x): x is string => x !== undefined);
 
@@ -116,7 +119,7 @@ const ImagesPreview = ({
     >
       <Space wrap align="center" style={{ display: hidden ? "none" : "flex" }}>
         {mode === "vertical"
-          ? images.map((e) => (
+          ? imagesList.map((e) => (
               <ImageCard
                 key={e.uid}
                 model={e}
@@ -125,7 +128,7 @@ const ImagesPreview = ({
                 onClick={() => {}}
               />
             ))
-          : images.map((e) => (
+          : imagesList.map((e) => (
               <CardImageHorizontal
                 key={e.uid}
                 image={e}

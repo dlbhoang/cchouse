@@ -1,7 +1,6 @@
-import { Col, DatePicker, Form, Input, Row } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import dayjs from "dayjs";
-import { useEffect, type ReactNode } from "react";
+import { Col, Dropdown, Form, Input, Row } from "antd";
+import { DownOutlined, SearchOutlined, EditOutlined, ShareAltOutlined } from "@ant-design/icons";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { NewsTypeSelect, StatusBaseSelect, UserAdminSelect } from "@/lib/components/shared/MySelect";
 import { appConst } from "@/lib/core/configs/appConst";
@@ -9,7 +8,16 @@ import { globalHandleFailed } from "@/lib/core/utils/ant-func";
 import { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import { useAdminContext } from "@/lib/stored";
 
+import FloatingFieldStyle from "./FloatingFieldStyle";
+import FloatingField from "./FloatingField";
+import NewsDateFilter from "./NewsDateFilter";
+
 const hiddenFields = ["IsWebsite", "pageSize", "pageIndex", "fromDate", "toDate"];
+
+const sourceMenuItems = [
+  { key: "write", label: "Viết bài", icon: <EditOutlined /> },
+  { key: "share", label: "Chia sẻ", icon: <ShareAltOutlined /> },
+];
 
 type Props = {
   model?: INewsOpts;
@@ -22,519 +30,15 @@ const isFilledValue = (value: unknown) => {
   return value !== undefined && value !== null && value !== "";
 };
 
-const FLOATING_FIELD_CSS = `
-  .news-filter-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin-top: 0;
-  }
-
-  /* ── Khung field bọc ngoài: cố định width nhỏ gọn ── */
-  .news-filter-field {
-    flex: 0 0 220px;
-    width: 220px;
-    min-height: 46px;
-    display: flex;
-    align-items: center;
-  }
-  .news-filter-field--user,
-  .news-filter-field--source,
-  .news-filter-field--date,
-  .news-filter-field--status {
-    flex: 0 0 220px;
-    width: 220px;
-    max-width: 220px;
-  }
-  .news-filter-field--search {
-    flex: 1 1 360px;
-    min-width: 360px;
-    width: 360px;
-    max-width: 360px;
-  }
-
-  /* ── Box chính ── */
-  .news-filter-floating-field {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-    min-height: 46px;
-    height: 46px;
-    padding: 10px 14px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 1px 2px rgba(16, 16, 16, 0.03);
-    transition: border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .news-filter-floating-field:hover {
-    border-color: #c2c2c2;
-    box-shadow: 0 1px 4px rgba(16, 16, 16, 0.06);
-  }
-  .news-filter-floating-field:focus-within {
-    border-color: #0588f0;
-    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.14);
-  }
-
-  /* ── Triệt tiêu toàn bộ border/shadow gốc của antd ở MỌI trạng thái,
-     để box ngoài là nơi duy nhất thể hiện viền/hover/focus ── */
-  .news-filter-floating-field .ant-select,
-  .news-filter-floating-field .ant-picker,
-  .news-filter-floating-field .ant-input-affix-wrapper,
-  .news-filter-floating-field > .ant-input {
-    width: 100%;
-    height: 100%;
-    min-height: 46px;
-  }
-  .news-filter-floating-field .ant-select-selector,
-  .news-filter-floating-field .ant-select-selector:hover,
-  .news-filter-floating-field .ant-select-focused .ant-select-selector,
-  .news-filter-floating-field .ant-select-open .ant-select-selector,
-  .news-filter-floating-field .ant-picker,
-  .news-filter-floating-field .ant-picker:hover,
-  .news-filter-floating-field .ant-picker-focused,
-  .news-filter-floating-field .ant-input-affix-wrapper,
-  .news-filter-floating-field .ant-input-affix-wrapper:hover,
-  .news-filter-floating-field .ant-input-affix-wrapper-focused,
-  .news-filter-floating-field > .ant-input,
-  .news-filter-floating-field > .ant-input:hover,
-  .news-filter-floating-field > .ant-input:focus {
-    min-height: unset !important;
-    height: 100% !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    flex-wrap: nowrap !important;
-  }
-  .news-filter-floating-field .ant-select-selector,
-  .news-filter-floating-field .ant-picker {
-    height: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-  }
-  .news-filter-floating-field .ant-select-selector {
-    padding: 0 10px !important;
-  }
-  .news-filter-floating-field .ant-select-selection-item,
-  .news-filter-floating-field .ant-picker-input > input {
-    line-height: 1.4 !important;
-  }
-  .news-filter-floating-field .ant-select-selection-search-input {
-    box-shadow: none !important;
-  }
-  .news-filter-floating-field .ant-select-selection-search-input {
-    box-shadow: none !important;
-  }
-
-  /* Icon mũi tên / clear trong Select, DatePicker — nhạt khi nghỉ, đậm dần khi hover/focus */
-  .news-filter-floating-field .ant-select-arrow,
-  .news-filter-floating-field .ant-select-clear,
-  .news-filter-floating-field .ant-picker-suffix,
-  .news-filter-floating-field .ant-picker-clear {
-    color: #a3a3a3;
-    transition: color 0.18s ease;
-  }
-  .news-filter-floating-field:hover .ant-select-arrow,
-  .news-filter-floating-field:focus-within .ant-select-arrow,
-  .news-filter-floating-field:hover .ant-picker-suffix,
-  .news-filter-floating-field:focus-within .ant-picker-suffix {
-    color: #0588f0;
-  }
-
-  /* ── Label nổi: mặc định nằm GIỮA box, làm placeholder ── */
-  .news-filter-floating-label {
-    position: absolute !important;
-    left: 12px;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    padding: 0 3px;
-    background: #ffffff;
-    color: #8a8a8a;
-    font-size: 12px !important;
-    font-weight: 400;
-    line-height: 1;
-    pointer-events: none;
-    z-index: 1;
-    transition: top 0.18s cubic-bezier(0.4, 0, 0.2, 1),
-      font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease;
-  }
-  .news-filter-floating-label .required {
-    color: #0588f0;
-    font-size: 11px;
-    line-height: 1;
-  }
-
-  /* Chỉ khi bấm vào (focus) hoặc đã có giá trị (filled) label mới nổi lên trên viền */
-  .news-filter-floating-field--filled .news-filter-floating-label,
-  .news-filter-floating-field:focus-within .news-filter-floating-label {
-    top: 0 !important;
-    transform: translateY(-50%) !important;
-    font-size: 10px !important;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    color: #525252;
-  }
-  .news-filter-floating-field:focus-within .news-filter-floating-label {
-    color: #0588f0;
-  }
-
-  .news-filter-floating-field--error {
-    border-color: #ef4444;
-  }
-  .news-filter-floating-field--error:hover,
-  .news-filter-floating-field--error:focus-within {
-    border-color: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-  }
-  .news-filter-floating-field--error .news-filter-floating-label {
-    color: #ef4444;
-  }
-
-  /* Ẩn text mặc định bên trong control (vd chữ "Chọn") khi box chưa có giá trị và chưa focus,
-     để chỉ còn label nổi đóng vai trò placeholder — không phụ thuộc component con có nhận
-     đúng prop placeholder hay không. */
-  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within)
-    .ant-select-selection-item,
-  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within)
-    .ant-select-selection-placeholder,
-  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within)
-    .ant-picker-input
-    > input {
-    opacity: 0 !important;
-  }
-
-  /* ── Ô tìm kiếm: đồng bộ phong cách với các box phía trên ── */
-  .news-filter-field--search {
-    flex: 1 1 360px !important;
-    min-width: 360px !important;
-    width: 360px !important;
-    max-width: 360px !important;
-  }
-  .news-filter-field--search .news-filter-search-field {
-    min-width: 360px !important;
-    width: 100% !important;
-  }
-  .news-filter-toolbar {
-    align-items: center;
-    min-height: 56px;
-  }
-  .news-filter-extra {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    flex: 0 0 auto;
-    min-height: 44px;
-  }
-  .news-filter-search-field {
-    width: 100% !important;
-    min-width: 300px !important;
-  }
-  .news-filter-search-field .ant-input-affix-wrapper {
-    width: 100% !important;
-    min-width: 300px !important;
-    height: 46px !important;
-    min-height: 46px !important;
-    max-height: 46px !important;
-    box-sizing: border-box !important;
-    border-radius: 10px !important;
-    border: 1px solid #e5e5e5 !important;
-    background: #ffffff !important;
-    padding: 0 14px !important;
-    display: flex !important;
-    align-items: center !important;
-    box-shadow: 0 1px 4px rgba(16, 16, 16, 0.06) !important;
-    transition: border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .news-filter-search-field .ant-input-affix-wrapper:hover {
-    border-color: #c2c2c2;
-    box-shadow: 0 1px 4px rgba(16, 16, 16, 0.06) !important;
-  }
-  .news-filter-search-field .ant-input-affix-wrapper-focused,
-  .news-filter-search-field .ant-input-affix-wrapper:focus-within {
-    border-color: #0588f0 !important;
-    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.14) !important;
-  }
-  .news-filter-search-field .ant-input {
-    font-size: 13px !important;
-    height: 100% !important;
-    padding: 0 !important;
-    line-height: 1 !important;
-  }
-  .news-filter-search-field .ant-input-prefix {
-    color: #a3a3a3;
-    margin-right: 6px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    transition: color 0.18s ease;
-  }
-  .news-filter-search-field .ant-input-affix-wrapper:focus-within .ant-input-prefix {
-    color: #0588f0;
-  }
-  .news-filter-search-field .ant-input-clear-icon {
-    color: #a3a3a3;
-  }
-
-  /* ── Slot cho nội dung phụ (vd nút "Viết bài") cùng hàng với các field lọc ── */
-  .news-filter-extra {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    flex: 0 0 auto;
-  }
-
-  /* ── Responsive: dưới 576px (mobile), field full-width, dùng layout Row/Col đã có ── */
-  @media (max-width: 575px) {
-    .news-filter-field--user,
-    .news-filter-field--source,
-    .news-filter-field--date,
-    .news-filter-field--status {
-      max-width: none;
-    }
-
-    .news-filter-extra {
-      margin-left: 0;
-      width: 100%;
-    }
-
-    .news-filter-extra > * {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-`;
-
-const FloatingFieldStyle = () => <style>{FLOATING_FIELD_CSS}</style>;
-
-const FloatingField = ({
-  label,
-  required,
-  filled,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  filled?: boolean;
-  children: ReactNode;
-}) => (
-  <div
-    className={[
-      "news-filter-floating-field",
-      filled ? "news-filter-floating-field--filled" : "",
-    ]
-      .filter(Boolean)
-      .join(" ")}
-  >
-    {children}
-    <span className="news-filter-floating-label">
-      {label}
-      {required && <span className="required">*</span>}
-    </span>
-  </div>
-);
-
-const NewsDateFilter = ({
-  form,
-  onValueChange,
-}: {
-  form: ReturnType<typeof Form.useForm<INewsOpts>>[0];
-  onValueChange?: () => void;
-}) => {
-  const fromDateWatch = Form.useWatch("fromDate", form);
-
-  const presetDays = [3, 7, 30];
-
-  const setPreset = (days: number) => {
-    const date = dayjs().subtract(days, "day");
-    const formatted = date.format(appConst.SUBMIT_DATE_FORMAT);
-
-    form.setFieldValue("fromDate", formatted);
-    form.setFieldValue("toDate", formatted);
-
-    onValueChange?.();
-  };
-
-  return (
-    <>
-      <DatePicker
-        popupClassName="news-date-picker-popup"
-        value={fromDateWatch ? dayjs(fromDateWatch) : null}
-        format={appConst.DATE_FORMAT}
-        placeholder=""
-        allowClear
-        onChange={(date) => {
-          if (!date) {
-            form.setFieldValue("fromDate", undefined);
-            form.setFieldValue("toDate", undefined);
-          } else {
-            const formatted = date.format(appConst.SUBMIT_DATE_FORMAT);
-
-            form.setFieldValue("fromDate", formatted);
-            form.setFieldValue("toDate", formatted);
-          }
-
-          onValueChange?.();
-        }}
-        panelRender={(panel) => (
-          <div className="news-date-picker-wrapper">
-            <div className="news-date-picker-presets">
-              {presetDays.map((day) => (
-                <button
-                  key={day}
-                  type="button"
-                  onClick={() => setPreset(day)}
-                >
-                  {day} ngày trước
-                </button>
-              ))}
-            </div>
-
-            {panel}
-          </div>
-        )}
-      />
-
-      <style>{`
-        .news-date-picker-popup {
-          padding: 0 !important;
-          border-radius: 10px !important;
-          overflow: hidden !important;
-        }
-
-        .news-date-picker-wrapper {
-          width: 240px;
-          background: #fff;
-          border-radius: 10px;
-          overflow: hidden;
-        }
-
-        /* Fix khoảng trắng / hở góc */
-        .news-date-picker-popup .ant-picker-panel-layout,
-        .news-date-picker-popup .ant-picker-date-panel,
-        .news-date-picker-popup .ant-picker-body {
-          width: 100% !important;
-          margin: 0 !important;
-          padding: 0 !important;
-          background: white !important;
-        }
-
-        /* Presets */
-        .news-date-picker-presets {
-          display: flex;
-          gap: 6px;
-          padding: 8px;
-          border-bottom: 1px solid #f3f4f6;
-        }
-
-        .news-date-picker-presets button {
-          flex: 1;
-          border: none;
-          background: #f3f4f6;
-          padding: 5px 6px;
-          border-radius: 6px;
-          font-size: 11px;
-          font-weight: 500;
-          line-height: 1.3;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        }
-
-        .news-date-picker-presets button:hover {
-          background: #e6f4ff;
-          color: #1677ff;
-        }
-
-        /* Calendar panel */
-        .news-date-picker-popup .ant-picker-panel {
-          border: none !important;
-          box-shadow: none !important;
-        }
-
-        .news-date-picker-popup .ant-picker-header {
-          padding: 6px 8px;
-          border-bottom: none;
-        }
-
-        .news-date-picker-popup .ant-picker-header-view {
-          font-size: 12px;
-        }
-
-        .news-date-picker-popup .ant-picker-content {
-          width: 100%;
-        }
-
-        /* Weekday */
-        .news-date-picker-popup .ant-picker-content th {
-          color: #9ca3af;
-          font-weight: 500;
-          font-size: 11px;
-          padding-bottom: 4px;
-        }
-
-        /* Day cell */
-        .news-date-picker-popup .ant-picker-cell {
-          padding: 1px 0;
-        }
-
-        .news-date-picker-popup .ant-picker-cell-inner {
-          width: 22px;
-          height: 22px;
-          line-height: 22px;
-          font-size: 12px;
-          border-radius: 6px !important;
-        }
-
-        .news-date-picker-popup
-          .ant-picker-cell-selected
-          .ant-picker-cell-inner {
-          background: #2563eb !important;
-          color: white !important;
-        }
-
-        .news-date-picker-popup
-          .ant-picker-cell:hover
-          .ant-picker-cell-inner {
-          background: #dbeafe !important;
-        }
-
-        /* Remove today border */
-        .news-date-picker-popup
-          .ant-picker-cell-today
-          .ant-picker-cell-inner::before {
-          display: none !important;
-        }
-
-        /* Body spacing */
-        .news-date-picker-popup .ant-picker-body {
-          padding: 6px 8px !important;
-        }
-
-        /* Footer */
-        .news-date-picker-popup .ant-picker-footer {
-          border-top: none !important;
-          padding: 4px 0;
-        }
-      `}</style>
-    </>
-  );
-};
-
 const NewsFilter = ({ model, onSubmit, extra }: Props) => {
   const { smallScreen } = useAdminContext();
   const [form] = Form.useForm<INewsOpts>();
+  const [sourceOpen, setSourceOpen] = useState(false);
+  const [sourceMenuWidth, setSourceMenuWidth] = useState<number>();
+  // Nhãn đang được chọn trong dropdown "Nguồn" (Viết bài / Chia sẻ), hiển thị
+  // trực tiếp trong ô như một combobox thật thay vì luôn để trống.
+  const [sourceLabel, setSourceLabel] = useState<string>();
+  const sourceTriggerRef = useRef<HTMLDivElement>(null);
 
   const createdByWatch = Form.useWatch("CreatedBy", form);
   const newsTypeIdsWatch = Form.useWatch("NewsTypeIds", form);
@@ -553,18 +57,19 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
 
   const submitOnChange = () => form.submit();
 
+  const handleSourceOpenChange = (open: boolean) => {
+    if (open && sourceTriggerRef.current) {
+      // Đo đúng chiều rộng thật của ô trigger để menu bên dưới luôn khớp
+      // tuyệt đối 2 bên, không bị hở/lệch dù màn hình responsive thế nào.
+      setSourceMenuWidth(sourceTriggerRef.current.offsetWidth);
+    }
+    setSourceOpen(open);
+  };
+
   const authorField = (
-    <FloatingField
-      label="Người đăng"
-      required
-      filled={isFilledValue(createdByWatch)}
-    >
+    <FloatingField label="Người đăng" required filled={isFilledValue(createdByWatch)}>
       <Form.Item name="CreatedBy" noStyle>
-        <UserAdminSelect
-          valueAsName
-          placeholder=""
-          onChange={submitOnChange}
-        />
+        <UserAdminSelect valueAsName placeholder="Chọn" onChange={submitOnChange} />
       </Form.Item>
     </FloatingField>
   );
@@ -573,20 +78,44 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
     <FloatingField
       label="Nguồn"
       required
-      filled={isFilledValue(newsTypeIdsWatch)}
+      filled={isFilledValue(newsTypeIdsWatch) || isFilledValue(sourceLabel) || sourceOpen}
     >
-      <Form.Item name="NewsTypeIds" noStyle>
-        <NewsTypeSelect placeholder="" onChange={submitOnChange} />
-      </Form.Item>
+      <Dropdown
+        menu={{
+          items: sourceMenuItems,
+          onClick: ({ key }) => {
+            const chosen = sourceMenuItems.find((item) => item.key === key);
+            setSourceLabel(chosen?.label);
+            // TODO: gắn hành động thật cho "Viết bài" / "Chia sẻ" tại đây.
+          },
+        }}
+        trigger={["click"]}
+        placement="bottomLeft"
+        overlayClassName="news-source-menu"
+        onOpenChange={handleSourceOpenChange}
+        dropdownRender={(menu) => (
+          <div style={{ width: sourceMenuWidth }}>{menu}</div>
+        )}
+      >
+        <div
+          ref={sourceTriggerRef}
+          className={`news-source-dropdown ${sourceOpen ? "news-source-dropdown--open" : ""}`}
+        >
+          <span
+            className={`news-source-dropdown-text${
+              sourceLabel ? " news-source-dropdown-text--filled" : ""
+            }`}
+          >
+            {sourceLabel ?? "Chọn"}
+          </span>
+          <DownOutlined className="news-source-dropdown-icon" />
+        </div>
+      </Dropdown>
     </FloatingField>
   );
 
   const dateField = (
-    <FloatingField
-      label="Thời gian"
-      required
-      filled={isFilledValue(fromDateWatch)}
-    >
+    <FloatingField label="Thời gian" required filled={isFilledValue(fromDateWatch)}>
       <Form.Item noStyle>
         <NewsDateFilter form={form} onValueChange={submitOnChange} />
       </Form.Item>
@@ -594,13 +123,9 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
   );
 
   const statusField = (
-    <FloatingField
-      label="Trạng thái"
-      required
-      filled={isFilledValue(statusWatch)}
-    >
+    <FloatingField label="Trạng thái" required filled={isFilledValue(statusWatch)}>
       <Form.Item name="Status" noStyle>
-        <StatusBaseSelect placeholder="" onChange={submitOnChange} />
+        <StatusBaseSelect placeholder="Chọn" onChange={submitOnChange} />
       </Form.Item>
     </FloatingField>
   );

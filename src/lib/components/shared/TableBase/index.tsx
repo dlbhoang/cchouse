@@ -8,6 +8,7 @@ import { objToQueryString } from "@/lib/core/utils/app-func";
 import { ISearchOptions } from "@/lib/interfaces/filter/ISearchOptions";
 import { IBaseOpts } from "@/lib/types/filter";
 import { useAdminContext } from "../../../stored/context/index";
+import { SkeletonTable } from "./TableSkeleton";
 
 interface IListData<T> {
   data: T[];
@@ -75,69 +76,73 @@ function TableBase<T>({
         </div>
       )}
     >
-      <Table
-        {...props}
-        rowKey="Id"
-        size="small"
-        rowSelection={rowSelection}
-        columns={cols}
-        dataSource={data}
-        pagination={false}
-        bordered={bordered}
-        loading={waitingData === 20 ? false : loading}
-        scroll={{ x: smallScreen ? "max-content" : 1200 }}
-        expandable={
-          expandedRowRender && {
-            expandedRowRender: (record: any, index: number) =>
-              expandedRowRender && expandedRowRender(index),
-            defaultExpandedRowKeys: ["0"],
+      {loading && waitingData < 20 ? (
+        <SkeletonTable columns={cols} rowCount={5} />
+      ) : (
+        <Table
+          {...props}
+          rowKey="Id"
+          size="small"
+          rowSelection={rowSelection}
+          columns={cols}
+          dataSource={data}
+          pagination={false}
+          bordered={bordered}
+          loading={false}
+          scroll={{ x: smallScreen ? "max-content" : 1200 }}
+          expandable={
+            expandedRowRender && {
+              expandedRowRender: (record: any, index: number) =>
+                expandedRowRender && expandedRowRender(index),
+              defaultExpandedRowKeys: ["0"],
+            }
           }
-        }
-        onRow={(record: T) => handleRow(record)}
-        // eslint-disable-next-line react/no-unstable-nested-components
-        footer={() => (
-          <Row gutter={[0, 16]}>
-            {/* <Col span={12} style={{ margin: 'auto' }}>
-            <span>
-              Hiển thị từ{' '}
-              {total === 0
-                ? 0
-                : (searchOptions.pageIndex - 1) * searchOptions.pageSize +
-                  1}{' '}
-              đến{' '}
-              {searchOptions.pageIndex * searchOptions.pageSize > total
-                ? total
-                : searchOptions.pageIndex * searchOptions.pageSize}{' '}
-              trong {total} kết quả
-            </span>
-          </Col> */}
-            <Col
-              span={24}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              {/* <span>
-              Tìm được <Typography.Text strong> {total}</Typography.Text> kết
-              quả
-            </span> */}
-              <Pagination
-                defaultCurrent={1}
-                total={total}
-                defaultPageSize={baseFilter.pageSize}
-                pageSizeOptions={["10", "20", "30", "40", "50"]}
-                current={Number(searchOptions.pageIndex ?? 1)}
-                showSizeChanger
-                onChange={(pageIndex: number, pageSize: number) =>
-                  onPageIndexChange
-                    ? onPageIndexChange(pageIndex, pageSize)
-                    : onDefPageIndexChange(pageIndex, pageSize)
-                }
-                showTitle
-              />
-              <span />
-            </Col>
-          </Row>
-        )}
-      />
+          onRow={(record: T) => handleRow(record)}
+          // eslint-disable-next-line react/no-unstable-nested-components
+          footer={() => (
+            <Row gutter={[0, 16]}>
+              {/* <Col span={12} style={{ margin: 'auto' }}>
+              <span>
+                Hiển thị từ{' '}
+                {total === 0
+                  ? 0
+                  : (searchOptions.pageIndex - 1) * searchOptions.pageSize +
+                    1}{' '}
+                đến{' '}
+                {searchOptions.pageIndex * searchOptions.pageSize > total
+                  ? total
+                  : searchOptions.pageIndex * searchOptions.pageSize}{' '}
+                trong {total} kết quả
+              </span>
+            </Col> */}
+              <Col
+                span={24}
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                {/* <span>
+                Tìm được <Typography.Text strong> {total}</Typography.Text> kết
+                quả
+              </span> */}
+                <Pagination
+                  defaultCurrent={1}
+                  total={total}
+                  defaultPageSize={baseFilter.pageSize}
+                  pageSizeOptions={["10", "20", "30", "40", "50"]}
+                  current={Number(searchOptions.pageIndex ?? 1)}
+                  showSizeChanger
+                  onChange={(pageIndex: number, pageSize: number) =>
+                    onPageIndexChange
+                      ? onPageIndexChange(pageIndex, pageSize)
+                      : onDefPageIndexChange(pageIndex, pageSize)
+                  }
+                  showTitle
+                />
+                <span />
+              </Col>
+            </Row>
+          )}
+        />
+      )}
     </ConfigProvider>
   );
 }

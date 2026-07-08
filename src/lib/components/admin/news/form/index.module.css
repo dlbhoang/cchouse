@@ -1,0 +1,784 @@
+/* =========================================================
+   DESIGN TOKENS — đồng bộ theo index.css, không phụ thuộc antd
+   ========================================================= */
+.news-form-wrapper {
+  --font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+
+  --color-text: #0a0a0a;
+  --color-text-secondary: #292c33;
+  --color-text-muted: #a1a1aa;
+  --color-text-label: #737373;
+
+  --color-primary: #0588f0;
+  --color-primary-hover: #046fcc;
+  --color-primary-bg: rgba(5, 136, 240, 0.1);
+  --color-danger: #dc3e42;
+  --color-danger-bg: rgba(220, 62, 66, 0.08);
+
+  --color-bg: #ffffff;
+  --color-bg-muted: #f5f5f5;
+  --color-border: #e5e5e5;
+  --color-border-hover: #d9d9d9;
+
+  --radius-input: 10px;
+  --radius-upload: 16px;
+  --radius-btn: 6px;
+  --radius-sm: 4px;
+
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background-color: var(--color-bg);
+  overflow: hidden;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  font-family: var(--font-family);
+  animation: formFadeIn 0.25s ease;
+}
+
+.news-form-wrapper,
+.news-form-wrapper * {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+@keyframes formFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px) scaleY(0.96); }
+  to { opacity: 1; transform: translateY(0) scaleY(1); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulseRing {
+  0% { box-shadow: 0 0 0 0 var(--color-primary-bg); }
+  100% { box-shadow: 0 0 0 6px rgba(5, 136, 240, 0); }
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+.news-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  flex-shrink: 0;
+}
+
+.news-form-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.news-form-close {
+  background-color: var(--color-bg-muted);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  color: #666;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.15s;
+  border-radius: var(--radius-btn);
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.news-form-close:hover {
+  background-color: var(--color-border);
+  border-color: var(--color-border-hover);
+  color: #333;
+}
+
+.news-form-close:active {
+  transform: scale(0.92);
+}
+
+/* =========================================================
+   CONTENT / SCROLL AREA
+   ========================================================= */
+.news-form-content {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.form-scrollable-area {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-scrollable-area::-webkit-scrollbar { width: 6px; }
+.form-scrollable-area::-webkit-scrollbar-track { background: var(--color-bg-muted); }
+.form-scrollable-area::-webkit-scrollbar-thumb { background: var(--color-border-hover); border-radius: 3px; }
+.form-scrollable-area::-webkit-scrollbar-thumb:hover { background: #bfbfbf; }
+
+.news-form-bottom-fixed {
+  border-top: 1px solid var(--color-border);
+  padding: 16px 24px;
+  background-color: var(--color-bg);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 100;
+}
+
+/* =========================================================
+   LAYOUT HELPERS (thay Row/Col của antd)
+   ========================================================= */
+.form-row-top {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.form-meta-column {
+  flex: 1 1 336px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-thumbnail-column {
+  flex: 1 1 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* =========================================================
+   GENERIC FIELD WRAPPER + FLOATING LABEL
+   ========================================================= */
+.field-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-label {
+  position: absolute;
+  top: -9px;
+  left: 11px;
+  padding: 0 4px;
+  background: var(--color-bg);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: 16px;
+  pointer-events: none;
+  z-index: 3;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.field-label-active {
+  color: var(--color-primary);
+}
+
+.field-label-static {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.field-label-plain {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--color-text-label);
+  margin-bottom: 4px;
+  display: inline-block;
+}
+
+.required {
+  color: var(--color-danger);
+  margin-left: 3px;
+}
+
+.placeholder {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.field-error {
+  font-size: 12px;
+  color: var(--color-danger);
+  animation: fadeInUp 0.2s ease;
+}
+
+.field-error-border {
+  border-color: var(--color-danger) !important;
+}
+
+.field-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.char-counter {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-left: auto;
+  transition: color 0.2s ease;
+}
+
+.char-counter-warn {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+.source-hint {
+  font-size: 12px;
+  color: var(--color-danger);
+  text-align: right;
+  margin-left: auto;
+}
+
+/* =========================================================
+   CUSTOM SELECT (Loại tin)
+   ========================================================= */
+.select-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.select-trigger:hover {
+  border-color: var(--color-border-hover);
+}
+
+.select-trigger-open {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-bg);
+}
+
+.select-value {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select-chevron {
+  flex-shrink: 0;
+  display: flex;
+  color: var(--color-text-muted);
+  transition: transform 0.22s ease;
+}
+
+.select-chevron-open {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+
+.select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  z-index: 30;
+  overflow: hidden;
+  transform-origin: top;
+  animation: slideDown 0.16s ease;
+}
+
+.select-options {
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 6px;
+}
+
+.select-option {
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.select-option:hover {
+  background: var(--color-bg-muted);
+}
+
+.select-option-active {
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.select-empty {
+  padding: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.select-footer {
+  display: flex;
+  gap: 6px;
+  padding: 8px;
+  border-top: 1px solid var(--color-border);
+}
+
+.select-add-input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  font-size: 13px;
+  color: var(--color-text);
+  transition: border-color 0.2s ease;
+}
+
+.select-add-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.select-add-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+.select-add-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.select-add-btn:active {
+  transform: scale(0.95);
+}
+
+/* =========================================================
+   RADIO GROUP (Viết bài / Chia sẻ)
+   ========================================================= */
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 4px 0;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.radio-circle {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border-hover);
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.radio-option:hover .radio-circle {
+  border-color: var(--color-primary);
+}
+
+.radio-circle-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  animation: pulseRing 0.4s ease;
+}
+
+.radio-circle-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  transform: scale(0);
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.radio-circle-active .radio-circle-inner {
+  transform: scale(1);
+}
+
+.radio-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* =========================================================
+   THUMBNAIL UPLOAD
+   ========================================================= */
+.upload-box {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-upload);
+  border: 1px dashed var(--color-border);
+  background: var(--color-bg-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upload-box:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(5, 136, 240, 0.15);
+}
+
+.upload-box:active {
+  transform: translateY(0) scale(0.97);
+}
+
+.upload-hint {
+  font-size: 12px;
+}
+
+.upload-preview-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-upload);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  animation: fadeInUp 0.25s ease;
+}
+
+.upload-preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.25s ease, transform 0.3s ease;
+}
+
+.upload-preview-wrap:hover .upload-preview-img {
+  transform: scale(1.06);
+}
+
+.upload-preview-loading {
+  opacity: 0.5;
+}
+
+.upload-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border: 2px solid rgba(5, 136, 240, 0.25);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+.upload-remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.upload-preview-wrap:hover .upload-remove-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.upload-remove-btn:hover {
+  background: var(--color-danger);
+}
+
+/* =========================================================
+   TEXTAREA (Tiêu đề / Tóm tắt)
+   ========================================================= */
+.textarea-box {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  background: var(--color-bg);
+  padding: 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.textarea-box:hover {
+  border-color: var(--color-border-hover);
+}
+
+.textarea-box-active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-bg);
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: vertical;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* =========================================================
+   SINGLE-LINE INPUT (Nguồn thông tin)
+   ========================================================= */
+.input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input);
+  background: var(--color-bg);
+  padding: 0 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-box:hover {
+  border-color: var(--color-border-hover);
+}
+
+.input-box-active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-bg);
+}
+
+.text-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.text-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* =========================================================
+   CONTENT EDITOR (TinyEditor container)
+   ========================================================= */
+.editor-wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  overflow: hidden;
+  min-height: 170px;
+  background: var(--color-bg);
+  transition: border-color 0.2s ease;
+}
+
+.editor-wrapper:hover {
+  border-color: var(--color-border-hover);
+}
+
+/* =========================================================
+   BOTTOM ACTIONS
+   ========================================================= */
+.bottom-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
+.preview-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  background: var(--color-bg);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: var(--radius-btn);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+  height: 40px;
+  padding: 0 20px;
+  cursor: pointer;
+}
+
+.preview-button:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-bg);
+}
+
+.preview-button:active {
+  transform: scale(0.97);
+}
+
+.submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 100px;
+  background: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-btn);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  height: 40px;
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 4px 10px rgba(5, 136, 240, 0.25);
+}
+
+.submit-button:active {
+  transform: scale(0.97);
+}
+
+.submit-button:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 992px) {
+  .news-form-header { padding: 12px 16px; }
+  .news-form-title { font-size: 14px; }
+  .form-scrollable-area { padding: 16px; gap: 16px; }
+  .bottom-actions { flex-direction: column; gap: 8px; }
+  .submit-button, .preview-button { width: 100%; }
+}
+
+@media (max-width: 576px) {
+  .news-form-header { padding: 10px 12px; }
+  .news-form-title { font-size: 13px; }
+  .news-form-close { min-width: 36px; min-height: 36px; }
+  .form-scrollable-area { padding: 12px 8px; gap: 14px; }
+  .news-form-bottom-fixed { padding: 10px 8px; gap: 6px; }
+  .textarea, .text-input { font-size: 12px; }
+  .bottom-actions { width: 100%; flex-wrap: wrap; gap: 6px; }
+  .preview-button, .submit-button { flex: 1; min-width: 90px; font-size: 12px; height: 36px; padding: 0 12px; }
+  .form-meta-column, .form-thumbnail-column { flex-basis: 100%; max-width: 100%; }
+}

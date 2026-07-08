@@ -11,6 +11,8 @@ export interface INewsRequest {
   Summary: string;
   Content: string;
   Thumbnail: string | any[];
+  Source: string;
+  SourceType: string;
   Status: number;
 }
 

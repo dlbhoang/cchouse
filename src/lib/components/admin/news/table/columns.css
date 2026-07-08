@@ -1,0 +1,230 @@
+/* columns.css
+ * Style cho các cell của bảng tin tức (News table), tách ra từ cấu trúc/thiết kế
+ * gốc trong index.jsx + index.css. Import file này vào columns.tsx.
+ */
+
+/* ---- Mã tin / Lượt xem: số nhỏ căn giữa ---- */
+.news-id-badge,
+.news-viewcount {
+  display: block;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #0a0a0a;
+  text-align: center;
+}
+
+/* ---- Loại tin ---- */
+.news-type-text {
+  display: block;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0a0a0a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Hình ảnh ---- */
+.news-thumbnail {
+  width: auto;
+  max-width: 140px;
+  height: 84px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto;
+}
+
+.news-thumb-placeholder {
+  width: 140px;
+  height: 84px;
+  border-radius: 6px;
+  background: #f4f4f5;
+  margin: 0 auto;
+}
+
+/* ---- Tiêu đề ---- */
+.news-title-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  width: 100%;
+}
+
+.news-title-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  width: 100%;
+}
+
+.news-title-text {
+  flex: 0 1 60%;
+  min-width: 0;
+  max-width: 60%;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0a0a0a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.news-see-more {
+  flex-shrink: 0;
+  margin-left: 0;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #2563eb;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.news-see-more:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+.news-view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 4px 12px;
+  background: #0588f0;
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.news-view-btn:hover {
+  background: #0477d1;
+  color: #ffffff;
+}
+
+/* ---- Nguồn/ Người đăng ---- */
+.news-source-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.news-source-line {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0a0a0a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Ngày ra tin / ngày duyệt ---- */
+.news-date-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-date {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0a0a0a;
+}
+
+.news-time {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #a1a1aa;
+}
+
+/* ---- Trạng thái ---- */
+.news-status-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 22px;
+  padding: 2px 10px;
+  border-radius: 10px;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+/* ---- Người duyệt ---- */
+.news-approver-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.news-approver-name {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0a0a0a;
+}
+
+/* ---- Chức năng ---- */
+.news-action-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.news-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  color: #52525b;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.news-action-btn:hover {
+  background: #f5f5f5;
+  border-color: #d4d4d8;
+}
+
+/* ---- Header ---- */
+.news-th-label {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #a1a1aa;
+}

@@ -32,11 +32,14 @@ const AppUpload = ({
     </div>
   );
 
+  // Ensure fileList is always an array for safe operations
+  const fileListArray = Array.isArray(fileList) ? fileList : [];
+
   return (
     <Space wrap align="center">
-      {fileList && fileList.length > 0 && (
+      {fileListArray.length > 0 && (
         <ImagesPreview
-          images={fileList as IMyUploadFile[]}
+          images={fileListArray as IMyUploadFile[]}
           imgWidth={120}
           onDelete={onDelete}
         />
@@ -44,7 +47,7 @@ const AppUpload = ({
       <Upload
         listType="picture-card"
         maxCount={maxCount}
-        fileList={fileList}
+        fileList={fileListArray}
         name="files" // name payload in FormData
         headers={{
           Authorization: `Bearer ${session?.user?.token}`,
@@ -54,7 +57,7 @@ const AppUpload = ({
         beforeUpload={fileServices.beforeUpload}
         {...props}
       >
-        {maxCount && (fileList?.length ?? 0) >= maxCount ? null : uploadButton}
+        {maxCount && fileListArray.length >= maxCount ? null : uploadButton}
       </Upload>
     </Space>
   );

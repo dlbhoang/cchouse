@@ -15,6 +15,7 @@ type Props = {
   danger?: boolean;
   block?: boolean;
   style?: CSSProperties;
+  className?: string;
   onOkClick: () => void;
 };
 const BtnConfirm = ({

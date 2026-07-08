@@ -5,6 +5,7 @@ import { mutate } from "swr";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
 import type { INewsType } from "@/services/api/news/INews";
 import newsTypeApi from "@/services/api/news/newsTypeApi";
+import FloatLabel from "./FloatLabel"; // đường dẫn tùy cấu trúc project của bạn
 
 type Props = {
   isModalOpen: boolean;
@@ -14,17 +15,19 @@ type Props = {
 
 const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
   const [form] = Form.useForm<INewsType>();
-
   const [confirmLoading, setConfirmLoading] = useState(false);
+
+  // theo dõi giá trị Name để biết label có nên nổi lên hay không
+  const nameValue = Form.useWatch("Name", form);
 
   const onFinish = async (item: INewsType) => {
     try {
       setConfirmLoading(true);
-      console.log("Success:", item);
       if (item.Id) {
         await newsTypeApi.update(item);
-      } else await newsTypeApi.add(item);
-      // TODO: xử lý add/update
+      } else {
+        await newsTypeApi.add(item);
+      }
       handleCancel();
     } finally {
       mutate(newsTypeApi.mutateKey);
@@ -34,24 +37,25 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
 
   useEffect(() => {
     if (model) {
-      form.setFieldsValue({
-        ...model,
-      });
+      form.setFieldsValue({ ...model });
     }
   }, [form, model]);
 
   return (
     <Modal
       open={isModalOpen}
-      title={model?.Id ? "Chỉnh sửa" : "Thêm mới"}
-      width={600}
+      title="Thêm mới chủ đề"
+      width={400}
       onCancel={() => {
         form.resetFields();
         handleCancel();
       }}
       onOk={() => form.submit()}
-      okText="Lưu"
-      cancelText="Đóng"
+      okText="Thêm"
+      cancelText="Hủy bỏ"
+      okButtonProps={{
+        style: { backgroundColor: "#1677ff", borderColor: "#1677ff" },
+      }}
     >
       <Form
         name="basic"
@@ -68,12 +72,10 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
 
         <Row gutter={12} align="bottom">
           <Col span={24}>
-            <Form.Item
-              label="Tên loại"
-              name="Name"
-              rules={[{ required: true }]}
-            >
-              <Input />
+            <Form.Item name="Name" rules={[{ required: true }]} noStyle>
+              <FloatLabel label="Chủ đề" value={nameValue}>
+                <Input placeholder="Nhập" />
+              </FloatLabel>
             </Form.Item>
           </Col>
         </Row>

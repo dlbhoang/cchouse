@@ -1,4 +1,4 @@
-import { Button, Input, type InputRef, Modal, Typography } from "antd";
+import { Button, Input, InputRef, Modal, Switch, Typography } from "antd";
 import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -9,13 +9,15 @@ import TableBase from "@/lib/components/shared/TableBase";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import type { INewsRequest } from "@/services/api/news/INews";
+import type { INewsRequest, INewsResponse } from "@/services/api/news/INews";
 import newsApi from "@/services/api/news/newsApi";
 import newsTypeApi from "@/services/api/news/newsTypeApi";
 import NewsForm from "@/lib/components/admin/news/form";
+import NewPreview from "../preview";
 import { NewsTypeTable } from "../../newsType/table";
+import AddEditModal from "../../newsType/modal";
 import NewsFilter from "../filter";
-import columns from "../table/columns";
+import { useNewsColumns } from "../table/columns";
 
 const NewsTypeTabs = ({
   opts,
@@ -34,16 +36,50 @@ const NewsTypeTabs = ({
   const [inputVisible, setInputVisible] = useState(false);
   const inputRef = useRef<InputRef>(null);
   const [openModal, setOpenModal] = useState(false);
+  const [openAddModal, setOpenAddModal] = useState(false);
 
   const { data } = newsTypeApi.useGet({ pageIndex: 1, pageSize: 50 });
   const tagsData = data?.data ?? [];
 
-  // Tổng số tin của "Tất cả" — cộng dồn count của từng loại
-  // Đổi thành data?.total nếu API trả sẵn tổng số không phụ thuộc loại tin
-  const allCount = tagsData.reduce(
-    (sum, item) => sum + (item.NewsCount ?? 0),
-    0
-  );
+  const [counts, setCounts] = useState<Record<string, number>>({});
+
+  // Tổng số tin của "Tất cả" — ưu tiên dùng counts thu thập được, fallback về NewsCount
+  const allCount = Object.keys(counts).length
+    ? Object.values(counts).reduce((s, v) => s + v, 0)
+    : tagsData.reduce((sum, item) => sum + (item.NewsCount ?? 0), 0);
+
+  useEffect(() => {
+    if (!tagsData || tagsData.length === 0) return;
+
+    let mounted = true;
+
+    (async () => {
+      try {
+        const results = await Promise.all(
+          tagsData.map(async (item) => {
+            const id = item.Id ?? 0;
+            const res = await newsApi.get({ pageIndex: 1, pageSize: 1, NewsTypeIds: id });
+            const total = ((res as any)?.totalRow ?? (res as any)?.data?.totalRow) ?? 0;
+            return { id, total };
+          })
+        );
+
+        if (!mounted) return;
+
+        const map: Record<string, number> = {};
+        results.forEach((r) => {
+          map[String(r.id)] = r.total ?? 0;
+        });
+        setCounts(map);
+      } catch (e) {
+        // ignore errors; leave counts empty so fallback values used
+      }
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, [tagsData]);
 
   useEffect(() => {
     if (inputVisible) {
@@ -93,7 +129,7 @@ const NewsTypeTabs = ({
         </button>
         {tagsData.map((item) => {
           const tagId = item.Id?.toString() ?? "";
-          const count = item.NewsCount ?? 0;
+          const count = counts[tagId] ?? item.NewsCount ?? 0;
           return (
             <button
               key={item.Id}
@@ -110,26 +146,13 @@ const NewsTypeTabs = ({
       </div>
 
       <div className="news-type-tabs-actions">
-        {inputVisible ? (
-          <Input
-            ref={inputRef}
-            className="news-add-type-input"
-            type="text"
-            size="small"
-            value={newTag}
-            onChange={(e) => setNewTag(e.target.value)}
-            onBlur={handleInputConfirm}
-            onPressEnter={handleInputConfirm}
-          />
-        ) : (
-          <Button
-            className="news-add-type-btn"
-            icon={<PlusOutlined />}
-            onClick={() => setInputVisible(true)}
-          >
-            Thêm
-          </Button>
-        )}
+        <Button
+          className="news-add-type-btn"
+          icon={<PlusOutlined />}
+          onClick={() => setOpenAddModal(true)}
+        >
+          Thêm
+        </Button>
         <Button
           className="news-more-btn"
           icon={<MoreOutlined />}
@@ -151,6 +174,11 @@ const NewsTypeTabs = ({
         </span>
         <NewsTypeTable loading={false} data={data?.data ?? []} />
       </Modal>
+
+      <AddEditModal
+        isModalOpen={openAddModal}
+        handleCancel={() => setOpenAddModal(false)}
+      />
 
       <style jsx>{`
         .news-type-tabs-bar {
@@ -207,6 +235,10 @@ const NewsTypeTabs = ({
           background-color: #000000;
         }
 
+        .news-type-tab.active::after {
+          display: none;
+        }
+
         .news-type-tabs-actions {
           display: flex;
           align-items: center;
@@ -259,6 +291,23 @@ const NewsTypeTabs = ({
           outline: none;
         }
 
+        .news-action-menu-item {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          padding: 10px 12px;
+          border: none;
+          background: transparent;
+          color: #111827;
+          text-align: left;
+          cursor: pointer;
+          font-size: 14px;
+        }
+
+        .news-action-menu-item:hover {
+          background: #f4f5f7;
+        }
+
         .news-more-btn.ant-btn:hover,
         .news-more-btn.ant-btn:focus {
           border-color: #bfbfbf;
@@ -281,7 +330,7 @@ const NewsList = () => {
   const pathname = usePathname();
   const query = useSearchParams();
   const [isNewsFormModalOpen, setIsNewsFormModalOpen] = useState(false);
-  const [selectedNews, setSelectedNews] = useState<INewsRequest | undefined>();
+  const [selectedNews, setSelectedNews] = useState<INewsResponse | undefined>();
 
   const opts = {
     ...Object.fromEntries(query?.entries() ?? []),
@@ -298,6 +347,9 @@ const NewsList = () => {
   };
 
   const { data, isLoading, isValidating } = newsApi.useGet(opts);
+  const [previewNews, setPreviewNews] = useState<INewsResponse | null>(null);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
 
   useEffect(() => {
     mutate(newsApi.mutateKey);
@@ -308,9 +360,46 @@ const NewsList = () => {
     setIsNewsFormModalOpen(true);
   };
 
+  const handleOpenEditNewsForm = (item: INewsResponse) => {
+    setSelectedNews(item);
+    setIsNewsFormModalOpen(true);
+  };
+
   const handleCloseNewsFormModal = () => {
     setIsNewsFormModalOpen(false);
     setSelectedNews(undefined);
+  };
+
+  const handleToggleNewsStatus = async (shouldShow?: boolean) => {
+    if (!selectedNews) return;
+    setIsUpdatingStatus(true);
+    try {
+      const isHidden = Boolean(
+        selectedNews?.StatusName?.toLowerCase().includes("ẩn") ||
+          selectedNews?.StatusName?.toLowerCase().includes("hidden")
+      );
+      // Use the shouldShow parameter if provided (from Switch), otherwise toggle
+      const newStatus = shouldShow !== undefined ? (shouldShow ? "Show" : "Hidden") : (isHidden ? "Show" : "Hidden");
+      await newsApi.updateStatus(
+        selectedNews.Id ?? 0,
+        newStatus
+      );
+      const res = await newsApi.getById(selectedNews.Id ?? 0);
+      setSelectedNews(res.data);
+      mutate(newsApi.mutateKey);
+    } finally {
+      setIsUpdatingStatus(false);
+    }
+  };
+
+  const handleOpenPreview = (item: INewsResponse) => {
+    setPreviewNews(item);
+    setPreviewOpen(true);
+  };
+
+  const handleClosePreview = () => {
+    setPreviewOpen(false);
+    setPreviewNews(null);
   };
 
   const createNewsButton = (
@@ -322,38 +411,18 @@ const NewsList = () => {
         alignItems: "center",
         justifyContent: "center",
         gap: "8px",
-
         padding: "8px 16px",
         borderRadius: "10px",
-
         background: "#0588f0",
         color: "#fff",
-
         border: "none",
         cursor: "pointer",
-
         fontSize: "13px",
         fontWeight: 500,
         lineHeight: 1,
         whiteSpace: "nowrap",
-
         boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
         transition: "all 0.2s ease",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.background = "#0477d6";
-        e.currentTarget.style.transform = "translateY(-1px)";
-        e.currentTarget.style.boxShadow =
-          "0 6px 14px rgba(5, 136, 240, 0.25)";
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.background = "#0588f0";
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow =
-          "0 1px 2px rgba(0,0,0,0.05)";
-      }}
-      onMouseDown={(e) => {
-        e.currentTarget.style.transform = "translateY(0)";
       }}
     >
       <PlusOutlined />
@@ -401,14 +470,43 @@ const NewsList = () => {
           total={data?.totalRow ?? 0}
           searchOptions={opts}
           data={data?.data ?? []}
-          cols={columns}
+          cols={useNewsColumns(handleOpenPreview, handleOpenEditNewsForm)}
           onPageIndexChange={handlePageIndexChange}
         />
       </div>
 
+      {previewNews && (
+        <NewPreview
+          model={previewNews}
+          isModalOpen={previewOpen}
+          handleCancel={handleClosePreview}
+          onEdit={handleOpenEditNewsForm}
+        />
+      )}
+
       {/* News Form Modal */}
       <Modal
-        title=""
+        title={selectedNews ? (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+            <span>Chỉnh sửa bài viết</span>
+            <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+              <Switch
+                checked={selectedNews && !Boolean(
+                  selectedNews?.StatusName?.toLowerCase().includes("ẩn") ||
+                    selectedNews?.StatusName?.toLowerCase().includes("hidden")
+                )}
+                loading={isUpdatingStatus}
+                onChange={handleToggleNewsStatus}
+              />
+              <Typography.Text>
+                {selectedNews && Boolean(
+                  selectedNews?.StatusName?.toLowerCase().includes("ẩn") ||
+                    selectedNews?.StatusName?.toLowerCase().includes("hidden")
+                ) ? "Ẩn bài" : "Đang hiển thị"}
+              </Typography.Text>
+            </div>
+          </div>
+        ) : null}
         open={isNewsFormModalOpen}
         onCancel={handleCloseNewsFormModal}
         footer={null}

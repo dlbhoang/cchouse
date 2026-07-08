@@ -25,6 +25,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         const { username, password } = credentials as IUserLogin;
+
+        // Log để chắc chắn biến môi trường đã được nạp đúng
+        console.log("NEXT_PUBLIC_API_URL =", process.env.NEXT_PUBLIC_API_URL);
+
         try {
           const res = await axios.post(
             "/AdminAuth",
@@ -49,8 +53,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           return null;
         } catch (e: any) {
+          // Log chi tiết lỗi thật để biết nguyên nhân gốc
+          console.error("AUTH ERROR DETAIL:", {
+            message: e?.message,
+            code: e?.code,
+            responseStatus: e?.response?.status,
+            responseData: e?.response?.data,
+            baseURL: axiosConfig.baseURL,
+          });
+
           const apiMessage =
-            e?.response?.data?.message ?? "Đăng nhập thất bại";
+            e?.response?.data?.message ?? e?.message ?? "Đăng nhập thất bại";
           throw new Error(apiMessage);
         }
       },

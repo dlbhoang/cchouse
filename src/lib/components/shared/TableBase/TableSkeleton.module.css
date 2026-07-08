@@ -1,0 +1,30 @@
+.skeleton-table-wrapper {
+  display: contents;
+}
+
+.skeleton-cell {
+  padding: 12px 16px;
+  animation: shimmer 2s infinite;
+  background: linear-gradient(
+    90deg,
+    #f5f5f5 0%,
+    #e8e8e8 50%,
+    #f5f5f5 100%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .skeleton-cell {
+    padding: 10px 12px;
+  }
+}

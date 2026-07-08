@@ -36,6 +36,14 @@ const normalizeValue = (
       return value;
     }
 
+    if (trimmedValue.includes(",")) {
+      const pieces = trimmedValue
+        .split(",")
+        .map((item) => item.trim())
+        .filter(Boolean);
+      return pieces.map((item) => normalizeValue(item, options)) as Array<string | number>;
+    }
+
     const matchedOption = options?.find(
       (option) => String(option?.value) === trimmedValue
     );

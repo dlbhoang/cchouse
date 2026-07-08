@@ -13,6 +13,8 @@ type Props = {
 
 const EditNewsPage = ({ id }: Props) => {
   const [data, setData] = useState<INewsResponse>();
+  const [updating, setUpdating] = useState(false);
+
   useEffect(() => {
     const fetch = async () => {
       if (id) {
@@ -23,6 +25,11 @@ const EditNewsPage = ({ id }: Props) => {
     fetch();
   }, [id]);
 
+  const isHidden = Boolean(
+    data?.StatusName?.toLowerCase().includes("ẩn") ||
+      data?.StatusName?.toLowerCase().includes("hidden")
+  );
+
   return (
     <Card
       title={<TitlePage title="Chỉnh sửa bài viết" />}
@@ -30,19 +37,25 @@ const EditNewsPage = ({ id }: Props) => {
         data && (
           <Space>
             <Switch
-              checked={data.StatusName !== "Ẩn"}
+              checked={!isHidden}
+              loading={updating}
               onChange={async () => {
-                await newsApi.updateStatus(
-                  data.Id ?? 0,
-                  data.StatusName === "Ẩn" ? "Show" : "Hidden"
-                );
-
-                const res = await newsApi.getById(data.Id ?? 0);
-                setData(res.data);
+                if (!data) return;
+                setUpdating(true);
+                try {
+                  await newsApi.updateStatus(
+                    data.Id ?? 0,
+                    isHidden ? "Show" : "Hidden"
+                  );
+                  const res = await newsApi.getById(data.Id ?? 0);
+                  setData(res.data);
+                } finally {
+                  setUpdating(false);
+                }
               }}
             />
             <Typography.Text>
-              {data.StatusName === "Ẩn" ? "Ẩn bài" : "Đang hiển thị"}
+              {isHidden ? "Ẩn bài" : "Đang hiển thị"}
             </Typography.Text>
           </Space>
         )

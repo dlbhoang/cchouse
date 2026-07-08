@@ -2,6 +2,75 @@
 /* .anticon{
     font-size: 16px;
 } */
+
+/* Align pagination in the news table footer to the right */
+.news-table .ant-table-footer .ant-row {
+  justify-content: flex-end !important;
+}
+.news-table .ant-table-footer .ant-row .ant-col {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+/* Custom pagination styling to match provided PNG: rounded items, green active outline */
+.news-table .ant-pagination {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+}
+.news-table .ant-pagination .ant-pagination-item,
+.news-table .ant-pagination .ant-pagination-prev,
+.news-table .ant-pagination .ant-pagination-next,
+.news-table .ant-pagination .ant-pagination-jump-prev,
+.news-table .ant-pagination .ant-pagination-jump-next {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  height: 32px;
+  min-width: 32px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  transition: all 0.12s ease;
+}
+.news-table .ant-pagination .ant-pagination-item a {
+  color: #6b7280;
+  padding: 0 6px;
+}
+.news-table .ant-pagination .ant-pagination-item-active {
+  background: #ffffff;
+  border: 2px solid #16a34a; /* green outline */
+}
+.news-table .ant-pagination .ant-pagination-item-active a {
+  color: #16a34a;
+  font-weight: 600;
+}
+.news-table .ant-pagination .ant-pagination-item:hover {
+  border-color: rgba(22,163,74,0.12);
+}
+.news-table .ant-pagination .ant-pagination-item-link {
+  padding: 0 6px;
+}
+
+/* Page-size select styling on the table footer */
+.news-table .ant-pagination .ant-pagination-options {
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.news-table .ant-pagination .ant-select-selector {
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+
 @layer theme, base, antd, components, utilities;
 
 @import "tailwindcss";
@@ -14,6 +83,28 @@ button:not(:disabled),
   cursor: pointer;
 }
 
+.float-label-wrapper {
+  position: relative;
+}
+
+.float-label-text {
+  position: absolute;
+  left: 11px;
+  top: 8px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  opacity: 0;
+  background: #fff;
+  padding: 0 4px;
+  transition: all 0.15s ease;
+}
+
+.float-label-text-active {
+  top: -10px;
+  font-size: 12px;
+  opacity: 1;
+}
 :root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
@@ -454,24 +545,35 @@ button:not(:disabled),
 
 .news-filter-form .news-filter-floating-label {
   position: absolute;
-  top: -7px;
+  top: 50%;
   left: 10px;
-  background: #fff;
+  transform: translateY(-50%);
+  background: transparent;
   padding: 0 4px;
   display: inline-flex;
   align-items: center;
   gap: 1px;
   pointer-events: none;
   z-index: 2;
-  font-size: 11px;
+  font-size: 13px;
   color: #a1a1aa;
   line-height: 1.2;
   white-space: nowrap;
+  transition: top 0.2s ease, font-size 0.2s ease, background-color 0.2s ease;
 }
 
 .news-filter-form .news-filter-floating-label .required {
   color: #ef4444;
   font-size: 10px;
+}
+
+/* Label nổi lên trên khi field được fill hoặc focus */
+.news-filter-form .news-filter-floating-field--filled .news-filter-floating-label,
+.news-filter-form .news-filter-floating-field:focus-within .news-filter-floating-label {
+  top: -7px;
+  transform: translateY(0);
+  background: #fff;
+  font-size: 11px;
 }
 
 .news-filter-form .ant-select {
@@ -634,17 +736,6 @@ button.news-create-btn.ant-btn:active {
 .news-type-tab.active {
   color: #141414;
   font-weight: 600;
-}
-
-.news-type-tab.active::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #1677ff;
-  border-radius: 2px 2px 0 0;
 }
 
 .news-type-tabs-actions {
