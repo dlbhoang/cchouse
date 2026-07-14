@@ -27,12 +27,11 @@ import type { ISearchWardDto } from "@/lib/interfaces/ConfigAddress/IConfigAddre
 import { cn } from "@/lib/utils";
 import wardApi from "@/services/api/wardApi";
 import { findWardAgencyData } from "@/data/ward-agencies";
+import { WardLookupTabs, type Tab } from "./ward-lookup-tabs";
 
 // ─────────────────────────────────────────────
 // Types
 // ─────────────────────────────────────────────
-type Tab = "ward" | "agency";
-
 interface AgencyItem {
   name: string;
   address: string;
@@ -552,30 +551,7 @@ const WardLookupDialog = ({
           <div className="flex flex-1 min-h-0 flex-col self-stretch bg-white px-6 pt-4 pb-6 gap-6 overflow-hidden">
 
             {/* ── Tabs ── */}
-            <div className="flex items-center self-stretch border-b border-neutral-200">
-              <button
-                type="button"
-                className={`flex flex-1 items-center justify-center py-3 text-sm font-medium border-b-2 transition-colors ${
-                  tab === "ward"
-                    ? "border-[#0588F0] text-[#0588F0]"
-                    : "border-transparent text-neutral-600 hover:text-neutral-900"
-                }`}
-                onClick={() => setTab("ward")}
-              >
-                Chuyển đổi Phường/Xã
-              </button>
-              <button
-                type="button"
-                className={`flex flex-1 items-center justify-center py-3 text-sm font-medium border-b-2 transition-colors ${
-                  tab === "agency"
-                    ? "border-[#0588F0] text-[#0588F0]"
-                    : "border-transparent text-neutral-600 hover:text-neutral-900"
-                }`}
-                onClick={() => setTab("agency")}
-              >
-                Tra cứu hành chính
-              </button>
-            </div>
+            <WardLookupTabs value={tab} onChange={setTab} />
 
             {/* ── Two-column body ── */}
             <div className="flex flex-1 min-h-0 items-stretch self-stretch gap-6">
@@ -622,17 +598,17 @@ const WardLookupDialog = ({
                       <button
                         type="submit"
                         disabled={form.formState.isSubmitting}
-                        className={`flex flex-1 justify-center items-center py-2 gap-2 rounded-md border-0 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]
+                        className={`flex flex-1 justify-center items-center py-2 gap-2 rounded-[10px] border-0 transition-colors font-[family-name:var(--font-inter,Inter,sans-serif)]
                           ${form.formState.isSubmitting
-                            ? "bg-blue-300 cursor-not-allowed"
-                            : "bg-[#0588F0] hover:bg-[#0471cc]"
+                            ? "bg-[#7DC0F7] cursor-not-allowed"
+                            : "bg-[#0588F0] hover:bg-[#0471CC]"
                           }`}
                       >
                         {form.formState.isSubmitting
                           ? <Loader2 className="w-4 h-4 animate-spin text-white" />
-                          : <ArrowLeftRight className="w-4 h-4 text-white" />
+                          : <ArrowLeftRight className="w-4 h-4 text-black" />
                         }
-                        <span className="text-white text-base font-medium">Chuyên đổi ngay</span>
+                        <span className="text-white text-base font-medium">Chuyển đổi ngay</span>
                       </button>
                     </div>
                   </form>

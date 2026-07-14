@@ -5,6 +5,7 @@ import {
   DirectionSelect,
   TransStatusSelect,
 } from "@/lib/components/shared/MySelect";
+import { PropTypeSelect } from "@/lib/components/shared/MySelect";
 import { ApartmentUnitTypeSelect } from "@/lib/components/shared/MySelect/apartment-unit-type";
 import {
   IApartmentUnitRequest,
@@ -52,6 +53,15 @@ const FirstZone = ({ model, form }: Props) => {
           rules={[{ required: true }]}
         >
           <ApartmentUnitTypeSelect />
+        </Form.Item>
+      </Col>
+      <Col lg={8} xl={8} xs={24}>
+        <Form.Item
+          label={"Loại hình BĐS"}
+          name={"PropTypeId"}
+          rules={[{ required: true }]}
+        >
+          <PropTypeSelect />
         </Form.Item>
       </Col>
 
