@@ -392,9 +392,22 @@ const NewsList = () => {
     }
   };
 
-  const handleOpenPreview = (item: INewsResponse) => {
-    setPreviewNews(item);
-    setPreviewOpen(true);
+  const handleOpenPreview = async (item: INewsResponse) => {
+    if (!item.Id) return;
+
+    if (item.Content) {
+      setPreviewNews(item);
+      setPreviewOpen(true);
+      return;
+    }
+
+    try {
+      const res = await newsApi.getById(item.Id);
+      setPreviewNews(res.data);
+      setPreviewOpen(true);
+    } catch (error) {
+      console.error("Failed to load news preview", error);
+    }
   };
 
   const handleClosePreview = () => {
@@ -528,6 +541,7 @@ const NewsList = () => {
         <NewsForm
           model={selectedNews}
           onClose={handleCloseNewsFormModal}
+          hideHeader={Boolean(selectedNews)}
         />
       </Modal>
 
@@ -569,7 +583,10 @@ const NewsList = () => {
           height: 90vh;
           max-height: 90vh;
           display: flex;
+          width: var(--Modal-Lg, 1152px);
           flex-direction: column;
+          align-items: flex-start;
+          padding: 0 !important;
         }
 
         .news-form-modal :global(.ant-modal-body) {

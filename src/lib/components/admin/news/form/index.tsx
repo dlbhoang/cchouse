@@ -17,6 +17,7 @@ import styles from "./index.module.css";
 type Props = {
   model?: INewsRequest | INewsResponse;
   onClose?: () => void;
+  hideHeader?: boolean;
 };
 
 type ErrorKey =
@@ -83,7 +84,7 @@ const isContentEmpty = (html?: string) => {
   return text.length === 0;
 };
 
-const NewsForm = ({ model, onClose }: Props) => {
+const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
   const router = useRouter();
 
   const [isSubmit, setIsSubmit] = useState(false);
@@ -265,17 +266,20 @@ const NewsForm = ({ model, onClose }: Props) => {
 
   return (
     <div className={styles["news-form-wrapper"]}>
-      {/* Header */}
-      <div className={styles["news-form-header"]}>
-        <h1 className={styles["news-form-title"]}>
-          {model ? "CẬP NHẬT BÀI VIẾT" : "THÊM BÀI VIẾT"}
-        </h1>
-        {onClose && (
-          <button type="button" className={styles["news-form-close"]} onClick={onClose}>
-            <IconClose />
-          </button>
-        )}
-      </div>
+      {!hideHeader && (
+        <div className={styles["news-form-header"]}>
+          {!model && (
+            <h1 className={styles["news-form-title"]}>
+              THÊM BÀI VIẾT
+            </h1>
+          )}
+          {onClose && (
+            <button type="button" className={styles["news-form-close"]} onClick={onClose}>
+              <IconClose />
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Content */}
       <div className={styles["news-form-content"]}>
@@ -564,7 +568,7 @@ const NewsForm = ({ model, onClose }: Props) => {
             disabled={isSubmit}
           >
             {isSubmit && <span className={styles["btn-spinner"]} />}
-            {model ? "Cập nhật" : "Duyệt tin"}
+            {model ? "Cập nhật" : "Gửi duyệt bài"}
           </button>
         </div>
       </div>

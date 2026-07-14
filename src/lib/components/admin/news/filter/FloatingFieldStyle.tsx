@@ -12,8 +12,8 @@ const FLOATING_FIELD_CSS = `
 
   /* ── Khung field bọc ngoài: cố định width nhỏ gọn, khớp .combobox (201px) trong index.css ── */
   .news-filter-field {
-    flex: 0 0 200px;
-    width: 200px;
+    flex: 0 0 201px;
+    width: 201px;
     min-height: 40px;
     display: flex;
     align-items: center;
@@ -22,9 +22,9 @@ const FLOATING_FIELD_CSS = `
   .news-filter-field--source,
   .news-filter-field--date,
   .news-filter-field--status {
-    flex: 0 0 200px;
-    width: 200px;
-    max-width: 200px;
+    flex: 0 0 201px;
+    width: 201px;
+    max-width: 201px;
   }
   .news-filter-field--search {
     flex: 1 1 280px;
@@ -38,15 +38,15 @@ const FLOATING_FIELD_CSS = `
     position: relative;
     display: flex;
     align-items: center;
-    gap: 6px;
-    width: 100%;
+    gap: 40px;
+    width: 201px;
     height: 40px;
     min-height: 40px;
-    padding: 0 12px;
+    padding: 12px;
     box-sizing: border-box;
     border-radius: 10px;
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
+    background: var(--Text-White, #fff);
+    border: 1px solid var(--Text-Border, #e5e5e5);
     transition: border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -342,6 +342,11 @@ const FLOATING_FIELD_CSS = `
   .news-filter-extra {
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    background: var(--Brand-Main, #0588F0);
     margin-left: auto;
     flex: 0 0 auto;
     min-height: 40px;

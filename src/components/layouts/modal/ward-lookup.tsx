@@ -570,7 +570,7 @@ const WardLookupDialog = ({
                           Chọn địa chỉ cần chuyển đổi
                         </span>
 
-                        <div className="flex items-center justify-between self-stretch bg-neutral-50 rounded-md px-4 py-3 mb-4">
+                        <div className="flex items-center justify-between self-stretch rounded-[6px] border border-[#E5E5E5] bg-[linear-gradient(90deg,_var(--Neutral-Gray-3,_#E5E5E5)_0%,_var(--Neutral-White,_#FFF)_100%)] px-4 py-3 mb-4">
                           <span className="text-neutral-950 text-sm font-[family-name:var(--font-inter,Inter,sans-serif)]">
                             Tìm theo địa chỉ mới sau sắp nhập
                           </span>
@@ -654,8 +654,10 @@ const WardLookupDialog = ({
         >
           <p className="text-neutral-950 text-sm m-0">
           <span className="text-[#0588F0] mr-2">•</span>
-            <span className="font-bold">Phường/Quận(Cũ): </span>
-            <span className="text-[#0588F0] font-medium">
+            <span className="text-[var(--Text-Main,#0A0A0A)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
+              Phường/Quận(Cũ): 
+            </span>
+            <span className="text-[var(--Brand-Main,#0588F0)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
               {originalAddress || "—"}
             </span>
           </p>
@@ -663,15 +665,17 @@ const WardLookupDialog = ({
           <ul className="flex flex-col gap-2 list-none m-0 p-0 pl-1">
           <li className="text-sm text-neutral-950">
               <span className="text-[#0588F0] mr-2">•</span>
-              <span className="font-bold">Sáp nhập từ: </span>
+              <span className="text-[var(--Text-Main,#0A0A0A)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
+                Sáp nhập từ: 
+              </span>
               {ward.MergedFrom.join(", ")}
             </li>
             <li className="text-sm text-neutral-950">
               <span className="text-[#0588F0] mr-2">•</span>
-              <span className="font-bold">
+              <span className="text-[var(--Text-Main,#0A0A0A)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
                 Tên Phường / Xã mới:
               </span>{" "}
-              <span className="text-[#0588F0] font-medium">
+              <span className="text-[var(--Brand-Main,#0588F0)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
                 Phường {ward.WardName}, Thành phố Hồ Chí Minh
               </span>
             </li>

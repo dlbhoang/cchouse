@@ -382,8 +382,8 @@ const FeedModalPreview = ({
                         type="text"
                         btnType="primary"
                         onOkClick={() => handleStatus(1)}
-                        btnText="Duyệt tin"
-                        title="Xác nhận duyệt tin?"
+                        btnText="Gửi duyệt bài"
+                        title="Xác nhận duyệt bài?"
                       />
                       <BtnConfirm
                         type="text"
