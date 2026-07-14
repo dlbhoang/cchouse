@@ -79,7 +79,15 @@ const NewPreview = ({
       width={1000}
       onCancel={handleCancel}
       title={
-        <Typography.Title level={5} style={{ margin: 0 }}>
+        <Typography.Title
+          level={4}
+          style={{
+            margin: 0,
+            fontSize: 18,
+            fontWeight: 700,
+            lineHeight: 1.5,
+          }}
+        >
           CHI TIẾT BÀI VIẾT
         </Typography.Title>
       }
@@ -99,25 +107,52 @@ const NewPreview = ({
       }
     >
       <div style={{ maxHeight: "75vh", overflow: "auto", paddingInline: 8 }}>
-
-        {/* Nội dung bài viết */}
         <div
           style={{
-            color: "#27272a",
-            fontSize: 16,
-            lineHeight: 1.8,
-            letterSpacing: "0.01em",
-            marginBottom: 20,
+            marginBottom: 28,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: 8,
+            alignSelf: "stretch",
           }}
-          dangerouslySetInnerHTML={{
-            __html: model.Content || "<p>Không có nội dung</p>",
-          }}
-        />
+        >
+          <Typography.Title
+            level={3}
+            style={{
+              margin: 0,
+              color: "var(--Text-Main, #0A0A0A)",
+              fontFamily: "var(--Font-family-Text, Inter)",
+              fontSize: "var(--Font-sizes-text-lg, 18px)",
+              fontStyle: "normal",
+              fontWeight: 700,
+              lineHeight: "var(--Line-height-text-lg, 28px)",
+            }}
+          >
+            {model.Title || "Xem tin"}
+          </Typography.Title>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <Typography.Text style={valueStyle}>
+              {FormatDateTime(model.CreatedDate)}
+            </Typography.Text>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <Typography.Text style={valueStyle}>
+                {model.ViewCount ?? 0}
+              </Typography.Text>
+              <EyeOutlined />
+            </div>
+          </div>
+          {model.CreatedBy ? (
+            <Typography.Text style={labelStyle}>
+              Người đăng: {model.CreatedBy}
+            </Typography.Text>
+          ) : null}
+        </div>
 
-        {/* Ảnh thumbnail */}
         {model.Thumbnail ? (
           <div
             style={{
+              marginBottom: 28,
               width: "100%",
               overflow: "hidden",
               borderRadius: 12,
@@ -134,6 +169,19 @@ const NewPreview = ({
             />
           </div>
         ) : null}
+
+        <div
+          style={{
+            color: "#27272a",
+            fontSize: 16,
+            lineHeight: 1.8,
+            letterSpacing: "0.01em",
+            marginBottom: 20,
+          }}
+          dangerouslySetInnerHTML={{
+            __html: model.Content || "<p>Không có nội dung</p>",
+          }}
+        />
       </div>
     </Modal>
   );
