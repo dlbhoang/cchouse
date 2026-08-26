@@ -47,4 +47,5 @@ sitemap*.xml
 .env.development
 
 .bun.lock
-.package-lock.json
+.package-lock.jsonbuild_error.log
+deploy.tar.gz
