@@ -589,6 +589,44 @@
   background: var(--color-danger);
 }
 
+/* Edit/pencil overlay on thumbnail */
+.upload-preview-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-upload);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.upload-edit-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  color: #111827;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  z-index: 2;
+  backdrop-filter: blur(10px);
+}
+.upload-edit-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+
 /* =========================================================
    TEXTAREA (Tiêu đề / Tóm tắt)
    ========================================================= */
@@ -732,6 +770,32 @@
   padding: 8px 16px;
   transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
   cursor: pointer;
+}
+
+.reject-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 76px;
+  height: 40px;
+  padding: 8px 16px;
+  border: 1px solid #ef4444;
+  border-radius: 10px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reject-button:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.reject-button:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
 }
 
 .submit-button:hover {

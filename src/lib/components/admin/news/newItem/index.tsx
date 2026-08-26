@@ -1,4 +1,4 @@
-import { EditOutlined, EyeFilled, EyeOutlined } from "@ant-design/icons";
+import { Pencil, Eye } from "lucide-react";
 import { Badge, Button, Card, Col, Image, Row, Space, Typography } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -27,12 +27,12 @@ const NewItem = ({ item, onPreview }: Props) => {
         actions={[
           <Button
             type="primary"
-            icon={<EditOutlined />}
+            icon={<Pencil size={14} />}
             onClick={() => router.push(`${AppRoutes.news.url}/edit/${item.Id}`)}
           >
             Chỉnh sửa
           </Button>,
-          <Button icon={<EyeOutlined />} onClick={() => onPreview(item)}>
+          <Button icon={<Eye size={14} />} onClick={() => onPreview(item)}>
             Xem tin
           </Button>,
         ]}
@@ -60,7 +60,7 @@ const NewItem = ({ item, onPreview }: Props) => {
                   {FormatDateTime(item.UpdatedDate ?? item.CreatedDate)}
                 </Text>
                 <Text type="secondary" style={{ fontSize: 12 }}>
-                  {item.ViewCount} <EyeFilled />
+                  {item.ViewCount} <Eye size={12} fill="currentColor" />
                 </Text>
               </Row>
               <Paragraph

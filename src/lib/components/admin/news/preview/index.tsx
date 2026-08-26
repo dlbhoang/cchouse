@@ -1,6 +1,7 @@
 import { Button, Modal, Space, Divider, Typography } from "antd";
-import { EyeOutlined } from "@ant-design/icons";
+import { Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { FormatDateTime } from "@/lib/core/utils/myFormat";
 import type { INewsResponse } from "@/services/api/news/INews";
@@ -21,6 +22,62 @@ const NewPreview = ({
   onEdit,
 }: Props) => {
   const router = useRouter();
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = contentRef.current;
+    if (!container) return;
+
+    const thumbnailSrc = Array.isArray(model.Thumbnail)
+      ? model.Thumbnail[0]?.toString()
+      : model.Thumbnail?.toString();
+
+    // Chuẩn hóa: bỏ domain, query string, decode, lowercase, bỏ đuôi mở rộng
+    const normalize = (url?: string) => {
+      if (!url) return "";
+      try {
+        let clean = decodeURIComponent(url.split("?")[0]);
+        clean = clean.substring(clean.lastIndexOf("/") + 1);
+        clean = clean.replace(/\.[a-zA-Z0-9]+$/, ""); // bỏ đuôi .jpg/.png...
+        return clean.toLowerCase().trim();
+      } catch {
+        return url.toLowerCase();
+      }
+    };
+
+    const thumbnailKey = normalize(thumbnailSrc);
+
+    const isSameImage = (a: string, b: string) => {
+      if (!a || !b) return false;
+      if (a === b) return true;
+      // so khớp lỏng: 1 chuỗi chứa chuỗi kia (phòng khi có hash/prefix khác nhau)
+      return a.length > 5 && b.length > 5 && (a.includes(b) || b.includes(a));
+    };
+
+    const imgs = container.querySelectorAll("img");
+
+    imgs.forEach((img) => {
+      const imgSrc = img.getAttribute("src") || img.src;
+      const imgKey = normalize(imgSrc);
+
+      const matchesThumbnail = thumbnailKey && isSameImage(imgKey, thumbnailKey);
+
+      if (matchesThumbnail) {
+        img.style.display = "none";
+        return;
+      }
+
+      const hideIfBroken = () => {
+        if (img.complete && img.naturalWidth === 0) {
+          img.style.display = "none";
+        }
+      };
+      img.addEventListener("error", () => {
+        img.style.display = "none";
+      });
+      hideIfBroken();
+    });
+  }, [model.Content, model.Thumbnail, isModalOpen]);
 
   const handleEdit = () => {
     handleCancel();
@@ -139,38 +196,21 @@ const NewPreview = ({
               <Typography.Text style={valueStyle}>
                 {model.ViewCount ?? 0}
               </Typography.Text>
-              <EyeOutlined />
+              <Eye size={14} />
             </div>
           </div>
           {model.CreatedBy ? (
-            <Typography.Text style={labelStyle}>
-              Người đăng: {model.CreatedBy}
+            <Typography.Text>
+              <span style={{ ...labelStyle, fontWeight: 700 }}>
+                Người đăng:
+              </span>{" "}
+              <span style={valueStyle}>{model.CreatedBy}</span>
             </Typography.Text>
           ) : null}
         </div>
 
-        {model.Thumbnail ? (
-          <div
-            style={{
-              marginBottom: 28,
-              width: "100%",
-              overflow: "hidden",
-              borderRadius: 12,
-            }}
-          >
-            <img
-              src={
-                Array.isArray(model.Thumbnail)
-                  ? model.Thumbnail[0]?.toString()
-                  : model.Thumbnail.toString()
-              }
-              alt={model.Title || "thumbnail"}
-              style={{ width: "100%", height: "auto", display: "block" }}
-            />
-          </div>
-        ) : null}
-
         <div
+          ref={contentRef}
           style={{
             color: "#27272a",
             fontSize: 16,

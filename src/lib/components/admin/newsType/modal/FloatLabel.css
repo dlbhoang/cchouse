@@ -1,0 +1,115 @@
+/* ===== FloatLabel — outlined input with notched floating label ===== */
+
+.gfl {
+  position: relative;
+  width: 100%;
+}
+
+/* Reset input/textarea/Antd Input visuals — border is drawn by .gfl-fieldset instead */
+.gfl input,
+.gfl textarea,
+.gfl .ant-input,
+.gfl .ant-input-affix-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  font-size: 14px;
+  line-height: 46px;
+  color: #1f1f1f;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  border-radius: 0;
+}
+
+.gfl textarea {
+  height: auto;
+  min-height: 90px;
+  padding-top: 14px;
+  line-height: 1.5;
+}
+
+/* The visible border, drawn via fieldset so the legend can cut a notch in it */
+.gfl-fieldset {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  pointer-events: none;
+  transition: border-color 0.15s ease, border-width 0.15s ease;
+}
+
+.gfl-focus .gfl-fieldset {
+  border-width: 1.5px;
+  border-color: #6366f1;
+}
+
+/* Legend reserves the notch width; its text is invisible, only used for sizing */
+.gfl-legend {
+  display: block;
+  width: auto;
+  max-width: 0.01px;
+  height: 11px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
+  transition: max-width 0.12s ease;
+}
+
+.gfl-active .gfl-legend {
+  max-width: 1000px;
+}
+
+.gfl-legend span {
+  display: inline-block;
+  padding: 0 4px;
+  color: transparent;
+  user-select: none;
+}
+
+/* The actual visible label, floats up on top of the notch */
+.gfl-label {
+  position: absolute;
+  z-index: 2;
+  left: 14px;
+  top: 50%;
+  padding: 0 4px;
+  transform: translateY(-50%);
+  transform-origin: left top;
+  font-size: 14px;
+  color: #8c8c8c;
+  background: transparent;
+  pointer-events: none;
+  transition: top 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.gfl-active .gfl-label {
+  top: 0;
+  left: 10px;
+  transform: translateY(-50%) scale(0.86);
+  color: #6366f1;
+  font-weight: 500;
+}
+
+.gfl-focus .gfl-label {
+  color: #6366f1;
+}
+
+/* Optional: error state — pass an extra className="gfl-error" from the parent
+   when the Form.Item has an error, to turn the border/label red */
+.gfl-error .gfl-fieldset {
+  border-color: #ff4d4f;
+}
+
+.gfl-error .gfl-label {
+  color: #ff4d4f;
+}

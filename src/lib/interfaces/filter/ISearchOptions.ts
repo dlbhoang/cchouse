@@ -30,6 +30,7 @@ export interface IRecruitmentOpts extends ISearchOptions {
 export interface INewsOpts extends ISearchOptions {
   CreatedBy?: string | number;
   NewsTypeIds?: string | number | number[];
+  SourceType?: "write" | "share";
   Status?: number;
 }
 

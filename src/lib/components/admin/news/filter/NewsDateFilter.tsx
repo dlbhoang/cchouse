@@ -1,6 +1,6 @@
 import { DatePicker, Form } from "antd";
 import dayjs from "dayjs";
-import React from "react";
+import { useState } from "react";
 
 import { appConst } from "@/lib/core/configs/appConst";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
@@ -13,15 +13,20 @@ const NewsDateFilter = ({
   onValueChange?: () => void;
 }) => {
   const fromDateWatch = Form.useWatch("fromDate", form);
+  const toDateWatch = Form.useWatch("toDate", form);
+  const [open, setOpen] = useState(false);
+  const [selectingEnd, setSelectingEnd] = useState(Boolean(fromDateWatch && !toDateWatch));
+  const [pickerValue, setPickerValue] = useState(
+    fromDateWatch ? dayjs(fromDateWatch) : dayjs()
+  );
 
   const presetDays = [3, 7, 30];
 
   const setPreset = (days: number) => {
     const date = dayjs().subtract(days, "day");
-    const formatted = date.format(appConst.SUBMIT_DATE_FORMAT);
 
-    form.setFieldValue("fromDate", formatted);
-    form.setFieldValue("toDate", formatted);
+    form.setFieldValue("fromDate", date.format(appConst.SUBMIT_DATE_FORMAT));
+    form.setFieldValue("toDate", dayjs().format(appConst.SUBMIT_DATE_FORMAT));
 
     onValueChange?.();
   };
@@ -30,22 +35,56 @@ const NewsDateFilter = ({
     <>
       <DatePicker
         popupClassName="news-date-picker-popup"
-        value={fromDateWatch ? dayjs(fromDateWatch) : null}
-        format={appConst.DATE_FORMAT}
-        placeholder="Chọn ngày"
+        open={open}
+        value={selectingEnd
+          ? (toDateWatch ? dayjs(toDateWatch) : fromDateWatch ? dayjs(fromDateWatch) : null)
+          : (fromDateWatch ? dayjs(fromDateWatch) : null)}
+        pickerValue={pickerValue}
+        onOpenChange={(nextOpen) => {
+          setOpen(nextOpen);
+          if (nextOpen) {
+            const start = fromDateWatch ? dayjs(fromDateWatch) : dayjs();
+            setPickerValue(start);
+            setSelectingEnd(Boolean(fromDateWatch && !toDateWatch));
+          }
+        }}
+        onPanelChange={(nextMonth) => setPickerValue(nextMonth)}
+        placeholder="Chọn khoảng ngày"
         allowClear
         onChange={(date) => {
           if (!date) {
-            form.setFieldValue("fromDate", undefined);
-            form.setFieldValue("toDate", undefined);
-          } else {
-            const formatted = date.format(appConst.SUBMIT_DATE_FORMAT);
-
-            form.setFieldValue("fromDate", formatted);
-            form.setFieldValue("toDate", formatted);
+            form.setFieldsValue({ fromDate: undefined, toDate: undefined });
+            setSelectingEnd(false);
+            onValueChange?.();
+            return;
           }
 
-          onValueChange?.();
+          if (!selectingEnd || !fromDateWatch) {
+            form.setFieldsValue({
+              fromDate: date.format(appConst.SUBMIT_DATE_FORMAT),
+              toDate: undefined,
+            });
+            setSelectingEnd(true);
+            setPickerValue(date);
+          } else {
+            const start = dayjs(fromDateWatch);
+            const from = date.isBefore(start, "day") ? date : start;
+            const to = date.isBefore(start, "day") ? start : date;
+            form.setFieldsValue({
+              fromDate: from.format(appConst.SUBMIT_DATE_FORMAT),
+              toDate: to.format(appConst.SUBMIT_DATE_FORMAT),
+            });
+            setSelectingEnd(false);
+            setOpen(false);
+            onValueChange?.();
+          }
+        }}
+        format={() => {
+          if (fromDateWatch && toDateWatch) {
+            return `${dayjs(fromDateWatch).format(appConst.DATE_FORMAT)} - ${dayjs(toDateWatch).format(appConst.DATE_FORMAT)}`;
+          }
+          if (fromDateWatch) return `${dayjs(fromDateWatch).format(appConst.DATE_FORMAT)} - Đến ngày`;
+          return "";
         }}
         panelRender={(panel) => (
           <div className="news-date-picker-wrapper">
@@ -64,25 +103,33 @@ const NewsDateFilter = ({
 
       <style>{`
         .news-date-picker-popup {
+          width: 300px !important;
           padding: 0 !important;
           border-radius: 10px !important;
           overflow: hidden !important;
         }
 
         .news-date-picker-wrapper {
-          width: 240px;
+          width: 100%;
+          min-width: 0;
           background: #fff;
           border-radius: 10px;
           overflow: hidden;
         }
 
-        /* Fix khoảng trắng / hở góc */
-        .news-date-picker-popup .ant-picker-panel-layout,
-        .news-date-picker-popup .ant-picker-date-panel,
-        .news-date-picker-popup .ant-picker-body {
+        .news-date-picker-popup .ant-picker-panel-layout {
+          display: flex !important;
           width: 100% !important;
+          min-width: 0 !important;
           margin: 0 !important;
-          padding: 0 !important;
+          background: white !important;
+        }
+
+        .news-date-picker-popup .ant-picker-body,
+        .news-date-picker-popup .ant-picker-content {
+          width: 100% !important;
+          min-width: 0 !important;
+          margin: 0 !important;
           background: white !important;
         }
 
@@ -181,6 +228,20 @@ const NewsDateFilter = ({
         .news-date-picker-popup .ant-picker-footer {
           border-top: none !important;
           padding: 4px 0;
+        }
+
+        @media (max-width: 576px) {
+          .news-date-picker-popup {
+            width: min(300px, calc(100vw - 32px)) !important;
+          }
+
+          .news-date-picker-popup .ant-picker-panel {
+            min-width: 0 !important;
+          }
+
+          .news-date-picker-popup .ant-picker-panels {
+            overflow-x: auto !important;
+          }
         }
       `}</style>
     </>

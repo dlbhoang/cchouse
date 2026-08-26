@@ -39,6 +39,25 @@ const OverviewTab = ({ data, images, showAllSections = true }: Props) => {
 
   return (
     <div>
+      {images[0]?.url && (
+        <div className="pd-hero-image">
+          <img src={images[0].url} alt={data.PropAddress.PropName || "Bất động sản"} />
+        </div>
+      )}
+
+      <div className="pd-hero-title-row">
+        <div className="pd-hero-title-group">
+          <h1 className="pd-hero-title">
+            {displayValue(data.PropAddress.PropName) || formatPropertyAddress(data)}
+          </h1>
+          <span className="pd-hero-address">{formatPropertyAddress(data)}</span>
+        </div>
+        <div className="pd-hero-price">
+          <span className="pd-hero-price-label">{priceLabel}</span>
+          <span className="pd-hero-price-value">{data.DisplayPrice}</span>
+        </div>
+      </div>
+
       <div className="pd-header-row">
         <div className="pd-header-item">
           <span className="pd-label">Mã BĐS</span>

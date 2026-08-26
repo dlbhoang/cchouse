@@ -25,18 +25,39 @@ const formatDateCell = (value?: string) => {
 };
 
 // Màu nền/chữ cho từng trạng thái, lấy theo tông màu trong thiết kế
-// (Chờ duyệt: xanh dương nhạt, Đã duyệt: xanh lá nhạt...). Nhãn hiển thị vẫn
-// lấy từ `StatusName` do API trả về, css chỉ quyết định màu.
-const statusStyles: Record<number, { bg: string; color: string }> = {
-  0: { bg: "#dbeafe", color: "#3b82f6" }, // Chờ duyệt
-  1: { bg: "#dcfce7", color: "#22c55e" }, // Đã duyệt
-  2: { bg: "#fef9c3", color: "#ca8a04" }, // Tạm ẩn / cảnh báo
-  3: { bg: "#fee2e2", color: "#ef4444" }, // Từ chối / lỗi
-};
-const defaultStatusStyle = { bg: "#f4f4f5", color: "#71717a" };
+// (Chờ duyệt: xanh dương nhạt, Đã duyệt/Đang hiển thị: xanh lá nhạt, Đã ẩn:
+// xám, Từ chối: đỏ...). Nhãn hiển thị vẫn lấy từ `StatusName` do API trả về.
+//
+// Trước đây màu được map theo số `Status` (0/1/2/3), nhưng giá trị số thực tế
+// trả về từ API không khớp với thứ tự giả định này, khiến các trạng thái như
+// "Đã ẩn" / "Đang hiển thị" rơi vào style mặc định (hoặc bị style ngoài đè
+// thành màu tím/indigo không đúng thiết kế). Chuyển sang so khớp theo chính
+// text `StatusName` cho chắc chắn, numeric map chỉ dùng làm phương án dự
+// phòng khi không có StatusName.
+const statusNameClasses: { match: RegExp; className: string }[] = [
+  { match: /ch[ờo]\s*duy[ệe]t/i, className: "news-status-pending" }, // Chờ duyệt
+  { match: /t[ừu]\s*ch[ốo]i|l[ỗo]i/i, className: "news-status-rejected" }, // Từ chối / lỗi
+  { match: /[ẩâ]n/i, className: "news-status-hidden" }, // Đã ẩn / Tạm ẩn
+  { match: /duy[ệe]t|hi[ểe]n\s*th[ịi]/i, className: "news-status-approved" }, // Đã duyệt / Đang hiển thị
+];
 
-const getStatusStyle = (status?: number) =>
-  (status !== undefined && statusStyles[status]) || defaultStatusStyle;
+const statusIndexClasses: Record<number, string> = {
+  0: "news-status-pending",
+  1: "news-status-approved",
+  2: "news-status-hidden",
+  3: "news-status-rejected",
+};
+
+// Xác định class màu theo `StatusName` (ưu tiên, vì đây là nhãn hiển thị thật
+// từ API) và dự phòng theo số `Status` nếu không khớp text nào — tránh trường
+// hợp rơi vào style mặc định/màu lạ (tím) không đúng với thiết kế Container.
+const getStatusClassName = (status?: number, statusName?: string) => {
+  if (statusName) {
+    const found = statusNameClasses.find(({ match }) => match.test(statusName));
+    if (found) return found.className;
+  }
+  return (status !== undefined && statusIndexClasses[status]) || "news-status-default";
+};
 
 const createColumns = (
   typeMap: Record<number, string>,
@@ -57,12 +78,15 @@ const createColumns = (
     title: () => <span className="news-th-label">Loại tin</span>,
     dataIndex: "NewsTypeId",
     width: 130,
-    render(value) {
+    render(value, record) {
+      const name = record.Source?.trim()
+        ? "Chia sẻ"
+        : "Viết bài";
       const id = Number(value);
-      const name = typeMap?.[id] ?? (value as any) ?? "—";
+      const fallbackName = typeMap?.[id] ?? (value as any) ?? "—";
       return (
-        <span className="news-type-text" title={name}>
-          {name || "—"}
+        <span className="news-type-text" title={name || fallbackName}>
+          {name || fallbackName}
         </span>
       );
     },
@@ -71,8 +95,8 @@ const createColumns = (
     // NOTE: assumes `Image` (thumbnail url) exists on INewsResponse — adjust to your actual field
     title: () => <span className="news-th-label">Hình ảnh</span>,
     dataIndex: "Thumbnail",
-    width: 300,
-    minWidth: 300,
+    width: 90,
+    minWidth: 90,
     align: "center",
     render(value, record) {
       const thumb = Array.isArray(value) ? value[0] : value;
@@ -82,6 +106,7 @@ const createColumns = (
           src={thumb.toString()}
           alt={record.Title ?? ""}
           className="news-thumbnail"
+          style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 8 }}
         />
       );
     },
@@ -89,7 +114,7 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Tiêu đề</span>,
     dataIndex: "Title",
-    width: 360,
+    width: 260,
     render(value, record) {
       return (
         <div className="news-title-cell">
@@ -173,11 +198,9 @@ const createColumns = (
     dataIndex: "StatusName",
     width: 130,
     render(value, record) {
-      const { bg, color } = getStatusStyle(record.Status);
+      const statusClass = getStatusClassName(record.Status, value);
       return (
-        <span className="news-status-tag" style={{ background: bg, color }}>
-          {value || "—"}
-        </span>
+        <span className={`news-status-tag ${statusClass}`}>{value || "—"}</span>
       );
     },
   },
@@ -192,7 +215,7 @@ const createColumns = (
         (record.Status !== 0 ? record.UpdatedDate : undefined);
 
       if (!value && !approvedDate) {
-        return null;
+        return <span className="news-approver-empty">—</span>;
       }
 
       return (

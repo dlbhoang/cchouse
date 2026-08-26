@@ -1,7 +1,7 @@
 /* Property detail modal — scoped design tokens matching Figma mockups */
 .property-detail,
 .property-detail-modal {
-  font-family: "Figtree", sans-serif;
+  font-family: Inter, var(--default-font-family, sans-serif);
 }
 
 .property-detail-modal .ant-modal-content {
@@ -16,11 +16,10 @@
 }
 
 .property-detail-modal .ant-modal-title {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
-  color: #1f1f1f;
-  letter-spacing: 0.3px;
-  line-height: 1.4;
+  color: #0a0a0a;
+  line-height: 1.5;
 }
 
 .property-detail-modal .ant-modal-body {
@@ -36,33 +35,33 @@
 .property-detail-modal .prop-detail-footer .ant-btn {
   min-width: 120px;
   height: 40px;
-  border-radius: 6px;
-  font-family: "Figtree", sans-serif;
+  border-radius: 10px;
+  font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 14px;
   font-weight: 500;
   box-shadow: none;
 }
 
 .property-detail-modal .prop-detail-footer .ant-btn-default {
-  border-color: #1677ff;
-  color: #1677ff;
+  border-color: #0588f0;
+  color: #0588f0;
   background: #fff;
 }
 
 .property-detail-modal .prop-detail-footer .ant-btn-default:hover {
-  border-color: #4096ff !important;
-  color: #4096ff !important;
+  border-color: #0477d6 !important;
+  color: #0477d6 !important;
   background: #f0f7ff !important;
 }
 
 .property-detail-modal .prop-detail-footer .ant-btn-primary {
-  background: #1677ff;
-  border-color: #1677ff;
+  background: #0588f0;
+  border-color: #0588f0;
 }
 
 .property-detail-modal .prop-detail-footer .ant-btn-primary:hover {
-  background: #4096ff !important;
-  border-color: #4096ff !important;
+  background: #0477d6 !important;
+  border-color: #0477d6 !important;
 }
 
 /* Tabs */
@@ -93,7 +92,7 @@
 }
 
 .property-detail .property-detail-tabs .ant-tabs-ink-bar {
-  background: #1677ff;
+  background: #0588f0;
   height: 2px;
   border-radius: 2px 2px 0 0;
 }
@@ -102,9 +101,9 @@
   padding-top: 20px;
 }
 
-/* Typography tokens — Figtree (text) + Geist Mono (numbers) */
+/* Typography tokens — Inter (text) + Geist Mono (numbers) */
 .property-detail .pd-label {
-  font-family: "Figtree", sans-serif;
+  font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 13px;
   font-weight: 600;
   color: #8c8c8c;
@@ -112,7 +111,7 @@
 }
 
 .property-detail .pd-value {
-  font-family: "Figtree", sans-serif;
+  font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 14px;
   font-weight: 400;
   color: #1f1f1f;
@@ -132,7 +131,7 @@
   margin-bottom: 16px;
   padding-bottom: 10px;
   border-bottom: 1px solid #f0f0f0;
-  font-family: "Figtree", sans-serif;
+  font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 16px;
   font-weight: 700;
   color: #1f1f1f;
@@ -167,7 +166,7 @@
 
 .property-detail .pd-field-label {
   margin-bottom: 4px;
-  font-family: "Figtree", sans-serif;
+  font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 13px;
   font-weight: 600;
   color: #8c8c8c;
@@ -175,7 +174,7 @@
 }
 
 .property-detail .pd-field-value {
-  font-family: "Figtree", sans-serif;
+  font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 14px;
   font-weight: 400;
   color: #1f1f1f;
@@ -250,8 +249,8 @@
 }
 
 .property-detail .pd-oneway-check .ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner {
-  background-color: #1677ff;
-  border-color: #1677ff;
+  background-color: #0588f0;
+  border-color: #0588f0;
 }
 
 .property-detail .pd-oneway-check .ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner::after {
@@ -356,7 +355,7 @@
 }
 
 .property-detail .pd-eye-btn:hover {
-  color: #1677ff;
+  color: #0588f0;
 }
 
 /* Warehouse collapse */
@@ -377,11 +376,11 @@
 
 .property-detail .pd-warehouse-link {
   font-size: 13px;
-  color: #1677ff;
+  color: #0588f0;
 }
 
 .property-detail .pd-warehouse-link:hover {
-  color: #4096ff;
+  color: #0477d6;
 }
 
 /* Map info box */
@@ -394,7 +393,7 @@
   width: min(90%, 320px);
   transform: translate(-50%, calc(-50% + 28px));
   border-radius: 8px;
-  border: 1px solid #1677ff;
+  border: 1px solid #0588f0;
   background: #fff;
   padding: 12px 14px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -438,27 +437,27 @@
 .property-detail-modal .ant-input-number,
 .property-detail-modal .ant-select-selector,
 .property-detail-modal .ant-picker {
-  border-radius: 8px !important;
+  border-radius: 10px !important;
 }
 
 .property-detail-modal .ant-input:hover,
 .property-detail-modal .ant-input-number:hover,
 .property-detail-modal .ant-select-selector:hover,
 .property-detail-modal .ant-picker:hover {
-  border-color: #fa8c16 !important;
+  border-color: #0588f0 !important;
 }
 
 .property-detail-modal .ant-input:focus,
 .property-detail-modal .ant-input-number-focused,
 .property-detail-modal .ant-select-focused .ant-select-selector,
 .property-detail-modal .ant-picker-focused {
-  border-color: #fa8c16 !important;
+  border-color: #0588f0 !important;
   box-shadow: 0 0 0 2px rgba(250,140,22,.15) !important;
 }
 
 .property-detail-modal .ant-checkbox-checked .ant-checkbox-inner {
-  background: #fa8c16;
-  border-color: #fa8c16;
+  background: #0588f0;
+  border-color: #0588f0;
 }
 
 .property-detail-modal .ant-btn-primary {
@@ -467,7 +466,78 @@
 }
 
 .property-detail-modal .ant-btn-primary:hover {
-  background: #fa8c16 !important;
-  border-color: #fa8c16 !important;
+  background: #0588f0 !important;
+  border-color: #0588f0 !important;
 }
 
+
+/* ===== Hero section: ảnh đại diện + tiêu đề + giá ===== */
+.property-detail .pd-hero-image {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.property-detail .pd-hero-image img {
+  display: block;
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+}
+
+.property-detail .pd-hero-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.property-detail .pd-hero-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.property-detail .pd-hero-title {
+  margin: 0;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: #0a0a0a;
+  line-height: 1.4;
+}
+
+.property-detail .pd-hero-address {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 400;
+  color: #a1a1aa;
+  line-height: 1.5;
+}
+
+.property-detail .pd-hero-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.property-detail .pd-hero-price-label {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  color: #a1a1aa;
+}
+
+.property-detail .pd-hero-price-value {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0588f0;
+  line-height: 1.3;
+}

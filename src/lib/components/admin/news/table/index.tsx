@@ -1,9 +1,12 @@
 import { Col, Row, Typography } from "antd";
+import type { TableRowSelection } from "antd/es/table/interface";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 import TableBase from "@/lib/components/shared/TableBase";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import { ISearchOptions } from "@/lib/interfaces/filter/ISearchOptions";
+import type { INewsResponse } from "@/services/api/news/INews";
 import newsApi from "@/services/api/news/newsApi";
 import columns from "./columns";
 
@@ -11,6 +14,7 @@ export const NewsTable = () => {
   const router = useRouter();
   const pathname = usePathname();
   const query = useSearchParams();
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const opts = {
     ...Object.fromEntries(query?.entries() ?? []),
   } as any as ISearchOptions;
@@ -22,6 +26,13 @@ export const NewsTable = () => {
   };
 
   const { data, isLoading, isValidating } = newsApi.useGet(opts);
+
+  const rowSelection: TableRowSelection<INewsResponse> = {
+    selectedRowKeys,
+    onChange: (keys) => {
+      setSelectedRowKeys(keys);
+    },
+  };
 
   return (
     <>
@@ -39,6 +50,7 @@ export const NewsTable = () => {
         data={data?.data ?? []}
         cols={columns}
         bordered
+        rowSelection={rowSelection}
         onPageIndexChange={handlePageIndexChange}
       />
     </>

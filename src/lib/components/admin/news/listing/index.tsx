@@ -1,5 +1,5 @@
-import { Button, Input, InputRef, Modal, Switch, Typography } from "antd";
-import { MoreOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, InputRef, Modal, Typography } from "antd";
+import { MoreVertical, Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { mutate } from "swr";
@@ -9,7 +9,7 @@ import TableBase from "@/lib/components/shared/TableBase";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import type { INewsRequest, INewsResponse } from "@/services/api/news/INews";
+import type { INewsResponse } from "@/services/api/news/INews";
 import newsApi from "@/services/api/news/newsApi";
 import newsTypeApi from "@/services/api/news/newsTypeApi";
 import NewsForm from "@/lib/components/admin/news/form";
@@ -47,6 +47,11 @@ const NewsTypeTabs = ({
   const allCount = Object.keys(counts).length
     ? Object.values(counts).reduce((s, v) => s + v, 0)
     : tagsData.reduce((sum, item) => sum + (item.NewsCount ?? 0), 0);
+
+  const enrichedTypes = tagsData.map((item) => ({
+    ...item,
+    NewsCount: counts[item.Id?.toString() ?? ""] ?? item.NewsCount,
+  }));
 
   useEffect(() => {
     if (!tagsData || tagsData.length === 0) return;
@@ -148,31 +153,60 @@ const NewsTypeTabs = ({
       <div className="news-type-tabs-actions">
         <Button
           className="news-add-type-btn"
-          icon={<PlusOutlined />}
+          icon={<Plus size={14} />}
           onClick={() => setOpenAddModal(true)}
         >
           Thêm
         </Button>
         <Button
           className="news-more-btn"
-          icon={<MoreOutlined />}
+          icon={<MoreVertical size={16} />}
           onClick={() => setOpenModal(true)}
         />
       </div>
 
       <Modal
-        title="LOẠI TIN TỨC"
-        style={{ top: 20 }}
+        title={null}
+        className="news-type-modal"
+        wrapClassName="news-type-modal-wrap"
         open={openModal}
         onCancel={() => setOpenModal(false)}
         footer={null}
+        closable={false}
+        width={520}
       >
-        <span>
-          TÌM ĐƯỢC{" "}
-          <Typography.Text strong>{data?.data?.length ?? 0}</Typography.Text>{" "}
-          KẾT QUẢ
-        </span>
-        <NewsTypeTable loading={false} data={data?.data ?? []} />
+        <div className="news-type-modal-wrapper">
+          <div className="news-type-modal-header">
+            <div>
+              <div className="news-type-modal-title">Loại tin tức</div>
+              <div className="news-type-modal-count">
+                Tìm được <Typography.Text strong>{data?.data?.length ?? 0}</Typography.Text> kết quả
+              </div>
+            </div>
+            <button
+              type="button"
+              className="news-type-modal-close"
+              onClick={() => setOpenModal(false)}
+              aria-label="Đóng"
+            >
+              ×
+            </button>
+          </div>
+
+          <div className="news-type-modal-body">
+            <NewsTypeTable loading={false} data={enrichedTypes} counts={counts} />
+          </div>
+
+          <div className="news-type-modal-footer">
+            <button
+              type="button"
+              className="news-type-modal-cancel-btn"
+              onClick={() => setOpenModal(false)}
+            >
+              Hủy
+            </button>
+          </div>
+        </div>
       </Modal>
 
       <AddEditModal
@@ -180,147 +214,6 @@ const NewsTypeTabs = ({
         handleCancel={() => setOpenAddModal(false)}
       />
 
-      <style jsx>{`
-        .news-type-tabs-bar {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          flex-wrap: wrap;
-          margin-bottom: 16px;
-        }
-
-        .news-type-tabs-list {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex-wrap: wrap;
-        }
-
-        .news-type-tab {
-          display: inline-flex;
-          align-items: center;
-          height: 32px;
-          padding: 0 14px;
-          border: none;
-          border-radius: 16px;
-          background-color: #f0f0f0;
-          color: #1f1f1f;
-          font-size: 13px;
-          font-weight: 500;
-          cursor: pointer;
-          white-space: nowrap;
-          outline: none;
-          box-shadow: none;
-          -webkit-tap-highlight-color: transparent;
-          transition: background-color 0.15s ease, color 0.15s ease;
-        }
-
-        .news-type-tab:hover {
-          background-color: #e6e6e6;
-        }
-
-        .news-type-tab:focus,
-        .news-type-tab:focus-visible {
-          outline: none;
-          box-shadow: none;
-        }
-
-        .news-type-tab.active {
-          background-color: #1a1a1a;
-          color: #ffffff;
-        }
-
-        .news-type-tab.active:hover {
-          background-color: #000000;
-        }
-
-        .news-type-tab.active::after {
-          display: none;
-        }
-
-        .news-type-tabs-actions {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-left: auto;
-        }
-
-        .news-add-type-input {
-          height: 32px;
-          width: 140px;
-          border-radius: 16px;
-        }
-      `}</style>
-      <style jsx global>{`
-        .news-add-type-btn.ant-btn {
-          height: 32px;
-          border-radius: 16px;
-          border: 1px solid #d9d9d9;
-          background-color: #ffffff;
-          color: #1f1f1f;
-          font-size: 13px;
-          font-weight: 500;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          box-shadow: none;
-          outline: none;
-        }
-
-        .news-add-type-btn.ant-btn:hover,
-        .news-add-type-btn.ant-btn:focus {
-          border-color: #bfbfbf;
-          color: #1f1f1f;
-          box-shadow: none;
-          outline: none;
-        }
-
-        .news-more-btn.ant-btn {
-          height: 32px;
-          width: 32px;
-          min-width: 32px;
-          border-radius: 8px;
-          border: 1px solid #d9d9d9;
-          background-color: #ffffff;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-          box-shadow: none;
-          outline: none;
-        }
-
-        .news-action-menu-item {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          padding: 10px 12px;
-          border: none;
-          background: transparent;
-          color: #111827;
-          text-align: left;
-          cursor: pointer;
-          font-size: 14px;
-        }
-
-        .news-action-menu-item:hover {
-          background: #f4f5f7;
-        }
-
-        .news-more-btn.ant-btn:hover,
-        .news-more-btn.ant-btn:focus {
-          border-color: #bfbfbf;
-          box-shadow: none;
-          outline: none;
-        }
-
-        /* Tắt hiệu ứng "wave" (viền sóng xanh khi click) mặc định của antd cho 2 nút này */
-        .news-add-type-btn .ant-wave,
-        .news-more-btn .ant-wave {
-          display: none !important;
-        }
-      `}</style>
     </div>
   );
 };
@@ -346,10 +239,35 @@ const NewsList = () => {
     );
   };
 
-  const { data, isLoading, isValidating } = newsApi.useGet(opts);
+  const hasLocalFilters = Boolean(opts.SourceType || opts.fromDate || opts.toDate);
+  const requestOpts = hasLocalFilters
+    ? {
+        ...opts,
+        pageIndex: 1,
+        pageSize: 10000,
+        SourceType: undefined,
+        fromDate: undefined,
+        toDate: undefined,
+      }
+    : opts;
+  const { data, isLoading, isValidating } = newsApi.useGet(requestOpts);
+  const filteredNewsItems = (data?.data ?? []).filter((item) => {
+    const sourceType = opts.SourceType;
+    if (sourceType === "share" && !item.Source?.trim()) return false;
+    if (sourceType === "write" && item.Source?.trim()) return false;
+
+    const itemDate = new Date(item.CreatedDate);
+    if (opts.fromDate && itemDate < new Date(`${opts.fromDate}T00:00:00`)) return false;
+    if (opts.toDate && itemDate > new Date(`${opts.toDate}T23:59:59.999`)) return false;
+    return true;
+  });
+  const pageIndex = Number(opts.pageIndex ?? 1);
+  const pageSize = Number(opts.pageSize ?? 30);
+  const newsItems = hasLocalFilters
+    ? filteredNewsItems.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
+    : filteredNewsItems;
   const [previewNews, setPreviewNews] = useState<INewsResponse | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [isUpdatingStatus, setIsUpdatingStatus] = useState(false);
 
   useEffect(() => {
     mutate(newsApi.mutateKey);
@@ -360,9 +278,22 @@ const NewsList = () => {
     setIsNewsFormModalOpen(true);
   };
 
-  const handleOpenEditNewsForm = (item: INewsResponse) => {
-    setSelectedNews(item);
-    setIsNewsFormModalOpen(true);
+  const handleOpenEditNewsForm = async (item: INewsResponse) => {
+    try {
+      if (item.Content && item.Content.trim().length > 0) {
+        setSelectedNews(item);
+        setIsNewsFormModalOpen(true);
+        return;
+      }
+
+      const res = await newsApi.getById(item.Id ?? 0);
+      setSelectedNews(res.data);
+      setIsNewsFormModalOpen(true);
+    } catch (error) {
+      console.error("Failed to load full news item:", error);
+      setSelectedNews(item);
+      setIsNewsFormModalOpen(true);
+    }
   };
 
   const handleCloseNewsFormModal = () => {
@@ -370,26 +301,10 @@ const NewsList = () => {
     setSelectedNews(undefined);
   };
 
-  const handleToggleNewsStatus = async (shouldShow?: boolean) => {
-    if (!selectedNews) return;
-    setIsUpdatingStatus(true);
-    try {
-      const isHidden = Boolean(
-        selectedNews?.StatusName?.toLowerCase().includes("ẩn") ||
-          selectedNews?.StatusName?.toLowerCase().includes("hidden")
-      );
-      // Use the shouldShow parameter if provided (from Switch), otherwise toggle
-      const newStatus = shouldShow !== undefined ? (shouldShow ? "Show" : "Hidden") : (isHidden ? "Show" : "Hidden");
-      await newsApi.updateStatus(
-        selectedNews.Id ?? 0,
-        newStatus
-      );
-      const res = await newsApi.getById(selectedNews.Id ?? 0);
-      setSelectedNews(res.data);
-      mutate(newsApi.mutateKey);
-    } finally {
-      setIsUpdatingStatus(false);
-    }
+  const handleRejectNews = async (item: INewsResponse) => {
+    await newsApi.updateStatus(item.Id ?? 0, "Hidden");
+    mutate(newsApi.mutateKey);
+    handleCloseNewsFormModal();
   };
 
   const handleOpenPreview = async (item: INewsResponse) => {
@@ -416,33 +331,15 @@ const NewsList = () => {
   };
 
   const createNewsButton = (
-    <button
-      type="button"
-      onClick={handleOpenNewNewsForm}
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "8px",
-        padding: "8px 16px",
-        borderRadius: "10px",
-        background: "#0588f0",
-        color: "#fff",
-        border: "none",
-        cursor: "pointer",
-        fontSize: "13px",
-        fontWeight: 500,
-        lineHeight: 1,
-        whiteSpace: "nowrap",
-        boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
-        transition: "all 0.2s ease",
-      }}
-    >
-      <PlusOutlined />
-      <span>Viết bài</span>
-    </button>
-  );
-
+  <button
+    type="button"
+    onClick={handleOpenNewNewsForm}
+    className="news-filter-create-btn"
+  >
+    <Plus size={16} />
+    <span>Viết bài</span>
+  </button>
+);
   return (
     <div className="news-listing">
       <MyBreadcrumb
@@ -459,6 +356,7 @@ const NewsList = () => {
           fontSize: "var(--Font-sizes-text-2xl, 24px)",
           fontStyle: "normal",
           fontWeight: 700,
+          textTransform: "uppercase",
           lineHeight: "var(--Line-height-text-2xl, 32px)",
         }}
       >
@@ -471,18 +369,14 @@ const NewsList = () => {
       {/* News Type Tabs */}
       <NewsTypeTabs opts={opts} onSubmit={handleFilter} />
 
-      {/* Results count */}
-      <div className="news-result-count">
-        Tìm được <span className="news-result-count-strong">{data?.totalRow ?? 0}</span> kết quả
-      </div>
 
       {/* News Table */}
       <div className="news-table">
         <TableBase
           loading={isLoading || isValidating}
-          total={data?.totalRow ?? 0}
+          total={hasLocalFilters ? filteredNewsItems.length : data?.totalRow ?? 0}
           searchOptions={opts}
-          data={data?.data ?? []}
+          data={newsItems}
           cols={useNewsColumns(handleOpenPreview, handleOpenEditNewsForm)}
           onPageIndexChange={handlePageIndexChange}
         />
@@ -499,31 +393,11 @@ const NewsList = () => {
 
       {/* News Form Modal */}
       <Modal
-        title={selectedNews ? (
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
-            <span>Chỉnh sửa bài viết</span>
-            <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-              <Switch
-                checked={selectedNews && !Boolean(
-                  selectedNews?.StatusName?.toLowerCase().includes("ẩn") ||
-                    selectedNews?.StatusName?.toLowerCase().includes("hidden")
-                )}
-                loading={isUpdatingStatus}
-                onChange={handleToggleNewsStatus}
-              />
-              <Typography.Text>
-                {selectedNews && Boolean(
-                  selectedNews?.StatusName?.toLowerCase().includes("ẩn") ||
-                    selectedNews?.StatusName?.toLowerCase().includes("hidden")
-                ) ? "Ẩn bài" : "Đang hiển thị"}
-              </Typography.Text>
-            </div>
-          </div>
-        ) : null}
+        title={null}
         open={isNewsFormModalOpen}
         onCancel={handleCloseNewsFormModal}
         footer={null}
-        width={900}
+        width={1152}
         style={{ top: 20 }}
         wrapClassName="news-form-modal-wrap"
         styles={{
@@ -541,119 +415,11 @@ const NewsList = () => {
         <NewsForm
           model={selectedNews}
           onClose={handleCloseNewsFormModal}
-          hideHeader={Boolean(selectedNews)}
+          hideHeader={false}
+          onReject={handleRejectNews}
         />
       </Modal>
 
-      <style jsx>{`
-        .news-listing {
-          padding: 0;
-        }
-
-        .news-result-count {
-          margin-bottom: 14px;
-          padding-left: 0;
-          font-size: 13px;
-          color: #737373;
-        }
-
-        .news-result-count-strong {
-          color: #171717;
-          font-weight: 600;
-        }
-
-        .news-table {
-          background: #ffffff;
-          border-radius: 10px;
-          box-shadow: 0 1px 2px rgba(16, 16, 16, 0.04);
-          overflow: hidden;
-        }
-
-        .news-form-modal :global(.ant-modal-header) {
-          display: none !important;
-        }
-
-        .news-form-modal :global(.ant-modal-close) {
-          display: none !important;
-        }
-
-        .news-form-modal :global(.ant-modal-content) {
-          border-radius: 8px;
-          overflow: hidden;
-          height: 90vh;
-          max-height: 90vh;
-          display: flex;
-          width: var(--Modal-Lg, 1152px);
-          flex-direction: column;
-          align-items: flex-start;
-          padding: 0 !important;
-        }
-
-        .news-form-modal :global(.ant-modal-body) {
-          padding: 0 !important;
-          height: 100%;
-          max-height: 100%;
-          min-height: 0;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          padding-bottom: 0 !important;
-        }
-
-        .news-form-modal-wrap {
-          height: 100vh !important;
-          max-height: 100vh !important;
-          overflow: auto !important;
-          touch-action: pan-y !important;
-          -webkit-overflow-scrolling: touch !important;
-        }
-
-        .news-form-modal-wrap :global(.ant-modal-wrap) {
-          height: 100% !important;
-          max-height: 100% !important;
-          overflow: auto !important;
-          touch-action: pan-y !important;
-        }
-
-        .news-form-modal :global(.ant-modal) {
-          min-height: 0 !important;
-          max-height: 100vh !important;
-        }
-
-        .news-form-modal :global(.ant-modal-content) {
-          overscroll-behavior: contain;
-        }
-
-        .news-form-modal :global(.ant-modal-body) {
-          touch-action: pan-y;
-          overscroll-behavior: contain;
-        }
-
-        @media (max-width: 1024px) {
-          .news-form-modal :global(.ant-modal) {
-            width: 90vw !important;
-            margin: 0 auto !important;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .news-form-modal :global(.ant-modal) {
-            width: 95vw !important;
-            margin: 0 auto !important;
-            top: 10px !important;
-          }
-
-          .news-form-modal :global(.ant-modal-content) {
-            max-height: 95vh;
-            height: 95vh;
-          }
-
-          .news-form-modal :global(.ant-modal-body) {
-            height: 100% !important;
-            max-height: 100% !important;
-          }
-        }
-      `}</style>
     </div>
   );
 };

@@ -38,23 +38,41 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
   useEffect(() => {
     if (model) {
       form.setFieldsValue({ ...model });
+    } else {
+      form.resetFields();
     }
   }, [form, model]);
 
   return (
     <Modal
       open={isModalOpen}
-      title="Thêm mới chủ đề"
+      title={model?.Id ? "Chỉnh sửa loại tin" : "Thêm mới chủ đề"}
       width={400}
+      className="news-addtype-modal"
       onCancel={() => {
         form.resetFields();
         handleCancel();
       }}
       onOk={() => form.submit()}
-      okText="Thêm"
+      okText={model?.Id ? "Cập nhật" : "Thêm"}
       cancelText="Hủy bỏ"
       okButtonProps={{
-        style: { backgroundColor: "#1677ff", borderColor: "#1677ff" },
+        style: {
+          backgroundColor: "#6366f1",
+          borderColor: "#6366f1",
+          borderRadius: 10,
+          height: 38,
+          fontWeight: 500,
+          boxShadow: "none",
+        },
+      }}
+      cancelButtonProps={{
+        style: {
+          borderRadius: 10,
+          borderColor: "#e5e5e5",
+          height: 38,
+          fontWeight: 500,
+        },
       }}
     >
       <Form
@@ -72,14 +90,19 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
 
         <Row gutter={12} align="bottom">
           <Col span={24}>
-            <Form.Item name="Name" rules={[{ required: true }]} noStyle>
+            <Form.Item
+              name="Name"
+              rules={[{ required: true, message: "Vui lòng nhập chủ đề" }]}
+              noStyle
+            >
               <FloatLabel label="Chủ đề" value={nameValue}>
-                <Input placeholder="Nhập" />
+                <Input placeholder="" />
               </FloatLabel>
             </Form.Item>
           </Col>
         </Row>
       </Form>
+
     </Modal>
   );
 };

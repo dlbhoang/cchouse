@@ -1,26 +1,35 @@
-import { cloneElement, isValidElement, ReactElement, useState } from "react";
+import { ReactElement, useState } from "react";
+
+import "./FloatLabel.css";
 
 type FloatLabelProps = {
-  children: ReactElement<Record<string, any>>;
+  children: ReactElement;
   label: string;
-  value?: string;
-  [key: string]: any;
+  value?: unknown;
 };
 
-const FloatLabel = ({ children, label, value, ...rest }: FloatLabelProps) => {
+const FloatLabel = ({ children, label, value }: FloatLabelProps) => {
   const [focus, setFocus] = useState(false);
 
-  const isOccupied = focus || (value !== undefined && value !== null && `${value}`.length > 0);
-  const labelClass = isOccupied ? "float-label-text float-label-text-active" : "float-label-text";
+  const hasValue = value !== undefined && value !== null && String(value).length > 0;
+  const isFloating = focus || hasValue;
 
   return (
     <div
-      className="float-label-wrapper"
-      onFocus={() => setFocus(true)}
+      className={`gfl ${isFloating ? "gfl-active" : ""} ${focus ? "gfl-focus" : ""}`}
       onBlur={() => setFocus(false)}
+      onFocus={() => setFocus(true)}
     >
-      {isValidElement(children) ? cloneElement(children, { value, ...rest }) : children}
-      <label className={labelClass}>{label}</label>
+      {children}
+
+      {/* viền + khoảng hở (notch) cho label, tự vẽ bằng fieldset/legend */}
+      <fieldset aria-hidden="true" className="gfl-fieldset">
+        <legend className="gfl-legend">
+          <span>{label}</span>
+        </legend>
+      </fieldset>
+
+      <label className="gfl-label">{label}</label>
     </div>
   );
 };

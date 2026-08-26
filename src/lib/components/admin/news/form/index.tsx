@@ -18,6 +18,7 @@ type Props = {
   model?: INewsRequest | INewsResponse;
   onClose?: () => void;
   hideHeader?: boolean;
+  onReject?: (item: INewsResponse) => Promise<void>;
 };
 
 type ErrorKey =
@@ -78,13 +79,88 @@ const IconPlus = () => (
   </svg>
 );
 
+const SquarePenIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <path d="m16 3 5 5L8 21H3v-5L16 3Z" />
+    <path d="M18 6l-3-3" />
+    <path d="M9 15l6-6" />
+  </svg>
+);
+
 const isContentEmpty = (html?: string) => {
   if (!html) return true;
   const text = html.replace(/<[^>]*>/g, "").trim();
   return text.length === 0;
 };
 
-const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
+// Try to extract a readable source string from the article HTML.
+const extractSourceFromContent = (html?: string): string | undefined => {
+  if (!html) return undefined;
+  try {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const anchors = Array.from(doc.querySelectorAll("a"));
+    // Prefer anchors whose text mentions 'Nguồn' (case-insensitive)
+    for (const a of anchors) {
+      const txt = (a.textContent || "").trim();
+      if (!txt) continue;
+      if (/Nguồn/i.test(txt)) {
+        const parts = txt.split(":").map((p) => p.trim()).filter(Boolean);
+        if (parts.length >= 2) return parts.slice(1).join(":");
+        try {
+          const u = new URL(a.href);
+          return u.hostname.replace(/^www\./, "");
+        } catch (e) {
+          return txt;
+        }
+      }
+    }
+    // Fallback: return hostname of last anchor if any
+    if (anchors.length) {
+      try {
+        const last = anchors[anchors.length - 1];
+        const u = new URL(last.href);
+        return u.hostname.replace(/^www\./, "");
+      } catch (e) {
+        const txt = (anchors[anchors.length - 1].textContent || "").trim();
+        if (txt) return txt;
+      }
+    }
+    return undefined;
+  } catch (e) {
+    return undefined;
+  }
+};
+
+const parseContentMeta = (html?: string) => {
+  if (!html) {
+    return { title: undefined, summary: undefined, source: undefined, content: undefined };
+  }
+
+  try {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    const titleEl = doc.querySelector("h1.title-detail, h1.title");
+    const summaryEl = doc.querySelector("p.description, p.summary");
+    const sourceAnchor = Array.from(doc.querySelectorAll("a")).find((a) => /Nguồn/i.test(a.textContent || ""));
+
+    const title = titleEl?.textContent?.trim();
+    const summary = summaryEl?.textContent?.trim();
+    const source = sourceAnchor ? extractSourceFromContent(sourceAnchor.outerHTML) : extractSourceFromContent(html);
+
+    if (titleEl) titleEl.remove();
+    if (summaryEl) summaryEl.remove();
+    if (sourceAnchor) {
+      const parent = sourceAnchor.closest("p");
+      if (parent) parent.remove();
+    }
+
+    const content = doc.body.innerHTML.trim();
+    return { title, summary, source, content: content || undefined };
+  } catch (e) {
+    return { title: undefined, summary: undefined, source: undefined, content: undefined };
+  }
+};
+
+const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
   const router = useRouter();
 
   const [isSubmit, setIsSubmit] = useState(false);
@@ -97,6 +173,64 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
     SourceType: (model as INewsRequest)?.SourceType || "write",
     Thumbnail: model?.Thumbnail ? (fileServices.mapFromString(model.Thumbnail) as any) : [],
   }));
+
+  // ✅ FIX: đồng bộ lại values mỗi khi model prop thay đổi.
+  // Cần thiết vì model thường được fetch bất đồng bộ từ trang cha
+  // (model = undefined lúc mount, có giá trị thật sau khi API trả về),
+  // trong khi useState(() => ...) chỉ chạy đúng 1 lần lúc mount nên
+  // không tự cập nhật lại khi model đổi.
+  useEffect(() => {
+    if (model) {
+      const meta = parseContentMeta((model as INewsRequest)?.Content);
+      setValues({
+        ...(model as INewsRequest),
+        SourceType: (model as INewsRequest)?.SourceType || "write",
+        Title: (model as INewsRequest)?.Title || meta.title || "",
+        Summary: (model as INewsRequest)?.Summary || meta.summary || "",
+        Source: (model as INewsRequest)?.Source || meta.source || "",
+        Content: meta.content || (model as INewsRequest)?.Content || "",
+        Thumbnail: model?.Thumbnail
+          ? (fileServices.mapFromString(model.Thumbnail) as any)
+          : [],
+      });
+    } else {
+      setValues({
+        ...({} as INewsRequest),
+        SourceType: "write",
+        Thumbnail: [],
+      } as INewsRequest);
+    }
+  }, [model]);
+
+  // If model provided but Content is missing, fetch full record to populate the editor
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        if (model && model.Id && !(model.Content && model.Content.trim().length)) {
+          const res = await newsApi.getById(model.Id);
+          if (!mounted) return;
+          const full = res.data as INewsResponse;
+          const meta = parseContentMeta(full.Content);
+          setValues((prev) => ({
+            ...prev,
+            ...(full as INewsRequest),
+            Title: full.Title || meta.title || prev.Title,
+            Summary: full.Summary || meta.summary || prev.Summary,
+            Source: full.Source || meta.source || prev.Source || "",
+            Content: meta.content || full.Content || prev.Content,
+            SourceType: (full as INewsRequest)?.SourceType || prev.SourceType || "write",
+            Thumbnail: full.Thumbnail ? (fileServices.mapFromString(full.Thumbnail) as any) : prev.Thumbnail,
+          }));
+        }
+      } catch (e) {
+        // ignore fetch errors — leave existing values
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [model?.Id]);
 
   // ----------------------------------------------------------------
   // Loại tin — custom select
@@ -138,7 +272,18 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
   const thumbnailPreview = thumbnailList[0];
 
   const handleFieldChange = <K extends keyof INewsRequest>(key: K, val: INewsRequest[K]) => {
-    setValues((prev) => ({ ...prev, [key]: val }));
+    if (key === "Content" && typeof val === "string") {
+      const meta = parseContentMeta(val);
+      setValues((prev) => ({
+        ...prev,
+        Content: meta.content || val,
+        Title: prev.Title || meta.title || prev.Title,
+        Summary: prev.Summary || meta.summary || prev.Summary,
+        Source: prev.Source || meta.source || prev.Source,
+      }));
+    } else {
+      setValues((prev) => ({ ...prev, [key]: val }));
+    }
     setErrors((prev) => ({ ...prev, [key as unknown as ErrorKey]: undefined }));
   };
 
@@ -153,7 +298,7 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
       return;
     }
     await newsTypeApi.add({ Name: newTypeName.trim(), NewsCount: 0 });
-    mutate(newsApi.mutateKey);
+    mutate(newsTypeApi.mutateKey);
     setNewTypeName("");
   };
 
@@ -220,7 +365,6 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
     if (!values.Title?.trim()) next.Title = "Vui lòng nhập tiêu đề";
     if (!values.Summary?.trim()) next.Summary = "Vui lòng nhập tóm tắt";
     if (isContentEmpty(values.Content)) next.Content = "Vui lòng nhập nội dung";
-    if (!values.Source?.trim()) next.Source = "Vui lòng nhập nguồn thông tin";
     return next;
   };
 
@@ -244,7 +388,10 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
     if (!runValidation()) return;
     try {
       setIsSubmit(true);
-      const payload: INewsRequest = { ...values };
+      const payload: INewsRequest = {
+        ...values,
+        SourceType: values.Source?.trim() ? "share" : "write",
+      };
       if (payload.Thumbnail && Array.isArray(payload.Thumbnail)) {
         const res = fileServices.processFiles(payload.Thumbnail as any);
         payload.Thumbnail = res.toString();
@@ -261,6 +408,16 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
     }
   };
 
+  const handleReject = async () => {
+    if (!model?.Id || !onReject) return;
+    setIsSubmit(true);
+    try {
+      await onReject({ ...(values as INewsResponse), Id: model.Id });
+    } finally {
+      setIsSubmit(false);
+    }
+  };
+
   const titleLen = values.Title?.length ?? 0;
   const summaryLen = values.Summary?.length ?? 0;
 
@@ -268,11 +425,9 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
     <div className={styles["news-form-wrapper"]}>
       {!hideHeader && (
         <div className={styles["news-form-header"]}>
-          {!model && (
-            <h1 className={styles["news-form-title"]}>
-              THÊM BÀI VIẾT
-            </h1>
-          )}
+          <h1 className={styles["news-form-title"]}>
+            {model ? "CHỈNH SỬA BÀI VIẾT" : "THÊM BÀI VIẾT"}
+          </h1>
           {onClose && (
             <button type="button" className={styles["news-form-close"]} onClick={onClose}>
               <IconClose />
@@ -405,8 +560,8 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
                     alt="thumbnail"
                   />
                   {thumbnailPreview.status === "uploading" && <span className={styles["upload-spinner"]} />}
-                  <button type="button" className={styles["upload-remove-btn"]} onClick={handleRemoveThumbnail}>
-                    <IconTrash />
+                  <button type="button" className={styles["upload-edit-btn"]} onClick={handleFilePick} aria-label="Chỉnh sửa ảnh">
+                    <SquarePenIcon />
                   </button>
                 </div>
               ) : (
@@ -535,7 +690,15 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
                 value={values.Source || ""}
                 onFocus={() => setSourceFocused(true)}
                 onBlur={() => setSourceFocused(false)}
-                onChange={(e) => handleFieldChange("Source", e.target.value as any)}
+                onChange={(e) => {
+                  const source = e.target.value;
+                  setValues((prev) => ({
+                    ...prev,
+                    Source: source,
+                    SourceType: source.trim() ? "share" : "write",
+                  }));
+                  setErrors((prev) => ({ ...prev, Source: undefined }));
+                }}
               />
             </div>
             <span
@@ -543,7 +706,7 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
                 " "
               )}
             >
-              Nguồn thông tin <span className={styles["required"]}>*</span>
+              Nguồn thông tin
             </span>
             <div className={styles["field-footer"]}>
               {errors.Source && <span className={styles["field-error"]}>{errors.Source}</span>}
@@ -561,6 +724,16 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
           <button type="button" className={styles["preview-button"]} onClick={handlePreview}>
             <IconEye /> Xem trước
           </button>
+          {model && onReject && (
+            <button
+              type="button"
+              className={styles["reject-button"]}
+              onClick={handleReject}
+              disabled={isSubmit}
+            >
+              Từ chối
+            </button>
+          )}
           <button
             type="button"
             className={styles["submit-button"]}
@@ -568,7 +741,7 @@ const NewsForm = ({ model, onClose, hideHeader = false }: Props) => {
             disabled={isSubmit}
           >
             {isSubmit && <span className={styles["btn-spinner"]} />}
-            {model ? "Cập nhật" : "Gửi duyệt bài"}
+            {model ? "Gửi duyệt bài" : "Gửi duyệt bài"}
           </button>
         </div>
       </div>

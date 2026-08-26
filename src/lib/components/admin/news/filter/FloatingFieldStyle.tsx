@@ -1,6 +1,20 @@
-import React from "react";
-
 const FLOATING_FIELD_CSS = `
+  .news-filter-outer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(229, 229, 229, 0.6);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.72);
+    box-sizing: border-box;
+  }
+  .news-filter-outer .news-filter-toolbar {
+    padding-top: 0;
+    margin-top: 0;
+    width: 100%;
+  }
+
   .news-filter-toolbar {
     display: flex;
     flex-wrap: wrap;
@@ -103,6 +117,50 @@ const FLOATING_FIELD_CSS = `
     border-radius: 10px !important;
     background: transparent !important;
   }
+
+  /* Range date control: keep both booking-style inputs readable inside the field. */
+  .news-filter-field--date .ant-picker-range {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .news-filter-field--date .ant-picker-range .ant-picker-input {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    width: auto !important;
+  }
+  .news-filter-field--date .ant-picker-range .ant-picker-input > input {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 24px !important;
+    padding: 0 !important;
+    line-height: 24px !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  .news-filter-field--date .ant-picker-range-separator {
+    flex: 0 0 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    color: #a1a1aa !important;
+  }
+  .news-filter-field--date .ant-picker-suffix {
+    flex: 0 0 auto !important;
+    margin-left: 4px !important;
+  }
+  .news-filter-field--date .news-filter-floating-field:not(.news-filter-floating-field--filled) .ant-picker-range-separator {
+    visibility: hidden !important;
+  }
+  .news-filter-field--date .news-filter-floating-label {
+    background: #ffffff;
+  }
   .news-filter-floating-field .ant-select-selection-wrap {
     display: flex !important;
     align-items: center !important;
@@ -147,7 +205,7 @@ const FLOATING_FIELD_CSS = `
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    opacity: 0; /* mặc định ẩn, chỉ hiện khi bấm vào (mở dropdown) hoặc đã chọn giá trị */
+    opacity: 1;
     transition: opacity 0.15s ease;
   }
   .news-source-dropdown--open .news-source-dropdown-text,
@@ -252,10 +310,7 @@ const FLOATING_FIELD_CSS = `
     color: #0588f0;
   }
 
-  /* ── Label nổi kiểu Google/Material: mặc định nằm GIỮA box, đóng vai trò placeholder;
-     khi bấm vào (focus) hoặc đã có giá trị (filled) thì mới bay lên viền trên, thu nhỏ lại,
-     có nền trắng để "cắt" đường viền phía sau — giống .search-frame-title trong index.css
-     nhưng chỉ áp dụng khi tương tác, không cố định như trước ── */
+
   .news-filter-floating-label {
     position: absolute;
     left: 12px;
@@ -274,9 +329,7 @@ const FLOATING_FIELD_CSS = `
     white-space: nowrap;
     pointer-events: none;
     z-index: 2;
-    transition: top 0.18s cubic-bezier(0.4, 0, 0.2, 1),
-      font-size 0.18s cubic-bezier(0.4, 0, 0.2, 1), color 0.18s ease,
-      background-color 0.18s ease;
+    transition: top 0.18s ease, font-size 0.18s ease, color 0.18s ease, background-color 0.18s ease;
   }
   .news-filter-floating-label .required {
     color: #dc3e42;
@@ -285,16 +338,14 @@ const FLOATING_FIELD_CSS = `
     line-height: 20px;
   }
 
-  /* Chỉ khi bấm vào (focus) hoặc đã có giá trị (filled), label mới nổi lên trên viền */
   .news-filter-floating-field--filled .news-filter-floating-label,
   .news-filter-floating-field:focus-within .news-filter-floating-label {
     top: 0;
-    transform: translateY(-50%);
     background: #ffffff;
+    color: #737373;
     font-size: 12px;
     font-weight: 400;
     line-height: 16px;
-    color: #737373;
   }
   .news-filter-floating-field--filled .news-filter-floating-label .required,
   .news-filter-floating-field:focus-within .news-filter-floating-label .required {
@@ -320,14 +371,13 @@ const FLOATING_FIELD_CSS = `
   /* Ẩn text mặc định bên trong control (vd chữ "Chọn") khi box chưa có giá trị và chưa focus,
      để chỉ còn label nổi đóng vai trò placeholder — không phụ thuộc component con có nhận
      đúng prop placeholder hay không. */
-  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within)
-    .ant-select-selection-item,
-  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within)
-    .ant-select-selection-placeholder,
-  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within)
-    .ant-picker-input
-    > input {
-    opacity: 0 !important;
+    .news-filter-floating-field:not(.news-filter-floating-field--filled) .ant-select-selection-placeholder,
+  .news-filter-floating-field:not(.news-filter-floating-field--filled) .news-source-dropdown-text:not(.news-source-dropdown-text--filled) {
+    opacity: 0;
+  }
+
+  .news-filter-floating-field:not(.news-filter-floating-field--filled) .ant-picker-input > input::placeholder {
+    opacity: 0;
   }
 
   /* ── Ô tìm kiếm: đồng bộ phong cách với các box phía trên (border e5e5e5, radius 10, height 40) ── */
@@ -344,9 +394,6 @@ const FLOATING_FIELD_CSS = `
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 8px 16px;
-    border-radius: 10px;
-    background: var(--Brand-Main, #0588F0);
     margin-left: auto;
     flex: 0 0 auto;
     min-height: 40px;
@@ -405,7 +452,6 @@ const FLOATING_FIELD_CSS = `
     color: #a3a3a3;
   }
 
-  /* ── Slot cho nội dung phụ (vd nút "Viết bài") cùng hàng với các field lọc ── */
   .news-filter-extra {
     display: flex;
     align-items: center;
@@ -472,6 +518,35 @@ const FLOATING_FIELD_CSS = `
       justify-content: center;
     }
   }
+  .news-filter-create-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 10px;
+    background: var(--Brand-Main, #0588F0);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: Inter, var(--default-font-family, sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+    transition: background 0.18s ease, box-shadow 0.18s ease;
+  }
+  .news-filter-create-btn:hover {
+    background: #0477d6;
+  }
+  .news-filter-create-btn:active {
+    background: #0366bd;
+  }
+  .news-filter-create-btn .anticon {
+    font-size: 14px;
+  }
+
 `;
 
 const FloatingFieldStyle = () => <style>{FLOATING_FIELD_CSS}</style>;

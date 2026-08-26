@@ -1,5 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ETableName } from "@/lib/core/enum";
 import { fileServices } from "@/services/api/services/fileServices";
 
@@ -34,9 +34,22 @@ const TinyEditor = ({
   onChange?: (value: string) => void;
 }) => {
   const editorRef = useRef<any>(null);
+  const [isEditorReady, setIsEditorReady] = useState(false);
+
   const handleEditorChange = (content: string) => {
     onChange?.(content);
   };
+
+  useEffect(() => {
+    if (!isEditorReady || !editorRef.current) return;
+
+    const nextValue = value ?? "";
+    const currentValue = editorRef.current.getContent() ?? "";
+
+    if (currentValue !== nextValue) {
+      editorRef.current.setContent(nextValue);
+    }
+  }, [isEditorReady, value]);
 
   const options = {
     height: 500,
@@ -101,8 +114,17 @@ const TinyEditor = ({
 
   return (
     <Editor
-      onInit={(evt, editor) => (editorRef.current = editor)}
-      value={value}
+      onInit={(evt, editor) => {
+        editorRef.current = editor;
+        setIsEditorReady(true);
+        try {
+          const next = value ?? "";
+          if (next) editor.setContent(next);
+        } catch (e) {
+          // ignore
+        }
+      }}
+      initialValue={""}
       init={options}
       onEditorChange={handleEditorChange}
     />

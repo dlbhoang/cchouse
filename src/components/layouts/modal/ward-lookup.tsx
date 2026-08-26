@@ -537,13 +537,14 @@ const WardLookupDialog = ({
     <Dialog open={open} onOpenChange={(v) => { if (!v) handleClose(); }}>
       <DialogContent
         ref={dialogBodyRef}
-        className="p-0 gap-0 w-[1152px] max-w-[95vw] max-h-[min(956px,90vh)] flex flex-col overflow-visible rounded-xl"
+        overlayClassName="bg-black/30"
+        className="p-0 gap-0 w-[1152px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-32px)] flex flex-col overflow-visible rounded-xl"
       >
         <div className="flex flex-1 min-h-0 flex-col bg-white overflow-visible">
 
           {/* ── Header ── */}
           <div className="flex items-center self-stretch bg-white py-4 px-6 border-b border-neutral-200 rounded-tl-xl rounded-tr-xl">
-            <span className="flex-1 text-neutral-950 text-lg font-bold font-[family-name:var(--font-inter,Inter,sans-serif)] tracking-wide">
+            <span className="flex-1 text-neutral-950 text-lg font-bold font-[family-name:var(--font-inter,Inter,sans-serif)]">
               TRA CỨU THÔNG TIN
             </span>
           </div>
@@ -554,10 +555,10 @@ const WardLookupDialog = ({
             <WardLookupTabs value={tab} onChange={setTab} />
 
             {/* ── Two-column body ── */}
-            <div className="flex flex-1 min-h-0 items-stretch self-stretch gap-6">
+            <div className="flex flex-1 min-h-0 items-stretch self-stretch gap-6 max-md:flex-col max-md:overflow-y-auto">
 
               {/* ── LEFT ── */}
-              <div className="flex flex-1 flex-col min-w-0 min-h-0">
+              <div className="flex flex-1 flex-col min-w-0 min-h-0 max-md:min-h-[360px]">
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}

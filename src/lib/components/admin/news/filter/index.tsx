@@ -1,9 +1,8 @@
 import { Col, Dropdown, Form, Input, Row } from "antd";
-import { DownOutlined, SearchOutlined, EditOutlined, ShareAltOutlined } from "@ant-design/icons";
+import { ChevronDown, Search, Pencil, Share2 } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-import { NewsTypeSelect, StatusBaseSelect, UserAdminSelect } from "@/lib/components/shared/MySelect";
-import { appConst } from "@/lib/core/configs/appConst";
+import { StatusBaseSelect, UserAdminSelect } from "@/lib/components/shared/MySelect";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
 import { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import { useAdminContext } from "@/lib/stored";
@@ -12,11 +11,18 @@ import FloatingFieldStyle from "./FloatingFieldStyle";
 import FloatingField from "./FloatingField";
 import NewsDateFilter from "./NewsDateFilter";
 
-const hiddenFields = ["IsWebsite", "pageSize", "pageIndex", "fromDate", "toDate"];
+const hiddenFields = [
+  "IsWebsite",
+  "pageSize",
+  "pageIndex",
+  "fromDate",
+  "toDate",
+  "SourceType",
+];
 
 const sourceMenuItems = [
-  { key: "write", label: "Viết bài", icon: <EditOutlined /> },
-  { key: "share", label: "Chia sẻ", icon: <ShareAltOutlined /> },
+  { key: "write", label: "Viết bài", icon: <Pencil size={14} /> },
+  { key: "share", label: "Chia sẻ", icon: <Share2 size={14} /> },
 ];
 
 type Props = {
@@ -36,12 +42,11 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
   const [sourceOpen, setSourceOpen] = useState(false);
   const [sourceMenuWidth, setSourceMenuWidth] = useState<number>();
   // Nhãn đang được chọn trong dropdown "Nguồn" (Viết bài / Chia sẻ), hiển thị
-  // trực tiếp trong ô như một combobox thật thay vì luôn để trống.
   const [sourceLabel, setSourceLabel] = useState<string>();
   const sourceTriggerRef = useRef<HTMLDivElement>(null);
 
   const createdByWatch = Form.useWatch("CreatedBy", form);
-  const newsTypeIdsWatch = Form.useWatch("NewsTypeIds", form);
+  const sourceTypeWatch = Form.useWatch("SourceType", form);
   const fromDateWatch = Form.useWatch("fromDate", form);
   const statusWatch = Form.useWatch("Status", form);
 
@@ -53,6 +58,7 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
     form.setFieldsValue({
       ...model,
     });
+    setSourceLabel(sourceMenuItems.find((item) => item.key === model?.SourceType)?.label);
   }, [form, model]);
 
   const submitOnChange = () => form.submit();
@@ -78,7 +84,7 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
     <FloatingField
       label="Nguồn"
       required
-      filled={isFilledValue(newsTypeIdsWatch) || isFilledValue(sourceLabel) || sourceOpen}
+      filled={isFilledValue(sourceTypeWatch) || isFilledValue(sourceLabel) || sourceOpen}
     >
       <Dropdown
         menu={{
@@ -86,7 +92,8 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
           onClick: ({ key }) => {
             const chosen = sourceMenuItems.find((item) => item.key === key);
             setSourceLabel(chosen?.label);
-            // TODO: gắn hành động thật cho "Viết bài" / "Chia sẻ" tại đây.
+            form.setFieldValue("SourceType", key as "write" | "share");
+            form.submit();
           },
         }}
         trigger={["click"]}
@@ -108,7 +115,7 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
           >
             {sourceLabel ?? "Chọn"}
           </span>
-          <DownOutlined className="news-source-dropdown-icon" />
+          <ChevronDown size={14} className="news-source-dropdown-icon" />
         </div>
       </Dropdown>
     </FloatingField>
@@ -135,7 +142,7 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
       <Form.Item name="search" noStyle>
         <Input
           placeholder="Tìm kiếm theo tiêu đề"
-          prefix={<SearchOutlined />}
+          prefix={<Search size={14} />}
           allowClear
           onPressEnter={submitOnChange}
         />
@@ -195,14 +202,15 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
     >
       <FloatingFieldStyle />
       {hiddenFormItems}
-
-      <div className="news-filter-toolbar">
-        <div className="news-filter-field news-filter-field--user">{authorField}</div>
-        <div className="news-filter-field news-filter-field--source">{sourceField}</div>
-        <div className="news-filter-field news-filter-field--date">{dateField}</div>
-        <div className="news-filter-field news-filter-field--status">{statusField}</div>
-        <div className="news-filter-field news-filter-field--search">{searchField}</div>
-        {extra && <div className="news-filter-extra">{extra}</div>}
+      <div className="news-filter-outer">
+        <div className="news-filter-toolbar">
+          <div className="news-filter-field news-filter-field--user">{authorField}</div>
+          <div className="news-filter-field news-filter-field--source">{sourceField}</div>
+          <div className="news-filter-field news-filter-field--date">{dateField}</div>
+          <div className="news-filter-field news-filter-field--status">{statusField}</div>
+          <div className="news-filter-field news-filter-field--search">{searchField}</div>
+          {extra && <div className="news-filter-extra">{extra}</div>}
+        </div>
       </div>
     </Form>
   );

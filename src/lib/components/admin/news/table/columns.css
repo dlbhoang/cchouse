@@ -66,9 +66,9 @@
 }
 
 .news-title-text {
-  flex: 0 1 60%;
+  flex: 0 1 auto;
   min-width: 0;
-  max-width: 60%;
+  max-width: 220px;
   font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 14px;
   font-weight: 500;
@@ -86,8 +86,8 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
-  color: #2563eb;
-  background: none;
+  color: #2563eb !important;
+  background: none !important;
   border: none;
   padding: 0;
   cursor: pointer;
@@ -95,7 +95,7 @@
   white-space: nowrap;
 }
 .news-see-more:hover {
-  color: #1d4ed8;
+  color: #1d4ed8 !important;
   text-decoration: underline;
 }
 
@@ -106,10 +106,10 @@
   gap: 8px;
   width: fit-content;
   padding: 4px 12px;
-  background: #0588f0;
+  background: #0588f0 !important;
   border: none;
   border-radius: 10px;
-  color: #ffffff;
+  color: #ffffff !important;
   font-family: Inter, var(--default-font-family, sans-serif);
   font-size: 14px;
   font-weight: 500;
@@ -118,8 +118,8 @@
   cursor: pointer;
 }
 .news-view-btn:hover {
-  background: #0477d1;
-  color: #ffffff;
+  background: #0477d1 !important;
+  color: #ffffff !important;
 }
 
 /* ---- Nguồn/ Người đăng ---- */
@@ -163,7 +163,10 @@
   color: #a1a1aa;
 }
 
-/* ---- Trạng thái ---- */
+/* ---- Trạng thái ----
+ * Dùng class theo trạng thái + !important để đảm bảo không bị style khác
+ * (theme mặc định của thư viện UI, CSS ngoài...) đè mất màu đúng thiết kế.
+ */
 .news-status-tag {
   display: inline-flex;
   align-items: center;
@@ -177,6 +180,27 @@
   font-weight: 500;
   line-height: 16px;
   white-space: nowrap;
+}
+
+.news-status-tag.news-status-pending {
+  background: #dbeafe !important; /* Chờ duyệt */
+  color: #3b82f6 !important;
+}
+.news-status-tag.news-status-approved {
+  background: #dcfce7 !important; /* Đã duyệt / Đang hiển thị */
+  color: #22c55e !important;
+}
+.news-status-tag.news-status-hidden {
+  background: #f4f4f5 !important; /* Đã ẩn */
+  color: #71717a !important;
+}
+.news-status-tag.news-status-rejected {
+  background: #fee2e2 !important; /* Từ chối / lỗi */
+  color: #ef4444 !important;
+}
+.news-status-tag.news-status-default {
+  background: #f4f4f5 !important;
+  color: #71717a !important;
 }
 
 /* ---- Người duyệt ---- */
@@ -219,6 +243,7 @@
   background: #f5f5f5;
   border-color: #d4d4d8;
 }
+ 
 
 /* ---- Header ---- */
 .news-th-label {
@@ -227,4 +252,8 @@
   font-weight: 500;
   line-height: 20px;
   color: #a1a1aa;
+}
+.news-approver-empty {
+  color: #a1a1aa;
+  font-size: 14px;
 }
