@@ -273,13 +273,9 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
   const handleFieldChange = <K extends keyof INewsRequest>(key: K, val: INewsRequest[K]) => {
     if (key === "Content" && typeof val === "string") {
-      const meta = parseContentMeta(val);
       setValues((prev) => ({
         ...prev,
-        Content: meta.content || val,
-        Title: prev.Title || meta.title || prev.Title,
-        Summary: prev.Summary || meta.summary || prev.Summary,
-        Source: prev.Source || meta.source || prev.Source,
+        Content: val,
       }));
     } else {
       setValues((prev) => ({ ...prev, [key]: val }));
@@ -686,7 +682,9 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
             >
               <input
                 className={styles["text-input"]}
-                placeholder="Nhập tên nguồn (VD: báo Đại Đoàn Kết, VTC News)..."
+                type="url"
+                inputMode="url"
+                placeholder="Dán link nguồn báo (VD: https://vnexpress.net/...)..."
                 value={values.Source || ""}
                 onFocus={() => setSourceFocused(true)}
                 onBlur={() => setSourceFocused(false)}
@@ -711,7 +709,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
             <div className={styles["field-footer"]}>
               {errors.Source && <span className={styles["field-error"]}>{errors.Source}</span>}
               <span className={styles["source-hint"]}>
-                các thông tin chia sẻ từ nơi khác bắt buộc ghi nguồn đường link trích dẫn
+                các thông tin chia sẻ từ nơi khác bắt buộc ghi đường link trích dẫn
               </span>
             </div>
           </div>

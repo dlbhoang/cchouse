@@ -74,6 +74,8 @@ const TinyEditor = ({
       "bold italic backcolor | alignleft aligncenter " +
       "alignright alignjustify | bullist numlist table | " +
       "link image removeformat | preview help",
+    link_assume_external_targets: true,
+    link_default_protocol: "https",
     content_style:
       "body { font-family:Roboto,Arial,sans-serif; font-size:14px }",
 

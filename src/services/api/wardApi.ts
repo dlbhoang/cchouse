@@ -47,5 +47,6 @@ const wardApi = {
       `${url}/${oldWardId}/MergedTo`
     );
   },
+
 };
 export default wardApi;

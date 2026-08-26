@@ -130,7 +130,7 @@ export const WARD_AGENCIES: WardAgencyData[] = [
     WardName: "Nhiêu Lộc",
     WardType: "phường",
     UBNDAddress: "82 Bà Huyện Thanh Quan, TP. Hồ Chí Minh",
-    MergedFrom: ["P9,P11,P12,P14 (Q3)"],
+    MergedFrom: ["P9,P10,P11,P12,P14 (Q3)"],
     Agencies: {
       "Văn phòng công chứng": [{ name: "VP Công chứng Sài Gòn Center", address: "520 Cách Mạng Tháng Tám, phường Xuân Hòa, TP. Hồ Chí Minh" }, { name: "VP Công chứng Quận 3", address: "99A Trần Quốc Thảo, phường Xuân Hòa, TP. Hồ Chí Minh" }],
       "Văn phòng đất đai": [{ name: "Chi nhánh VPĐK Đất đai Quận 3", address: "99A Trần Quốc Thảo, phường Xuân Hòa, TP. Hồ Chí Minh" }],

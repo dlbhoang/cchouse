@@ -19,17 +19,18 @@ import {
 } from "./IUserAdmin";
 
 const url = "UserAdmin";
+const meUrl = "Me";
 
 const notiRoutes = {
   useGetNotifications(params: ISearchOptions) {
     const key = params
-      ? `${url}/Notifications?${new URLSearchParams(
+      ? `${meUrl}/Notifications?${new URLSearchParams(
           params as unknown as Record<string, string>
         ).toString()}`
-      : `${url}/Notifications`;
+      : `${meUrl}/Notifications`;
     return useSWR(key, async (route) => {
       return axiosClient.get<any, IListData<INotiUserResponse>>(
-        `${url}/Notifications`,
+        `${meUrl}/Notifications`,
         {
           params,
         }
@@ -37,9 +38,9 @@ const notiRoutes = {
     });
   },
 
-  countUnReadKey: `${url}/CountUnReadNoti`,
+  countUnReadKey: `${meUrl}/CountUnReadNoti`,
   useCountUnReadNoti() {
-    return useSWR(`${url}/CountUnReadNoti`, async (route) => {
+    return useSWR(`${meUrl}/CountUnReadNoti`, async (route) => {
       return axiosClient.get<any, ISingleData<number>>(route);
     });
   },
@@ -135,11 +136,11 @@ const userAdminApi = {
     return axiosClient.put(`${url}/ToggleSaveProp/${id}`);
   },
 
-  mutateSavePropsKey: `${url}/SaveProps`,
+  mutateSavePropsKey: `${meUrl}/SaveProps`,
 
   useGetSaveProps(id: number) {
-    return useSWR(`${url}/SaveProps`, async () =>
-      axiosClient.get<any, IListData<IPropResponse>>(`${url}/${id}/SaveProps`)
+    return useSWR(`${meUrl}/SaveProps`, async () =>
+      axiosClient.get<any, IListData<IPropResponse>>(`${meUrl}/SaveProps`)
     );
   },
 };

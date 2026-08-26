@@ -355,9 +355,14 @@ const WardLookupDialog = ({
 
   const handleSearchModeChange = (checked: boolean) => {
     setSearchByNewAddress(checked);
-    // Chỉ reset agency, không ảnh hưởng đến form chuyển đổi phường/xã
+    form.reset({ ProvinceId: 1, DistrictId: 0, WardId: 0 });
+    setWards([]);
     setAgencyGroups([]);
     setAgencySelections({});
+    setOriginalAddress("");
+    setSelectedDistrict("");
+    setResolvedNewWardId(0);
+    setResolvedNewWardName("");
   };
 
   const handleReset = () => {
@@ -411,7 +416,20 @@ const WardLookupDialog = ({
     setOriginalAddress(parts.join(", "));
     setSelectedDistrict(districtLabel);
 
-    const result = await wardApi.getMergedTo(data.WardId);
+    const result = searchByNewAddress
+      ? (() => {
+          const newWard = findWardAgencyData(data.WardId, wardLabel);
+          const mergedFromResult: ISearchWardDto[] = newWard
+            ? [{
+                WardId: newWard.WardId,
+                WardName: newWard.WardName,
+                Headquarters: newWard.UBNDAddress,
+                MergedFrom: newWard.MergedFrom,
+              }]
+            : [];
+          return { data: mergedFromResult };
+        })()
+      : await wardApi.getMergedTo(data.WardId);
     if (result && result.data) {
       if (result.data.length === 0) {
         toast.warning("Không tìm thấy dữ liệu");
@@ -419,8 +437,8 @@ const WardLookupDialog = ({
       setWards(result.data);
       // Lay ID + Ten cua phuong MOI tu ket qua API, khong dung ID phuong cu tu form.
       // Ten duoc dung de fallback tra cuu neu WardId tu backend lech voi file tinh.
-      const newWardId = result.data[0]?.WardId ?? 0;
-      const newWardName = result.data[0]?.WardName ?? "";
+      const newWardId = searchByNewAddress ? data.WardId : result.data[0]?.WardId ?? 0;
+      const newWardName = searchByNewAddress ? wardLabel : result.data[0]?.WardName ?? "";
       setResolvedNewWardId(newWardId);
       setResolvedNewWardName(newWardName);
       setAgencyGroups(buildAgencyGroups(newWardId, newWardName));
@@ -447,24 +465,26 @@ const WardLookupDialog = ({
         </div>
       </FloatingField>
 
-      <FloatingField
-        label="Quận/Huyện"
-        required={!searchByNewAddress}
-        filled={form.watch("DistrictId") > 0}
-        className="mb-4"
-        error={form.formState.errors.DistrictId?.message}
-      >
-        <div className={cbxFieldClass} data-field="DistrictId">
-          <DistrictCbxField
-            name="DistrictId"
-            parentName="ProvinceId"
-            hiddenLabel
-            placeholder=""
-            popoverModal={false}
-            portalContainer={dialogBodyRef}
-          />
-        </div>
-      </FloatingField>
+      {!searchByNewAddress && (
+        <FloatingField
+          label="Quận/Huyện"
+          required
+          filled={form.watch("DistrictId") > 0}
+          className="mb-4"
+          error={form.formState.errors.DistrictId?.message}
+        >
+          <div className={cbxFieldClass} data-field="DistrictId">
+            <DistrictCbxField
+              name="DistrictId"
+              parentName="ProvinceId"
+              hiddenLabel
+              placeholder=""
+              popoverModal={false}
+              portalContainer={dialogBodyRef}
+            />
+          </div>
+        </FloatingField>
+      )}
 
       <FloatingField
         label="Phường/Xã"
@@ -573,7 +593,7 @@ const WardLookupDialog = ({
 
                         <div className="flex items-center justify-between self-stretch rounded-[6px] border border-[#E5E5E5] bg-[linear-gradient(90deg,_var(--Neutral-Gray-3,_#E5E5E5)_0%,_var(--Neutral-White,_#FFF)_100%)] px-4 py-3 mb-4">
                           <span className="text-neutral-950 text-sm font-[family-name:var(--font-inter,Inter,sans-serif)]">
-                            Tìm theo địa chỉ mới sau sắp nhập
+                            Tìm theo địa chỉ mới sau sáp nhập
                           </span>
                           <ToggleSwitch
                             checked={searchByNewAddress}
@@ -656,7 +676,7 @@ const WardLookupDialog = ({
           <p className="text-neutral-950 text-sm m-0">
           <span className="text-[#0588F0] mr-2">•</span>
             <span className="text-[var(--Text-Main,#0A0A0A)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
-              Phường/Quận(Cũ): 
+              {searchByNewAddress ? "Phường/Xã mới: " : "Phường/Quận (cũ): "}
             </span>
             <span className="text-[var(--Brand-Main,#0588F0)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
               {originalAddress || "—"}
@@ -667,19 +687,21 @@ const WardLookupDialog = ({
           <li className="text-sm text-neutral-950">
               <span className="text-[#0588F0] mr-2">•</span>
               <span className="text-[var(--Text-Main,#0A0A0A)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
-                Sáp nhập từ: 
+                  {searchByNewAddress ? "Địa chỉ cũ: " : "Sáp nhập từ: "}
               </span>
-              {ward.MergedFrom.join(", ")}
+                {ward.MergedFrom.join(", ")}
             </li>
-            <li className="text-sm text-neutral-950">
-              <span className="text-[#0588F0] mr-2">•</span>
-              <span className="text-[var(--Text-Main,#0A0A0A)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
-                Tên Phường / Xã mới:
-              </span>{" "}
-              <span className="text-[var(--Brand-Main,#0588F0)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
-                Phường {ward.WardName}, Thành phố Hồ Chí Minh
-              </span>
-            </li>
+            {!searchByNewAddress && (
+              <li className="text-sm text-neutral-950">
+                <span className="text-[#0588F0] mr-2">•</span>
+                <span className="text-[var(--Text-Main,#0A0A0A)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
+                  Tên Phường / Xã mới:
+                </span>{" "}
+                <span className="text-[var(--Brand-Main,#0588F0)] font-semibold text-sm leading-[20px] font-[family-name:var(--Font-family-Text,Inter)]">
+                  Phường {ward.WardName}, Thành phố Hồ Chí Minh
+                </span>
+              </li>
+            )}
 
             
           </ul>

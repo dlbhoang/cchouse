@@ -14,6 +14,7 @@ import type { IWardResponse } from "@/lib/interfaces/ConfigAddress/IConfigAddres
 import type { IFormFieldProps } from "@/lib/types/common";
 import { cn } from "@/lib/utils";
 import wardApi from "@/services/api/wardApi";
+import { WARD_AGENCIES } from "@/data/ward-agencies";
 import { Button } from "../button";
 import {
   Command,
@@ -58,16 +59,54 @@ const WardCbxField = ({
 
     setLoading(true);
     const fetchData = async () => {
-      const result = await wardApi.get({
-        ...(isNew
-          ? { ProvinceId: parentId }
-          : { DistrictId: parentId }),
-        pageIndex: 1,
-        pageSize: 10000,
-        IsNew: isNew,
-      });
-      setData(result.data);
-      setLoading(false);
+      try {
+        const result = await wardApi.get({
+          ...(isNew
+            ? { ProvinceId: parentId }
+            : { DistrictId: parentId }),
+          pageIndex: 1,
+          pageSize: 10000,
+          IsNew: isNew,
+        });
+        const wards = result.data ?? [];
+        if (wards.length > 0 || !isNew) {
+          setData(wards);
+        } else {
+          setData(
+            WARD_AGENCIES.map((ward) => ({
+              Id: ward.WardId,
+              Name: ward.WardName,
+              ProvinceId: Number(parentId),
+              DistrictId: 0,
+              ShortName: ward.WardName,
+              RefKey: "",
+              Type: ward.WardType,
+              Images: [],
+              Slug: ward.WardName,
+              DistrictName: "",
+            })) as IWardResponse[]
+          );
+        }
+      } catch {
+        setData(
+          isNew
+            ? (WARD_AGENCIES.map((ward) => ({
+                Id: ward.WardId,
+                Name: ward.WardName,
+                ProvinceId: Number(parentId),
+                DistrictId: 0,
+                ShortName: ward.WardName,
+                RefKey: "",
+                Type: ward.WardType,
+                Images: [],
+                Slug: ward.WardName,
+                DistrictName: "",
+              })) as IWardResponse[])
+            : []
+        );
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();

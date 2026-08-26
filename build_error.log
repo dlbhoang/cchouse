@@ -1,0 +1,37 @@
+$ npm i && next build && bun copy-files.ts
+
+up to date, audited 888 packages in 3s
+
+189 packages are looking for funding
+  run `npm fund` for details
+
+12 vulnerabilities (2 moderate, 9 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+  ▲ Next.js 14.2.35
+  - Environments: .env.production, .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+Failed to compile.
+
+./src/lib/components/admin/news/form/index.tsx:196:17
+Type error: Conversion of type '{ SourceType: string; Thumbnail: never[]; }' to type 'INewsRequest' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ SourceType: string; Thumbnail: never[]; }' is missing the following properties from type 'INewsRequest': NewsTypeId, Title, Summary, Content, and 2 more.
+
+[0m [90m 194 |[39m       })[33m;[39m[0m
+[0m [90m 195 |[39m     } [36melse[39m {[0m
+[0m[31m[1m>[22m[39m[90m 196 |[39m       setValues({[0m
+[0m [90m     |[39m                 [31m[1m^[22m[39m[0m
+[0m [90m 197 |[39m         [33mSourceType[39m[33m:[39m [32m"write"[39m[33m,[39m[0m
+[0m [90m 198 |[39m         [33mThumbnail[39m[33m:[39m [][33m,[39m[0m
+[0m [90m 199 |[39m       } [36mas[39m [33mINewsRequest[39m)[33m;[39m[0m
+Next.js build worker exited with code: 1 and signal: null
+error: script "build" exited with code 1
