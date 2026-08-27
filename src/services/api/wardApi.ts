@@ -43,7 +43,7 @@ const wardApi = {
   },
 
   getMergedTo(oldWardId: number) {
-    return axiosClient.get<any, IListData<ISearchWardDto>>(
+    return axiosClient.get<any, ISingleData<ISearchWardDto>>(
       `${url}/${oldWardId}/MergedTo`
     );
   },

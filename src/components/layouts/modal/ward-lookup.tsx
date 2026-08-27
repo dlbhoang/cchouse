@@ -23,7 +23,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { ISearchWardDto } from "@/lib/interfaces/ConfigAddress/IConfigAddress";
+import type {
+  ISearchWardDto,
+  IWardResponse,
+} from "@/lib/interfaces/ConfigAddress/IConfigAddress";
 import { cn } from "@/lib/utils";
 import wardApi from "@/services/api/wardApi";
 import { findWardAgencyData } from "@/data/ward-agencies";
@@ -431,14 +434,41 @@ const WardLookupDialog = ({
         })()
       : await wardApi.getMergedTo(data.WardId);
     if (result && result.data) {
-      if (result.data.length === 0) {
+      const apiWard = (Array.isArray(result.data) ? result.data[0] : result.data) as
+        | (Partial<ISearchWardDto> & Partial<IWardResponse>)
+        | undefined;
+      const newWard = apiWard
+        ? findWardAgencyData(
+            apiWard.WardId ?? apiWard.Id,
+            apiWard.WardName ?? apiWard.Name
+          )
+        : undefined;
+      const resolvedWardId = apiWard?.WardId ?? apiWard?.Id;
+      const resolvedWardName = apiWard?.WardName ?? apiWard?.Name;
+      const mergedResults: ISearchWardDto[] =
+        resolvedWardId && resolvedWardName
+          ? [{
+              WardId: resolvedWardId,
+              WardName: resolvedWardName,
+              Headquarters: apiWard?.Headquarters ?? newWard?.UBNDAddress ?? "",
+              MergedFrom: apiWard?.MergedFrom ?? newWard?.MergedFrom ?? [],
+            }]
+          : [];
+
+      if (mergedResults.length === 0) {
         toast.warning("Không tìm thấy dữ liệu");
+        setWards([]);
+        setResolvedNewWardId(0);
+        setResolvedNewWardName("");
+        setAgencyGroups([]);
+        setAgencySelections({});
+        return;
       }
-      setWards(result.data);
+      setWards(mergedResults);
       // Lay ID + Ten cua phuong MOI tu ket qua API, khong dung ID phuong cu tu form.
       // Ten duoc dung de fallback tra cuu neu WardId tu backend lech voi file tinh.
-      const newWardId = searchByNewAddress ? data.WardId : result.data[0]?.WardId ?? 0;
-      const newWardName = searchByNewAddress ? wardLabel : result.data[0]?.WardName ?? "";
+      const newWardId = searchByNewAddress ? data.WardId : mergedResults[0].WardId;
+      const newWardName = searchByNewAddress ? wardLabel : mergedResults[0].WardName;
       setResolvedNewWardId(newWardId);
       setResolvedNewWardName(newWardName);
       setAgencyGroups(buildAgencyGroups(newWardId, newWardName));
