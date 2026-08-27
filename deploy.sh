@@ -4,7 +4,7 @@ set -e  # Dừng ngay nếu có lệnh nào lỗi
 # ===== CẤU HÌNH =====
 VPS_USER="root"
 VPS_HOST="187.52.125.5"
-MK="bodanduongaA@2026"          # <-- Đổi thành mật khẩu SSH thật của bạn
+MK="bodanduongaA@2026"          # <-- Nên đổi mật khẩu VPS này rồi cập nhật lại đây
 REMOTE_APP_DIR="/var/www/cchouse"
 PM2_APP_NAME="cchouse"
 HEALTH_CHECK_URL="http://187.52.125.5:3003"   # Đổi lại nếu app chạy port khác
@@ -27,6 +27,11 @@ sshpass -p "$MK" ssh -o StrictHostKeyChecking=no "${VPS_USER}@${VPS_HOST}" bash 
 set -e
 cd "${REMOTE_APP_DIR}"
 
+echo "==> Loại bỏ mọi thay đổi cục bộ trên VPS (tránh lỗi git pull bị chặn)..."
+git fetch origin
+git reset --hard origin/main
+git clean -fd -e node_modules -e .next -e playwright-report -e test-results
+
 echo "==> Đang git pull..."
 git pull
 
@@ -36,8 +41,14 @@ npm install
 echo "==> Đang build..."
 npm run build
 
-echo "==> Restart PM2..."
-pm2 restart "${PM2_APP_NAME}"
+echo "==> Copy public/ và .next/static/ vào .next/standalone (bắt buộc với Next.js standalone mode)..."
+cp -r public "${REMOTE_APP_DIR}/.next/standalone/public"
+cp -r .next/static "${REMOTE_APP_DIR}/.next/standalone/.next/static"
+
+echo "==> Xóa process cũ và start lại sạch (tránh lỗi 400 Bad Request do header/connection cũ)..."
+pm2 delete "${PM2_APP_NAME}" || true
+NODE_OPTIONS="--max-http-header-size=32768" pm2 start "${REMOTE_APP_DIR}/.next/standalone/server.js" --name "${PM2_APP_NAME}"
+pm2 save
 
 echo "==> Deploy xong trên VPS."
 EOF
