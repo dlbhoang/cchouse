@@ -59,6 +59,16 @@ const getStatusClassName = (status?: number, statusName?: string) => {
   return (status !== undefined && statusIndexClasses[status]) || "news-status-default";
 };
 
+const getThumbnailUrl = (value: unknown) => {
+  const thumbnail = Array.isArray(value) ? value[0] : value;
+  if (!thumbnail) return "";
+  if (typeof thumbnail === "object" && thumbnail !== null) {
+    const item = thumbnail as { url?: string; Path?: string };
+    return item.url ?? item.Path ?? "";
+  }
+  return String(thumbnail).split("|")[0].trim();
+};
+
 const createColumns = (
   typeMap: Record<number, string>,
   onPreview?: (item: INewsResponse) => void,
@@ -99,11 +109,11 @@ const createColumns = (
     minWidth: 90,
     align: "center",
     render(value, record) {
-      const thumb = Array.isArray(value) ? value[0] : value;
+      const thumb = getThumbnailUrl(value);
       if (!thumb) return <div className="news-thumb-placeholder" />;
       return (
         <img
-          src={thumb.toString()}
+          src={thumb}
           alt={record.Title ?? ""}
           className="news-thumbnail"
           style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 8 }}

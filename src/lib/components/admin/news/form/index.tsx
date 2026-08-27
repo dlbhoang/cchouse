@@ -317,16 +317,27 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
     try {
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append("files", file);
       formData.append("TableName", ETableName.News as unknown as string);
       formData.append("resize", "false");
       formData.append("watermark", "false");
 
-      const res = await fetch(imagesApi.uploadUrl, { method: "POST", body: formData });
-      const data = await res.json();
-
-      // NOTE: tuỳ theo response thật của imagesApi.uploadUrl, chỉnh lại field lấy url cho đúng
-      const remoteUrl: string = data?.url ?? data?.Url ?? data?.data?.url ?? localUrl;
+      const data = await imagesApi.upload(formData);
+      const uploadItem = Array.isArray(data) ? data[0] : data;
+      const responseData = Array.isArray(data?.data) ? data.data[0] : data?.data;
+      const remoteUrl: string =
+        (typeof uploadItem === "string" ? uploadItem : "") ||
+        (typeof responseData === "string" ? responseData : "") ||
+        uploadItem?.Path ||
+        uploadItem?.path ||
+        uploadItem?.url ||
+        uploadItem?.Url ||
+        responseData?.Path ||
+        responseData?.path ||
+        responseData?.url ||
+        responseData?.Url ||
+        "";
+      if (!remoteUrl) throw new Error("Image URL missing from upload response");
 
       setValues((prev) => ({
         ...prev,
@@ -346,6 +357,16 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
     }
   };
 
+  const handleThumbnailLoadError = () => {
+    const message = "Ảnh không thể tải, vui lòng chọn ảnh khác";
+    NotiBase("error", message);
+    setErrors((prev) => ({ ...prev, Thumbnail: message }));
+    setValues((prev) => ({
+      ...prev,
+      Thumbnail: thumbnailList.map((file) => ({ ...file, status: "error" })),
+    }));
+  };
+
   const handleRemoveThumbnail = () => {
     setValues((prev) => ({ ...prev, Thumbnail: [] }));
   };
@@ -358,6 +379,9 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
     if (!values.NewsTypeId) next.NewsTypeId = "Vui lòng chọn loại tin";
     if (!values.SourceType) next.SourceType = "Vui lòng chọn nguồn tin";
     if (!thumbnailList.length) next.Thumbnail = "Vui lòng chọn hình minh hoạ";
+    else if (thumbnailList.some((file) => file.status === "error")) {
+      next.Thumbnail = "Ảnh không thể tải, vui lòng chọn ảnh khác";
+    }
     if (!values.Title?.trim()) next.Title = "Vui lòng nhập tiêu đề";
     if (!values.Summary?.trim()) next.Summary = "Vui lòng nhập tóm tắt";
     if (isContentEmpty(values.Content)) next.Content = "Vui lòng nhập nội dung";
@@ -398,7 +422,12 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
         await newsApi.add(payload);
       }
       mutate(newsApi.mutateKey);
-      router.replace(AppRoutes.news.url);
+      if (onClose) {
+        onClose();
+        router.refresh();
+      } else {
+        router.replace(AppRoutes.news.url);
+      }
     } finally {
       setIsSubmit(false);
     }
@@ -554,6 +583,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
                     ].join(" ")}
                     src={thumbnailPreview.url}
                     alt="thumbnail"
+                    onError={handleThumbnailLoadError}
                   />
                   {thumbnailPreview.status === "uploading" && <span className={styles["upload-spinner"]} />}
                   <button type="button" className={styles["upload-edit-btn"]} onClick={handleFilePick} aria-label="Chỉnh sửa ảnh">
