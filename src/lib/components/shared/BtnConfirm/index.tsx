@@ -1,3 +1,4 @@
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
 
@@ -18,6 +19,7 @@ type Props = {
   className?: string;
   onOkClick: () => void;
 };
+
 const BtnConfirm = ({
   title,
   description,
@@ -54,8 +56,20 @@ const BtnConfirm = ({
       title={title ?? 'Xác nhận xoá dữ liệu?'}
       description={description ?? 'Thao tác này không thể hoàn tác'}
       open={open}
+      icon={
+        <ExclamationCircleFilled
+          className={danger ? 'app-popconfirm-icon-danger' : 'app-popconfirm-icon-primary'}
+        />
+      }
+      overlayClassName={`app-popconfirm${danger ? ' app-popconfirm-danger' : ''}`}
       onConfirm={handleOk}
-      okButtonProps={{ loading: confirmLoading }}
+      okButtonProps={{
+        loading: confirmLoading,
+        className: danger ? 'app-popconfirm-ok-danger' : 'app-popconfirm-ok-primary',
+      }}
+      cancelButtonProps={{
+        className: 'app-popconfirm-cancel-btn',
+      }}
       onCancel={() => setOpen(false)}
       okText="Xác nhận"
       cancelText="Huỷ"

@@ -1579,6 +1579,8 @@ button.news-create-btn.ant-btn:active {
   color: #bfbfbf;
 }
 
+
+
 .news-filter-form .ant-select-selection-item {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1592,4 +1594,96 @@ button.news-create-btn.ant-btn:active {
 
 .news-filter-form .ant-picker-input > input::placeholder {
   color: #bfbfbf;
+}
+
+/* ---------------------------------------------------------------
+ * Popconfirm dùng chung (BtnConfirm) — style theo theme shadcn hiện tại
+ * Xanh (--primary) cho hành động thường (duyệt bài), đỏ (--destructive) cho xoá
+ * --------------------------------------------------------------- */
+
+.app-popconfirm .ant-popover-inner {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  background: var(--popover);
+}
+
+.app-popconfirm .ant-popconfirm-title,
+.app-popconfirm .ant-popover-message-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--popover-foreground);
+}
+
+.app-popconfirm .ant-popconfirm-description,
+.app-popconfirm .ant-popover-message-title + div {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
+}
+
+.app-popconfirm-icon-primary {
+  color: var(--primary);
+  font-size: 18px;
+  margin-top: 1px;
+}
+
+.app-popconfirm-icon-danger {
+  color: var(--destructive);
+  font-size: 18px;
+  margin-top: 1px;
+}
+
+.app-popconfirm .ant-popconfirm-buttons,
+.app-popconfirm .ant-popover-buttons {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.app-popconfirm .ant-popconfirm-buttons .ant-btn,
+.app-popconfirm .ant-popover-buttons .ant-btn {
+  height: 32px;
+  padding: 0 14px;
+  border-radius: calc(var(--radius) - 4px);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+/* Nút Huỷ — trung tính */
+.app-popconfirm .app-popconfirm-cancel-btn {
+  border-color: var(--border) !important;
+  color: var(--muted-foreground) !important;
+  background: var(--popover) !important;
+}
+.app-popconfirm .app-popconfirm-cancel-btn:hover {
+  border-color: var(--foreground) !important;
+  background: var(--accent) !important;
+  color: var(--foreground) !important;
+}
+
+/* Nút Xác nhận — hành động thường (duyệt bài) dùng --primary */
+.app-popconfirm .app-popconfirm-ok-primary {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+.app-popconfirm .app-popconfirm-ok-primary:hover {
+  filter: brightness(0.92);
+}
+
+/* Nút Xác nhận — hành động xoá dùng --destructive */
+.app-popconfirm .app-popconfirm-ok-danger {
+  background-color: var(--destructive) !important;
+  border-color: var(--destructive) !important;
+  color: #ffffff !important;
+}
+.app-popconfirm .app-popconfirm-ok-danger:hover {
+  filter: brightness(0.92);
 }

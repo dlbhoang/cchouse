@@ -231,7 +231,7 @@ const createColumns = (
             <BtnConfirm
               onOkClick={async () => {
                 await newsApi.approve(record.Id ?? 0);
-                mutate(newsApi.mutateKey);
+                newsApi.revalidate();
               }}
               type="icon"
               className="news-action-btn"
@@ -266,7 +266,7 @@ const createColumns = (
           <BtnConfirm
             onOkClick={async () => {
               await newsApi.delete(record.Id ?? 0);
-              mutate(newsApi.mutateKey);
+              newsApi.revalidate();
             }}
             type="icon"
             danger

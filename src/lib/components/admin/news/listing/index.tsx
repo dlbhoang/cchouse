@@ -18,7 +18,6 @@ import { NewsTypeTable } from "../../newsType/table";
 import AddEditModal from "../../newsType/modal";
 import NewsFilter from "../filter";
 import { useNewsColumns } from "../table/columns";
-
 const NewsTypeTabs = ({
   opts,
   onSubmit,
@@ -41,50 +40,8 @@ const NewsTypeTabs = ({
   const { data } = newsTypeApi.useGet({ pageIndex: 1, pageSize: 50 });
   const tagsData = data?.data ?? [];
 
-  const [counts, setCounts] = useState<Record<string, number>>({});
-
-  // Tổng số tin của "Tất cả" — ưu tiên dùng counts thu thập được, fallback về NewsCount
-  const allCount = Object.keys(counts).length
-    ? Object.values(counts).reduce((s, v) => s + v, 0)
-    : tagsData.reduce((sum, item) => sum + (item.NewsCount ?? 0), 0);
-
-  const enrichedTypes = tagsData.map((item) => ({
-    ...item,
-    NewsCount: counts[item.Id?.toString() ?? ""] ?? item.NewsCount,
-  }));
-
-  useEffect(() => {
-    if (!tagsData || tagsData.length === 0) return;
-
-    let mounted = true;
-
-    (async () => {
-      try {
-        const results = await Promise.all(
-          tagsData.map(async (item) => {
-            const id = item.Id ?? 0;
-            const res = await newsApi.get({ pageIndex: 1, pageSize: 1, NewsTypeIds: id });
-            const total = ((res as any)?.totalRow ?? (res as any)?.data?.totalRow) ?? 0;
-            return { id, total };
-          })
-        );
-
-        if (!mounted) return;
-
-        const map: Record<string, number> = {};
-        results.forEach((r) => {
-          map[String(r.id)] = r.total ?? 0;
-        });
-        setCounts(map);
-      } catch (e) {
-        // ignore errors; leave counts empty so fallback values used
-      }
-    })();
-
-    return () => {
-      mounted = false;
-    };
-  }, [tagsData]);
+  // Dùng thẳng NewsCount backend đã tính đúng qua subquery — không tự đếm lại nữa
+  const allCount = tagsData.reduce((sum, item) => sum + (item.NewsCount ?? 0), 0);
 
   useEffect(() => {
     if (inputVisible) {
@@ -134,7 +91,6 @@ const NewsTypeTabs = ({
         </button>
         {tagsData.map((item) => {
           const tagId = item.Id?.toString() ?? "";
-          const count = counts[tagId] ?? item.NewsCount ?? 0;
           return (
             <button
               key={item.Id}
@@ -144,7 +100,7 @@ const NewsTypeTabs = ({
               }`}
               onClick={() => handleChange(tagId)}
             >
-              {item.Name} ({count})
+              {item.Name} ({item.NewsCount ?? 0})
             </button>
           );
         })}
@@ -194,7 +150,7 @@ const NewsTypeTabs = ({
           </div>
 
           <div className="news-type-modal-body">
-            <NewsTypeTable loading={false} data={enrichedTypes} counts={counts} />
+            <NewsTypeTable loading={false} data={tagsData} />
           </div>
 
           <div className="news-type-modal-footer">
@@ -213,12 +169,9 @@ const NewsTypeTabs = ({
         isModalOpen={openAddModal}
         handleCancel={() => setOpenAddModal(false)}
       />
-
     </div>
   );
-};
-
-const NewsList = () => {
+};const NewsList = () => {
   const router = useRouter();
   const pathname = usePathname();
   const query = useSearchParams();

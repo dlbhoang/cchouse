@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 import { axiosClient } from "../api_config";
 import { IListData, ISingleData } from "@/lib/interfaces/base/IResponseBase";
@@ -9,6 +9,12 @@ import { INewsRequest, INewsResponse } from "./INews";
 const url = "News";
 const newsApi = {
   mutateKey: url,
+
+  revalidate() {
+    return mutate((key) => Array.isArray(key) && key[0] === url, undefined, {
+      revalidate: true,
+    });
+  },
 
   useGet(params: INewsOpts) {
     return useSWR([url, params], async ([route, query]) => {

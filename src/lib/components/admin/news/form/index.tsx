@@ -421,7 +421,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
       } else {
         await newsApi.add(payload);
       }
-      mutate(newsApi.mutateKey);
+      newsApi.revalidate();
       if (onClose) {
         onClose();
         router.refresh();
