@@ -270,7 +270,7 @@ const NewsList = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
 
   useEffect(() => {
-    mutate(newsApi.mutateKey);
+    newsApi.revalidate();
   }, [query]);
 
   const handleOpenNewNewsForm = () => {
@@ -303,7 +303,7 @@ const NewsList = () => {
 
   const handleRejectNews = async (item: INewsResponse) => {
     await newsApi.hidden(item.Id ?? 0);
-    mutate(newsApi.mutateKey);
+    newsApi.revalidate();
     handleCloseNewsFormModal();
   };
 
