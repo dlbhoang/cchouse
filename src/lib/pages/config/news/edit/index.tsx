@@ -43,10 +43,11 @@ const EditNewsPage = ({ id }: Props) => {
                 if (!data) return;
                 setUpdating(true);
                 try {
-                  await newsApi.updateStatus(
-                    data.Id ?? 0,
-                    isHidden ? "Show" : "Hidden"
-                  );
+                  if (isHidden) {
+                    await newsApi.show(data.Id ?? 0);
+                  } else {
+                    await newsApi.hidden(data.Id ?? 0);
+                  }
                   const res = await newsApi.getById(data.Id ?? 0);
                   setData(res.data);
                 } finally {

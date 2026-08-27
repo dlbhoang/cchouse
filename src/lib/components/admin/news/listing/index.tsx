@@ -302,7 +302,7 @@ const NewsList = () => {
   };
 
   const handleRejectNews = async (item: INewsResponse) => {
-    await newsApi.updateStatus(item.Id ?? 0, "Hidden");
+    await newsApi.hidden(item.Id ?? 0);
     mutate(newsApi.mutateKey);
     handleCloseNewsFormModal();
   };

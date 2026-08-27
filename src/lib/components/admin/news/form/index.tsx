@@ -198,7 +198,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
         ...({} as INewsRequest),
         SourceType: "write",
         Thumbnail: [],
-      } as INewsRequest);
+      } as unknown as INewsRequest);
     }
   }, [model]);
 

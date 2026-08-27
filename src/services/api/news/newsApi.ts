@@ -36,8 +36,16 @@ const newsApi = {
     return axiosClient.delete(`${url}/${id}`);
   },
 
-  updateStatus(id: number, status: "Hidden" | "Show") {
-    return axiosClient.put(`${url}/${id}/UpdateStatus/${status}`);
+  hidden(id: number) {
+    return axiosClient.put(`${url}/${id}/Hidden`);
+  },
+
+  show(id: number) {
+    return axiosClient.put(`${url}/${id}/Show`);
+  },
+
+  approve(id: number) {
+    return axiosClient.put(`${url}/${id}/Approve`);
   },
 };
 export default newsApi;
