@@ -14,7 +14,7 @@ export const NewsStatusSelect = ({
       mode={mode}
       placeholder={placeholder}
       allowClear
-      options={enumList.NewsStatus.map((e) => ({
+      options={(enumList.NewsStatus ?? []).map((e) => ({
         label: e.Name,
         value: e.Value,
       }))}
