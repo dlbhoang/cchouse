@@ -232,6 +232,17 @@ const FLOATING_FIELD_CSS = `
     transform: rotate(180deg);
   }
 
+  .news-source-dropdown-clear {
+    flex-shrink: 0;
+    color: #a3a3a3;
+    font-size: 12px;
+    transition: color 0.18s ease;
+  }
+
+  .news-source-dropdown-clear:hover {
+    color: #ef4444;
+  }
+
   .news-filter-floating-field .ant-select-selection-overflow-item {
     display: inline-flex !important;
     align-items: center !important;

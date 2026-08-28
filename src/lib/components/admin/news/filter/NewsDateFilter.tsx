@@ -20,7 +20,9 @@ const NewsDateFilter = ({
     fromDateWatch ? dayjs(fromDateWatch) : dayjs()
   );
 
-  const presetDays = [3, 7, 30];
+  const presetDays = [0, 3, 7, 30];
+
+  const presetLabel = (days: number) => (days === 0 ? "Hôm nay" : `${days} ngày trước`);
 
   const setPreset = (days: number) => {
     const date = dayjs().subtract(days, "day");
@@ -91,9 +93,14 @@ const NewsDateFilter = ({
             <div className="news-date-picker-presets">
               {presetDays.map((day) => (
                 <button key={day} type="button" onClick={() => setPreset(day)}>
-                  {day} ngày trước
+                  {presetLabel(day)}
                 </button>
               ))}
+            </div>
+            <div className="news-date-picker-hint">
+              {selectingEnd
+                ? "Chọn ngày kết thúc (bấm lại cùng ngày để lọc đúng 1 ngày)"
+                : "Chọn ngày bắt đầu"}
             </div>
 
             {panel}
@@ -157,6 +164,13 @@ const NewsDateFilter = ({
         .news-date-picker-presets button:hover {
           background: #e0f2fe;
           color: #0588f0;
+        }
+
+        .news-date-picker-hint {
+          padding: 6px 8px 0;
+          font-size: 11px;
+          line-height: 1.4;
+          color: #9ca3af;
         }
 
         /* Calendar panel */

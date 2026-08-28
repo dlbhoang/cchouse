@@ -1,5 +1,5 @@
 import { Col, Dropdown, Form, Input, Row } from "antd";
-import { ChevronDown, Search, Pencil, Share2 } from "lucide-react";
+import { ChevronDown, Search, Pencil, Share2, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { StatusBaseSelect, UserAdminSelect } from "@/lib/components/shared/MySelect";
@@ -21,6 +21,7 @@ const hiddenFields = [
 ];
 
 const sourceMenuItems = [
+  { key: "all", label: "Tất cả" },
   { key: "write", label: "Viết bài", icon: <Pencil size={14} /> },
   { key: "share", label: "Chia sẻ", icon: <Share2 size={14} /> },
 ];
@@ -80,6 +81,12 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
     </FloatingField>
   );
 
+  const clearSource = () => {
+    setSourceLabel(undefined);
+    form.setFieldValue("SourceType", undefined);
+    form.submit();
+  };
+
   const sourceField = (
     <FloatingField
       label="Nguồn"
@@ -89,7 +96,12 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
       <Dropdown
         menu={{
           items: sourceMenuItems,
+          selectedKeys: sourceTypeWatch ? [sourceTypeWatch] : ["all"],
           onClick: ({ key }) => {
+            if (key === "all") {
+              clearSource();
+              return;
+            }
             const chosen = sourceMenuItems.find((item) => item.key === key);
             setSourceLabel(chosen?.label);
             form.setFieldValue("SourceType", key as "write" | "share");
@@ -115,7 +127,18 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
           >
             {sourceLabel ?? "Chọn"}
           </span>
-          <ChevronDown size={14} className="news-source-dropdown-icon" />
+          {sourceLabel ? (
+            <X
+              size={14}
+              className="news-source-dropdown-clear"
+              onClick={(e) => {
+                e.stopPropagation();
+                clearSource();
+              }}
+            />
+          ) : (
+            <ChevronDown size={14} className="news-source-dropdown-icon" />
+          )}
         </div>
       </Dropdown>
     </FloatingField>
@@ -137,6 +160,16 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
     </FloatingField>
   );
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Bấm nút "x" (allowClear) hoặc tự xoá hết chữ trong ô tìm kiếm không bắn
+    // sự kiện onPressEnter, nên trước đây danh sách không tự tải lại khi xoá.
+    // Chỉ tự submit khi ô đã rỗng — vẫn giữ hành vi "gõ xong bấm Enter mới tìm"
+    // để tránh gọi API liên tục theo từng kí tự gõ.
+    if (!e.target.value) {
+      submitOnChange();
+    }
+  };
+
   const searchField = (
     <div className="news-filter-search-field">
       <Form.Item name="search" noStyle>
@@ -144,6 +177,7 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
           placeholder="Tìm kiếm theo tiêu đề"
           prefix={<Search size={14} />}
           allowClear
+          onChange={handleSearchChange}
           onPressEnter={submitOnChange}
         />
       </Form.Item>

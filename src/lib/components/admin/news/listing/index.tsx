@@ -192,33 +192,12 @@ const NewsTypeTabs = ({
     );
   };
 
-  const hasLocalFilters = Boolean(opts.SourceType || opts.fromDate || opts.toDate);
-  const requestOpts = hasLocalFilters
-    ? {
-        ...opts,
-        pageIndex: 1,
-        pageSize: 10000,
-        SourceType: undefined,
-        fromDate: undefined,
-        toDate: undefined,
-      }
-    : opts;
-  const { data, isLoading, isValidating } = newsApi.useGet(requestOpts);
-  const filteredNewsItems = (data?.data ?? []).filter((item) => {
-    const sourceType = opts.SourceType;
-    if (sourceType === "share" && !item.Source?.trim()) return false;
-    if (sourceType === "write" && item.Source?.trim()) return false;
-
-    const itemDate = new Date(item.CreatedDate);
-    if (opts.fromDate && itemDate < new Date(`${opts.fromDate}T00:00:00`)) return false;
-    if (opts.toDate && itemDate > new Date(`${opts.toDate}T23:59:59.999`)) return false;
-    return true;
-  });
-  const pageIndex = Number(opts.pageIndex ?? 1);
-  const pageSize = Number(opts.pageSize ?? 30);
-  const newsItems = hasLocalFilters
-    ? filteredNewsItems.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)
-    : filteredNewsItems;
+  // Backend (NewsQueryBuilder) đã lọc đúng SourceType và fromDate/toDate rồi,
+  // nên không cần tự fetch 10000 bản ghi rồi lọc lại ở client nữa — cách cũ này
+  // còn là nguyên nhân khiến việc xoá filter không tự tải lại đúng (SWR key
+  // không đổi vì SourceType/fromDate/toDate luôn bị loại khỏi request).
+  const { data, isLoading, isValidating } = newsApi.useGet(opts);
+  const newsItems = data?.data ?? [];
   const [previewNews, setPreviewNews] = useState<INewsResponse | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
@@ -327,7 +306,7 @@ const NewsTypeTabs = ({
       <div className="news-table">
         <TableBase
           loading={isLoading || isValidating}
-          total={hasLocalFilters ? filteredNewsItems.length : data?.totalRow ?? 0}
+          total={data?.totalRow ?? 0}
           searchOptions={opts}
           data={newsItems}
           cols={useNewsColumns(handleOpenPreview, handleOpenEditNewsForm)}
