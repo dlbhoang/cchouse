@@ -222,6 +222,32 @@ const NewPreview = ({
             __html: model.Content || "<p>Không có nội dung</p>",
           }}
         />
+
+        {model.Source?.trim() ? (
+          <div
+            style={{
+              marginTop: 12,
+              paddingTop: 12,
+              borderTop: "1px solid var(--Text-Border, #E5E5E5)",
+            }}
+          >
+            <Typography.Text>
+              <span style={{ ...labelStyle, fontWeight: 700 }}>Nguồn:</span>{" "}
+              {/^https?:\/\//i.test(model.Source) ? (
+                <a
+                  href={model.Source}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  style={{ color: "var(--Brand-Main, #0588F0)" }}
+                >
+                  {model.Source}
+                </a>
+              ) : (
+                <span style={valueStyle}>{model.Source}</span>
+              )}
+            </Typography.Text>
+          </div>
+        ) : null}
       </div>
     </Modal>
   );

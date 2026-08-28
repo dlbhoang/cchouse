@@ -160,12 +160,12 @@ const createColumns = (
     dataIndex: "Source",
     width: 160,
     render(value, record) {
-      const firstLine = value || "Viết bài";
+      const firstLine = record.Source?.trim() ? "Chia sẻ" : "Viết bài";
       const createdBy = record.CreatedBy;
       return (
         <div className="news-source-cell">
           <span className="news-source-line">{firstLine}</span>
-          {createdBy && createdBy !== value ? (
+          {createdBy ? (
             <span className="news-source-line">{createdBy}</span>
           ) : null}
         </div>
