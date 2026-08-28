@@ -25,9 +25,9 @@ const formatDateCell = (value?: string) => {
 };
 
 const statusNameClasses: { match: RegExp; className: string }[] = [
-  { match: /ch[ờo]\s*duy[ệe]t/i, className: "news-status-pending" },
-  { match: /t[ừu]\s*ch[ốo]i|l[ỗo]i/i, className: "news-status-rejected" },
-  { match: /[ẩâ]n/i, className: "news-status-hidden" },
+  { match: /ch[ờo]\s*duy[ệe]t|ch[ờo]\s*x[ửu]\s*l[ýy]/i, className: "news-status-pending" },
+  { match: /t[ừu]\s*ch[ốo]i|h[ủu]y|l[ỗo]i/i, className: "news-status-rejected" },
+  { match: /t[ạa]m\s*[ẩâ]n|t[ạa]m\s*ng[ừư]ng|[ẩâ]n/i, className: "news-status-hidden" },
   { match: /duy[ệe]t|hi[ểe]n\s*th[ịi]/i, className: "news-status-approved" },
 ];
 

@@ -73,6 +73,7 @@ export const useAdminContext = create(
         Root: [],
         Sex: [],
         StatusBase: [],
+        NewsStatus: [],
         StatusUsage: [],
         Structures: [],
         SubAddresses: [],

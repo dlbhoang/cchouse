@@ -18,6 +18,7 @@ export interface IEnumList {
   TransStatus: IEnumItem[];
   Law: IEnumItem[];
   StatusBase: IEnumItem[];
+  NewsStatus: IEnumItem[];
   CustomerType: IEnumItem[];
   PaymentMethod: IEnumItem[];
   Utilities: IEnumItem[];

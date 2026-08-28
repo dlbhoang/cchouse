@@ -2,7 +2,7 @@ import { Col, Dropdown, Form, Input, Row } from "antd";
 import { ChevronDown, Search, Pencil, Share2, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-import { StatusBaseSelect, UserAdminSelect } from "@/lib/components/shared/MySelect";
+import { NewsStatusSelect, UserAdminSelect } from "@/lib/components/shared/MySelect";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
 import { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import { useAdminContext } from "@/lib/stored";
@@ -155,7 +155,7 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
   const statusField = (
     <FloatingField label="Trạng thái" required filled={isFilledValue(statusWatch)}>
       <Form.Item name="Status" noStyle>
-        <StatusBaseSelect placeholder="Chọn" onChange={submitOnChange} />
+        <NewsStatusSelect placeholder="Chọn" onChange={submitOnChange} />
       </Form.Item>
     </FloatingField>
   );

@@ -42,3 +42,4 @@ export {
   WeekendSelect,
 } from './UserAdmin';
 export { UtilitySelect } from './UtilitySelect';
+export { NewsStatusSelect } from './NewsStatusSelect';
