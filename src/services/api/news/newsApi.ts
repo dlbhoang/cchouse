@@ -26,6 +26,9 @@ const newsApi = {
   get(params: INewsOpts) {
     return axiosClient.get<any, IListData<INewsResponse>>(url, { params });
   },
+  count(params: Partial<INewsOpts>) {
+    return axiosClient.get<any, { data: number }>(`${url}/count`, { params });
+  },
   getById(id: number) {
     return axiosClient.get<any, ISingleData<INewsResponse>>(`${url}/${id}`);
   },

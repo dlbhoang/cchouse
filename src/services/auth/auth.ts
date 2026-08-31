@@ -3,6 +3,16 @@ import axios from "axios";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+import { CredentialsSignin } from "next-auth";
+
+class InvalidLoginError extends CredentialsSignin {
+  code: string;
+  constructor(message: string) {
+    super();
+    this.code = message;
+  }
+}
+
 import { IUserLogin } from "@/lib/interfaces/IUser";
 import { authConfig } from "@/services/auth/auth.config";
 
@@ -64,7 +74,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           const apiMessage =
             e?.response?.data?.message ?? e?.message ?? "Đăng nhập thất bại";
-          throw new Error(apiMessage);
+          throw new InvalidLoginError(apiMessage);
         }
       },
     }),

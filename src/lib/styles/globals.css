@@ -490,6 +490,32 @@ button:not(:disabled),
   color: #ffffff;
 }
 
+.news-pending-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid #FFD591;
+  border-radius: 999px;
+  background-color: #FFF7E6;
+  color: #874D00;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;
+}
+
+.news-pending-badge:hover {
+  background-color: #FFECB3;
+}
+
+.news-pending-badge--active {
+  background-color: #874D00;
+  border-color: #874D00;
+  color: #ffffff;
+}
+
 .news-type-tab.active:hover {
   background-color: #000000;
 }

@@ -4,6 +4,7 @@ import { SWRConfig } from "swr";
 import { Toaster } from "@/components/ui/toaster";
 import "@/lib/styles/globals.css";
 import AuthProvider from "@/components/layouts/providers/auth-provider";
+import { auth } from "@/services/auth/auth";
 import ChunkErrorHandler from "@/components/chunk-error-handler";
 
 const APP_NAME = "cchouse";
@@ -33,11 +34,12 @@ export const viewport: Viewport = {
   themeColor: "#FFFFFF",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
   return (
     <html lang="en">
       <head>
@@ -67,7 +69,7 @@ export default function RootLayout({
         />
 
         <SWRConfig>
-          <AuthProvider>
+          <AuthProvider session={session}>
             {children}
             <Toaster expand position="top-center" richColors />
           </AuthProvider>

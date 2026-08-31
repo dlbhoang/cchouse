@@ -421,7 +421,11 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
       } else {
         await newsApi.add(payload);
       }
-      newsApi.revalidate();
+      // ⚠️ Phải await revalidate — nếu không, modal đóng lại trước khi
+      // SWR cache của danh sách kịp cập nhật, nên bảng (và form sửa mở
+      // lại lần sau) vẫn thấy dữ liệu cũ cho tới khi có một hành động
+      // khác (vd bấm Duyệt) vô tình kích hoạt revalidate.
+      await newsApi.revalidate();
       if (onClose) {
         onClose();
         router.refresh();
@@ -458,6 +462,14 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
               <IconClose />
             </button>
           )}
+        </div>
+      )}
+
+      {/* Cảnh báo: bài đang hiển thị công khai — lưu sẽ đưa bài về "Chờ duyệt" */}
+      {model && (model as INewsResponse)?.Status === 1 && (
+        <div className={styles["status-warning-banner"]}>
+          Bài viết này đang <strong>hiển thị công khai</strong>. Khi lưu, bài sẽ chuyển về trạng thái{" "}
+          <strong>Chờ duyệt</strong> và tạm thời gỡ khỏi trang tin cho tới khi được duyệt lại.
         </div>
       )}
 

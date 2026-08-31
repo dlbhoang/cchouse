@@ -2,7 +2,7 @@ import { Button, InputRef, Modal, Typography } from "antd";
 import { MoreVertical, Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { mutate } from "swr";
+import useSWR, { mutate } from "swr";
 
 import MyBreadcrumb from "@/lib/components/shared/MyBreadcrumb";
 import TableBase from "@/lib/components/shared/TableBase";
@@ -205,20 +205,44 @@ const NewsTypeTabs = ({
     newsApi.revalidate();
   }, [query]);
 
+  // Đếm số bài đang "Chờ duyệt" để hiển thị badge — dùng chung tiền tố key
+  // "News" nên newsApi.revalidate() (gọi sau mỗi lần sửa/duyệt/từ chối bài)
+  // cũng tự làm mới luôn số đếm này.
+  const { data: pendingCountData } = useSWR(
+    ["News", "count", { Status: 2 }],
+    () => newsApi.count({ Status: 2 } as any)
+  );
+  const pendingCount = pendingCountData?.data ?? 0;
+  const isPendingFilterActive = String(opts.Status ?? "") === "2";
+
+  const handleTogglePendingFilter = () => {
+    handleFilter({
+      ...opts,
+      Status: isPendingFilterActive ? undefined : (2 as any),
+    });
+  };
+
   const handleOpenNewNewsForm = () => {
     setSelectedNews(undefined);
     setIsNewsFormModalOpen(true);
   };
 
   const handleOpenEditNewsForm = async (item: INewsResponse) => {
-    try {
-      if (item.Content && item.Content.trim().length > 0) {
-        setSelectedNews(item);
-        setIsNewsFormModalOpen(true);
-        return;
-      }
+    // ⚠️ Luôn lấy bản mới nhất từ server trước khi mở form sửa.
+    // Trước đây nếu `item.Content` đã có sẵn (gần như luôn đúng vì API
+    // danh sách /News trả về Content đầy đủ cho mọi bản ghi) thì code sẽ
+    // dùng thẳng `item` — tức là dữ liệu đang nằm trong SWR cache của
+    // danh sách, có thể là dữ liệu CŨ nếu cache chưa kịp revalidate sau
+    // lần sửa/gửi duyệt trước đó. Đây là nguyên nhân khiến sửa bài xong,
+    // mở lại để gửi duyệt lần nữa vẫn thấy nội dung cũ.
+    if (!item.Id) {
+      setSelectedNews(item);
+      setIsNewsFormModalOpen(true);
+      return;
+    }
 
-      const res = await newsApi.getById(item.Id ?? 0);
+    try {
+      const res = await newsApi.getById(item.Id);
       setSelectedNews(res.data);
       setIsNewsFormModalOpen(true);
     } catch (error) {
@@ -242,18 +266,17 @@ const NewsTypeTabs = ({
   const handleOpenPreview = async (item: INewsResponse) => {
     if (!item.Id) return;
 
-    if (item.Content) {
-      setPreviewNews(item);
-      setPreviewOpen(true);
-      return;
-    }
-
+    // Cùng lý do như handleOpenEditNewsForm: không dùng thẳng `item` từ
+    // cache danh sách vì Content luôn có sẵn nên nhánh fetch mới trước đây
+    // gần như không bao giờ chạy, khiến preview hiển thị bản cũ.
     try {
       const res = await newsApi.getById(item.Id);
       setPreviewNews(res.data);
       setPreviewOpen(true);
     } catch (error) {
       console.error("Failed to load news preview", error);
+      setPreviewNews(item);
+      setPreviewOpen(true);
     }
   };
 
@@ -279,21 +302,36 @@ const NewsTypeTabs = ({
         current={AppRoutes.news.name}
       />
 
-      <Typography.Title
-        level={4}
-        style={{
-          margin: "16px 0 12px",
-          color: "var(--Text-Main, #0A0A0A)",
-          fontFamily: "var(--Font-family-Text, Inter)",
-          fontSize: "var(--Font-sizes-text-2xl, 24px)",
-          fontStyle: "normal",
-          fontWeight: 700,
-          textTransform: "uppercase",
-          lineHeight: "var(--Line-height-text-2xl, 32px)",
-        }}
-      >
-        {AppRoutes.news.name}
-      </Typography.Title>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "16px 0 12px" }}>
+        <Typography.Title
+          level={4}
+          style={{
+            margin: 0,
+            color: "var(--Text-Main, #0A0A0A)",
+            fontFamily: "var(--Font-family-Text, Inter)",
+            fontSize: "var(--Font-sizes-text-2xl, 24px)",
+            fontStyle: "normal",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            lineHeight: "var(--Line-height-text-2xl, 32px)",
+          }}
+        >
+          {AppRoutes.news.name}
+        </Typography.Title>
+
+        {/* Bấm để lọc nhanh các bài đang chờ duyệt (bao gồm cả bài vừa
+            sửa xong — sau khi sửa, bài sẽ tự quay về trạng thái này) */}
+        {pendingCount > 0 && (
+          <button
+            type="button"
+            onClick={handleTogglePendingFilter}
+            className={`news-pending-badge${isPendingFilterActive ? " news-pending-badge--active" : ""}`}
+            title="Xem các bài đang chờ duyệt"
+          >
+            Chờ duyệt ({pendingCount})
+          </button>
+        )}
+      </div>
 
       {/* Filter + nút Viết bài cùng một hàng */}
       <NewsFilter model={opts} onSubmit={handleFilter} extra={createNewsButton} />

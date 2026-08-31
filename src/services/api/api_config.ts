@@ -7,6 +7,32 @@ import { getSession, signOut } from "next-auth/react";
 
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 
+let cachedSession: any = null;
+let cachedSessionAt = 0;
+let inFlightRequest: Promise<any> | null = null;
+const SESSION_CACHE_MS = 10000; // cache 10s, tránh gọi lại session dồn dập
+
+async function getCachedSession() {
+  const now = Date.now();
+
+  if (cachedSession && now - cachedSessionAt < SESSION_CACHE_MS) {
+    return cachedSession;
+  }
+
+  if (inFlightRequest) {
+    return inFlightRequest;
+  }
+
+  inFlightRequest = getSession().then((session) => {
+    cachedSession = session;
+    cachedSessionAt = Date.now();
+    inFlightRequest = null;
+    return session;
+  });
+
+  return inFlightRequest;
+}
+
 export const axiosClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -18,7 +44,7 @@ export const axiosClient: AxiosInstance = axios.create({
 // Add a request interceptor
 axiosClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
-    const session = await getSession();
+    const session = await getCachedSession();
     if (session) {
       config.headers.Authorization = `Bearer ${session.user.token}`;
     }
@@ -53,7 +79,8 @@ axiosClient.interceptors.response.use(
     // LogBot.sendMessage(JSON.stringify(error));
     if (error?.request?.status === 401) {
       NotiBase("error", "Hết hạn đăng nhập, vui lòng đăng nhập lại!");
-      signOut();
+      cachedSession = null;
+        signOut();
     } else if (error?.response?.data?.data) {
       NotiBase("error", error.response?.data?.message ?? error?.message);
     } else NotiBase("error", error.response?.data?.message ?? error?.message);
