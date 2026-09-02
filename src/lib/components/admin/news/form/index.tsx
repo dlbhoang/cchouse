@@ -160,6 +160,25 @@ const parseContentMeta = (html?: string) => {
   }
 };
 
+const getEditableValues = (model?: INewsRequest | INewsResponse): INewsRequest => {
+  const item = model as INewsResponse | undefined;
+  const usePending = item?.HasPendingChanges;
+  const content = usePending ? item?.PendingContent : item?.Content;
+  const meta = parseContentMeta(content);
+  const thumbnail = usePending ? item?.PendingThumbnail : item?.Thumbnail;
+
+  return {
+    ...(item as INewsRequest),
+    NewsTypeId: usePending ? item?.PendingNewsTypeId ?? item?.NewsTypeId : item?.NewsTypeId,
+    Title: usePending ? item?.PendingTitle ?? "" : item?.Title ?? meta.title ?? "",
+    Summary: usePending ? item?.PendingSummary ?? "" : item?.Summary ?? meta.summary ?? "",
+    Source: usePending ? item?.PendingSource ?? "" : item?.Source ?? meta.source ?? "",
+    SourceType: usePending ? item?.PendingSourceType || "write" : item?.SourceType || "write",
+    Content: meta.content || content || "",
+    Thumbnail: thumbnail ? (fileServices.mapFromString(thumbnail) as any) : [],
+  } as INewsRequest;
+};
+
 const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
   const router = useRouter();
 
@@ -168,11 +187,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [shakeField, setShakeField] = useState<ErrorKey | null>(null);
 
-  const [values, setValues] = useState<INewsRequest>(() => ({
-    ...(model as INewsRequest),
-    SourceType: (model as INewsRequest)?.SourceType || "write",
-    Thumbnail: model?.Thumbnail ? (fileServices.mapFromString(model.Thumbnail) as any) : [],
-  }));
+  const [values, setValues] = useState<INewsRequest>(() => getEditableValues(model));
 
   // ✅ FIX: đồng bộ lại values mỗi khi model prop thay đổi.
   // Cần thiết vì model thường được fetch bất đồng bộ từ trang cha
@@ -181,18 +196,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
   // không tự cập nhật lại khi model đổi.
   useEffect(() => {
     if (model) {
-      const meta = parseContentMeta((model as INewsRequest)?.Content);
-      setValues({
-        ...(model as INewsRequest),
-        SourceType: (model as INewsRequest)?.SourceType || "write",
-        Title: (model as INewsRequest)?.Title || meta.title || "",
-        Summary: (model as INewsRequest)?.Summary || meta.summary || "",
-        Source: (model as INewsRequest)?.Source || meta.source || "",
-        Content: meta.content || (model as INewsRequest)?.Content || "",
-        Thumbnail: model?.Thumbnail
-          ? (fileServices.mapFromString(model.Thumbnail) as any)
-          : [],
-      });
+      setValues(getEditableValues(model));
     } else {
       setValues({
         ...({} as INewsRequest),
@@ -465,11 +469,11 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
         </div>
       )}
 
-      {/* Cảnh báo: bài đang hiển thị công khai — lưu sẽ đưa bài về "Chờ duyệt" */}
+      {/* Bản công khai được giữ nguyên đến khi bản sửa được duyệt. */}
       {model && (model as INewsResponse)?.Status === 1 && (
         <div className={styles["status-warning-banner"]}>
-          Bài viết này đang <strong>hiển thị công khai</strong>. Khi lưu, bài sẽ chuyển về trạng thái{" "}
-          <strong>Chờ duyệt</strong> và tạm thời gỡ khỏi trang tin cho tới khi được duyệt lại.
+          Bài viết này đang <strong>hiển thị công khai</strong>. Khi lưu, phiên bản hiện tại vẫn hiển thị;
+          bản sửa sẽ <strong>chờ duyệt</strong> và chỉ thay thế sau khi được duyệt.
         </div>
       )}
 

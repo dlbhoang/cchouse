@@ -72,10 +72,36 @@ const FeedModalPreview = ({
 
   const [images, setImages] = useState<string[]>([]);
 
+  // Dữ liệu "sống" dùng để render (mặc định lấy theo prop, sẽ được
+  // thay bằng bản mới nhất lấy từ server ngay khi mở modal).
+  const [liveData, setLiveData] = useState<IFeedResponse>(data);
+
+  useEffect(() => {
+    setLiveData(data);
+  }, [data]);
+
+  // Khi mở modal, luôn lấy lại trạng thái mới nhất từ server thay vì
+  // tin vào dữ liệu cũ trong danh sách (list có thể đã lỗi thời nếu
+  // tin vừa được đổi trạng thái ở nơi khác/tab khác).
+  useEffect(() => {
+    const refetch = async () => {
+      if (isModalOpen && data?.Id) {
+        try {
+          const res = await feedApi.getById(data.Id);
+          if (res?.data) setLiveData(res.data);
+        } catch {
+          // nếu lấy lỗi thì vẫn dùng data cũ, không chặn việc xem tin
+        }
+      }
+    };
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isModalOpen, data?.Id]);
+
   useEffect(() => {
     const fetch = async () => {
-      if (Array.isArray(data?.Property?.Images)) {
-        const promises = data.Property.Images.map((e) => {
+      if (Array.isArray(liveData?.Property?.Images)) {
+        const promises = liveData.Property.Images.map((e) => {
           if (typeof e === "string") {
             return e;
           }
@@ -85,18 +111,24 @@ const FeedModalPreview = ({
         });
         const result = await Promise.all(promises);
         setImages(result);
-      } else if (data?.Property?.Images) setImages(data.Property.Images);
+      } else if (liveData?.Property?.Images) setImages(liveData.Property.Images);
     };
     fetch();
-  }, [data?.Property?.Images]);
+  }, [liveData?.Property?.Images]);
 
   const handleStatus = async (status: number) => {
-    await feedApi.changeStatus({
-      Id: data.Id,
-      Status: status,
-      ReasonDeny: reason,
-    });
-    handleCancel();
+    try {
+      await feedApi.changeStatus({
+        Id: liveData.Id,
+        Status: status,
+        ReasonDeny: reason,
+      });
+    } finally {
+      // Luôn đóng modal + mutate lại danh sách, kể cả khi lỗi
+      // (vd: tin đã được đổi trạng thái ở nơi khác trước đó),
+      // để không giữ lại một tin đã "chết" trong cache list.
+      handleCancel();
+    }
   };
   return (
     <Modal
@@ -109,7 +141,7 @@ const FeedModalPreview = ({
       }}
       footer={null}
     >
-      {data.Property && (
+      {liveData.Property && (
         <Row gutter={[12, 12]}>
           <Col lg={18}>
             <Card
@@ -117,19 +149,19 @@ const FeedModalPreview = ({
                 <div>
                   <ImageZone
                     images={images}
-                    video={data.Property.Video?.toString()}
+                    video={liveData.Property.Video?.toString()}
                     position={
-                      data.Property.Lat && data.Property.Lng
+                      liveData.Property.Lat && liveData.Property.Lng
                         ? {
-                            lat: data.Property.Lat,
-                            lng: data.Property.Lng,
+                            lat: liveData.Property.Lat,
+                            lng: liveData.Property.Lng,
                           }
                         : undefined
                     }
                   />
                   <Title level={5} style={{ whiteSpace: "initial" }}>
-                    <Tag> Mã: {data?.Id}</Tag>
-                    {data?.Title}
+                    <Tag> Mã: {liveData?.Id}</Tag>
+                    {liveData?.Title}
                   </Title>
                   <Space style={{ alignItems: "end" }}>
                     <Text strong>Giá: </Text>
@@ -140,26 +172,26 @@ const FeedModalPreview = ({
                         margin: 0,
                       }}
                     >
-                      {data.Property.HiddenPrice
+                      {liveData.Property.HiddenPrice
                         ? "Thoả thuận"
-                        : data?.Property.DisplayPrice}
+                        : liveData?.Property.DisplayPrice}
                     </Title>
-                    {!data.Property.HiddenPrice && (
+                    {!liveData.Property.HiddenPrice && (
                       <Text type="secondary">
-                        {data.Property.PricePerSquareMeter}
+                        {liveData.Property.PricePerSquareMeter}
                       </Text>
                     )}
                     <Text type="secondary">
-                      {data.Property.PaymentMethod === 4
-                        ? `~ ${ConvertUsdToVnd(data.Property.FullPrice)}`
+                      {liveData.Property.PaymentMethod === 4
+                        ? `~ ${ConvertUsdToVnd(liveData.Property.FullPrice)}`
                         : ""}{" "}
                       (thương lượng)
                     </Text>
                   </Space>
                   <Text type="secondary" style={{ float: "inline-end" }}>
                     Ngày đăng:{" "}
-                    {data?.StartDate
-                      ? FormatDate(data.StartDate?.toString())
+                    {liveData?.StartDate
+                      ? FormatDate(liveData.StartDate?.toString())
                       : undefined}
                   </Text>
                 </div>
@@ -172,16 +204,16 @@ const FeedModalPreview = ({
                 <Col span={12}>
                   <Space wrap align="center">
                     <Text type="secondary">Vị trí: </Text>
-                    <Text>{data.Property.LocationName || emptyVal} </Text>
+                    <Text>{liveData.Property.LocationName || emptyVal} </Text>
                   </Space>
                 </Col>
                 <Col span={12}>
                   <Space wrap align="center">
                     <Text type="secondary">Diện tích: </Text>
                     <RenderArea
-                      area={data?.Property.Area ?? 0}
-                      length={data?.Property.Length}
-                      width={data?.Property.Width}
+                      area={liveData?.Property.Area ?? 0}
+                      length={liveData?.Property.Length}
+                      width={liveData?.Property.Width}
                     />
                   </Space>
                 </Col>
@@ -191,7 +223,7 @@ const FeedModalPreview = ({
                     <Text>
                       {
                         enumList.Law.find(
-                          (x) => x.Value === Number(data?.Property?.Laws)
+                          (x) => x.Value === Number(liveData?.Property?.Laws)
                         )?.Name
                       }
                     </Text>
@@ -202,9 +234,9 @@ const FeedModalPreview = ({
                     <Text type="secondary">Kêt cấu:</Text>
                     <Text>
                       {CombineStructures(enumList.Structures, {
-                        Basement: data?.Property.Basement,
-                        Floors: data?.Property.Floors,
-                        Structures: data?.Property.Structures,
+                        Basement: liveData?.Property.Basement,
+                        Floors: liveData?.Property.Floors,
+                        Structures: liveData?.Property.Structures,
                       })}
                     </Text>
                   </Space>
@@ -212,15 +244,15 @@ const FeedModalPreview = ({
                 <Col span={12}>
                   <Space wrap align="center">
                     <Text type="secondary">Hướng:</Text>
-                    <Text>{data?.Property.DirectionName ?? emptyVal}</Text>
+                    <Text>{liveData?.Property.DirectionName ?? emptyVal}</Text>
                   </Space>
                 </Col>
                 <Col span={12}>
                   <Space wrap align="center">
                     <Text type="secondary">Nội thất:</Text>
                     <Text>
-                      {data?.Property.Furniture
-                        ? data?.Property.Furniture
+                      {liveData?.Property.Furniture
+                        ? liveData?.Property.Furniture
                         : emptyVal}
                     </Text>
                   </Space>
@@ -229,7 +261,7 @@ const FeedModalPreview = ({
                   <Space wrap align="center">
                     <Text type="secondary">Tiện ích:</Text>
                     <Text>
-                      {data?.Property?.Utils?.map((e) =>
+                      {liveData?.Property?.Utils?.map((e) =>
                         enumList.Utilities.find(
                           (x) => x.Value === e
                         )?.Name.toLowerCase()
@@ -241,7 +273,7 @@ const FeedModalPreview = ({
                   <Space wrap align="center">
                     <Text type="secondary">Trang thiết bị:</Text>
                     <Text>
-                      {data?.Property?.Equipments?.map((e) =>
+                      {liveData?.Property?.Equipments?.map((e) =>
                         enumList.Equipments.find(
                           (x) => x.Value === e
                         )?.Name.toLowerCase()
@@ -255,40 +287,40 @@ const FeedModalPreview = ({
                 </Col>
                 <Col span={24}>
                   <Text style={{ whiteSpace: "pre-wrap" }}>
-                    {data?.Content ? data?.Content : "Không có nội dung mô tả"}
+                    {liveData?.Content ? liveData?.Content : "Không có nội dung mô tả"}
                   </Text>
                 </Col>
               </Row>
             </Card>
           </Col>
           <Col xs={24} md={24} lg={6}>
-            <ConsultantContact data={data} />
+            <ConsultantContact data={liveData} />
           </Col>
           {!readOnly && (
             <BottomFixed>
               <Space>
-                {data.Id > 0 && (
-                  <Tag color={tagColor(data?.StatusName)}>
-                    {data?.StatusName}
+                {liveData.Id > 0 && (
+                  <Tag color={tagColor(liveData?.StatusName)}>
+                    {liveData?.StatusName}
                   </Tag>
                 )}
-                {!data.Id && (
+                {!liveData.Id && (
                   <Button type="primary" size="large" onClick={onSubmit}>
                     Đăng tin
                   </Button>
                 )}
                 {showEdit && (
-                  <Button href={`${AppRoutes.feed.url}/${data.Id}`}>
+                  <Button href={`${AppRoutes.feed.url}/${liveData.Id}`}>
                     Chỉnh sửa
                   </Button>
                 )}
-                {[2, 3].includes(data.Status) && (
+                {[2, 3].includes(liveData.Status) && (
                   <Button
                     type="primary"
                     size="large"
                     disabled={
-                      !data?.Author?.IsAdmin ||
-                      data?.Author?.Id !== session?.user.Id
+                      !liveData?.Author?.IsAdmin ||
+                      liveData?.Author?.Id !== session?.user.Id
                     }
                     onClick={() => {
                       Modal.confirm({
@@ -309,12 +341,12 @@ const FeedModalPreview = ({
                         onOk: async () => {
                           if (refDate) {
                             await feedApi.update({
-                              ...data,
+                              ...liveData,
                               StartDate: FormatDateSubmit(
                                 refDate.current?.toString()
                               ),
                               Property: {
-                                ...data.Property,
+                                ...liveData.Property,
                                 Images: images,
                               },
                             });
@@ -328,10 +360,10 @@ const FeedModalPreview = ({
                   </Button>
                 )}
 
-                {data?.Id > 0 &&
-                  data?.Author?.IsAdmin &&
-                  data.Author?.Id === session?.user.Id &&
-                  data?.StatusName === "Đang hiển thị" && (
+                {liveData?.Id > 0 &&
+                  liveData?.Author?.IsAdmin &&
+                  liveData.Author?.Id === session?.user.Id &&
+                  liveData?.StatusName === "Đang hiển thị" && (
                     <Space>
                       <BtnConfirm
                         type="text"
@@ -345,16 +377,20 @@ const FeedModalPreview = ({
                         btnType="dashed"
                         danger
                         onOkClick={async () => {
-                          await feedApi.hidden(data.Id);
+                          try {
+                            await feedApi.hidden(liveData.Id);
+                          } finally {
+                            handleCancel();
+                          }
                         }}
                         btnText="Ẩn tin"
                         title="Xác nhận ẩn tin đăng?"
                       />
                     </Space>
                   )}
-                {data?.Id > 0 &&
+                {liveData?.Id > 0 &&
                   isAdminOrModOrManager &&
-                  data?.StatusName === "Đang hiển thị" && (
+                  liveData?.StatusName === "Đang hiển thị" && (
                     <BtnConfirm
                       type="text"
                       btnType="dashed"
@@ -374,16 +410,16 @@ const FeedModalPreview = ({
                       }
                     />
                   )}
-                {data?.Id > 0 &&
+                {liveData?.Id > 0 &&
                   isAdminOrModOrManager &&
-                  data?.StatusName === "Chờ xử lý" && (
+                  liveData?.StatusName === "Chờ xử lý" && (
                     <Space>
                       <BtnConfirm
                         type="text"
                         btnType="primary"
                         onOkClick={() => handleStatus(1)}
-                        btnText="Gửi duyệt bài"
-                        title="Xác nhận duyệt bài?"
+                        btnText="Duyệt tin"
+                        title="Xác nhận duyệt tin?"
                       />
                       <BtnConfirm
                         type="text"

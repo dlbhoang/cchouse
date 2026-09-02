@@ -227,7 +227,7 @@ const createColumns = (
     render(_, record) {
       return (
         <div className="news-action-cell">
-          {record.Status === NEWS_STATUS_PENDING && (
+          {(record.Status === NEWS_STATUS_PENDING || record.HasPendingChanges) && (
             <BtnConfirm
               onOkClick={async () => {
                 await newsApi.approve(record.Id ?? 0);
@@ -242,8 +242,11 @@ const createColumns = (
                 border: "1px solid #e5e5e5",
                 borderRadius: 10,
               }}
-              title="Xác nhận duyệt bài?"
-              description="Sau khi duyệt, bài viết sẽ hiển thị công khai trên trang tin."
+              title={record.HasPendingChanges ? "Duyệt bản cập nhật?" : "Xác nhận duyệt bài?"}
+              description={record.HasPendingChanges
+                ? "Bản sửa sẽ thay thế nội dung đang hiển thị công khai."
+                : "Sau khi duyệt, bài viết sẽ hiển thị công khai trên trang tin."}
+              overlayClassName="news-popconfirm news-popconfirm-approve"
               btnText=""
               icon={<CheckIcon className="size-4 text-[#22c55e]" />}
             />
@@ -270,6 +273,9 @@ const createColumns = (
             }}
             type="icon"
             danger
+            title="Xóa tin tức?"
+            description="Tin tức sẽ bị xóa và không thể khôi phục."
+            overlayClassName="news-popconfirm news-popconfirm-delete"
             className="news-action-btn"
             style={{
               width: 40,

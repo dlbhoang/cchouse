@@ -257,3 +257,92 @@
   color: #a1a1aa;
   font-size: 14px;
 }
+
+/* Modal xác nhận chỉ của trang Tin tức */
+.news-popconfirm .ant-popover-inner {
+  width: min(340px, calc(100vw - 32px));
+  padding: 18px;
+  border: 1px solid #e4e4e7;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(24, 24, 27, 0.14);
+}
+
+.news-popconfirm .ant-popover-arrow::before {
+  background: #ffffff !important;
+}
+
+.news-popconfirm .ant-popconfirm-title,
+.news-popconfirm .ant-popover-message-title {
+  color: #18181b;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 22px;
+}
+
+.news-popconfirm .ant-popconfirm-description,
+.news-popconfirm .ant-popover-message-title + div {
+  margin-top: 4px;
+  color: #71717a;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 13px;
+  line-height: 19px;
+}
+
+.news-popconfirm .ant-popconfirm-buttons,
+.news-popconfirm .ant-popover-buttons {
+  margin-top: 16px;
+  gap: 8px;
+}
+
+.news-popconfirm .ant-popconfirm-buttons .ant-btn,
+.news-popconfirm .ant-popover-buttons .ant-btn {
+  height: 36px;
+  padding: 0 15px;
+  border-radius: 9px;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.news-popconfirm .app-popconfirm-cancel-btn {
+  border-color: #e4e4e7 !important;
+  color: #3f3f46 !important;
+  background: #ffffff !important;
+}
+
+.news-popconfirm .app-popconfirm-cancel-btn:hover {
+  border-color: #a1a1aa !important;
+  background: #f4f4f5 !important;
+  color: #18181b !important;
+}
+
+.news-popconfirm-approve .app-popconfirm-icon-primary {
+  color: #0588f0;
+}
+
+.news-popconfirm-approve .app-popconfirm-ok-primary {
+  border-color: #0588f0 !important;
+  background: #0588f0 !important;
+  color: #ffffff !important;
+}
+
+.news-popconfirm-approve .app-popconfirm-ok-primary:hover {
+  border-color: #0877cf !important;
+  background: #0877cf !important;
+}
+
+.news-popconfirm-delete .app-popconfirm-icon-danger {
+  color: #ef4444;
+}
+
+.news-popconfirm-delete .app-popconfirm-ok-danger {
+  border-color: #ef4444 !important;
+  background: #ef4444 !important;
+}
+
+.news-popconfirm-delete .app-popconfirm-ok-danger:hover {
+  border-color: #dc2626 !important;
+  background: #dc2626 !important;
+}

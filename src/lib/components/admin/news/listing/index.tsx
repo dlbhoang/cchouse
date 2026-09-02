@@ -209,16 +209,16 @@ const NewsTypeTabs = ({
   // "News" nên newsApi.revalidate() (gọi sau mỗi lần sửa/duyệt/từ chối bài)
   // cũng tự làm mới luôn số đếm này.
   const { data: pendingCountData } = useSWR(
-    ["News", "count", { Status: 2 }],
-    () => newsApi.count({ Status: 2 } as any)
+    ["News", "count", { NeedsApproval: true }],
+    () => newsApi.count({ NeedsApproval: true } as any)
   );
   const pendingCount = pendingCountData?.data ?? 0;
-  const isPendingFilterActive = String(opts.Status ?? "") === "2";
+  const isPendingFilterActive = String(opts.NeedsApproval ?? "") === "true";
 
   const handleTogglePendingFilter = () => {
     handleFilter({
       ...opts,
-      Status: isPendingFilterActive ? undefined : (2 as any),
+      NeedsApproval: isPendingFilterActive ? undefined : true,
     });
   };
 

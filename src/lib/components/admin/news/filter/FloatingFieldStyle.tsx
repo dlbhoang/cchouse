@@ -3,10 +3,11 @@ const FLOATING_FIELD_CSS = `
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 12px;
-    border: 1px solid rgba(229, 229, 229, 0.6);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.72);
+    padding: 14px;
+    border: 1px solid rgba(5, 136, 240, 0.18);
+    border-radius: 16px;
+    background: linear-gradient(135deg, #f7fbff 0%, #ffffff 58%, #f4faff 100%);
+    box-shadow: 0 8px 24px rgba(5, 136, 240, 0.06);
     box-sizing: border-box;
   }
   .news-filter-outer .news-filter-toolbar {
@@ -19,7 +20,7 @@ const FLOATING_FIELD_CSS = `
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     margin-top: 0;
     padding-top: 10px;
   }
@@ -28,7 +29,7 @@ const FLOATING_FIELD_CSS = `
   .news-filter-field {
     flex: 0 0 201px;
     width: 201px;
-    min-height: 40px;
+    min-height: 44px;
     display: flex;
     align-items: center;
   }
@@ -54,22 +55,23 @@ const FLOATING_FIELD_CSS = `
     align-items: center;
     gap: 40px;
     width: 201px;
-    height: 40px;
-    min-height: 40px;
-    padding: 12px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 12px;
     box-sizing: border-box;
-    border-radius: 10px;
-    background: var(--Text-White, #fff);
-    border: 1px solid var(--Text-Border, #e5e5e5);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #dbeafe;
     transition: border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .news-filter-floating-field:hover {
-    border-color: #c7c7cc;
+    border-color: rgba(5, 136, 240, 0.48);
+    background: #ffffff;
   }
   .news-filter-floating-field:focus-within {
     border-color: #0588f0;
-    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.12);
+    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.14), 0 3px 8px rgba(5, 136, 240, 0.08);
   }
 
   /* ── Triệt tiêu toàn bộ border/shadow gốc của antd ở MỌI trạng thái,
@@ -352,8 +354,8 @@ const FLOATING_FIELD_CSS = `
   .news-filter-floating-field--filled .news-filter-floating-label,
   .news-filter-floating-field:focus-within .news-filter-floating-label {
     top: 0;
-    background: #ffffff;
-    color: #737373;
+    background: #f8fcff;
+    color: #64748b;
     font-size: 12px;
     font-weight: 400;
     line-height: 16px;
@@ -398,7 +400,7 @@ const FLOATING_FIELD_CSS = `
   }
   .news-filter-toolbar {
     align-items: center;
-    min-height: 52px;
+    min-height: 44px;
   }
   .news-filter-extra {
     display: flex;
@@ -416,13 +418,13 @@ const FLOATING_FIELD_CSS = `
   .news-filter-search-field .ant-input-affix-wrapper {
     width: 100% !important;
     min-width: 280px !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    max-height: 40px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
     box-sizing: border-box !important;
-    border-radius: 10px !important;
-    border: 1px solid #e5e5e5 !important;
-    background: #ffffff !important;
+    border-radius: 11px !important;
+    border: 1px solid #dbeafe !important;
+    background: rgba(255, 255, 255, 0.96) !important;
     padding: 0 14px !important;
     display: flex !important;
     align-items: center !important;
@@ -430,12 +432,12 @@ const FLOATING_FIELD_CSS = `
       box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .news-filter-search-field .ant-input-affix-wrapper:hover {
-    border-color: #c7c7cc;
+    border-color: rgba(5, 136, 240, 0.48);
   }
   .news-filter-search-field .ant-input-affix-wrapper-focused,
   .news-filter-search-field .ant-input-affix-wrapper:focus-within {
     border-color: #0588f0 !important;
-    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.12) !important;
+    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.14), 0 3px 8px rgba(5, 136, 240, 0.08) !important;
   }
   .news-filter-search-field .ant-input {
     font-size: 14px !important;
@@ -476,8 +478,9 @@ const FLOATING_FIELD_CSS = `
     width: 100%;
     padding: 6px;
     border-radius: 12px;
-    box-shadow: 0 12px 28px rgba(16, 16, 16, 0.12);
-    border: 1px solid #eef2f6;
+    box-shadow: 0 14px 32px rgba(5, 136, 240, 0.15);
+    border: 1px solid #dbeafe;
+    background: #ffffff;
   }
 
   .news-source-menu .ant-dropdown-menu-item {
@@ -502,6 +505,12 @@ const FLOATING_FIELD_CSS = `
     color: #0588f0;
   }
 
+  .news-source-menu .ant-dropdown-menu-item-selected {
+    background: rgba(5, 136, 240, 0.1) !important;
+    color: #0588f0 !important;
+    font-weight: 600;
+  }
+
   .news-source-menu .ant-dropdown-menu-item:hover .anticon {
     color: #0588f0;
   }
@@ -512,6 +521,23 @@ const FLOATING_FIELD_CSS = `
 
   /* ── Responsive: dưới 576px (mobile), field full-width, dùng layout Row/Col đã có ── */
   @media (max-width: 575px) {
+    .news-filter-form .ant-row {
+      margin: 0 !important;
+      padding: 14px;
+      border: 1px solid rgba(5, 136, 240, 0.18);
+      border-radius: 16px;
+      background: linear-gradient(135deg, #f7fbff 0%, #ffffff 70%);
+      box-shadow: 0 8px 24px rgba(5, 136, 240, 0.06);
+    }
+
+    .news-filter-form .ant-row > .ant-col {
+      padding-inline: 0 !important;
+    }
+
+    .news-filter-floating-field,
+    .news-filter-search-field .ant-input-affix-wrapper {
+      width: 100% !important;
+    }
     .news-filter-field--user,
     .news-filter-field--source,
     .news-filter-field--date,
@@ -534,22 +560,25 @@ const FLOATING_FIELD_CSS = `
     align-items: center;
     justify-content: center;
     gap: 6px;
-    height: 40px;
+    height: 44px;
     padding: 0 16px;
-    border-radius: 10px;
+    border-radius: 11px;
     background: var(--Brand-Main, #0588F0);
     color: #fff;
     border: none;
     cursor: pointer;
     font-family: Inter, var(--default-font-family, sans-serif);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 20px;
     white-space: nowrap;
-    transition: background 0.18s ease, box-shadow 0.18s ease;
+    box-shadow: 0 5px 12px rgba(5, 136, 240, 0.22);
+    transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
   }
   .news-filter-create-btn:hover {
     background: #0477d6;
+    box-shadow: 0 8px 16px rgba(5, 136, 240, 0.28);
+    transform: translateY(-1px);
   }
   .news-filter-create-btn:active {
     background: #0366bd;

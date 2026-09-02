@@ -32,6 +32,7 @@ export interface INewsOpts extends ISearchOptions {
   NewsTypeIds?: string | number | number[];
   SourceType?: "write" | "share";
   Status?: number;
+  NeedsApproval?: boolean;
 }
 
 export interface IConfigAddressFilter extends ISearchOptions {

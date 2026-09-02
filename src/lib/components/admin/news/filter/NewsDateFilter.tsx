@@ -10,28 +10,38 @@ const NewsDateFilter = ({
   onValueChange,
 }: {
   form: ReturnType<typeof Form.useForm<INewsOpts>>[0];
-  onValueChange?: () => void;
+  onValueChange?: (values: Pick<INewsOpts, "fromDate" | "toDate">) => void;
 }) => {
   const fromDateWatch = Form.useWatch("fromDate", form);
   const toDateWatch = Form.useWatch("toDate", form);
   const [open, setOpen] = useState(false);
   const [selectingEnd, setSelectingEnd] = useState(Boolean(fromDateWatch && !toDateWatch));
-  const [pickerValue, setPickerValue] = useState(
-    fromDateWatch ? dayjs(fromDateWatch) : dayjs()
-  );
-
+  const [pickerValue, setPickerValue] = useState(fromDateWatch ? dayjs(fromDateWatch) : dayjs());
   const presetDays = [0, 3, 7, 30];
-
   const presetLabel = (days: number) => (days === 0 ? "Hôm nay" : `${days} ngày trước`);
+
+  const submitDateFilter = (fromDate?: string, toDate?: string) =>
+    onValueChange?.({ fromDate, toDate });
 
   const setPreset = (days: number) => {
     const date = dayjs().subtract(days, "day");
-
-    form.setFieldValue("fromDate", date.format(appConst.SUBMIT_DATE_FORMAT));
-    form.setFieldValue("toDate", dayjs().format(appConst.SUBMIT_DATE_FORMAT));
-
-    onValueChange?.();
+    form.setFieldsValue({
+      fromDate: date.format(appConst.SUBMIT_DATE_FORMAT),
+      toDate: dayjs().format(appConst.SUBMIT_DATE_FORMAT),
+    });
+    setSelectingEnd(false);
+    setOpen(false);
+    submitDateFilter(
+      date.format(appConst.SUBMIT_DATE_FORMAT),
+      dayjs().format(appConst.SUBMIT_DATE_FORMAT)
+    );
   };
+
+  const isTodayOnly = Boolean(
+    fromDateWatch && toDateWatch &&
+    dayjs(fromDateWatch).isSame(dayjs(), "day") &&
+    dayjs(toDateWatch).isSame(dayjs(), "day")
+  );
 
   return (
     <>
@@ -57,7 +67,7 @@ const NewsDateFilter = ({
           if (!date) {
             form.setFieldsValue({ fromDate: undefined, toDate: undefined });
             setSelectingEnd(false);
-            onValueChange?.();
+            submitDateFilter(undefined, undefined);
             return;
           }
 
@@ -78,10 +88,14 @@ const NewsDateFilter = ({
             });
             setSelectingEnd(false);
             setOpen(false);
-            onValueChange?.();
+            submitDateFilter(
+              from.format(appConst.SUBMIT_DATE_FORMAT),
+              to.format(appConst.SUBMIT_DATE_FORMAT)
+            );
           }
         }}
         format={() => {
+          if (isTodayOnly) return "Hôm nay";
           if (fromDateWatch && toDateWatch) {
             return `${dayjs(fromDateWatch).format(appConst.DATE_FORMAT)} - ${dayjs(toDateWatch).format(appConst.DATE_FORMAT)}`;
           }
@@ -98,11 +112,8 @@ const NewsDateFilter = ({
               ))}
             </div>
             <div className="news-date-picker-hint">
-              {selectingEnd
-                ? "Chọn ngày kết thúc (bấm lại cùng ngày để lọc đúng 1 ngày)"
-                : "Chọn ngày bắt đầu"}
+              {selectingEnd ? "Chọn ngày kết thúc" : "Chọn ngày bắt đầu"}
             </div>
-
             {panel}
           </div>
         )}
@@ -140,25 +151,31 @@ const NewsDateFilter = ({
           background: white !important;
         }
 
-        /* Presets */
+        /* Calendar panel */
+        .news-date-picker-popup .ant-picker-panel {
+          border: none !important;
+          box-shadow: none !important;
+        }
+
         .news-date-picker-presets {
           display: flex;
           gap: 6px;
           padding: 8px;
-          border-bottom: 1px solid #f3f4f6;
+          border-bottom: 1px solid #e0f2fe;
+          background: #f8fcff;
         }
 
         .news-date-picker-presets button {
           flex: 1;
           border: none;
-          background: #f3f4f6;
+          background: #ffffff;
           padding: 5px 6px;
           border-radius: 6px;
+          color: #475569;
           font-size: 11px;
           font-weight: 500;
           line-height: 1.3;
           cursor: pointer;
-          transition: all 0.2s ease;
         }
 
         .news-date-picker-presets button:hover {
@@ -168,15 +185,9 @@ const NewsDateFilter = ({
 
         .news-date-picker-hint {
           padding: 6px 8px 0;
+          color: #9ca3af;
           font-size: 11px;
           line-height: 1.4;
-          color: #9ca3af;
-        }
-
-        /* Calendar panel */
-        .news-date-picker-popup .ant-picker-panel {
-          border: none !important;
-          box-shadow: none !important;
         }
 
         .news-date-picker-popup .ant-picker-header {

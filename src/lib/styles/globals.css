@@ -540,9 +540,9 @@ button:not(:disabled),
 .news-add-type-btn.ant-btn {
   height: 36px;
   border-radius: 999px;
-  border: 1px solid #e5e5e5;
-  background-color: #ffffff;
-  color: #1f1f1f;
+  border: 1px solid #b9e0fb;
+  background-color: #f0f9ff;
+  color: #0588f0;
   font-size: 14px;
   font-weight: 500;
   display: inline-flex;
@@ -550,15 +550,16 @@ button:not(:disabled),
   gap: 6px;
   padding: 0 18px;
   margin-left: -10px;
-  box-shadow: none;
+  box-shadow: 0 3px 8px rgba(5, 136, 240, 0.1);
   outline: none;
 }
 
 .news-add-type-btn.ant-btn:hover,
 .news-add-type-btn.ant-btn:focus {
-  border-color: #c7c7c7;
-  color: #1f1f1f;
-  box-shadow: none;
+  border-color: #0588f0;
+  background-color: #0588f0;
+  color: #ffffff;
+  box-shadow: 0 5px 12px rgba(5, 136, 240, 0.2);
   outline: none;
 }
 
@@ -567,8 +568,9 @@ button:not(:disabled),
   width: 36px;
   min-width: 36px;
   border-radius: 50%;
-  border: 1px solid #e5e5e5;
-  background-color: #ffffff;
+  border: 1px solid #b9e0fb;
+  background-color: #f0f9ff;
+  color: #0588f0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -596,8 +598,10 @@ button:not(:disabled),
 
 .news-more-btn.ant-btn:hover,
 .news-more-btn.ant-btn:focus {
-  border-color: #c7c7c7;
-  box-shadow: none;
+  border-color: #0588f0;
+  background-color: #0588f0;
+  color: #ffffff;
+  box-shadow: 0 5px 12px rgba(5, 136, 240, 0.2);
   outline: none;
 }
 

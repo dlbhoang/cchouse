@@ -24,4 +24,12 @@ export interface INewsResponse extends INewsRequest {
   UpdatedDate: string;
   ApprovedBy?: string;
   ApprovedDate?: string;
+  HasPendingChanges?: boolean;
+  PendingTitle?: string;
+  PendingSummary?: string;
+  PendingContent?: string;
+  PendingThumbnail?: string;
+  PendingSource?: string;
+  PendingSourceType?: string;
+  PendingNewsTypeId?: number;
 }

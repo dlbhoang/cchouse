@@ -64,6 +64,12 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
 
   const submitOnChange = () => form.submit();
 
+  const submitDateFilter = (dateValues: Pick<INewsOpts, "fromDate" | "toDate">) => {
+    // Không dùng form.submit ở đây: DatePicker cập nhật form trong chính event
+    // chọn ngày, nên gọi trực tiếp với giá trị vừa chọn để URL/API luôn nhận đủ range.
+    onSubmit({ ...form.getFieldsValue(), ...dateValues });
+  };
+
   const handleSourceOpenChange = (open: boolean) => {
     if (open && sourceTriggerRef.current) {
       // Đo đúng chiều rộng thật của ô trigger để menu bên dưới luôn khớp
@@ -147,7 +153,7 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
   const dateField = (
     <FloatingField label="Thời gian" required filled={isFilledValue(fromDateWatch)}>
       <Form.Item noStyle>
-        <NewsDateFilter form={form} onValueChange={submitOnChange} />
+        <NewsDateFilter form={form} onValueChange={submitDateFilter} />
       </Form.Item>
     </FloatingField>
   );

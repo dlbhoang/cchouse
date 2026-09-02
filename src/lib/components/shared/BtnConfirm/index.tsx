@@ -17,6 +17,7 @@ type Props = {
   block?: boolean;
   style?: CSSProperties;
   className?: string;
+  overlayClassName?: string;
   onOkClick: () => void;
 };
 
@@ -30,6 +31,7 @@ const BtnConfirm = ({
   type,
   icon,
   onOkClick,
+  overlayClassName,
   ...props
 }: Props) => {
   const [open, setOpen] = useState<boolean>(false);
@@ -61,7 +63,7 @@ const BtnConfirm = ({
           className={danger ? 'app-popconfirm-icon-danger' : 'app-popconfirm-icon-primary'}
         />
       }
-      overlayClassName={`app-popconfirm${danger ? ' app-popconfirm-danger' : ''}`}
+      overlayClassName={`app-popconfirm${danger ? ' app-popconfirm-danger' : ''}${overlayClassName ? ` ${overlayClassName}` : ''}`}
       onConfirm={handleOk}
       okButtonProps={{
         loading: confirmLoading,
