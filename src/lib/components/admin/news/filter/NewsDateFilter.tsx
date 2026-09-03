@@ -16,7 +16,9 @@ const NewsDateFilter = ({
   const toDateWatch = Form.useWatch("toDate", form);
   const [open, setOpen] = useState(false);
   const ignoreNextClearRef = useRef(false);
-  const [selectingEnd, setSelectingEnd] = useState(Boolean(fromDateWatch && !toDateWatch));
+  const [selectingEnd, setSelectingEnd] = useState(
+    Boolean(fromDateWatch && (!toDateWatch || dayjs(fromDateWatch).isSame(dayjs(toDateWatch), "day")))
+  );
   const [pickerValue, setPickerValue] = useState(fromDateWatch ? dayjs(fromDateWatch) : dayjs());
   const presetDays = [0, 3, 7, 30];
   const presetLabel = (days: number) => (days === 0 ? "Hôm nay" : `${days} ngày trước`);
@@ -31,7 +33,7 @@ const NewsDateFilter = ({
       fromDate: date.format(appConst.SUBMIT_DATE_FORMAT),
       toDate: dayjs().format(appConst.SUBMIT_DATE_FORMAT),
     });
-    setSelectingEnd(false);
+    setSelectingEnd(days === 0);
     setOpen(false);
     submitDateFilter(
       date.format(appConst.SUBMIT_DATE_FORMAT),
@@ -39,14 +41,16 @@ const NewsDateFilter = ({
     );
   };
 
-  const isTodayOnly = Boolean(
-    fromDateWatch && toDateWatch &&
-    dayjs(fromDateWatch).isSame(dayjs(), "day") &&
-    dayjs(toDateWatch).isSame(dayjs(), "day")
+  const isSingleDate = Boolean(
+    fromDateWatch && toDateWatch && dayjs(fromDateWatch).isSame(dayjs(toDateWatch), "day")
   );
 
   const handleDateSelect = (date: dayjs.Dayjs) => {
-    if (!selectingEnd || !fromDateWatch) {
+    const hasSingleDate = Boolean(
+      fromDateWatch && toDateWatch && dayjs(fromDateWatch).isSame(dayjs(toDateWatch), "day")
+    );
+
+    if ((!selectingEnd && !hasSingleDate) || !fromDateWatch) {
       const selectedDate = date.format(appConst.SUBMIT_DATE_FORMAT);
       form.setFieldsValue({ fromDate: selectedDate, toDate: selectedDate });
       setSelectingEnd(true);
@@ -80,7 +84,12 @@ const NewsDateFilter = ({
           if (nextOpen) {
             const start = fromDateWatch ? dayjs(fromDateWatch) : dayjs();
             setPickerValue(start);
-            setSelectingEnd(Boolean(fromDateWatch && !toDateWatch));
+            setSelectingEnd(
+              Boolean(
+                fromDateWatch &&
+                  (!toDateWatch || dayjs(fromDateWatch).isSame(dayjs(toDateWatch), "day"))
+              )
+            );
           }
         }}
         onPanelChange={(nextMonth) => setPickerValue(nextMonth)}
@@ -101,7 +110,7 @@ const NewsDateFilter = ({
           handleDateSelect(date);
         }}
         format={() => {
-          if (isTodayOnly) return "Hôm nay";
+          if (isSingleDate) return dayjs(fromDateWatch).format(appConst.DATE_FORMAT);
           if (fromDateWatch && toDateWatch) {
             return `${dayjs(fromDateWatch).format(appConst.DATE_FORMAT)} - ${dayjs(toDateWatch).format(appConst.DATE_FORMAT)}`;
           }
