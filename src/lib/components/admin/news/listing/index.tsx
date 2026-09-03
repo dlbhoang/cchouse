@@ -364,7 +364,7 @@ const NewsTypeTabs = ({
         onCancel={handleCloseNewsFormModal}
         footer={null}
         width={1152}
-        style={{ top: 20 }}
+        style={{ top: "50%", transform: "translateY(-50%)" }}
         wrapClassName="news-form-modal-wrap"
         styles={{
           body: {
