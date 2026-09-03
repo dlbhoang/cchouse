@@ -201,10 +201,6 @@ const NewsTypeTabs = ({
   const [previewNews, setPreviewNews] = useState<INewsResponse | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  useEffect(() => {
-    newsApi.revalidate();
-  }, [query]);
-
   // Đếm số bài đang "Chờ duyệt" để hiển thị badge — dùng chung tiền tố key
   // "News" nên newsApi.revalidate() (gọi sau mỗi lần sửa/duyệt/từ chối bài)
   // cũng tự làm mới luôn số đếm này.

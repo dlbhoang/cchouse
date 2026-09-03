@@ -64,6 +64,12 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
 
   const submitOnChange = () => form.submit();
 
+  const hasActiveFilters = Object.entries(model ?? {}).some(([key, value]) => {
+    if (key === "pageIndex" || key === "pageSize") return false;
+    if (typeof value === "boolean") return value;
+    return isFilledValue(value);
+  });
+
   const clearFilters = () => {
     form.resetFields();
     onSubmit({ pageIndex: 1, pageSize: model?.pageSize ?? 30 });
@@ -229,12 +235,14 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
             {statusField}
           </Col>
           <Col xs={24}>{searchField}</Col>
-          <Col xs={24}>
-            <button type="button" className="news-filter-clear-btn" onClick={clearFilters}>
-              <RotateCcw size={14} />
-              <span>Xóa bộ lọc</span>
-            </button>
-          </Col>
+          {hasActiveFilters && (
+            <Col xs={24}>
+              <button type="button" className="news-filter-clear-btn" onClick={clearFilters}>
+                <RotateCcw size={14} />
+                <span>Xóa bộ lọc</span>
+              </button>
+            </Col>
+          )}
           {extra && <Col xs={24}>{extra}</Col>}
         </Row>
       </Form>
@@ -260,10 +268,12 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
           <div className="news-filter-field news-filter-field--date">{dateField}</div>
           <div className="news-filter-field news-filter-field--status">{statusField}</div>
           <div className="news-filter-field news-filter-field--search">{searchField}</div>
-          <button type="button" className="news-filter-clear-btn" onClick={clearFilters}>
-            <RotateCcw size={14} />
-            <span>Xóa bộ lọc</span>
-          </button>
+          {hasActiveFilters && (
+            <button type="button" className="news-filter-clear-btn" onClick={clearFilters}>
+              <RotateCcw size={14} />
+              <span>Xóa bộ lọc</span>
+            </button>
+          )}
           {extra && <div className="news-filter-extra">{extra}</div>}
         </div>
       </div>
