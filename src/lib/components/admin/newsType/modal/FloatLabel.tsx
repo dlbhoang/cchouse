@@ -1,14 +1,15 @@
-import { ReactElement, useState } from "react";
+import { cloneElement, ReactElement, useState } from "react";
 
 import "./FloatLabel.css";
 
 type FloatLabelProps = {
-  children: ReactElement;
+  children: ReactElement<{ value?: string; onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void }>;
   label: string;
-  value?: unknown;
+  value?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const FloatLabel = ({ children, label, value }: FloatLabelProps) => {
+const FloatLabel = ({ children, label, value, onChange }: FloatLabelProps) => {
   const [focus, setFocus] = useState(false);
 
   const hasValue = value !== undefined && value !== null && String(value).length > 0;
@@ -20,7 +21,7 @@ const FloatLabel = ({ children, label, value }: FloatLabelProps) => {
       onBlur={() => setFocus(false)}
       onFocus={() => setFocus(true)}
     >
-      {children}
+      {cloneElement(children, { value, onChange })}
 
       {/* viền + khoảng hở (notch) cho label, tự vẽ bằng fieldset/legend */}
       <fieldset aria-hidden="true" className="gfl-fieldset">

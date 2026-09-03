@@ -150,7 +150,7 @@ button:not(:disabled),
 }
 
 .gfl-focus .gfl-fieldset {
-  border-color: #6366f1;
+  border-color: #0588f0;
   border-width: 2px;
 }
 
@@ -192,11 +192,11 @@ button:not(:disabled),
   top: -9px;
   font-size: 12px;
   font-weight: 500;
-  color: #6366f1;
+  color: #0588f0;
 }
 
 .gfl-focus .gfl-label {
-  color: #6366f1;
+  color: #0588f0;
 }
 
 .news-addtype-modal .ant-modal-content {
@@ -1128,14 +1128,14 @@ button.news-create-btn.ant-btn:active {
 .news-type-edit-input.ant-input-affix-wrapper {
   max-width: 260px;
   border-radius: 8px;
-  border: 1.5px solid #6366f1 !important;
+  border: 1.5px solid #0588f0 !important;
   box-shadow: none !important;
 }
 
 .news-type-edit-input.ant-input-affix-wrapper:focus,
 .news-type-edit-input.ant-input-affix-wrapper-focused {
-  border-color: #6366f1 !important;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+  border-color: #0588f0 !important;
+  box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.12) !important;
 }
 
 .news-type-edit-suffix {
@@ -1194,13 +1194,13 @@ button.news-create-btn.ant-btn:active {
 }
 
 .news-type-action-btn.confirm {
-  background: #6366f1;
+  background: #0588f0;
   border: none;
   color: #fff;
 }
 
 .news-type-action-btn.confirm:hover:not(:disabled) {
-  background: #4f52e0;
+  background: #0471cc;
 }
 
 .news-type-action-btn.cancel {

@@ -48,7 +48,7 @@
 
 .gfl-focus .gfl-fieldset {
   border-width: 1.5px;
-  border-color: #6366f1;
+  border-color: #0588f0;
 }
 
 /* Legend reserves the notch width; its text is invisible, only used for sizing */
@@ -96,12 +96,12 @@
   top: 0;
   left: 10px;
   transform: translateY(-50%) scale(0.86);
-  color: #6366f1;
+  color: #0588f0;
   font-weight: 500;
 }
 
 .gfl-focus .gfl-label {
-  color: #6366f1;
+  color: #0588f0;
 }
 
 /* Optional: error state — pass an extra className="gfl-error" from the parent

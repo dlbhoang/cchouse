@@ -58,8 +58,8 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
       cancelText="Hủy bỏ"
       okButtonProps={{
         style: {
-          backgroundColor: "#6366f1",
-          borderColor: "#6366f1",
+          backgroundColor: "#0588f0",
+          borderColor: "#0588f0",
           borderRadius: 10,
           height: 38,
           fontWeight: 500,
@@ -90,11 +90,7 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
 
         <Row gutter={12} align="bottom">
           <Col span={24}>
-            <Form.Item
-              name="Name"
-              rules={[{ required: true, message: "Vui lòng nhập chủ đề" }]}
-              noStyle
-            >
+            <Form.Item name="Name" rules={[{ required: true, message: "Vui lòng nhập chủ đề" }] }>
               <FloatLabel label="Chủ đề" value={nameValue}>
                 <Input placeholder="" />
               </FloatLabel>

@@ -1,6 +1,6 @@
 import { DatePicker, Form } from "antd";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { appConst } from "@/lib/core/configs/appConst";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
@@ -15,6 +15,7 @@ const NewsDateFilter = ({
   const fromDateWatch = Form.useWatch("fromDate", form);
   const toDateWatch = Form.useWatch("toDate", form);
   const [open, setOpen] = useState(false);
+  const ignoreNextClearRef = useRef(false);
   const [selectingEnd, setSelectingEnd] = useState(Boolean(fromDateWatch && !toDateWatch));
   const [pickerValue, setPickerValue] = useState(fromDateWatch ? dayjs(fromDateWatch) : dayjs());
   const presetDays = [0, 3, 7, 30];
@@ -25,6 +26,7 @@ const NewsDateFilter = ({
 
   const setPreset = (days: number) => {
     const date = dayjs().subtract(days, "day");
+    ignoreNextClearRef.current = true;
     form.setFieldsValue({
       fromDate: date.format(appConst.SUBMIT_DATE_FORMAT),
       toDate: dayjs().format(appConst.SUBMIT_DATE_FORMAT),
@@ -42,6 +44,27 @@ const NewsDateFilter = ({
     dayjs(fromDateWatch).isSame(dayjs(), "day") &&
     dayjs(toDateWatch).isSame(dayjs(), "day")
   );
+
+  const handleDateSelect = (date: dayjs.Dayjs) => {
+    if (!selectingEnd || !fromDateWatch) {
+      const selectedDate = date.format(appConst.SUBMIT_DATE_FORMAT);
+      form.setFieldsValue({ fromDate: selectedDate, toDate: selectedDate });
+      setSelectingEnd(true);
+      setPickerValue(date);
+      submitDateFilter(selectedDate, selectedDate);
+      return;
+    }
+
+    const start = dayjs(fromDateWatch);
+    const from = date.isBefore(start, "day") ? date : start;
+    const to = date.isBefore(start, "day") ? start : date;
+    const fromValue = from.format(appConst.SUBMIT_DATE_FORMAT);
+    const toValue = to.format(appConst.SUBMIT_DATE_FORMAT);
+    form.setFieldsValue({ fromDate: fromValue, toDate: toValue });
+    setSelectingEnd(false);
+    setOpen(false);
+    submitDateFilter(fromValue, toValue);
+  };
 
   return (
     <>
@@ -65,34 +88,17 @@ const NewsDateFilter = ({
         allowClear
         onChange={(date) => {
           if (!date) {
+            if (ignoreNextClearRef.current) {
+              ignoreNextClearRef.current = false;
+              return;
+            }
             form.setFieldsValue({ fromDate: undefined, toDate: undefined });
             setSelectingEnd(false);
             submitDateFilter(undefined, undefined);
             return;
           }
 
-          if (!selectingEnd || !fromDateWatch) {
-            form.setFieldsValue({
-              fromDate: date.format(appConst.SUBMIT_DATE_FORMAT),
-              toDate: undefined,
-            });
-            setSelectingEnd(true);
-            setPickerValue(date);
-          } else {
-            const start = dayjs(fromDateWatch);
-            const from = date.isBefore(start, "day") ? date : start;
-            const to = date.isBefore(start, "day") ? start : date;
-            form.setFieldsValue({
-              fromDate: from.format(appConst.SUBMIT_DATE_FORMAT),
-              toDate: to.format(appConst.SUBMIT_DATE_FORMAT),
-            });
-            setSelectingEnd(false);
-            setOpen(false);
-            submitDateFilter(
-              from.format(appConst.SUBMIT_DATE_FORMAT),
-              to.format(appConst.SUBMIT_DATE_FORMAT)
-            );
-          }
+          handleDateSelect(date);
         }}
         format={() => {
           if (isTodayOnly) return "Hôm nay";
