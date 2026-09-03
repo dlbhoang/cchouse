@@ -56,5 +56,9 @@ const newsApi = {
   approve(id: number) {
     return axiosClient.put(`${url}/${id}/Approve`);
   },
+
+  reject(id: number, reason: string) {
+    return axiosClient.put(`${url}/${id}/Reject`, { Reason: reason });
+  },
 };
 export default newsApi;

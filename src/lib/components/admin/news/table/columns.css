@@ -257,7 +257,15 @@
   color: #a1a1aa;
   font-size: 14px;
 }
-
+.news-reject-reason {
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 12px;
+  color: #ef4444;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 /* Modal xác nhận chỉ của trang Tin tức */
 .news-popconfirm .ant-popover-inner {
   width: min(340px, calc(100vw - 32px));

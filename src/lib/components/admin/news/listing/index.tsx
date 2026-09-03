@@ -257,11 +257,11 @@ const NewsTypeTabs = ({
     setSelectedNews(undefined);
   };
 
-  const handleRejectNews = async (item: INewsResponse) => {
-    await newsApi.hidden(item.Id ?? 0);
-    newsApi.revalidate();
-    handleCloseNewsFormModal();
-  };
+  const handleRejectNews = async (item: INewsResponse, reason: string) => {
+  await newsApi.reject(item.Id ?? 0, reason);
+  newsApi.revalidate();
+  handleCloseNewsFormModal();
+};
 
   const handleOpenPreview = async (item: INewsResponse) => {
     if (!item.Id) return;

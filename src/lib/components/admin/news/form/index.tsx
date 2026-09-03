@@ -18,7 +18,7 @@ type Props = {
   model?: INewsRequest | INewsResponse;
   onClose?: () => void;
   hideHeader?: boolean;
-  onReject?: (item: INewsResponse) => Promise<void>;
+  onReject?: (item: INewsResponse, reason: string) => Promise<void>;
 };
 
 type ErrorKey =
@@ -186,6 +186,8 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
   const [openPreview, setOpenPreview] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [shakeField, setShakeField] = useState<ErrorKey | null>(null);
+  const [rejectPanelOpen, setRejectPanelOpen] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
 
   const [values, setValues] = useState<INewsRequest>(() => getEditableValues(model));
 
@@ -443,9 +445,19 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
   const handleReject = async () => {
     if (!model?.Id || !onReject) return;
+    if (!rejectPanelOpen) {
+      setRejectPanelOpen(true);
+      return;
+    }
+    if (!rejectReason.trim()) {
+      NotiBase("error", "Vui lòng nhập lý do từ chối");
+      return;
+    }
     setIsSubmit(true);
     try {
-      await onReject({ ...(values as INewsResponse), Id: model.Id });
+      await onReject({ ...(values as INewsResponse), Id: model.Id }, rejectReason.trim());
+      setRejectPanelOpen(false);
+      setRejectReason("");
     } finally {
       setIsSubmit(false);
     }
@@ -474,6 +486,17 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
         <div className={styles["status-warning-banner"]}>
           Bài viết này đang <strong>hiển thị công khai</strong>. Khi lưu, phiên bản hiện tại vẫn hiển thị;
           bản sửa sẽ <strong>chờ duyệt</strong> và chỉ thay thế sau khi được duyệt.
+        </div>
+      )}
+
+      {/* Bài từng bị từ chối — cho người viết biết lý do trước khi sửa lại. */}
+      {model && (model as INewsResponse)?.Status === 3 && (
+        <div className={styles["status-warning-banner"]}>
+          Bài viết này đã bị <strong>từ chối</strong>
+          {(model as INewsResponse)?.RejectReason
+            ? <>: <strong>{(model as INewsResponse).RejectReason}</strong>. </>
+            : ". "}
+          Sửa lại và bấm Gửi duyệt bài để gửi lại chờ duyệt.
         </div>
       )}
 
@@ -764,11 +787,48 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
       {/* Bottom actions */}
       <div className={styles["news-form-bottom-fixed"]}>
+        {rejectPanelOpen && (
+          <div className={styles["reject-panel"]}>
+            <span className={styles["reject-panel-label"]}>
+              Lý do từ chối <span className={styles["required"]}>*</span>
+            </span>
+            <textarea
+              className={styles["reject-panel-textarea"]}
+              placeholder="Nhập lý do từ chối để người đăng biết và chỉnh sửa lại..."
+              rows={3}
+              autoFocus
+              value={rejectReason}
+              onChange={(e) => setRejectReason(e.target.value)}
+            />
+            <div className={styles["reject-panel-actions"]}>
+              <button
+                type="button"
+                className={styles["reject-panel-cancel"]}
+                onClick={() => {
+                  setRejectPanelOpen(false);
+                  setRejectReason("");
+                }}
+                disabled={isSubmit}
+              >
+                Huỷ
+              </button>
+              <button
+                type="button"
+                className={styles["reject-panel-confirm"]}
+                onClick={handleReject}
+                disabled={isSubmit || !rejectReason.trim()}
+              >
+                {isSubmit && <span className={styles["btn-spinner"]} />}
+                Xác nhận từ chối
+              </button>
+            </div>
+          </div>
+        )}
         <div className={styles["bottom-actions"]}>
           <button type="button" className={styles["preview-button"]} onClick={handlePreview}>
             <IconEye /> Xem trước
           </button>
-          {model && onReject && (
+          {model && onReject && !rejectPanelOpen && (
             <button
               type="button"
               className={styles["reject-button"]}
