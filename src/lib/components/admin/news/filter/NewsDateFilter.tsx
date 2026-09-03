@@ -206,12 +206,29 @@ const NewsDateFilter = ({
         }
 
         .news-date-picker-popup .ant-picker-header {
-          padding: 6px 8px;
+          padding: 10px 8px 8px;
           border-bottom: none;
         }
 
         .news-date-picker-popup .ant-picker-header-view {
-          font-size: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 28px;
+          color: #0f172a;
+          font-size: 14px;
+          font-weight: 700;
+        }
+
+        .news-date-picker-popup .ant-picker-header-view button {
+          padding: 4px 7px;
+          border-radius: 6px;
+          color: #0f172a;
+        }
+
+        .news-date-picker-popup .ant-picker-header-view button:hover {
+          background: #e8f4fe;
+          color: #0588f0;
         }
 
         .news-date-picker-popup .ant-picker-content {
@@ -237,6 +254,25 @@ const NewsDateFilter = ({
           line-height: 22px;
           font-size: 12px;
           border-radius: 6px !important;
+        }
+
+        /* Month picker: keep "Th 01" on one line instead of inheriting the
+           compact day-cell width and wrapping the label. */
+        .news-date-picker-popup .ant-picker-month-panel .ant-picker-content {
+          table-layout: fixed;
+        }
+
+        .news-date-picker-popup .ant-picker-month-panel .ant-picker-cell-inner {
+          width: 72px;
+          height: 42px;
+          line-height: 42px;
+          font-size: 14px;
+          white-space: nowrap;
+          border-radius: 8px !important;
+        }
+
+        .news-date-picker-popup .ant-picker-month-panel .ant-picker-cell {
+          padding: 4px 0;
         }
 
         .news-date-picker-popup

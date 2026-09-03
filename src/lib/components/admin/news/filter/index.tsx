@@ -1,5 +1,5 @@
 import { Col, Dropdown, Form, Input, Row } from "antd";
-import { ChevronDown, Search, Pencil, Share2, X } from "lucide-react";
+import { ChevronDown, Search, Pencil, RotateCcw, Share2, X } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { NewsStatusSelect, UserAdminSelect } from "@/lib/components/shared/MySelect";
@@ -63,6 +63,11 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
   }, [form, model]);
 
   const submitOnChange = () => form.submit();
+
+  const clearFilters = () => {
+    form.resetFields();
+    onSubmit({ pageIndex: 1, pageSize: model?.pageSize ?? 30 });
+  };
 
   const submitDateFilter = (dateValues: Pick<INewsOpts, "fromDate" | "toDate">) => {
     // Không dùng form.submit ở đây: DatePicker cập nhật form trong chính event
@@ -224,6 +229,12 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
             {statusField}
           </Col>
           <Col xs={24}>{searchField}</Col>
+          <Col xs={24}>
+            <button type="button" className="news-filter-clear-btn" onClick={clearFilters}>
+              <RotateCcw size={14} />
+              <span>Xóa bộ lọc</span>
+            </button>
+          </Col>
           {extra && <Col xs={24}>{extra}</Col>}
         </Row>
       </Form>
@@ -249,6 +260,10 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
           <div className="news-filter-field news-filter-field--date">{dateField}</div>
           <div className="news-filter-field news-filter-field--status">{statusField}</div>
           <div className="news-filter-field news-filter-field--search">{searchField}</div>
+          <button type="button" className="news-filter-clear-btn" onClick={clearFilters}>
+            <RotateCcw size={14} />
+            <span>Xóa bộ lọc</span>
+          </button>
           {extra && <div className="news-filter-extra">{extra}</div>}
         </div>
       </div>

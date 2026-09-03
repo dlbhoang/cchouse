@@ -48,6 +48,28 @@ const FLOATING_FIELD_CSS = `
     max-width: 420px;
   }
 
+  .news-filter-clear-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 0 10px;
+    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #475569;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+  }
+  .news-filter-clear-btn:hover {
+    border-color: #0588f0;
+    background: #e8f4fe;
+    color: #0588f0;
+  }
+
   /* ── Box chính: border/radius/height lấy theo .combobox trong index.css ── */
   .news-filter-floating-field {
     position: relative;
