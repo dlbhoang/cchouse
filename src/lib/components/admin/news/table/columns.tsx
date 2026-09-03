@@ -1,6 +1,6 @@
 import type { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
-import { CheckIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
+import { CheckIcon, EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { mutate } from "swr";
 import BtnConfirm from "@/lib/components/shared/BtnConfirm";
@@ -45,6 +45,9 @@ const getStatusClassName = (status?: number, statusName?: string) => {
   return (status !== undefined && statusIndexClasses[status]) || "news-status-default";
 };
 
+// Khớp với backend ENewsStatus: Hidden=0, Show=1, Pending=2, Rejected=3
+const NEWS_STATUS_HIDDEN = 0;
+const NEWS_STATUS_SHOW = 1;
 const NEWS_STATUS_PENDING = 2;
 
 const getThumbnailUrl = (value: unknown) => {
@@ -222,7 +225,7 @@ const createColumns = (
   {
     key: "Action",
     title: () => <span className="news-th-label">Chức năng</span>,
-    width: 150,
+    width: 190,
     align: "center",
     render(_, record) {
       return (
@@ -251,6 +254,53 @@ const createColumns = (
               icon={<CheckIcon className="size-4 text-[#22c55e]" />}
             />
           )}
+
+          {record.Status === NEWS_STATUS_SHOW && (
+            <BtnConfirm
+              onOkClick={async () => {
+                await newsApi.hidden(record.Id ?? 0);
+                newsApi.revalidate();
+              }}
+              type="icon"
+              className="news-action-btn"
+              style={{
+                width: 40,
+                height: 40,
+                background: "#ffffff",
+                border: "1px solid #e5e5e5",
+                borderRadius: 10,
+              }}
+              title="Ẩn bài viết?"
+              description="Bài viết sẽ không còn hiển thị công khai trên trang tin."
+              overlayClassName="news-popconfirm news-popconfirm-hidden"
+              btnText=""
+              icon={<EyeOffIcon className="size-4 text-[#f59e0b]" />}
+            />
+          )}
+
+          {record.Status === NEWS_STATUS_HIDDEN && (
+            <BtnConfirm
+              onOkClick={async () => {
+                await newsApi.show(record.Id ?? 0);
+                newsApi.revalidate();
+              }}
+              type="icon"
+              className="news-action-btn"
+              style={{
+                width: 40,
+                height: 40,
+                background: "#ffffff",
+                border: "1px solid #e5e5e5",
+                borderRadius: 10,
+              }}
+              title="Hiện lại bài viết?"
+              description="Bài viết sẽ hiển thị công khai trở lại trên trang tin."
+              overlayClassName="news-popconfirm news-popconfirm-show"
+              btnText=""
+              icon={<EyeIcon className="size-4 text-[#22c55e]" />}
+            />
+          )}
+
           {onEdit ? (
             <button
               type="button"

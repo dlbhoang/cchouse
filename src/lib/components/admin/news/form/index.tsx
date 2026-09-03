@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
+import { Input, Modal } from "antd";
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 import TinyEditor from "@/lib/components/shared/tiny-editor";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
@@ -443,12 +444,13 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
     }
   };
 
+  const handleOpenReject = () => {
+    if (!model?.Id || !onReject) return;
+    setRejectPanelOpen(true);
+  };
+
   const handleReject = async () => {
     if (!model?.Id || !onReject) return;
-    if (!rejectPanelOpen) {
-      setRejectPanelOpen(true);
-      return;
-    }
     if (!rejectReason.trim()) {
       NotiBase("error", "Vui lòng nhập lý do từ chối");
       return;
@@ -787,52 +789,15 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
       {/* Bottom actions */}
       <div className={styles["news-form-bottom-fixed"]}>
-        {rejectPanelOpen && (
-          <div className={styles["reject-panel"]}>
-            <span className={styles["reject-panel-label"]}>
-              Lý do từ chối <span className={styles["required"]}>*</span>
-            </span>
-            <textarea
-              className={styles["reject-panel-textarea"]}
-              placeholder="Nhập lý do từ chối để người đăng biết và chỉnh sửa lại..."
-              rows={3}
-              autoFocus
-              value={rejectReason}
-              onChange={(e) => setRejectReason(e.target.value)}
-            />
-            <div className={styles["reject-panel-actions"]}>
-              <button
-                type="button"
-                className={styles["reject-panel-cancel"]}
-                onClick={() => {
-                  setRejectPanelOpen(false);
-                  setRejectReason("");
-                }}
-                disabled={isSubmit}
-              >
-                Huỷ
-              </button>
-              <button
-                type="button"
-                className={styles["reject-panel-confirm"]}
-                onClick={handleReject}
-                disabled={isSubmit || !rejectReason.trim()}
-              >
-                {isSubmit && <span className={styles["btn-spinner"]} />}
-                Xác nhận từ chối
-              </button>
-            </div>
-          </div>
-        )}
         <div className={styles["bottom-actions"]}>
           <button type="button" className={styles["preview-button"]} onClick={handlePreview}>
             <IconEye /> Xem trước
           </button>
-          {model && onReject && !rejectPanelOpen && (
+          {model && onReject && (
             <button
               type="button"
               className={styles["reject-button"]}
-              onClick={handleReject}
+              onClick={handleOpenReject}
               disabled={isSubmit}
             >
               Từ chối
@@ -849,6 +814,34 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
           </button>
         </div>
       </div>
+
+      {/* Modal lý do từ chối */}
+      <Modal
+        title="Từ chối bài viết?"
+        open={rejectPanelOpen}
+        onCancel={() => {
+          if (isSubmit) return;
+          setRejectPanelOpen(false);
+          setRejectReason("");
+        }}
+        onOk={handleReject}
+        confirmLoading={isSubmit}
+        okText="Xác nhận từ chối"
+        okButtonProps={{ danger: true, disabled: !rejectReason.trim() }}
+        cancelText="Huỷ"
+        maskClosable={false}
+      >
+        <p style={{ marginBottom: 8 }}>
+          Bài viết sẽ không được duyệt. Vui lòng nhập lý do để người đăng biết và chỉnh sửa lại.
+        </p>
+        <Input.TextArea
+          placeholder="Nhập lý do từ chối để người đăng biết và chỉnh sửa lại..."
+          value={rejectReason}
+          onChange={(e) => setRejectReason(e.target.value)}
+          rows={4}
+          autoFocus
+        />
+      </Modal>
 
       {/* Preview modal */}
       <NewPreview
