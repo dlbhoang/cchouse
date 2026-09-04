@@ -201,11 +201,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
     if (model) {
       setValues(getEditableValues(model));
     } else {
-      setValues({
-        ...({} as INewsRequest),
-        SourceType: "write",
-        Thumbnail: [],
-      } as unknown as INewsRequest);
+      setValues(getEditableValues());
     }
   }, [model]);
 
