@@ -199,10 +199,485 @@ button:not(:disabled),
   color: #0588f0;
 }
 
+.login-field {
+  position: relative;
+}
+
+.login-field .ant-input,
+.login-field .ant-input-affix-wrapper {
+  border-color: #e5e5e5 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+}
+
+.login-field .ant-input-affix-wrapper .ant-input {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.login-field:hover > .ant-input,
+.login-field:hover .ant-input-affix-wrapper,
+.login-field:focus-within > .ant-input,
+.login-field:focus-within .ant-input-affix-wrapper {
+  border-color: #0588f0 !important;
+  box-shadow: 0 0 0 1px #0588f0 !important;
+}
+
+.login-field .ant-input-affix-wrapper:hover > .ant-input,
+.login-field .ant-input-affix-wrapper:focus-within > .ant-input {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.login-field-label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  z-index: 2;
+  padding: 0 4px;
+  transform: translateY(-50%);
+  background: #fff;
+  color: #a1a1aa !important;
+  line-height: 16px !important;
+  pointer-events: none;
+  transition: top 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.login-field.is-raised .login-field-label,
+.login-field:focus-within .login-field-label {
+  top: -8px;
+  transform: none;
+  color: #737373 !important;
+}
+
+.login-field:focus-within .login-field-label {
+  color: #0588f0 !important;
+}
+
+.login-field-required {
+  color: #dc3e42;
+}
+
+.login-checkbox .ant-checkbox-inner {
+  border-color: #d9d9d9;
+  border-radius: 6px;
+}
+
+.login-checkbox:hover .ant-checkbox-inner,
+.login-checkbox .ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.login-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+  border-color: #0588f0;
+}
+
+.login-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #0588f0;
+}
+
+.login-checkbox .ant-checkbox-input:focus + .ant-checkbox-inner {
+  border-color: #0588f0;
+  box-shadow: 0 0 0 2px rgb(5 136 240 / 15%);
+}
+
+.login-field-input,
+.login-field-input input {
+  color: #a1a1aa !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+}
+
+.register-form .ant-input,
+.register-form .ant-input-affix-wrapper,
+.register-form .ant-select-selector,
+.register-form .ant-picker {
+  border-color: #e5e5e5 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+}
+
+.register-form .ant-input:hover,
+.register-form .ant-input-affix-wrapper:hover,
+.register-form .ant-input-affix-wrapper-focused,
+.register-form .ant-input:focus,
+.register-form .ant-select-focused .ant-select-selector,
+.register-form .ant-select-selector:hover,
+.register-form .ant-picker:hover,
+.register-form .ant-picker-focused {
+  border-color: #0588f0 !important;
+  box-shadow: 0 0 0 1px #0588f0 !important;
+}
+
+.register-form .ant-input-affix-wrapper .ant-input {
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.register-form .ant-input::placeholder,
+.register-form .ant-select-selection-placeholder,
+.register-form .ant-picker-input > input::placeholder {
+  color: #a1a1aa !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+}
+
+.register-form .ant-form-item-label > label {
+  color: #737373;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.register-form .ant-form-item {
+  position: relative;
+  margin-bottom: 14px !important;
+}
+
+.register-form .ant-form-item-label {
+  position: absolute;
+  top: 20px;
+  left: 8px;
+  z-index: 3;
+  width: auto;
+  height: auto;
+  padding: 0 4px;
+  overflow: visible;
+  background: #fff;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  transition: top 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.register-form .ant-form-item-label > label {
+  height: auto;
+  cursor: text;
+  line-height: 16px;
+}
+
+.register-form .ant-form-item-label > label::after {
+  display: none;
+}
+
+.register-form .ant-form-item:focus-within .ant-form-item-label,
+.register-form .ant-form-item:has(.ant-input:not(:placeholder-shown)) .ant-form-item-label,
+.register-form .ant-form-item:has(.ant-select-selection-item) .ant-form-item-label,
+.register-form .ant-form-item:has(.ant-picker-input > input:not(:placeholder-shown)) .ant-form-item-label {
+  top: -8px;
+  transform: none;
+  color: #0588f0;
+}
+
+.register-form .ant-form-item-control-input {
+  min-height: 40px;
+}
+
+.register-form .ant-input,
+.register-form .ant-input-affix-wrapper,
+.register-form .ant-select-single:not(.ant-select-customize-input) .ant-select-selector,
+.register-form .ant-picker {
+  min-height: 40px !important;
+  padding: 8px 12px !important;
+}
+
+.register-form .ant-input-affix-wrapper > input.ant-input {
+  min-height: 22px !important;
+  padding: 0 !important;
+}
+
+.register-form .ant-input-password > input.ant-input,
+.register-form .ant-input-password > input.ant-input:focus {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.register-form .register-password-requirements {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: -4px 0 16px;
+}
+
+.register-password-requirement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #a1a1aa;
+  line-height: 22px;
+}
+
+.register-password-requirement .ant-typography {
+  color: inherit !important;
+}
+
+.register-password-requirement svg {
+  flex: 0 0 auto;
+  color: #a1a1aa;
+}
+
+.register-password-requirement.is-valid {
+  color: #0588f0;
+}
+
+.register-password-requirement.is-valid svg {
+  color: #0588f0;
+}
+
+.register-password-requirements .ant-checkbox-wrapper-disabled {
+  color: #a1a1aa;
+  cursor: default;
+}
+
+.register-password-requirements .ant-checkbox-wrapper-disabled.ant-checkbox-wrapper-checked {
+  color: #0588f0;
+}
+
+.register-password-requirements .ant-checkbox-disabled .ant-checkbox-inner {
+  border-color: #d9d9d9;
+  background: #fff;
+}
+
+.register-password-requirements .ant-checkbox-disabled.ant-checkbox-checked .ant-checkbox-inner {
+  border-color: #0588f0;
+  background: #0588f0;
+}
+
+.register-form .ant-select-single .ant-select-selector {
+  display: flex;
+  align-items: center;
+}
+
+.register-form .ant-picker-input > input {
+  font-family: Inter, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+}
+
+.register-form .ant-form-item-explain-error {
+  margin-top: 4px;
+  color: #dc3e42;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.register-form .ant-btn-primary:not(:disabled):hover {
+  background: #0579d6 !important;
+  border-color: #0579d6 !important;
+}
+
+.register-form .ant-form-item-required::before {
+  color: #dc3e42 !important;
+}
+
+/* Modal.info renders .ant-modal-confirm-* markup, not
+   .ant-modal-header / .ant-modal-body — the old selectors never matched. */
+
+.terms-modal .ant-modal-content {
+  overflow: hidden;
+  padding: 0;
+  border-radius: 16px;
+}
+
+.terms-modal .ant-modal-confirm-body-wrapper {
+  padding: 40px;
+}
+
+.terms-modal .ant-modal-confirm-body > .anticon {
+  display: none;
+}
+
+.terms-modal .ant-modal-confirm-title {
+  margin: 0 0 20px !important;
+  padding-right: 24px;
+  color: #171717;
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.terms-modal .ant-modal-confirm-content {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 !important;
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
+.terms-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.terms-modal-content .ant-typography {
+  color: #262626;
+  font-family: Inter, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.terms-modal .ant-modal-close {
+  top: 20px;
+  right: 20px;
+}
+
+@media (max-width: 600px) {
+  .terms-modal .ant-modal {
+    top: 12px;
+    max-width: calc(100vw - 14px);
+    margin: 0 auto;
+  }
+
+  .terms-modal .ant-modal-confirm-body-wrapper {
+    padding: 24px;
+  }
+
+  .terms-modal .ant-modal-confirm-title {
+    padding-right: 20px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .terms-modal .ant-modal-confirm-content {
+    max-height: calc(100vh - 140px);
+  }
+
+  .terms-modal-content .ant-typography {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+/* Đồng bộ box style với .login-field trên LoginForm: bo góc 10px, viền
+   #e5e5e5, hover/focus chuyển xanh brand #0588f0 kèm box-shadow. */
+
+.register-form .ant-input,
+.register-form .ant-input-affix-wrapper,
+.register-form .ant-picker,
+.register-form .ant-select .ant-select-selector {
+  border-color: #e5e5e5 !important;
+  border-radius: 10px !important;
+  box-shadow: none !important;
+  font-family: Inter, sans-serif;
+}
+
+.register-form .ant-input-affix-wrapper .ant-input {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.register-form .ant-input:hover,
+.register-form .ant-input:focus,
+.register-form .ant-input-affix-wrapper:hover,
+.register-form .ant-input-affix-wrapper-focused,
+.register-form .ant-picker:hover,
+.register-form .ant-picker-focused,
+.register-form .ant-select:hover .ant-select-selector,
+.register-form .ant-select-focused .ant-select-selector {
+  border-color: #0588f0 !important;
+  box-shadow: 0 0 0 1px #0588f0 !important;
+}
+
+.register-form .ant-select-selection-placeholder,
+.register-form .ant-picker-input > input::placeholder,
+.register-form .ant-input::placeholder {
+  color: #a1a1aa;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.register-form .ant-form-item:focus-within .ant-select-selection-placeholder,
+.register-form .ant-form-item:focus-within .ant-picker-input > input::placeholder,
+.register-form .ant-form-item:focus-within .ant-input::placeholder {
+  opacity: 1;
+}
+
+.register-form .ant-form-item:not(:focus-within):has(#register-form_Email:placeholder-shown) .ant-form-item-label {
+  top: 20px;
+  transform: translateY(-50%);
+  color: #737373;
+}
+
+.register-form .ant-input:focus::placeholder {
+  opacity: 1 !important;
+}
+
+.register-form .ant-form-item-label > label {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: #737373;
+}
+
 .news-addtype-modal .ant-modal-content {
   border-radius: 14px;
   padding: 20px 20px 16px;
   overflow: hidden;
+}
+
+.register-form .ant-input-group-wrapper {
+  width: 100%;
+}
+
+.register-form .ant-input-group > .ant-input {
+  border-radius: 10px 0 0 10px !important;
+}
+
+.register-form .ant-input-group .ant-input-group-addon {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.register-form .ant-input-group .ant-input-group-addon .ant-select {
+  height: 40px;
+  margin: 0 !important;
+}
+
+.register-form .ant-input-group .ant-input-group-addon .ant-select-selector {
+  display: flex;
+  height: 40px !important;
+  min-height: 40px !important;
+  align-items: center;
+  border: 1px solid #e5e5e5 !important;
+  border-left: 0 !important;
+  border-radius: 0 10px 10px 0 !important;
+  box-shadow: none !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+  color: #737373 !important;
+}
+
+.register-form .ant-input-group .ant-input-group-addon .ant-select-selection-item {
+  color: #737373 !important;
+  font-family: Inter, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 20px !important;
+}
+
+.register-form .ant-input-group .ant-input-group-addon .ant-select-arrow {
+  color: #a1a1aa !important;
+}
+
+.register-form .ant-input-group .ant-input-group-addon .ant-select-focused .ant-select-selector {
+  border-color: #0588f0 !important;
+  box-shadow: 0 0 0 1px #0588f0 !important;
 }
 
 .news-addtype-modal .ant-modal-header {

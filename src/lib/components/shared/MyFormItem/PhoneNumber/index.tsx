@@ -8,6 +8,7 @@ type Props = {
   name?: NamePath;
   message?: string;
   required?: boolean | undefined;
+  placeholder?: string;
   hasMore?: boolean;
   onShowMore?: () => void;
 };
@@ -16,6 +17,7 @@ export const PhoneNumber = ({
   name,
   message,
   required,
+  placeholder,
   hasMore,
   onShowMore,
 }: Props) => {
@@ -32,7 +34,7 @@ export const PhoneNumber = ({
     <Form.Item label={label} required>
       <Space.Compact>
         <Form.Item name={name} noStyle rules={rule}>
-          <Input maxLength={10} />
+          <Input maxLength={10} placeholder={placeholder} />
         </Form.Item>
         <Form.Item noStyle>
           <Button icon={<PlusIcon className="size-4" />} onClick={onShowMore} />
@@ -41,7 +43,7 @@ export const PhoneNumber = ({
     </Form.Item>
   ) : (
     <Form.Item label={label} name={name} rules={rule}>
-      <Input maxLength={10} />
+      <Input maxLength={10} placeholder={placeholder} />
     </Form.Item>
   );
 };

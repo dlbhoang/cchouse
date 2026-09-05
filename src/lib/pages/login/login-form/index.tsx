@@ -1,8 +1,8 @@
 // LoginForm.tsx
-import { Modal, Row, Col, Divider, Space, Typography, Flex, Input, Button } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined, FacebookFilled } from "@ant-design/icons";
+import { Modal, Typography, Flex, Input, Button, Checkbox } from "antd";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { openUpgradeModal } from "@/lib/components/shared/MyModal";
 import { NotiBase } from "@/lib/components/shared/NotiBase";
@@ -11,6 +11,7 @@ import { IUserLogin } from "@/lib/interfaces/IUser";
 import { usePropStore } from "@/lib/stored";
 
 const { Text, Link } = Typography;
+const rememberedLoginKey = "cchouse-remembered-login";
 
 type Props = {
   isVisible: boolean;
@@ -34,15 +35,37 @@ const parseAuthError = (error: string): string => {
 const LoginForm = ({ isVisible, onModeChange }: Props) => {
   const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
   const [loading, setLoading] = useState(false);
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
-  const [errors, setErrors] = useState<{ phone?: string; password?: string }>({});
+  const [rememberPassword, setRememberPassword] = useState(false);
+  const [focusedField, setFocusedField] = useState<"email" | "password" | null>(null);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
   const { showHappyBirthdayModal } = usePropStore();
+
+  useLayoutEffect(() => {
+    const rememberedLogin = localStorage.getItem(rememberedLoginKey);
+    if (!rememberedLogin) return;
+
+    try {
+      const values = JSON.parse(rememberedLogin) as { email?: string; password?: string };
+      setEmail(values.email ?? "");
+      setPassword(values.password ?? "");
+      setRememberPassword(Boolean(values.email && values.password));
+    } catch {
+      localStorage.removeItem(rememberedLoginKey);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (rememberPassword && (email || password)) {
+      localStorage.setItem(rememberedLoginKey, JSON.stringify({ email, password }));
+    }
+  }, [email, password, rememberPassword]);
 
   const validate = () => {
     const e: typeof errors = {};
-    if (!phone.trim()) e.phone = "Vui lòng nhập số điện thoại";
+    if (!email.trim()) e.email = "Vui lòng nhập email";
     if (!password) e.password = "Vui lòng nhập mật khẩu";
     setErrors(e);
     return !Object.keys(e).length;
@@ -52,7 +75,7 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
     if (!validate()) return;
     try {
       setLoading(true);
-      const values: IUserLogin = { username: phone.trim(), password };
+      const values: IUserLogin = { username: email.trim(), password };
       const result = await signIn("credentials", { redirect: false, ...values });
 
       if (result?.ok && !result?.error) {
@@ -74,27 +97,23 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
   const openTermsModal = () =>
     Modal.info({
       icon: null,
-      width: isMobile ? "95vw" : 750,
+      className: "terms-modal",
+      width: isMobile ? "calc(100vw - 24px)" : 760,
       centered: true,
-      title: "",
+      closable: true,
+      maskClosable: true,
+      title: "ĐIỀU KHOẢN & CHÍNH SÁCH BẢO MẬT THÔNG TIN CÔNG TY KHI SỬ DỤNG PHẦN MỀM C.C.HOUSE.",
       content: (
-        <Row>
-          <Col xs={24}>
-            <Text strong style={{ fontSize: isMobile ? 14 : 18, color: "#1677ff" }}>
-              ĐIỀU KHOẢN VÀ ĐIỀU KIỆN SỬ DỤNG HỆ THỐNG
-            </Text>
-          </Col>
-          <Divider />
-          <Space direction="vertical">
-            <Text style={{ fontSize: isMobile ? 13 : 14 }}><strong>1. </strong>Nhân sự C.C.House mới được đăng nhập vào hệ thống</Text>
-            <Text style={{ fontSize: isMobile ? 13 : 14 }}><strong>2. </strong>Tương tác càng nhiều xem càng nhiều Bất động sản</Text>
-            <Text style={{ fontSize: isMobile ? 13 : 14 }}><strong>3. </strong>Trong vòng 6 ngày nhập tối đa 3 sản phẩm hoặc nhập 20 sổ hồng vào hệ thống.</Text>
-            <Text style={{ fontSize: isMobile ? 13 : 14 }}><strong>4. </strong>Kiểm tra và xác thực sản phẩm trước khi nhập vào hệ thống, tránh dữ liệu rác</Text>
-          </Space>
-        </Row>
+        <div className="terms-modal-content">
+          <Text><strong>1. </strong>Điều khoản áp dụng đối với toàn bộ nhân sự được cấp quyền sử dụng phần mềm C.C.House.</Text>
+          <Text><strong>2. </strong>Cam kết nhân sự kiểm tra &amp; đối chiếu thông tin Bất động sản trước khi nhập vào hệ thống quản lý bất động sản chung.</Text>
+          <Text><strong>3. </strong>Chịu trách nhiệm về các nội dung quảng cáo, thông tin, hình ảnh, video liên quan về bất động sản là đúng thực tế.</Text>
+          <Text><strong>4. </strong>Bảo mật thông tin, dữ liệu, tài khoản cá nhân. Nghiêm cấm tuyệt đối không chia sẻ, sao chép hoặc Copy cho bất kỳ đối tượng nào chưa được sự đồng ý văn bản của giám đốc C.C.House.</Text>
+          <Text><strong>5. </strong>Trường hợp gây thất thoát ảnh hưởng sẽ bị truy cứu trách nhiệm và đền bù thiệt hại cho công ty. Nếu trường hợp vi phạm nghiêm trọng Công ty chuyển đến cơ quan chính quyền xử lý.</Text>
+          <Text><strong>6. </strong>Nhân sự thuộc phòng kinh doanh Bất động sản tuân thủ các quy định liên quan và có chứng chỉ hành nghề môi giới, hoàn thành nghĩa vụ thuế.</Text>
+        </div>
       ),
       footer: null,
-      maskClosable: true,
     });
 
   if (!isVisible) return null;
@@ -105,49 +124,53 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
       {/* ── Fields ── */}
       <Flex vertical gap={isMobile ? 10 : 14}>
 
-        {/* Số điện thoại */}
+        {/* Email */}
         <Flex vertical gap={4}>
-          <Text type="secondary" style={{ fontSize: isMobile ? 12 : 13 }}>Số điện thoại</Text>
+          <div className={`login-field ${focusedField === "email" || email ? "is-raised" : ""}`}>
+            <Text className="login-field-label" type="secondary" style={{ fontSize: 12 }}>
+              Email <span className="login-field-required">*</span>
+            </Text>
           <Input
-            type="tel"
-            value={phone}
-            placeholder="Nhập số điện thoại"
-            autoComplete="username"
+              type="email"
+              value={email}
+              placeholder={focusedField === "email" ? "nguyenvana.cchouse@gmail.com" : ""}
+              autoComplete="email"
             size="large"
-            status={errors.phone ? "error" : undefined}
-            style={{ borderRadius: 8, fontSize: 14, height: isMobile ? 40 : 44 }}
+            status={errors.email ? "error" : undefined}
+            className="login-field-input"
+              style={{ fontFamily: "Inter, sans-serif", fontSize: 14, fontWeight: 500, lineHeight: "20px", color: "#A1A1AA", height: 40 }}
+              onFocus={() => setFocusedField("email")}
+            onBlur={() => setFocusedField(null)}
             onChange={(e) => {
-              setPhone(e.target.value);
-              if (errors.phone) setErrors((p) => ({ ...p, phone: undefined }));
+                setEmail(e.target.value);
+                if (errors.email) setErrors((p) => ({ ...p, email: undefined }));
             }}
             onPressEnter={() => document.getElementById("pw-input")?.focus()}
           />
-          {errors.phone && (
-            <Text type="danger" style={{ fontSize: 11 }}>{errors.phone}</Text>
+          </div>
+          {errors.email && (
+            <Text type="danger" style={{ fontSize: 11 }}>{errors.email}</Text>
           )}
         </Flex>
 
         {/* Mật khẩu */}
         <Flex vertical gap={4}>
-          <Row justify="space-between" align="middle">
-            <Col>
-              <Text type="secondary" style={{ fontSize: isMobile ? 12 : 13 }}>Mật khẩu</Text>
-            </Col>
-            <Col>
-              <Link onClick={openUpgradeModal} style={{ fontSize: isMobile ? 12 : 13 }}>
-                Quên mật khẩu
-              </Link>
-            </Col>
-          </Row>
+          <div className={`login-field ${focusedField === "password" || password ? "is-raised" : ""}`}>
+            <Text className="login-field-label" type="secondary" style={{ fontSize: 12 }}>
+              Mật khẩu <span className="login-field-required">*</span>
+            </Text>
           <Input
             id="pw-input"
             type={showPw ? "text" : "password"}
             value={password}
-            placeholder="Nhập mật khẩu"
+            placeholder={focusedField === "password" ? "*********" : ""}
             autoComplete="current-password"
             size="large"
             status={errors.password ? "error" : undefined}
-            style={{ borderRadius: 8, fontSize: 14, height: isMobile ? 40 : 44 }}
+            className="login-field-input"
+            style={{ fontSize: 14, height: 40 }}
+            onFocus={() => setFocusedField("password")}
+            onBlur={() => setFocusedField(null)}
             suffix={
               <span
                 onClick={() => setShowPw((v) => !v)}
@@ -162,10 +185,28 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
             }}
             onPressEnter={onFinish}
           />
+          </div>
           {errors.password && (
             <Text type="danger" style={{ fontSize: 11 }}>{errors.password}</Text>
           )}
         </Flex>
+      </Flex>
+
+      <Flex align="center" justify="space-between">
+        <Checkbox
+          checked={rememberPassword}
+          className="login-checkbox"
+          onChange={(event) => {
+            const checked = event.target.checked;
+            setRememberPassword(checked);
+            if (!checked) localStorage.removeItem(rememberedLoginKey);
+          }}
+        >
+          <Text style={{ fontSize: isMobile ? 12 : 14 }}>Nhớ mật khẩu</Text>
+        </Checkbox>
+        <Link onClick={openUpgradeModal} style={{ fontSize: isMobile ? 12 : 14 }}>
+          Quên mật khẩu
+        </Link>
       </Flex>
 
       {/* ── Buttons ── */}
@@ -177,8 +218,8 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
           loading={loading}
           onClick={onFinish}
           style={{
-            background: "#0A0B1E",
-            borderColor: "#0A0B1E",
+            background: "#0588F0",
+            borderColor: "#0588F0",
             borderRadius: 8,
             height: isMobile ? 42 : 46,
             fontSize: 14,
@@ -186,19 +227,6 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
           }}
         >
           Đăng nhập
-        </Button>
-        <Button
-          size="large"
-          block
-          icon={<FacebookFilled style={{ color: "#1877F2" }} />}
-          onClick={() => NotiBase("info", "Tính năng đang phát triển")}
-          style={{
-            borderRadius: 8,
-            height: isMobile ? 42 : 46,
-            fontSize: 14,
-          }}
-        >
-          Đăng nhập bằng Facebook
         </Button>
       </Flex>
 
@@ -213,10 +241,12 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
       </Flex>
 
       {/* ── Điều khoản ── */}
-      <Flex justify="center">
-        <Link onClick={openTermsModal} style={{ fontSize: 11, color: "#9CA3AF" }}>
-          Điều khoản &amp; điều kiện sử dụng
-        </Link>
+      <Flex align="flex-start" gap={4}>
+          <Checkbox className="login-checkbox" style={{ marginTop: 2 }} />
+        <Text style={{ fontSize: isMobile ? 11 : 14, color: "#575855", lineHeight: 1.45 }}>
+          Bằng việc đăng ký tôi đồng ý cung cấp thông tin cá nhân, tuân thủ các{" "}
+          <Link onClick={openTermsModal}>Quy định</Link> và <Link>Chính sách bảo mật</Link> của công ty ban hành.
+        </Text>
       </Flex>
     </Flex>
   );

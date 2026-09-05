@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
 import { type ReactNode, useEffect } from "react";
+import { useState } from "react";
 import {
   SidebarInset,
   SidebarProvider,
@@ -25,6 +26,9 @@ import { NavUser } from "./nav-user";
 import { PropCarts } from "./prop-carts";
 import { TopNavigation } from "./top-navigation";
 import TopNotification from "./top-notification";
+import ServerConfigModal from "@/lib/pages/config/server";
+import { Server } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AntProvider = dynamic(() => import("@/lib/components/AntProvider"), {
   ssr: false,
@@ -40,6 +44,7 @@ type LayoutProps = {
 const RoutesShowMobileMenu = Object.values(AppRoutes).map((route) => route.url);
 
 const RootLayout = ({ children, session }: LayoutProps) => {
+  const [serverConfigOpen, setServerConfigOpen] = useState(false);
   const { loading, init, setSmallScreen } = useAdminContext();
   const pathname = usePathname();
 
@@ -84,6 +89,16 @@ const RootLayout = ({ children, session }: LayoutProps) => {
 
               {session?.user && (
                 <div className="flex items-center gap-2">
+                  {[1, 2].includes(Number(session.user.RoleId)) && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      title="Cài đặt địa chỉ máy chủ"
+                      onClick={() => setServerConfigOpen(true)}
+                    >
+                      <Server size={18} />
+                    </Button>
+                  )}
                   <TopNotification />
                   {session.user?.Id && <PropCarts userId={session.user?.Id} />}
                   <div className="hidden md:flex gap-2">
@@ -109,6 +124,12 @@ const RootLayout = ({ children, session }: LayoutProps) => {
               children
             )}
           </div>
+          {[1, 2].includes(Number(session.user.RoleId)) && (
+            <ServerConfigModal
+              open={serverConfigOpen}
+              onClose={() => setServerConfigOpen(false)}
+            />
+          )}
           {!hideMobileMenu && (
             <div className="fixed bottom-[5%] px-6 md:hidden flex justify-between items-center w-full">
               <MenuTabs />

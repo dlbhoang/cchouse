@@ -1,69 +1,28 @@
 import axios, {
   AxiosInstance,
   AxiosResponse,
-  InternalAxiosRequestConfig,
 } from "axios";
-import { getSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 
-let cachedSession: any = null;
-let cachedSessionAt = 0;
-let inFlightRequest: Promise<any> | null = null;
-const SESSION_CACHE_MS = 10000; // cache 10s, tránh gọi lại session dồn dập
-
-async function getCachedSession() {
-  const now = Date.now();
-
-  if (cachedSession && now - cachedSessionAt < SESSION_CACHE_MS) {
-    return cachedSession;
-  }
-
-  if (inFlightRequest) {
-    return inFlightRequest;
-  }
-
-  inFlightRequest = getSession().then((session) => {
-    cachedSession = session;
-    cachedSessionAt = Date.now();
-    inFlightRequest = null;
-    return session;
-  });
-
-  return inFlightRequest;
-}
-
 export const axiosClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "/api/proxy",
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "origin",
   },
 });
 
-// Add a request interceptor
 axiosClient.interceptors.request.use(
-  async (config: InternalAxiosRequestConfig) => {
-    const session = await getCachedSession();
-    if (session) {
-      config.headers.Authorization = `Bearer ${session.user.token}`;
-    }
-    // Do something before request is sent
-    return config;
-  },
+  (config) => config,
   (error) => {
     console.log("error in request", error);
-    // LogBot.sendMessage(JSON.stringify(error));
-    // Do something with request error
     return Promise.reject(error.message);
   }
 );
 
-// Add a response interceptor
 axiosClient.interceptors.response.use(
   (response: AxiosResponse<any>) => {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
     if (
       response.status === 200 &&
       response?.data?.message &&
@@ -76,16 +35,12 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    // LogBot.sendMessage(JSON.stringify(error));
     if (error?.request?.status === 401) {
       NotiBase("error", "Hết hạn đăng nhập, vui lòng đăng nhập lại!");
-      cachedSession = null;
-        signOut();
+      signOut();
     } else if (error?.response?.data?.data) {
       NotiBase("error", error.response?.data?.message ?? error?.message);
     } else NotiBase("error", error.response?.data?.message ?? error?.message);
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
     return Promise.reject(error.response);
   }
 );
