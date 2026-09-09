@@ -40,7 +40,7 @@ const UserAdminFilter = ({ model, onSubmit }: Props) => {
 
   const handleRefresh = () => {
     form.resetFields();
-    onSubmit({ ...baseFilter, Status: 1 });
+    onSubmit({ ...baseFilter, Status: 3 });
   };
 
   useEffect(() => {
@@ -89,6 +89,7 @@ const UserAdminFilter = ({ model, onSubmit }: Props) => {
         <Col span={24}>
           <UserStatusTabs
             counts={countStatus}
+            activeKey={model?.Status?.toString()}
             onChange={(key) => {
               form.setFieldsValue({ Status: Number(key), pageIndex: 1 });
               form.submit();

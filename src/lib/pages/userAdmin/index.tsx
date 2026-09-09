@@ -11,7 +11,7 @@ import userAdminApi from "@/services/api/userAdmin/userAdminApi";
 const UserAdminPage = () => {
   const [searchOptions, setSearchOptions] = useState<IUserAdminOpts>({
     ...baseFilter,
-    Status: 1,
+    Status: 3,
   });
 
   const { data, isValidating, mutate } = userAdminApi.useGet(searchOptions);
@@ -38,6 +38,13 @@ const UserAdminPage = () => {
       pageSize,
     });
   };
+  const handleRejected = () => {
+    setSearchOptions({
+      ...searchOptions,
+      Status: 0,
+      pageIndex: 1,
+    });
+  };
   return (
     <Card>
       <UserAdminFilter onSubmit={handleFilter} model={searchOptions} />
@@ -49,6 +56,7 @@ const UserAdminPage = () => {
         searchOptions={searchOptions}
         onPageIndexChange={handlePageIndexChange}
         handleMutate={() => mutate()}
+        onRejected={handleRejected}
       />
     </Card>
   );

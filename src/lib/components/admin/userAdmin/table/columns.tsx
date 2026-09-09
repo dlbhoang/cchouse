@@ -1,5 +1,6 @@
 import { Avatar, Image, Space, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
+import dayjs from "dayjs";
 import { CheckCircleIcon, EllipsisVerticalIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -9,14 +10,42 @@ import { IUserAdminResponse } from "@/services/api/userAdmin/IUserAdmin";
 
 const { Text, Paragraph } = Typography;
 
+type CellLinkProps = {
+  record: IUserAdminResponse;
+  onReview: (item: IUserAdminResponse) => void;
+  children: React.ReactNode;
+};
+
+const UserAdminCellLink = ({ record, onReview, children }: CellLinkProps) => {
+  if (record.Status === 3) {
+    return (
+      <a
+        href="#review"
+        onClick={(event) => {
+          event.preventDefault();
+          onReview(record);
+        }}
+      >
+        {children}
+      </a>
+    );
+  }
+
+  return <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>{children}</Link>;
+};
+
 type Props = {
   districtLength: number;
+  status?: number;
   onEdit: (item: IUserAdminResponse) => void;
+  onReview: (item: IUserAdminResponse) => void;
 };
 
 export const columns = ({
   districtLength,
+  status,
   onEdit,
+  onReview,
 }: Props): ColumnsType<IUserAdminResponse> => [
   {
     title: "Mã",
@@ -27,9 +56,9 @@ export const columns = ({
     render(value, record) {
       return (
         <Space direction="vertical">
-          <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>
+          <UserAdminCellLink record={record} onReview={onReview}>
             <Text strong>{value}</Text>
-          </Link>
+          </UserAdminCellLink>
         </Space>
       );
     },
@@ -40,9 +69,9 @@ export const columns = ({
     width: 100,
     render(value, record) {
       return (
-        <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>
+        <UserAdminCellLink record={record} onReview={onReview}>
           <Text>{value}</Text>
-        </Link>
+        </UserAdminCellLink>
       );
     },
   },
@@ -66,9 +95,9 @@ export const columns = ({
           )}
 
           <Space direction="vertical">
-            <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>
+            <UserAdminCellLink record={record} onReview={onReview}>
               <Text>{value}</Text>
-            </Link>
+            </UserAdminCellLink>
             {record.ShowWebsite && (
               <Tooltip title="Hiển thị trang chủ">
                 <CheckCircleIcon className="size-4 text-green-500" />
@@ -84,7 +113,7 @@ export const columns = ({
     dataIndex: ["UserAccess", "DisplayTransTypes"],
     render(value, record) {
       return (
-        <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>
+        <UserAdminCellLink record={record} onReview={onReview}>
           <Space direction="vertical">
             <Typography.Text>
               Loại giao dịch: {value?.join(", ")}
@@ -93,7 +122,7 @@ export const columns = ({
               Vị trí: {record.UserAccess?.DisplayLocations?.join(", ")}
             </Typography.Text>
           </Space>
-        </Link>
+        </UserAdminCellLink>
       );
     },
   },
@@ -102,7 +131,7 @@ export const columns = ({
     dataIndex: ["UserAccess", "DisplayDistricts"],
     width: 200,
     render: (val, record) => (
-      <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>
+      <UserAdminCellLink record={record} onReview={onReview}>
         <Space direction="vertical">
           <Text>{`Giá: ${record.UserAccess?.PriceFrm} - ${record.UserAccess?.PriceTo} (tỷ)`}</Text>
           <Paragraph
@@ -111,7 +140,7 @@ export const columns = ({
             Quận: {val?.length === districtLength ? "Tất cả" : val?.join(", ")}
           </Paragraph>
         </Space>
-      </Link>
+      </UserAdminCellLink>
     ),
   },
   {
@@ -119,7 +148,7 @@ export const columns = ({
     dataIndex: ["UserAccess", "DisplayDistrictsRent"],
     width: 200,
     render: (val, record) => (
-      <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>
+      <UserAdminCellLink record={record} onReview={onReview}>
         <Space direction="vertical">
           <Text>{`Giá: ${record.UserAccess?.PriceRentFrm} - ${record.UserAccess?.PriceRentTo} (triệu)`}</Text>
           <Paragraph
@@ -128,7 +157,7 @@ export const columns = ({
             Quận: {val?.length === districtLength ? "Tất cả" : val?.join(", ")}
           </Paragraph>
         </Space>
-      </Link>
+      </UserAdminCellLink>
     ),
   },
 
@@ -137,12 +166,14 @@ export const columns = ({
     dataIndex: "DateOfBirth",
     width: 100,
     render: (value, record) => (
-      <Space direction="vertical">
+      <UserAdminCellLink record={record} onReview={onReview}>
+        <Space direction="vertical">
         <Text>
           {record.Sex === 1 ? "Nam" : record.Sex === 2 ? "Nữ" : "Khác"}
         </Text>
         <Text>{FormatDate(value)}</Text>
-      </Space>
+        </Space>
+      </UserAdminCellLink>
     ),
   },
   {
@@ -150,7 +181,7 @@ export const columns = ({
     dataIndex: "RoleName",
     render(value, record) {
       return (
-        <Link href={`${AppRoutes.userAdmin.url}/${record.Id}`}>
+        <UserAdminCellLink record={record} onReview={onReview}>
           <Space direction="vertical">
             <Typography.Text>{value}</Typography.Text>
             <Typography.Text>
@@ -159,32 +190,58 @@ export const columns = ({
             </Typography.Text>
             <Typography.Text>Quản lý: {record.ManagerName}</Typography.Text>
           </Space>
-        </Link>
+        </UserAdminCellLink>
       );
     },
   },
-
-  {
+  ...(status === 4 ? [{
+    title: "Lý do từ chối",
+    dataIndex: "RejectedReason",
+    width: 240,
+    render: (value: string | undefined, record: IUserAdminResponse) =>
+      record.Status === 4 ? (
+        <Space direction="vertical">
+          <Text>{value || record.Note || "Không có lý do"}</Text>
+          <Text type="secondary">
+            {record.RejectedByName || "Không rõ người từ chối"}
+          </Text>
+          <Text type="secondary">
+            {record.RejectedAt
+              ? dayjs(record.RejectedAt).format("DD-MM-YYYY HH:mm:ss")
+              : "Chưa có ngày giờ"}
+          </Text>
+        </Space>
+      ) : null,
+  }] : []),
+  ...(status !== 4 ? [{
     title: "Thao tác",
     dataIndex: "Id",
-    render: (val, record) => {
-      if (record.Status === 3)
+    render: (val: number | undefined, record: IUserAdminResponse) => {
+      if (record.Status === 3) {
         return (
-          <Link href={`${AppRoutes.userAdmin.url}/edit/${val}`}>Kích hoạt</Link>
+          <a
+            href="#review"
+            onClick={(event) => {
+              event.preventDefault();
+              onReview(record);
+            }}
+          >
+            Kích hoạt
+          </a>
         );
+      }
       return (
         <Button
           size="icon-sm"
           variant="ghost"
-          onClick={() => {
-            onEdit(record);
-          }}
+          onClick={() => onEdit(record)}
         >
           <EllipsisVerticalIcon />
         </Button>
       );
     },
-  },
+  }] : []),
+
   // {
   //     title: 'Người tạo/Ngày tạo',
   //     dataIndex: 'createdBy',

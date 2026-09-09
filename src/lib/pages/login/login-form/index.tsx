@@ -1,7 +1,7 @@
 // LoginForm.tsx
 import { Modal, Typography, Flex, Input, Button, Checkbox } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { openUpgradeModal } from "@/lib/components/shared/MyModal";
@@ -30,6 +30,45 @@ const parseAuthError = (error: string): string => {
     return "Mật khẩu không đúng";
   }
   return error;
+};
+
+const showRejectedAccount = async (
+  error: string,
+  onModeChange: () => void
+) => {
+  const rejectedPrefix = "Tài khoản bị từ chối|";
+  if (!error.startsWith(rejectedPrefix)) return false;
+
+  const [, reason, rejectedBy, rejectedAt] = error.split("|");
+  await signOut({ redirect: false });
+  Modal.info({
+    title: "Tài khoản bị từ chối",
+    content: (
+      <div>
+        <p><strong>Lý do:</strong> {reason || "Không có lý do"}</p>
+        <p><strong>Người từ chối:</strong> {rejectedBy || "Không rõ"}</p>
+        <p><strong>Ngày giờ:</strong> {rejectedAt || "Không rõ"}</p>
+      </div>
+    ),
+    okText: "Đăng ký lại",
+    onOk: onModeChange,
+  });
+  return true;
+};
+
+const getLoginErrorMessage = async (values: IUserLogin) => {
+  try {
+    const response = await fetch("/api/proxy/AdminAuth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ Username: values.username, Password: values.password }),
+    });
+    if (response.ok) return "";
+    const payload = await response.json();
+    return payload?.message ?? "";
+  } catch {
+    return "";
+  }
 };
 
 const LoginForm = ({ isVisible, onModeChange }: Props) => {
@@ -85,10 +124,18 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
         }, 1000);
         showHappyBirthdayModal();
       } else {
-        NotiBase("error", parseAuthError(result?.error ?? ""));
+        const loginError =
+          result?.error === "CredentialsSignin"
+            ? await getLoginErrorMessage(values)
+            : result?.error ?? "";
+        const rejected = await showRejectedAccount(
+          loginError,
+          onModeChange
+        );
+        if (!rejected) NotiBase("error", parseAuthError(loginError));
         setLoading(false);
       }
-    } catch (e) {
+    } catch {
       setLoading(false);
       NotiBase("error", "Đã xảy ra lỗi, vui lòng thử lại");
     }

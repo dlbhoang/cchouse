@@ -178,7 +178,7 @@ const handleFilesV2 = async ({
 }: Props): Promise<UploadResult> => {
   const keepImages: string[] = [];
   const filesData = new FormData();
-  filesData.append("type", type);
+  filesData.append("TableName", type);
 
   console.log(images);
 

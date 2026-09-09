@@ -14,6 +14,7 @@ export interface IRegisterAdmin {
   Password: string;
   Phone: string;
   IdentityImages: any[];
+  ApprovalRequestCount?: number;
 }
 
 interface IUserAdminBase {
@@ -62,6 +63,11 @@ interface IUserAdminResponseBase extends IUserAdminRequestBase {
   CreatedDate: string;
   ManagerName: string;
   CompanyPhone: string;
+  ApprovalRequestCount?: number;
+  RejectedById?: number;
+  RejectedByName?: string;
+  RejectedReason?: string;
+  RejectedAt?: string;
 }
 
 export interface IUserAdminRequest extends IUserAdminRequestBase {
@@ -78,6 +84,10 @@ export interface IUserAdminQU {
   Note: string;
   Rank: number;
   ShowWebsite: boolean;
+  RejectedById?: number;
+  RejectedByName?: string;
+  RejectedReason?: string;
+  RejectedAt?: string;
 }
 
 export interface IUserAdminPublic extends IUserAdminBase {

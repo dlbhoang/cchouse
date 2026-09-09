@@ -38,7 +38,7 @@ const utilsApi = {
 
   uploadNoAuth(data: FormData) {
     return axiosClient.post<any, IListData<string>>(
-      `${url}/UploadNoAuth`,
+      `${url}/Upload`,
       data,
       {
         headers: {

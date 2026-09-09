@@ -8,11 +8,14 @@ import { useAdminContext } from "@/lib/stored";
 type Props = {
   counts: ICountItem[];
   onChange: (key: string) => void;
+  activeKey?: string;
 };
-const UserStatusTabs = ({ counts, onChange }: Props) => {
+const UserStatusTabs = ({ counts, onChange, activeKey = "3" }: Props) => {
   const router = useRouter();
   const { enumList } = useAdminContext();
-  const data = enumList.UserStatus;
+  const data = enumList.UserStatus.some((item) => item.Value === 4)
+    ? enumList.UserStatus
+    : [...enumList.UserStatus, { Value: 4, Name: "Từ chối" }];
 
   let items: TabsProps["items"] = data.map((e) => ({
     key: e.Value.toString(),
@@ -24,7 +27,7 @@ const UserStatusTabs = ({ counts, onChange }: Props) => {
   }
   return (
     <Tabs
-      defaultActiveKey={items[0]?.key}
+      activeKey={activeKey}
       items={items}
       onChange={onChange}
       tabBarExtraContent={{

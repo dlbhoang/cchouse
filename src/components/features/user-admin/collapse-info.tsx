@@ -23,8 +23,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { appConst } from "@/lib/core/configs/appConst";
+import ImagesPreview from "@/lib/components/shared/ImagesPreview";
 import { useAdminContext } from "@/lib/stored";
 import type { IUserAdminResponse } from "@/services/api/userAdmin/IUserAdmin";
+import { fileServices } from "@/services/api/services/fileServices";
 import QrSheet from "./qr-sheet";
 
 const InfoCard = ({
@@ -68,8 +70,7 @@ const UserCollapseInfo = ({ data }: { data: IUserAdminResponse }) => {
   const { enumList, managers, districts } = useAdminContext();
   const { Sex, Literacy } = enumList;
   const { UserAccess } = data;
-
-  const [activeModal, setActiveModal] = useState<string | null>(null);
+  const identityImages = fileServices.mapFromString(data.IdentityImages) ?? [];
 
   return (
     <Card>
@@ -106,13 +107,12 @@ const UserCollapseInfo = ({ data }: { data: IUserAdminResponse }) => {
                   </Badge> */}
                   <Badge className="bg-primary/10 text-primary">
                     <div className="mr-1 h-2 w-2 rounded-full bg-primary/80"></div>
-                    Hoạt động
+                    {data.StatusName}
                   </Badge>
                 </div>
               </CardDescription>
             </div>
           </div>
-
           <div className="flex items-center gap-2">
             <span className="hidden md:block text-sm text-muted-foreground">
               {isHeaderOpen ? "Thu gọn" : "Mở rộng"}
@@ -127,7 +127,43 @@ const UserCollapseInfo = ({ data }: { data: IUserAdminResponse }) => {
       </CardHeader>
       {isHeaderOpen && (
         <CardContent className="pt-0">
+          <div className="mb-4 rounded-lg border p-4">
+            <h3 className="mb-3 font-semibold text-gray-900">CMND/CCCD</h3>
+            {identityImages.length > 0 ? (
+              <ImagesPreview images={identityImages} imgWidth={200} />
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Chưa có ảnh CMND/CCCD
+              </p>
+            )}
+          </div>
           <div className="grid gap-4 lg:grid-cols-3 xl:grid-cols-4">
+            {data.Status === 4 && (
+              <InfoCard
+                title="Thông tin từ chối"
+                icon={UserCircle2}
+                className="border-red-200 bg-red-50/50 lg:col-span-3 xl:col-span-4"
+              >
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between gap-4">
+                    <span className="text-muted-foreground">Người từ chối:</span>
+                    <span className="font-medium">{data.RejectedByName ?? "Không có"}</span>
+                  </div>
+                  <div className="flex justify-between gap-4">
+                    <span className="text-muted-foreground">Ngày giờ:</span>
+                    <span className="font-medium">
+                      {data.RejectedAt
+                        ? dayjs(data.RejectedAt).format(appConst.DATE_TIME_FORMAT)
+                        : "Không có"}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Lý do: </span>
+                    <span className="font-medium">{data.RejectedReason ?? data.Note ?? "Không có"}</span>
+                  </div>
+                </div>
+              </InfoCard>
+            )}
             {/* QR Code */}
             {/* <div className="flex flex-col items-center space-y-4">
               <div>

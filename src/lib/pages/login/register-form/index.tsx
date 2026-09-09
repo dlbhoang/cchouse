@@ -1,11 +1,12 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Checkbox, DatePicker, Form, Image, Input, Modal, Select, Typography, Upload } from "antd";
+import { Button, Checkbox, DatePicker, Form, Image, Input, Modal, Select, Space, Typography, Upload } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 import { CheckCircle2, Circle } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { PhoneNumber } from "@/lib/components/shared/MyFormItem";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
+import { NotiBase } from "@/lib/components/shared/NotiBase";
 import authApi from "@/services/auth/authApi";
 import type { IRegisterAdmin } from "@/services/api/userAdmin/IUserAdmin";
 import { fileServices } from "@/services/api/services/fileServices";
@@ -25,7 +26,7 @@ const positionOptions = [
 const levelOptions = ["Trung học phổ thông", "Trung cấp", "Cao đẳng", "Đại học", "Sau đại học"];
 
 const passwordPattern =
-  /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>_\-]).{5,15}$/;
+  /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>_\-]).{8,15}$/;
 
 type Props = {
   isVisible: boolean;
@@ -38,12 +39,13 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
   const [loading, setLoading] = useState(false);
   const [showPw, setShowPw] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
+  const [registrationValues, setRegistrationValues] = useState<Partial<IRegisterAdmin>>({});
   const [identityFiles, setIdentityFiles] = useState<UploadFile[]>([]);
   const [previewUrl, setPreviewUrl] = useState<string>();
   const agreedTerms = Form.useWatch("AgreeTerms", form);
   const passwordValue = Form.useWatch("Password", form) ?? "";
   const passwordRequirements = [
-    { label: "Phải từ 5-15 ký tự", valid: passwordValue.length >= 5 && passwordValue.length <= 15 },
+    { label: "Phải từ 8-15 ký tự", valid: passwordValue.length >= 8 && passwordValue.length <= 15 },
     { label: "Phải chứa 1 ký tự viết hoa", valid: /[A-Z]/.test(passwordValue) },
     {
       label: "Phải chứa số, chữ cái và ký tự đặc biệt",
@@ -79,18 +81,30 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
   const onFinish = async (values: IRegisterAdmin) => {
     try {
       setLoading(true);
+      const submittedValues = { ...registrationValues, ...values };
       const identityImages = await fileServices.uploadFilesNoAuth(
         identityFiles as Parameters<typeof fileServices.uploadFilesNoAuth>[0],
         "User",
       );
       await authApi.register({
-        ...values,
-        Email: `${values.Email}${values.EmailExt}`,
+        ...submittedValues,
+        Address: submittedValues.Address ?? "",
+        TempAddress: submittedValues.TempAddress ?? "",
+        Email: `${submittedValues.Email ?? ""}${submittedValues.EmailExt ?? ""}`,
+        Phone: submittedValues.Phone ?? "",
+        Password: submittedValues.Password ?? "",
         IdentityImages: identityImages,
-      });
+      } as IRegisterAdmin);
       form.resetFields();
       setIdentityFiles([]);
+      setRegistrationValues({});
       setStep(1);
+    } catch (error: any) {
+      NotiBase(
+        "error",
+        error?.data?.message ??
+          "Đăng ký thất bại, vui lòng kiểm tra lại thông tin."
+      );
     } finally {
       setLoading(false);
     }
@@ -98,6 +112,7 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
 
   const goToUploadStep = async () => {
     await form.validateFields();
+    setRegistrationValues(form.getFieldsValue(true));
     setStep(2);
   };
 
@@ -200,27 +215,33 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
 
       <Form.Item
         label="Email"
-        name="Email"
-        rules={[{ required: true, message: "Vui lòng nhập Email" }]}
         style={{ marginBottom: isMobile ? 12 : 16 }}
       >
-        <Input
-          size={isMobile ? "middle" : "large"}
-          placeholder="nguyenvana.cchouse"
-          addonAfter={
-            <Form.Item
-              label="EmailExt"
-              noStyle
-              name="EmailExt"
-              rules={[{ required: true, message: "Vui lòng nhập Email" }]}
+        <Space.Compact block>
+          <Form.Item
+            noStyle
+            name="Email"
+            rules={[{ required: true, message: "Vui lòng nhập Email" }]}
+          >
+            <Input
+              size={isMobile ? "middle" : "large"}
+              placeholder="nguyenvana.cchouse"
+            />
+          </Form.Item>
+          <Form.Item
+            noStyle
+            name="EmailExt"
+            rules={[{ required: true, message: "Vui lòng chọn đuôi Email" }]}
+          >
+            <Select
+              size={isMobile ? "middle" : "large"}
+              style={{ width: isMobile ? 120 : 140 }}
             >
-              <Select style={{ width: isMobile ? 120 : 140 }}>
-                <Select.Option value="@gmail.com">@gmail.com</Select.Option>
-                <Select.Option value="@cchouse.vn">@cchouse.vn</Select.Option>
-              </Select>
-            </Form.Item>
-          }
-        />
+              <Select.Option value="@gmail.com">@gmail.com</Select.Option>
+              <Select.Option value="@cchouse.vn">@cchouse.vn</Select.Option>
+            </Select>
+          </Form.Item>
+        </Space.Compact>
       </Form.Item>
 
       <Form.Item
