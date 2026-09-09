@@ -1,12 +1,11 @@
 "use client";
-import { Card, Checkbox, Typography } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { mutate } from "swr";
 import PropertyFilter from "@/lib/components/admin/property/filter";
 import { PropertyTable } from "@/lib/components/admin/property/table";
 import { ETransType } from "@/lib/core/enum";
-import TitlePage from "@/lib/core/layout/components/TitlePage";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import PropertyFormModal from "@/lib/pages/property/prop-detail";
@@ -14,6 +13,39 @@ import propertyApi from "@/services/api/property/propertyApi";
 
 type Props = {
   transType: ETransType;
+};
+
+// Lưu ý: PriceFrm/PriceTo hiện đang giả định đơn vị "tỷ". Nếu backend trả về
+// giá trị thô (VNĐ) thì cần format lại (chia 1_000_000_000 hoặc dùng hàm format tiền tệ có sẵn).
+const buildFilterSummary = (
+  searchOptions: IPropAdminOpts,
+  transType: ETransType
+) => {
+  const parts: string[] = [];
+
+  parts.push(transType === ETransType.sell ? "Đang bán" : "Đang cho thuê");
+
+  const priceFrm = searchOptions?.PriceFrm;
+  const priceTo = searchOptions?.PriceTo;
+  if (priceTo && !priceFrm) {
+    parts.push(`giá dưới ${priceTo} tỷ`);
+  } else if (priceFrm && priceTo) {
+    parts.push(`giá từ ${priceFrm} - ${priceTo} tỷ`);
+  } else if (priceFrm && !priceTo) {
+    parts.push(`giá trên ${priceFrm} tỷ`);
+  }
+
+  const areaFrm = searchOptions?.AreaFrm;
+  const areaTo = searchOptions?.AreaTo;
+  if (areaFrm && areaTo) {
+    parts.push(`từ ${areaFrm}m² - ${areaTo}m²`);
+  } else if (areaFrm && !areaTo) {
+    parts.push(`diện tích trên ${areaFrm}m²`);
+  } else if (!areaFrm && areaTo) {
+    parts.push(`diện tích dưới ${areaTo}m²`);
+  }
+
+  return parts.join(", ");
 };
 
 const PropertyPage = ({ transType }: Props) => {
@@ -153,50 +185,41 @@ const PropertyPage = ({ transType }: Props) => {
       : transType === ETransType.sell
         ? "Quản lý nhà bán"
         : "Quản lý nhà thuê";
+  const total = meta?.totalRow ?? 0;
+  const filterSummary = buildFilterSummary(searchOptions, transType);
 
   return (
     searchOptions && (
       <>
-        <Card>
+        <div className="property-page-content">
           <PropertyFilter onSubmit={handleFilter} model={searchOptions} />
-          <div className="grid grid-cols-2 md:grid-cols-2 gap-1">
-            <div className="col-span-2 md:col-span-1">
-              <TitlePage title={title} />
-            </div>
-            <div className="hidden md:flex items-center gap-2">
-              <Checkbox
-                checked={searchOptions?.IsMonopoly ?? false}
-                onChange={(e) => {
-                  handleFilter({
-                    ...searchOptions,
-                    IsMonopoly: e.target.checked === true ? true : undefined,
-                  });
-                }}
-              >
-                <Typography.Text type="warning">Độc quyền</Typography.Text>
-              </Checkbox>
-              <Checkbox
-                checked={
-                  Number(searchOptions?.CustomerType) === 6 ? true : false
-                }
-                onChange={(e) => {
-                  handleFilter({
-                    ...searchOptions,
-                    CustomerType: e.target.checked === true ? 6 : undefined,
-                  });
-                }}
-              >
-                <Typography.Text type="warning">Đấu giá </Typography.Text>
-              </Checkbox>
-            </div>
-          </div>
-          <PropertyTable
-            searchOptions={searchOptions}
-            onPageIndexChange={handlePageIndexChange}
-            onOpenDetail={handleOpenDetail}
-            onOpenAdd={handleOpenAdd}
-          />
-        </Card>
+
+              <div className="property-page-header">
+                <div>
+                  <h1>{title}</h1>
+                  <p>
+                    Hiện có <b>{total}</b> bất động sản được tìm kiếm theo: {filterSummary}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleOpenAdd()}
+                  className="property-add-button"
+                >
+                  <PlusOutlined />
+                  Thêm mới
+                </button>
+              </div>
+
+              <div className="property-table-area">
+                <PropertyTable
+                  searchOptions={searchOptions}
+                  onPageIndexChange={handlePageIndexChange}
+                  onOpenDetail={handleOpenDetail}
+                  onOpenAdd={handleOpenAdd}
+                />
+              </div>
+        </div>
 
         <PropertyFormModal
           open={formModalOpen}

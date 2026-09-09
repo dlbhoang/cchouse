@@ -1,6 +1,4 @@
-import { Col, Row, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
-import dayjs from "dayjs";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -19,6 +17,7 @@ import userAdminApi from "@/services/api/userAdmin/userAdminApi";
 import ContactModal from "../modal/contactModal";
 import HistoryModel from "../modal/historyModal";
 import columns from "./columns";
+import "./property-table.css";
 
 type Props = {
   isPropCart?: boolean;
@@ -35,6 +34,8 @@ type Props = {
       StreetId?: string;
     };
   }) => void;
+  /** Reports the current result total up to a parent (e.g. the page header). */
+  onTotalChange?: (total: number) => void;
 };
 export const PropertyTable = ({
   isPropCart,
@@ -42,6 +43,7 @@ export const PropertyTable = ({
   onPageIndexChange,
   onOpenDetail,
   onOpenAdd,
+  onTotalChange,
 }: Props) => {
   const { data, isLoading, isValidating, mutate } =
     isPropCart === true
@@ -108,45 +110,44 @@ export const PropertyTable = ({
     }
   }, [searchOptions]);
 
+  useEffect(() => {
+    const total = isPropCart
+      ? data?.data?.filter((x) => x.TransType === searchOptions.TransType)
+          ?.length
+      : data?.totalRow;
+    onTotalChange?.(total || 0);
+  }, [data, isPropCart, searchOptions.TransType]);
+
   return (
     <>
-      <Row justify="space-between" gutter={[12, 12]}>
-        <Col span={24}>
-          Cập nhật ngày {dayjs().format("DD-MM-YYYY")}, kết quả:{" "}
-          <Typography.Text strong>
-            {(isPropCart
-              ? data?.data?.filter(
-                  (x) => x.TransType === searchOptions.TransType
-                )?.length
-              : data?.totalRow) || 0}
-          </Typography.Text>{" "}
-          BĐS
-        </Col>
-      </Row>
-      {isPropCart ? (
-        <TableBase
-          loading={isLoading || isValidating}
-          total={data?.data.length || 0}
-          searchOptions={searchOptions}
-          data={
-            data?.data.filter((x) => x.TransType === searchOptions.TransType) ||
-            []
-          }
-          cols={cols}
-          bordered
-          onPageIndexChange={onPageIndexChange}
-        />
-      ) : (
-        <TableBase
-          loading={isLoading || isValidating}
-          total={data?.totalRow || 0}
-          searchOptions={searchOptions}
-          data={data?.data || []}
-          cols={cols}
-          bordered
-          onPageIndexChange={onPageIndexChange}
-        />
-      )}
+      <div className="property-table-shell">
+        {isPropCart ? (
+          <TableBase
+            loading={isLoading || isValidating}
+            total={data?.data.length || 0}
+            searchOptions={searchOptions}
+            data={
+              data?.data.filter((x) => x.TransType === searchOptions.TransType) ||
+              []
+            }
+            cols={cols}
+            bordered
+            useCustomPagination
+            onPageIndexChange={onPageIndexChange}
+          />
+        ) : (
+          <TableBase
+            loading={isLoading || isValidating}
+            total={data?.totalRow || 0}
+            searchOptions={searchOptions}
+            data={data?.data || []}
+            cols={cols}
+            bordered
+            useCustomPagination
+            onPageIndexChange={onPageIndexChange}
+          />
+        )}
+      </div>
 
       {selectedData && (
         <>

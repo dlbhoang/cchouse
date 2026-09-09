@@ -52,8 +52,12 @@ async function proxy(
   };
 
   if (!["GET", "HEAD"].includes(req.method)) {
-    const bodyText = await req.text();
-    if (bodyText) init.body = bodyText;
+    if (req.headers.get("content-type")?.startsWith("multipart/form-data")) {
+      init.body = await req.arrayBuffer();
+    } else {
+      const bodyText = await req.text();
+      if (bodyText) init.body = bodyText;
+    }
   }
 
   let upstreamRes: Response;

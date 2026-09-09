@@ -1,5 +1,6 @@
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { Button, Checkbox, DatePicker, Form, Input, Modal, Select, Typography } from "antd";
+import { Button, Checkbox, DatePicker, Form, Image, Input, Modal, Select, Typography, Upload } from "antd";
+import type { UploadFile } from "antd/es/upload/interface";
 import { CheckCircle2, Circle } from "lucide-react";
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -7,6 +8,7 @@ import { PhoneNumber } from "@/lib/components/shared/MyFormItem";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
 import authApi from "@/services/auth/authApi";
 import type { IRegisterAdmin } from "@/services/api/userAdmin/IUserAdmin";
+import { fileServices } from "@/services/api/services/fileServices";
 
 const { Text, Title, Link } = Typography;
 
@@ -35,6 +37,9 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
   const [form] = Form.useForm<IRegisterAdmin>();
   const [loading, setLoading] = useState(false);
   const [showPw, setShowPw] = useState(false);
+  const [step, setStep] = useState<1 | 2>(1);
+  const [identityFiles, setIdentityFiles] = useState<UploadFile[]>([]);
+  const [previewUrl, setPreviewUrl] = useState<string>();
   const agreedTerms = Form.useWatch("AgreeTerms", form);
   const passwordValue = Form.useWatch("Password", form) ?? "";
   const passwordRequirements = [
@@ -74,13 +79,26 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
   const onFinish = async (values: IRegisterAdmin) => {
     try {
       setLoading(true);
-      // Giai đoạn 1: đăng ký thủ công. Upload CCCD + tự động đọc QR sẽ nằm
-      // ở giai đoạn 2, sau khi tài khoản được tạo thành công.
-      await authApi.register({ ...values, Email: `${values.Email}${values.EmailExt}` });
+      const identityImages = await fileServices.uploadFilesNoAuth(
+        identityFiles as Parameters<typeof fileServices.uploadFilesNoAuth>[0],
+        "User",
+      );
+      await authApi.register({
+        ...values,
+        Email: `${values.Email}${values.EmailExt}`,
+        IdentityImages: identityImages,
+      });
       form.resetFields();
+      setIdentityFiles([]);
+      setStep(1);
     } finally {
       setLoading(false);
     }
+  };
+
+  const goToUploadStep = async () => {
+    await form.validateFields();
+    setStep(2);
   };
 
   if (!isVisible) return null;
@@ -100,13 +118,16 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
     >
       <div style={{ textAlign: "center", marginBottom: isMobile ? 20 : 28 }}>
         <Title level={2} style={{ margin: 0, fontSize: isMobile ? 22 : 28, fontWeight: 700 }}>
-          Đăng ký tài khoản
+          {step === 1 ? "Đăng ký tài khoản" : "Tải CCCD lên"}
         </Title>
         <Text type="secondary" style={{ fontSize: isMobile ? 12 : 14 }}>
-          Chỉ nhân sự C.C.House đã được tuyển dụng mới đăng ký sử dụng và truy cập phần mềm
+          {step === 1
+            ? "Chỉ nhân sự C.C.House đã được tuyển dụng mới đăng ký sử dụng và truy cập phần mềm"
+            : "Vui lòng tải ảnh mặt trước và mặt sau CCCD để hoàn tất đăng ký"}
         </Text>
       </div>
 
+      {step === 1 ? <>
       <Form.Item
         label="Họ tên"
         name="Name"
@@ -185,7 +206,7 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
       >
         <Input
           size={isMobile ? "middle" : "large"}
-          placeholder="nguyenvana.cchouse@gmail.com"
+          placeholder="nguyenvana.cchouse"
           addonAfter={
             <Form.Item
               label="EmailExt"
@@ -207,10 +228,7 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
         name="Password"
         rules={[
           { required: true, message: "Vui lòng nhập mật khẩu" },
-          {
-            pattern: passwordPattern,
-            message: "Mật khẩu không đúng định dạng yêu cầu",
-          },
+          { pattern: passwordPattern, message: "Mật khẩu không đúng định dạng yêu cầu" },
         ]}
         style={{ marginBottom: 8 }}
       >
@@ -253,15 +271,52 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           </Text>
         </Checkbox>
       </Form.Item>
+      </> : (
+        <div className="register-identity-upload">
+          <Text type="secondary">Chấp nhận JPG/PNG, tối đa 8MB mỗi ảnh, tối đa 2 ảnh.</Text>
+          <Upload
+            accept="image/jpeg,image/png"
+            listType="picture-card"
+            maxCount={2}
+            multiple
+            fileList={identityFiles}
+            onPreview={async (file) => {
+              const url = file.url ?? file.thumbUrl ?? (file.originFileObj
+                ? await fileServices.getBase64(file.originFileObj)
+                : undefined);
+              if (url) setPreviewUrl(url);
+            }}
+            beforeUpload={(file) => {
+              return fileServices.validateImg(file as never) ? false : Upload.LIST_IGNORE;
+            }}
+            onChange={({ fileList }) => setIdentityFiles(fileList)}
+          >
+            {identityFiles.length < 2 ? "+ Tải ảnh CCCD" : null}
+          </Upload>
+          <Image
+            preview={{
+              visible: Boolean(previewUrl),
+              src: previewUrl,
+              onVisibleChange: (visible) => {
+                if (!visible) setPreviewUrl(undefined);
+              },
+            }}
+            src={previewUrl}
+            alt="Xem trước CCCD"
+            style={{ display: "none" }}
+          />
+        </div>
+      )}
 
       <Form.Item style={{ marginBottom: 12 }}>
         <Button
           block
           size={isMobile ? "middle" : "large"}
           type="primary"
-          htmlType="submit"
+          htmlType={step === 2 ? "submit" : undefined}
           loading={loading}
-          disabled={!agreedTerms}
+          disabled={step === 1 ? !agreedTerms : identityFiles.length !== 2}
+          onClick={step === 1 ? goToUploadStep : undefined}
           style={{
             background: "#0588F0",
             borderColor: "#0588F0",
@@ -270,9 +325,15 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
             fontWeight: 600,
           }}
         >
-          Đăng ký
+          {step === 1 ? "Tiếp tục" : "Đăng ký"}
         </Button>
       </Form.Item>
+
+      {step === 2 && (
+        <Button type="link" block onClick={() => setStep(1)} disabled={loading}>
+          Quay lại chỉnh sửa thông tin
+        </Button>
+      )}
 
       <div style={{ textAlign: "center" }}>
         <Text style={{ fontSize: isMobile ? 12 : 13 }}>

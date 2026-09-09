@@ -1,0 +1,171 @@
+.property-table-shell {
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+}
+
+.property-table-shell .ant-table-wrapper {
+  background: #fff;
+}
+
+.property-table-shell .ant-table {
+  color: var(--Text-Main, #0A0A0A);
+  font-family: var(--Font-family-Text, Inter), sans-serif;
+  font-size: var(--Font-sizes-text-sm, 14px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--Line-height-text-sm, 20px);
+}
+
+.property-table-shell .ant-table-thead > tr > th {
+  background: #fafafa;
+  color: #1f2937;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 12px 14px;
+  white-space: nowrap;
+}
+
+.property-table-shell .ant-table-tbody > tr > td {
+  color: var(--Text-Main, #0A0A0A);
+  font-family: var(--Font-family-Text, Inter), sans-serif;
+  font-size: var(--Font-sizes-text-sm, 14px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: var(--Line-height-text-sm, 20px);
+  padding: 14px;
+  vertical-align: top;
+}
+
+.property-table-shell .ant-table-thead > tr > th,
+.property-table-shell .ant-table-tbody > tr > th,
+.property-table-shell .ant-table-tbody > tr > td {
+  border-bottom: none !important;
+  border-block-end: none !important;
+}
+
+.property-table-shell .ant-table-thead > tr,
+.property-table-shell .ant-table-tbody > tr {
+  border-bottom: none !important;
+  border-block-end: none !important;
+}
+
+.property-table-shell .ant-table-thead > tr > th,
+.property-table-shell .ant-table-tbody > tr > th,
+.property-table-shell .ant-table-tbody > tr > td {
+  border-right: none !important;
+  border-inline-end: none !important;
+}
+
+.property-table-shell .ant-table-tbody .ant-typography {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: normal;
+  font-weight: 400;
+  line-height: inherit;
+}
+
+.property-table-shell .ant-table-tbody > tr:hover > td {
+  background: #fafcff;
+}
+
+.property-table-shell .ant-table-footer {
+  padding: 0;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.property-table-shell .ant-table-footer > div:not(.table-custom-footer) {
+  padding: 0 !important;
+}
+
+.property-table-shell .ant-pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.property-table-shell .ant-pagination-item,
+.property-table-shell .ant-pagination-prev,
+.property-table-shell .ant-pagination-next,
+.property-table-shell .ant-pagination-jump-prev,
+.property-table-shell .ant-pagination-jump-next {
+  margin: 0 !important;
+}
+
+.property-table-shell .table-pagination-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.property-table-shell .ant-table-pagination {
+  margin: 0;
+}
+
+.property-table-shell .table-custom-footer {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 4px;
+  color: var(--Text-Main, #0A0A0A);
+  font-family: var(--Font-family-Text, Inter), sans-serif;
+  font-size: var(--Font-sizes-text-sm, 14px);
+  font-weight: 400;
+  line-height: var(--Line-height-text-sm, 20px);
+}
+
+.property-table-shell .table-selected-count {
+  color: #737373;
+  white-space: nowrap;
+}
+
+.property-table-shell .table-custom-pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.property-table-shell .table-custom-pagination .ant-select {
+  min-width: 78px;
+}
+
+.property-table-shell .table-custom-pagination > button {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+}
+
+.property-table-shell .table-custom-pagination > button:hover:not(:disabled) {
+  border-color: #1677ff;
+  color: #1677ff;
+}
+
+.property-table-shell .table-custom-pagination > button:disabled {
+  color: #d1d5db;
+  cursor: default;
+}
+
+@media (max-width: 760px) {
+  .property-table-shell .table-custom-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .property-table-shell .table-custom-pagination {
+    flex-wrap: wrap;
+  }
+}

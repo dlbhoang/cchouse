@@ -3,15 +3,14 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { Upload, RefreshCw, CheckCircle2, XCircle, ImageIcon, Eye, Trash2 } from "lucide-react";
+import { axiosClient } from "@/services/api/api_config";
 
-const BANNER_SERVER = process.env.NEXT_PUBLIC_BANNER_SERVER!;
 const WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL!;
 
 const BANNERS = [
-  { name: "bn-1.jpg",    label: "Banner 1",      desc: "Slide đầu tiên",     tag: "Trang chủ" },
-  { name: "bn-2.png",    label: "Banner 2",      desc: "Slide thứ hai",      tag: "Trang chủ" },
-  { name: "bn-3.jpg",    label: "Banner 3",      desc: "Slide thứ ba",       tag: "Trang chủ" },
-  { name: "bn-main.jpg", label: "Banner Popup",  desc: "Hiển thị khi vào",   tag: "Modal" },
+  { name: "mb_home_1.jpg", label: "Banner mobile 1", desc: "Slide đầu tiên", tag: "Mobile", path: "/images/mobile/home/mb_home_1.jpg" },
+  { name: "mb_home_2.jpg", label: "Banner mobile 2", desc: "Slide thứ hai", tag: "Mobile", path: "/images/mobile/home/mb_home_2.jpg" },
+  { name: "mb_home_3.jpg", label: "Banner mobile 3", desc: "Slide thứ ba", tag: "Mobile", path: "/images/mobile/home/mb_home_3.jpg" },
 ];
 
 type Toast = { type: "success" | "error"; msg: string };
@@ -45,15 +44,20 @@ export default function BannerPage() {
     setUploading(name);
     const formData = new FormData();
     formData.append("image", input.files[0]);
+    formData.append("title", name);
+    formData.append("displayOrder", String(BANNERS.findIndex((banner) => banner.name === name)));
     try {
-      const res = await fetch(`${BANNER_SERVER}/upload/${name}`, { method: "POST", body: formData });
-      const data = await res.json();
-      if (data.success) {
+      const data = await axiosClient.post<any, { status?: number; message?: string }>(
+        "Ws/Banner",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } },
+      );
+      if (data.status === 200) {
         setToast({ type: "success", msg: `"${name}" đã được cập nhật!` });
         clearPreview(name);
         setTs(Date.now());
       } else {
-        setToast({ type: "error", msg: data.error || "Lỗi không xác định" });
+        setToast({ type: "error", msg: data.message || "Lỗi không xác định" });
       }
     } catch {
       setToast({ type: "error", msg: "Không thể kết nối server" });
@@ -120,9 +124,9 @@ export default function BannerPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {BANNERS.map(({ name, label, desc, tag }) => {
+          {BANNERS.map(({ name, label, desc, tag, path }) => {
             const hasPreview = !!previews[name];
-            const imgSrc = previews[name] || `${WEBSITE_URL}/images/${name}?t=${ts}`;
+            const imgSrc = previews[name] || `${WEBSITE_URL}${path}?t=${ts}`;
 
             return (
               <div

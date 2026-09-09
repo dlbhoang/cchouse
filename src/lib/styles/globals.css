@@ -433,6 +433,64 @@ button:not(:disabled),
   color: #0588f0;
 }
 
+.register-identity-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+  color: #737373;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+}
+
+.register-identity-upload .ant-upload-wrapper {
+  width: 100%;
+}
+
+.register-identity-upload .ant-upload-picture-card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start !important;
+  gap: 12px;
+  width: 100%;
+}
+
+.register-identity-upload .ant-upload-list-picture-card {
+  display: contents;
+  float: none !important;
+  margin: 0 !important;
+}
+
+.register-identity-upload .ant-upload-list-item-container,
+.register-identity-upload .ant-upload.ant-upload-select {
+  width: calc(50% - 6px) !important;
+  height: 132px !important;
+  float: none !important;
+  min-width: 0;
+  margin: 0 !important;
+  border-radius: 10px;
+}
+
+.register-identity-upload .ant-upload.ant-upload-select {
+  border-color: #d9d9d9;
+  color: #737373;
+  font-family: Inter, sans-serif;
+  font-size: 13px;
+}
+
+.register-identity-upload .ant-upload-list-item {
+  width: 100% !important;
+  height: 132px !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.register-identity-upload .ant-upload-list-item-image {
+  object-fit: cover;
+}
+
 .register-password-requirements .ant-checkbox-wrapper-disabled {
   color: #a1a1aa;
   cursor: default;

@@ -33,6 +33,7 @@ export const LocationSelectCustom = ({
 
   const [location, setLocation] = useState<string>();
   const [feature, setFeature] = useState<string>();
+  const [open, setOpen] = useState(false);
   const handleApply = () => {
     form.submit();
   };
@@ -113,27 +114,25 @@ export const LocationSelectCustom = ({
   }, [enumList.LocationFeature, locationFeatureWatch]);
 
   return (
-    <Dropdown trigger={["click"]} dropdownRender={dropdownRender}>
-      <Button
-        block
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
+    <Dropdown
+      trigger={["click"]}
+      dropdownRender={dropdownRender}
+      open={open}
+      onOpenChange={setOpen}
+    >
+      <div
+        className={`property-custom-dropdown-trigger property-location-trigger ${
+          open ? "is-open" : ""
+        } ${location || feature ? "has-value" : ""}`}
       >
-        <Typography.Text
-          type={location || feature ? undefined : "secondary"}
-          ellipsis
-        >
-          {location && feature
-            ? `${location}, ${feature}`
-            : location || feature || "Chọn"}
+        <span className="property-custom-dropdown-label">
+          Vị trí <span>*</span>
+        </span>
+        <Typography.Text ellipsis className="property-custom-dropdown-value">
+          {location && feature ? `${location}, ${feature}` : location || feature || ""}
         </Typography.Text>
-        <Typography.Text type="secondary">
-          <DownOutlined />
-        </Typography.Text>
-      </Button>
+        <DownOutlined className="property-custom-dropdown-arrow" />
+      </div>
     </Dropdown>
   );
 };

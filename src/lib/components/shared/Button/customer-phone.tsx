@@ -8,6 +8,8 @@ type Props = {
     | "Môi giới"
     | "Tiêu dùng"
     | "Đại diện"
+    | "Đấu giá"
+    | "Ngân hàng"
     | "Nhân viên công ty"
     | string;
   icon?: ReactNode;
@@ -18,6 +20,8 @@ const tagColorMap: Record<string, string | undefined> = {
   "Môi giới": "red",
   "Tiêu dùng": "grey",
   "Đại diện": "green",
+  "Đấu giá": "#FFC107",
+  "Ngân hàng": "#FFC107",
   "Nhân viên công ty": "brown",
 };
 

@@ -4,6 +4,7 @@ import { Avatar, Space, Tag, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   CopyIcon,
+  HistoryIcon,
   ImageIcon,
   ShoppingCartIcon,
   Trash2Icon,
@@ -83,18 +84,21 @@ Props): ColumnsType<IPropResponse> => {
       align: "center",
       render(value, record) {
         return (
-          <Space direction="vertical">
+          <Space direction="vertical" align="center">
             {detailLink(record.Id, <Text>{value}</Text>)}
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => handleOpenHistory(record.Id)}
-              style={{
-                color: appConst.PROP_STATUS_COLORS[record.Status - 1],
-              }}
-            >
-              Lịch sử
-            </Button>
+            <Tooltip title="Lịch sử">
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="rounded-full"
+                onClick={() => handleOpenHistory(record.Id)}
+                style={{
+                  color: appConst.PROP_STATUS_COLORS[record.Status - 1],
+                }}
+              >
+                <HistoryIcon className="size-4" />
+              </Button>
+            </Tooltip>
           </Space>
         );
       },
@@ -121,8 +125,7 @@ Props): ColumnsType<IPropResponse> => {
       },
     },
     {
-      title: "Số nhà",
-      // width: 100,
+      title: "Số nhà, tên đường",
       dataIndex: ["PropAddress", "AddressNumber"],
       render(value, record) {
         const { LandNumber, MapNumber } = record.PropAddress;
@@ -151,12 +154,20 @@ Props): ColumnsType<IPropResponse> => {
                     record.PropAddress.SubAddressName
                       ? `(${record.PropAddress.SubAddressName})`
                       : ""
-                  }`}</Text>
+                  } ${record.PropAddress.StreetName ?? ""}`}</Text>
                   <br />
                   {record.PropAddress.OldAddressNumber && (
                     <Text type="secondary" style={{ fontSize: 12 }}>
                       Số cũ: {record.PropAddress.OldAddressNumber}
                     </Text>
+                  )}
+                  {record.PropAddress.OldStreetName && (
+                    <>
+                      <br />
+                      <Text type="secondary" style={{ fontSize: 12 }}>
+                        ({record.PropAddress.OldStreetName})
+                      </Text>
+                    </>
                   )}
                 </>
               )
@@ -182,57 +193,54 @@ Props): ColumnsType<IPropResponse> => {
       },
     },
     {
-      title: "Đường",
-      dataIndex: ["PropAddress", "StreetName"],
-      render: (value, record) =>
-        detailLink(
-          record.Id,
-          <Space direction="vertical">
-            <Text>{value}</Text>
-            {record.PropAddress.OldStreetName && (
-              <Text type="secondary" style={{ fontSize: 12 }}>
-                ({record.PropAddress.OldStreetName})
-              </Text>
-            )}
-          </Space>
-        ),
-    },
-    {
-      title: "Phường / Xã",
+      title: "Xã phường quận",
       dataIndex: ["PropAddress", "WardName"],
-      render: (value, record) =>
-        detailLink(
+      render: (value, record) => {
+        const oldParts = [
+          record.PropAddress.OldWardName,
+          record.PropAddress.OldDistrictName,
+        ].filter(Boolean);
+
+        return detailLink(
           record.Id,
           <>
-            <Text>{value}</Text>
-            <br />
-            {record.PropAddress.OldWardName &&
-              record.PropAddress.WardId !== record.PropAddress.OldWardId && (
-                <Text type="secondary" style={{ fontSize: 12 }}>
-                  ({record.PropAddress.OldWardName})
+            <Text style={{ whiteSpace: "nowrap" }}>
+              {[
+                value,
+                record.PropAddress.DistrictName,
+              ]
+                .filter(Boolean)
+                .join(", ")}
+            </Text>
+            {record.PropAddress.ProvinceName && (
+              <>
+                <br />
+                <Text type="secondary" style={{ whiteSpace: "nowrap" }}>
+                  {record.PropAddress.ProvinceName}
                 </Text>
-              )}
-          </>
-        ),
-    },
-    {
-      title: "Quận / Huyện",
-      dataIndex: ["PropAddress", "DistrictName"],
-      render: (value, record) =>
-        detailLink(
-          record.Id,
-          <>
-            <Text>{value}</Text>
-            <br />
-            {record.PropAddress.OldDistrictName &&
-              record.PropAddress.DistrictId !==
-                record.PropAddress.OldDistrictId && (
-                <Text type="secondary" style={{ fontSize: 12 }}>
-                  ({record.PropAddress.OldDistrictName})
+              </>
+            )}
+            {oldParts.length > 0 && (
+              <>
+                <br />
+                <Text
+                  style={{
+                    color: "var(--Text-Muted, #737373)",
+                    fontFamily: "Inter",
+                    fontSize: "var(--Font-sizes-text-xs, 12px)",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "var(--Line-height-text-xs, 16px)",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {oldParts.join(", ")} (cũ)
                 </Text>
-              )}
+              </>
+            )}
           </>
-        ),
+        );
+      },
     },
     {
       title: "Loại BĐS",
@@ -333,7 +341,7 @@ Props): ColumnsType<IPropResponse> => {
             )}
             {record.PropAddress.AlleyTurns > 1 && <AlleyInfo record={record} />}
             {record.PropAddress.LocationFeatureName && (
-              <Tag color="success">
+              <Tag color="#000000" style={{ color: "#fff", border: "none" }}>
                 {record.PropAddress.LocationFeatureName}
               </Tag>
             )}
@@ -373,7 +381,7 @@ Props): ColumnsType<IPropResponse> => {
     },
     {
       key: "Action",
-      title: "Thao tác",
+      title: "Hành động",
       dataIndex: "CreatedDate",
       render: (value, record) => (
         <Space direction="vertical">
@@ -383,6 +391,7 @@ Props): ColumnsType<IPropResponse> => {
                 <Button
                   size="sm"
                   variant="destructive"
+                  className="rounded-full"
                   onClick={async () => {
                     await propertyApi.delete(record.Id);
                     mutate(propertyApi.mutateKey);
@@ -398,6 +407,7 @@ Props): ColumnsType<IPropResponse> => {
                 <Button
                   size="icon-sm"
                   variant="ghost"
+                  className="rounded-full"
                   onClick={async () => {
                     await userAdminApi.toggleSaveProp(record.Id);
                     mutate(propertyApi.mutateKey);
@@ -421,6 +431,7 @@ Props): ColumnsType<IPropResponse> => {
                 <Button
                   size="icon-sm"
                   variant="ghost"
+                  className="rounded-full"
                   onClick={async () => {
                     onCompare({
                       Id: record.Id,

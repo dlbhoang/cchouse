@@ -1,12 +1,11 @@
-"use client";
-import { Edit, Home, Key, Map } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
-import { ETransType } from "@/lib/core/enum";
-import { cn } from "@/lib/utils";
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { isPathActive, useCurrentPath } from "./navigation";
+'use client';
+import { Edit, Home, Key, Map } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { AppRoutes } from '@/lib/core/configs/appRoutes';
+import { ETransType } from '@/lib/core/enum';
+import { cn } from '@/lib/utils';
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
+import { isPathActive, useCurrentPath } from './navigation';
 
 interface TabData {
   value: string;
@@ -16,27 +15,26 @@ interface TabData {
 
 const MenuTabs = () => {
   const currentPath = useCurrentPath();
-  const { data: session } = useSession();
   const router = useRouter();
   const tabsData: TabData[] = [
     {
       value: `${AppRoutes.property.url}?TransType=${ETransType.sell}`,
-      label: "Mua bán",
+      label: 'Mua bán',
       icon: Home,
     },
     {
       value: `${AppRoutes.property.url}?TransType=${ETransType.rent}`,
-      label: "Cho thuê",
+      label: 'Cho thuê',
       icon: Key,
     },
     {
       value: `${AppRoutes.map.url}`,
-      label: "Bản đồ",
+      label: 'Bản đồ',
       icon: Map,
     },
     {
       value: `${AppRoutes.feed.url}`,
-      label: "Tin đăng",
+      label: 'Tin đăng',
       icon: Edit,
     },
   ];
@@ -53,7 +51,7 @@ const MenuTabs = () => {
       onValueChange={handleTabChange}
       className="w-full "
     >
-      <TabsList className="h-10 rounded-full">
+      <TabsList className="h-10 w-full rounded-full">
         {tabsData.map((tab) => {
           const Icon = tab.icon;
           const isActive = isPathActive(currentPath, tab.value);
@@ -62,18 +60,17 @@ const MenuTabs = () => {
               key={tab.value}
               value={tab.value}
               className={cn(
-                "data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground",
-                "transition-all duration-200 ease-in-out rounded-full",
-                "data-[state=active]:shadow-sm",
-                isActive ? "p-2 text-white" : "w-16 h-16 p-0 justify-center"
+                'h-8 flex-1 px-2',
+                'data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground',
+                'transition-all duration-200 ease-in-out rounded-full',
+                'data-[state=active]:shadow-sm',
+                isActive && 'text-white'
               )}
             >
               <Icon className="w-4 h-4 shrink-0" />
-              {isActive && (
-                <span className="font-medium whitespace-nowrap text-sm">
-                  {tab.label}
-                </span>
-              )}
+              <span className="font-medium whitespace-nowrap text-sm">
+                {tab.label}
+              </span>
             </TabsTrigger>
           );
         })}

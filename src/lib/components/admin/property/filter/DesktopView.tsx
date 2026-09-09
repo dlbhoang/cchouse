@@ -1,28 +1,39 @@
 import {
+  Button,
+  Checkbox,
+  Drawer,
   Flex,
   Form,
   FormInstance,
   Input,
-  Button,
   Select,
   Typography,
 } from "antd";
 import {
+  FilterOutlined,
+  ReloadOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
+import { useState, type ReactNode } from "react";
+import {
   AdvPropSearch,
   AreaFilter,
+  DateFilter,
   PriceFilter,
 } from "@/lib/components/shared/MyFormItem";
 import {
   AddressSelectCustom,
+  CustomerTypeSelect,
+  DirectionSelect,
   LocationSelectCustom,
   PropTypeSelect,
   TransStatusSelect,
+  UserAdminSelect,
 } from "@/lib/components/shared/MySelect";
-import { FilterOutlined, SearchOutlined } from "@ant-design/icons";
 import { ETransType } from "@/lib/core/enum";
 import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import { HIDDEN_FIELDS } from "./config";
-import type { ReactNode } from "react";
+import "./property-filter.css";
 
 const { Text } = Typography;
 
@@ -32,7 +43,6 @@ type DesktopViewProps = {
   handleRefresh: () => void;
 };
 
-/** Wrapper tạo floating label giống Figma */
 const FloatingField = ({
   label,
   required,
@@ -42,30 +52,11 @@ const FloatingField = ({
   required?: boolean;
   children: ReactNode;
 }) => (
-  <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
+  <div className="property-floating-field">
     {children}
-    <div
-      style={{
-        position: "absolute",
-        top: -8,
-        left: 12,
-        background: "#fff",
-        paddingInline: 4,
-        display: "flex",
-        alignItems: "center",
-        gap: 2,
-        pointerEvents: "none",
-        zIndex: 1,
-      }}
-    >
-      <Text style={{ fontSize: 11, color: "#a1a1aa", lineHeight: 1 }}>
-        {label}
-      </Text>
-      {required && (
-        <Text style={{ fontSize: 10, color: "#ef4444", lineHeight: 1 }}>
-          *
-        </Text>
-      )}
+    <div className="property-floating-label">
+      <Text className="property-floating-label-text">{label}</Text>
+      {required && <Text className="property-floating-label-required">*</Text>}
     </div>
   </div>
 );
@@ -75,190 +66,154 @@ export const DesktopView = ({
   model,
   handleRefresh,
 }: DesktopViewProps) => {
+  const [moreOpen, setMoreOpen] = useState(false);
+
   return (
-    <Flex vertical gap={16}>
-      {HIDDEN_FIELDS.map((e) => (
+    <Flex vertical gap={16} className="property-filter-card">
+      {HIDDEN_FIELDS.filter((e) => e !== "TransType").map((e) => (
         <Form.Item key={e} name={e} hidden>
           <Input />
         </Form.Item>
       ))}
 
-      {/* Row 1 - search-top */}
-      <Flex
-        align="center"
-        gap={16}
-        style={{
-          padding: "16px 8px 10px",
-          borderRadius: 10,
-          border: "1px solid #e5e5e5",
-        }}
-      >
-        {/* Trái: Mua bán + Search input */}
-        <Flex align="center" gap={16} style={{ flex: 1 }}>
-  <div style={{ width: 120 }}>
-  <div
-    style={{
-      position: "relative",
-      border: "1px solid #e5e7eb",
-      borderRadius: 10,
-      padding: "0 12px",
-      background: "#fff",
-      height: 40,
-      display: "flex",
-      alignItems: "center",
-    }}
-  >
-    <Form.Item name="TransType" style={{ marginBottom: 0, width: "100%" }}>
-      <Select
-        className="trans-type-select"
-        options={[
-          { label: "Mua bán", value: ETransType.sell },
-          { label: "Cho thuê", value: ETransType.rent },
-        ]}
-        variant="borderless"
-      />
-    </Form.Item>
-  </div>
+      {/* Hàng 1: tìm kiếm + khu vực + trạng thái + actions */}
+      <div className="property-filter-search-row">
+        <div className="property-search-combo">
+          <Form.Item name="TransType" className="property-trans-type-form-item">
+            <Select
+              className="property-trans-type-select"
+              options={[
+                { label: "Mua bán", value: ETransType.sell },
+                { label: "Cho thuê", value: ETransType.rent },
+              ]}
+              onChange={() => form.submit()}
+            />
+          </Form.Item>
 
-  <style jsx global>{`
-    .trans-type-select {
-      width: 100%;
-    }
-    .trans-type-select .ant-select-selector {
-      height: 38px !important;
-      border-radius: 0 !important;
-      border: none !important;
-      background: transparent !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-      display: flex;
-      align-items: center;
-    }
-    .trans-type-select.ant-select-single .ant-select-selector {
-      display: flex;
-      align-items: center;
-    }
-    .trans-type-select .ant-select-selection-item {
-      line-height: 38px !important;
-      font-size: 14px;
-      font-weight: 400 !important;
-      color: #262626;
-    }
-    .trans-type-select .ant-select-arrow {
-      color: #6b7280;
-      font-size: 11px;
-    }
-    .trans-type-select.ant-select-focused .ant-select-selector {
-      box-shadow: none !important;
-    }
-  `}</style>
-</div>
-
-          <div style={{ flex: 1 }}>
+          <div className="property-search-input-wrap">
             <AdvPropSearch
               form={form}
               placeholder="Tìm kiếm bất động sản..."
               handleRefresh={handleRefresh}
             />
           </div>
-        </Flex>
+        </div>
 
-        {/* Phải: Khu vực + Trạng thái + Tìm kiếm (không dùng FloatingField, giống HTML) */}
-        <Flex align="center" gap={8}>
-          <div style={{ width: 192 }}>
-            <Form.Item style={{ marginBottom: 0 }}>
-              <AddressSelectCustom
-                form={form}
-                nameProvince="ProvinceId"
-                nameDistrict="DistrictId"
-                nameWard="WardId"
-                nameStreet="StreetId"
-                nameAddressNumber="AddressNumber"
-              />
-            </Form.Item>
-          </div>
+        <div className="property-region-field">
+          <AddressSelectCustom
+            form={form}
+            nameProvince="ProvinceId"
+            nameDistrict="DistrictId"
+            nameWard="WardId"
+            nameStreet="StreetId"
+            nameAddressNumber="AddressNumber"
+          />
+        </div>
 
-          <div style={{ width: 192 }}>
-            <Form.Item name="Status" style={{ marginBottom: 0 }}>
-              <TransStatusSelect
-                mode="multiple"
-                transType={model?.TransType || ETransType.sell}
-              />
-            </Form.Item>
-          </div>
-
-          <Button
-            type="primary"
-            icon={<SearchOutlined />}
-            style={{
-              borderRadius: 10,
-              fontWeight: 500,
-              height: 40,
-              paddingInline: 16,
-              flexShrink: 0,
-            }}
-            onClick={handleRefresh}
-          >
-            Tìm kiếm
-          </Button>
-        </Flex>
-      </Flex>
-
-      {/* Row 2 - filters (giữ nguyên FloatingField) */}
-      <Flex align="center" gap={8}>
-        <Flex align="center" gap={8} style={{ flex: 1 }}>
-          <div style={{ flex: 1 }}>
-            <FloatingField label="Vị trí" required>
-              <Form.Item style={{ marginBottom: 0 }}>
-                <LocationSelectCustom
-                  form={form}
-                  locationName="Location"
-                  locationFeatureName="LocationFeature"
-                />
-              </Form.Item>
-            </FloatingField>
-          </div>
-
-          <div style={{ flex: 1 }}>
-            <FloatingField label="Khoảng giá" required>
-              <Form.Item style={{ marginBottom: 0 }}>
-                <PriceFilter form={form} />
-              </Form.Item>
-            </FloatingField>
-          </div>
-
-          <div style={{ flex: 1 }}>
-            <FloatingField label="Diện tích" required>
-              <Form.Item style={{ marginBottom: 0 }}>
-                <AreaFilter form={form} />
-              </Form.Item>
-            </FloatingField>
-          </div>
-
-          <div style={{ flex: 1 }}>
-            <FloatingField label="Loại BĐS" required>
-              <Form.Item name="PropTypeIds" style={{ marginBottom: 0 }}>
-                <PropTypeSelect mode="multiple" />
-              </Form.Item>
-            </FloatingField>
-          </div>
-        </Flex>
+        <FloatingField label="Trạng thái" required>
+          <Form.Item name="Status" className="property-status-form-item">
+            <TransStatusSelect
+              mode="multiple"
+              transType={model?.TransType || ETransType.sell}
+              placeholder="Trạng thái"
+              allowClear
+            />
+          </Form.Item>
+        </FloatingField>
 
         <Button
-          icon={<FilterOutlined style={{ color: "#3b82f6" }} />}
-          style={{
-            borderColor: "#3b82f6",
-            color: "#3b82f6",
-            borderRadius: 10,
-            fontWeight: 500,
-            height: 40,
-            paddingInline: 16,
-            flexShrink: 0,
-          }}
+          type="primary"
+          htmlType="submit"
+          icon={<SearchOutlined />}
+          className="property-filter-search-btn"
+        >
+          Tìm kiếm
+        </Button>
+
+        <Button
+          htmlType="button"
+          icon={<ReloadOutlined />}
+          className="property-filter-reset-btn"
+          onClick={handleRefresh}
+          aria-label="Làm mới bộ lọc"
+        />
+      </div>
+
+      {/* Hàng 2 */}
+      <div className="property-filter-row">
+        <Form.Item className="property-field-item property-location-item">
+          <LocationSelectCustom
+            form={form}
+            locationName="Location"
+            locationFeatureName="LocationFeature"
+          />
+        </Form.Item>
+
+        <Form.Item className="property-field-item property-price-item">
+          <FloatingField label="Khoảng giá" required>
+            <PriceFilter form={form} />
+          </FloatingField>
+        </Form.Item>
+
+        <Form.Item className="property-field-item property-area-item">
+          <FloatingField label="Diện tích" required>
+            <AreaFilter form={form} />
+          </FloatingField>
+        </Form.Item>
+
+        <Form.Item name="Direction" className="property-field-item">
+          <FloatingField label="Hướng">
+            <DirectionSelect mode="multiple" placeholder="Hướng" />
+          </FloatingField>
+        </Form.Item>
+
+        <Form.Item name="PropTypeIds" className="property-field-item">
+          <FloatingField label="Loại BĐS" required>
+            <PropTypeSelect mode="multiple" placeholder="Loại BĐS" />
+          </FloatingField>
+        </Form.Item>
+
+        <Button
+          htmlType="button"
+          icon={<FilterOutlined />}
+          className="property-filter-more-btn"
+          onClick={() => setMoreOpen(true)}
         >
           Lọc thêm
         </Button>
-      </Flex>
+      </div>
+
+      <Drawer
+        title="Lọc thêm"
+        placement="right"
+        width={420}
+        onClose={() => setMoreOpen(false)}
+        open={moreOpen}
+      >
+        <Flex vertical gap={16}>
+          <Form.Item name="CustomerType" label="Loại khách">
+            <CustomerTypeSelect />
+          </Form.Item>
+          <Form.Item name="UserAdminId" label="Nhân viên">
+            <UserAdminSelect />
+          </Form.Item>
+          <DateFilter form={form} />
+          <Form.Item name="IsMonopoly" valuePropName="checked">
+            <Checkbox>Độc quyền</Checkbox>
+          </Form.Item>
+          <Checkbox
+            checked={Number(model?.CustomerType) === 6}
+            onChange={(e) => {
+              form.setFieldValue("CustomerType", e.target.checked ? 6 : undefined);
+            }}
+          >
+            Đấu giá
+          </Checkbox>
+          <Button type="primary" htmlType="submit" onClick={() => setMoreOpen(false)}>
+            Áp dụng
+          </Button>
+        </Flex>
+      </Drawer>
     </Flex>
   );
 };

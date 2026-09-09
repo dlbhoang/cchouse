@@ -86,7 +86,7 @@ export const PriceFilter = ({ form }: Props) => {
       onClick={() => setIsDropdownOpen(true)}
       onChange={handleDropdownChange}
       onDropdownVisibleChange={setIsDropdownOpen}
-      placeholder={`Giá (${methodName})`}
+      placeholder="Khoảng giá"
       value={selectValue}
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdownRender={(menu) => (
