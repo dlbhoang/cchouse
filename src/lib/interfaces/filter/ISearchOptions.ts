@@ -91,6 +91,15 @@ export interface IPropAdminOpts extends AddressOpts {
   IsSaved?: boolean;
   IsMonopoly?: boolean;
   CustomerType?: number;
+  // mới thêm cho Bộ lọc mobile
+  FloorFrm?: number;
+  FloorTo?: number;
+  BedroomFrm?: number;
+  BedroomTo?: number;
+  BathroomFrm?: number;
+  BathroomTo?: number;
+  Legal?: number;
+  FurnitureIds?: number[];
 }
 export interface IParcelLandAdminOpts extends AddressOpts {
   Status?: number;

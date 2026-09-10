@@ -9,3 +9,6 @@ export { PhoneNumber } from './PhoneNumber';
 export { PriceFilter } from './PriceFilter';
 export { SearchInput } from './SearchInput';
 export { UploadItem } from './UploadItem';
+export { AuctionCheckbox } from './AuctionCheckbox';
+export { CountRangeFilter } from './CountRangeFilter';
+export { FloatingField } from './FloatingField';

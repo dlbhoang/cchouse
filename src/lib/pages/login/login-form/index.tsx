@@ -21,16 +21,22 @@ type Props = {
 
 // Auth.js v5 luôn trả "CredentialsSignin" — map message từ API sang tiếng Việt
 const parseAuthError = (error: string): string => {
-  if (!error || error === "CredentialsSignin") {
+  const normalized = (error ?? "").trim();
+  if (!normalized || normalized === "CredentialsSignin") {
     return "Số điện thoại hoặc mật khẩu không đúng";
   }
-  if (error.toLowerCase().includes("tài khoản") || error.toLowerCase().includes("account")) {
+
+  const lower = normalized.toLowerCase();
+  if (lower.includes("đăng nhập ở thiết bị khác") || lower.includes("device") || lower.includes("already logged in")) {
+    return "Tài khoản đang đăng nhập ở thiết bị khác. Vui lòng đăng xuất trước khi đăng nhập";
+  }
+  if (lower.includes("tài khoản") || lower.includes("account")) {
     return "Số điện thoại chưa được đăng ký trong hệ thống";
   }
-  if (error.toLowerCase().includes("mật khẩu") || error.toLowerCase().includes("password")) {
+  if (lower.includes("mật khẩu") || lower.includes("password")) {
     return "Mật khẩu không đúng";
   }
-  return error;
+  return normalized;
 };
 
 const hasMustChangePassword = (user?: any) =>
@@ -41,23 +47,35 @@ const showRejectedAccount = async (
   onModeChange: () => void
 ) => {
   const rejectedPrefix = "Tài khoản bị từ chối|";
-  if (!error.startsWith(rejectedPrefix)) return false;
+  if (error.startsWith(rejectedPrefix)) {
+    const [, reason, rejectedBy, rejectedAt] = error.split("|");
+    await signOut({ redirect: false });
+    Modal.info({
+      title: "Tài khoản bị từ chối",
+      content: (
+        <div>
+          <p><strong>Lý do:</strong> {reason || "Không có lý do"}</p>
+          <p><strong>Người từ chối:</strong> {rejectedBy || "Không rõ"}</p>
+          <p><strong>Ngày giờ:</strong> {rejectedAt || "Không rõ"}</p>
+        </div>
+      ),
+      okText: "Đăng ký lại",
+      onOk: onModeChange,
+    });
+    return true;
+  }
 
-  const [, reason, rejectedBy, rejectedAt] = error.split("|");
-  await signOut({ redirect: false });
-  Modal.info({
-    title: "Tài khoản bị từ chối",
-    content: (
-      <div>
-        <p><strong>Lý do:</strong> {reason || "Không có lý do"}</p>
-        <p><strong>Người từ chối:</strong> {rejectedBy || "Không rõ"}</p>
-        <p><strong>Ngày giờ:</strong> {rejectedAt || "Không rõ"}</p>
-      </div>
-    ),
-    okText: "Đăng ký lại",
-    onOk: onModeChange,
-  });
-  return true;
+  if (error.toLowerCase().includes("đăng nhập ở thiết bị khác") || error.toLowerCase().includes("device") || error.toLowerCase().includes("already logged in")) {
+    await signOut({ redirect: false });
+    Modal.warning({
+      title: "Tài khoản đang được sử dụng",
+      content: "Tài khoản đang đăng nhập ở thiết bị khác. Vui lòng đăng xuất trước khi đăng nhập",
+      okText: "Đã hiểu",
+    });
+    return true;
+  }
+
+  return false;
 };
 
 const getLoginErrorMessage = async (values: IUserLogin) => {
