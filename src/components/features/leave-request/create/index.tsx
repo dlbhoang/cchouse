@@ -91,11 +91,11 @@ const LeaveRequestCreate = ({ isOpen, onClose }: Props) => {
             <div className="flex items-center gap-2">
               <Avatar>
                 <AvatarImage
-                  src={session?.user?.Avatar.toString() || ""}
+                  src={session?.user?.Avatar?.toString() || ""}
                   className="object-cover"
                 />
                 <AvatarFallback>
-                  {session?.user?.Name?.charAt(0)}
+                  {session?.user?.Name?.charAt(0) || "U"}
                 </AvatarFallback>
               </Avatar>
               <span className="font-medium">

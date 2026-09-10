@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { signIn, useSession } from "next-auth/react";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -32,12 +33,15 @@ import { PasswordStrength } from "./password-strength";
 interface ChangePasswordModalProps {
   isOpen: boolean;
   onClose: () => void;
+  required?: boolean;
 }
 
 export function ChangePasswordModal({
   isOpen,
   onClose,
+  required = false,
 }: ChangePasswordModalProps) {
+  const { data: session, update } = useSession();
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -55,7 +59,24 @@ export function ChangePasswordModal({
 
   async function onSubmit(values: IChangePassword) {
     try {
+      const sessionUser = session?.user as any;
       await authApi.changePassword(values);
+
+      const username = sessionUser?.Email || sessionUser?.email || "";
+      if (username) {
+        const loginResult = await signIn("credentials", {
+          username,
+          password: values.newPassword,
+          redirect: false,
+        });
+
+        if (loginResult?.error) {
+          console.error("Re-login after password change failed:", loginResult.error);
+        } else {
+          await update?.();
+        }
+      }
+
       form.reset();
       onClose();
     } catch (error) {
@@ -69,7 +90,7 @@ export function ChangePasswordModal({
   }
 
   return (
-    <AlertDialog open={isOpen} onOpenChange={handleClose}>
+    <AlertDialog open={isOpen} onOpenChange={required ? undefined : handleClose}>
       <AlertDialogContent className="sm:max-w-[500px]">
         <AlertDialogHeader>
           <AlertDialogTitle>Thay đổi mật khẩu</AlertDialogTitle>
@@ -198,14 +219,16 @@ export function ChangePasswordModal({
             />
 
             <DialogFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleClose}
-                disabled={form.formState.isSubmitting}
-              >
-                Hủy
-              </Button>
+              {!required && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleClose}
+                  disabled={form.formState.isSubmitting}
+                >
+                  Hủy
+                </Button>
+              )}
               <Button type="submit" disabled={form.formState.isSubmitting}>
                 {form.formState.isSubmitting ? "Đang xử lý..." : "Lưu thay đổi"}
               </Button>

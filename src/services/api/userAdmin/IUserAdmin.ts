@@ -76,6 +76,7 @@ export interface IUserAdminRequest extends IUserAdminRequestBase {
 
 export interface IUserAdminResponse extends IUserAdminResponseBase {
   UserAccess?: IUserAccessResponse;
+  MustChangePassword?: boolean;
 }
 export interface IUserAdminQU {
   Id: number;

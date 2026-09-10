@@ -7,7 +7,22 @@ declare module 'next-auth' {
   }
 }
 
-interface IUserLogged extends IUserAdminResponse {
+interface IUserLogged {
+  Id?: number;
+  Code?: string;
+  Name?: string;
+  Email?: string;
+  Phone?: string;
+  CompanyPhone?: string;
+  RoleId?: number;
+  RoleName?: string;
+  BranchId?: number;
+  BranchName?: string;
+  ManagedBy?: number;
+  Permission?: number;
+  Avatar?: string;
+  DateOfBirth?: string;
+  MustChangePassword?: boolean;
   token: string;
   expiredDate: string;
 }

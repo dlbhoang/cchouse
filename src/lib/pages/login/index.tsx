@@ -1,17 +1,41 @@
 "use client";
 
 import { Divider, Flex, Image, QRCode, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AppRoutes } from "@/lib/core/configs/appRoutes";
+import { ChangePasswordModal } from "@/lib/components/shared/MyModal/ChangePasswordShadcn";
 import LoginForm from "./login-form";
 import RegisterForm from "./register-form";
+
+const FORCE_CHANGE_PASSWORD_KEY = "cchouse-force-change-password";
 
 const { Text } = Typography;
 
 function LoginPage() {
   const [mode, setMode] = useState<"login" | "register">("login");
+  const [mustChangePasswordOpen, setMustChangePasswordOpen] = useState(false);
+
+  useEffect(() => {
+    const shouldOpen = sessionStorage.getItem(FORCE_CHANGE_PASSWORD_KEY) === "1";
+    if (shouldOpen) {
+      setMustChangePasswordOpen(true);
+      sessionStorage.removeItem(FORCE_CHANGE_PASSWORD_KEY);
+    }
+  }, []);
 
   return (
-    <main className="flex min-h-screen w-full bg-white">
+    <>
+      <ChangePasswordModal
+        isOpen={mustChangePasswordOpen}
+        required
+        onClose={() => {
+          setMustChangePasswordOpen(false);
+          sessionStorage.removeItem(FORCE_CHANGE_PASSWORD_KEY);
+          window.location.href = `${AppRoutes.property.url}?TransType=1`;
+        }}
+      />
+
+      <main className="flex min-h-screen w-full bg-white">
       <section className="relative hidden min-h-screen flex-1 overflow-hidden bg-[#071945] md:block">
         <img
           src="/assets/figma-visual.png"
@@ -43,7 +67,11 @@ function LoginPage() {
             </div>
           )}
 
-          <LoginForm isVisible={mode === "login"} onModeChange={() => setMode("register")} />
+          <LoginForm
+            isVisible={mode === "login"}
+            onModeChange={() => setMode("register")}
+            onMustChangePassword={() => setMustChangePasswordOpen(true)}
+          />
           <RegisterForm isVisible={mode === "register"} onModeChange={() => setMode("login")} />
 
           {mode === "login" && (
@@ -72,7 +100,8 @@ function LoginPage() {
           </Flex>
         </footer>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
 

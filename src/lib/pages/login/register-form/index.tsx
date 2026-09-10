@@ -2,7 +2,7 @@ import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Checkbox, DatePicker, Form, Image, Input, Modal, Select, Space, Typography, Upload } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 import { CheckCircle2, Circle } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useMediaQuery } from "react-responsive";
 import { PhoneNumber } from "@/lib/components/shared/MyFormItem";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -24,9 +24,33 @@ const positionOptions = [
 ];
 
 const levelOptions = ["Trung học phổ thông", "Trung cấp", "Cao đẳng", "Đại học", "Sau đại học"];
-
 const passwordPattern =
   /^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>_\-]).{8,15}$/;
+
+const getEmailDomainByPosition = (position?: string) => {
+  const normalizedPosition = (position ?? "").toLowerCase();
+  const isSales =
+    normalizedPosition.includes("kinh doanh") ||
+    normalizedPosition.includes("marketing") ||
+    normalizedPosition.includes("sale");
+
+  return isSales ? "@gmail.com" : "@cchouse.vn";
+};
+
+const isSalesPosition = (position?: string) => {
+  const normalizedPosition = (position ?? "").toLowerCase();
+  return (
+    normalizedPosition.includes("kinh doanh") ||
+    normalizedPosition.includes("marketing") ||
+    normalizedPosition.includes("sale")
+  );
+};
+
+const normalizeEmailLocalPart = (value?: string) => {
+  const trimmed = (value ?? "").trim();
+  if (!trimmed) return "";
+  return trimmed.split("@")[0].trim();
+};
 
 type Props = {
   isVisible: boolean;
@@ -43,6 +67,8 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
   const [identityFiles, setIdentityFiles] = useState<UploadFile[]>([]);
   const [previewUrl, setPreviewUrl] = useState<string>();
   const agreedTerms = Form.useWatch("AgreeTerms", form);
+  const positionValue = Form.useWatch("Position", form) ?? "";
+  const isSales = isSalesPosition(positionValue);
   const passwordValue = Form.useWatch("Password", form) ?? "";
   const passwordRequirements = [
     { label: "Phải từ 8-15 ký tự", valid: passwordValue.length >= 8 && passwordValue.length <= 15 },
@@ -78,6 +104,28 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
       footer: null,
     });
 
+  useEffect(() => {
+    const autoDomain = getEmailDomainByPosition(positionValue);
+    const currentDomain = (form.getFieldValue("EmailExt") ?? "").trim();
+
+    if (!currentDomain || currentDomain !== autoDomain) {
+      form.setFieldValue("EmailExt", autoDomain);
+    }
+
+    if (isSales) {
+      const currentEmail = (form.getFieldValue("Email") ?? "").trim();
+      if (!currentEmail || currentEmail !== "cchouse") {
+        form.setFieldValue("Email", "cchouse");
+      }
+    }
+  }, [form, isSales, positionValue]);
+
+  const handleEmailLocalPartChange = (value: string) => {
+    if (isSales) return;
+    const cleanLocalPart = normalizeEmailLocalPart(value);
+    form.setFieldValue("Email", cleanLocalPart);
+  };
+
   const onFinish = async (values: IRegisterAdmin) => {
     try {
       setLoading(true);
@@ -86,11 +134,14 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
         identityFiles as Parameters<typeof fileServices.uploadFilesNoAuth>[0],
         "User",
       );
+      const emailLocalPart = normalizeEmailLocalPart(submittedValues.Email ?? "");
+      const emailDomain = (submittedValues.EmailExt ?? "@gmail.com").trim();
+      const email = `${emailLocalPart}${emailDomain}`;
       await authApi.register({
         ...submittedValues,
         Address: submittedValues.Address ?? "",
         TempAddress: submittedValues.TempAddress ?? "",
-        Email: `${submittedValues.Email ?? ""}${submittedValues.EmailExt ?? ""}`,
+        Email: email,
         Phone: submittedValues.Phone ?? "",
         Password: submittedValues.Password ?? "",
         IdentityImages: identityImages,
@@ -191,6 +242,8 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           style={{ marginBottom: isMobile ? 12 : 16, flex: 1 }}
         >
           <DatePicker
+            className="register-date-picker-field"
+            popupClassName="register-date-picker-popup"
             size={isMobile ? "middle" : "large"}
             style={{ width: "100%" }}
             format="DD/MM/YYYY"
@@ -225,21 +278,26 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           >
             <Input
               size={isMobile ? "middle" : "large"}
-              placeholder="nguyenvana.cchouse"
+              readOnly={isSales}
+              placeholder={isSales ? "cchouse" : "nguyenvana"}
+              value={isSales ? "cchouse" : undefined}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                handleEmailLocalPartChange(event.target.value)
+              }
             />
           </Form.Item>
-          <Form.Item
-            noStyle
-            name="EmailExt"
-            rules={[{ required: true, message: "Vui lòng chọn đuôi Email" }]}
-          >
-            <Select
+          <Form.Item noStyle name="EmailExt">
+            <Input
               size={isMobile ? "middle" : "large"}
-              style={{ width: isMobile ? 120 : 140 }}
-            >
-              <Select.Option value="@gmail.com">@gmail.com</Select.Option>
-              <Select.Option value="@cchouse.vn">@cchouse.vn</Select.Option>
-            </Select>
+              readOnly
+              value={form.getFieldValue("EmailExt") ?? getEmailDomainByPosition(positionValue)}
+              style={{
+                width: isMobile ? 150 : 170,
+                background: "#f7f7f7",
+                color: "#111827",
+                cursor: "default",
+              }}
+            />
           </Form.Item>
         </Space.Compact>
       </Form.Item>
@@ -364,6 +422,25 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           </Link>
         </Text>
       </div>
+
+      <style>{`
+        .register-date-picker-popup {
+          width: 300px !important;
+          padding: 0 !important;
+          border-radius: 12px !important;
+          overflow: hidden !important;
+          box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12) !important;
+        }
+
+        .register-date-picker-field .ant-picker,
+        .register-date-picker-field .ant-picker-input {
+          border-radius: 8px;
+        }
+
+        .register-date-picker-field .ant-picker {
+          min-height: 40px;
+        }
+      `}</style>
     </Form>
   );
 };

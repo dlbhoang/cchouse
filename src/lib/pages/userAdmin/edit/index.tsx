@@ -125,8 +125,8 @@ const EditUserAdminPage = ({ id }: Props) => {
         UserAccess: values?.UserAccess
           ? {
               ...values.UserAccess,
-              TimeFrom: dayjs(values.UserAccess?.TimeFrom).format("HH:mm"),
-              TimeTo: dayjs(values.UserAccess?.TimeTo).format("HH:mm"),
+              TimeFrom: dayjs(values.UserAccess?.TimeFrom).format("HH:mm:ss"),
+              TimeTo: dayjs(values.UserAccess?.TimeTo).format("HH:mm:ss"),
               DateStart: FormatDateSubmit(
                 values.UserAccess?.DateStart?.toString()
               ),

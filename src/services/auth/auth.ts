@@ -33,7 +33,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
+      authorize: async (credentials): Promise<any> => {
         const { username, password } = credentials as IUserLogin;
 
         // Log để chắc chắn biến môi trường đã được nạp đúng
@@ -54,11 +54,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           });
 
           if (user?.data?.data) {
+            const userData = user.data.data as Record<string, any>;
+
             return {
-              ...user?.data?.data,
+              Id: userData.Id,
+              Code: userData.Code,
+              Name: userData.Name,
+              Email: userData.Email,
+              Phone: userData.Phone,
+              CompanyPhone: userData.CompanyPhone,
+              RoleId: userData.RoleId,
+              RoleName: userData.RoleName,
+              BranchId: userData.BranchId,
+              BranchName: userData.BranchName,
+              ManagedBy: userData.ManagedBy,
+              Permission: userData.Permission,
+              Avatar: userData.Avatar,
+              DateOfBirth: userData.DateOfBirth,
+              MustChangePassword: Boolean(userData.MustChangePassword),
               token: Token,
               expiredDate: ExpiredDate,
-            };
+            } as any;
           }
 
           return null;

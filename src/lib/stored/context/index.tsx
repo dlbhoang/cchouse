@@ -98,30 +98,76 @@ export const useAdminContext = create(
         set(() => ({
           loading: true,
         }));
-        const branchResult = await branchApi.get(opts);
-        const managerResult = await userAdminApi.getUserAdminPublic(true);
-        const roleResult = await roleApi.get(opts);
-        const provinceResult = await provinceApi.get(opts);
-        const districtResult = await districtApi.get(opts);
-        const propTypeResult = await propTypeApi.get(opts);
-        const userAdminResult = await lookupApi.getUserAdmin();
-        const managedUsersResult = await axiosClient.get<
-          any,
-          IApiResponse<IUserItem[]>
-        >(meRoutes.managedUsers);
 
-        const enumListResult = await utilsApi.enumList();
+        const [
+          branchResult,
+          managerResult,
+          roleResult,
+          provinceResult,
+          districtResult,
+          propTypeResult,
+          userAdminResult,
+          managedUsersResult,
+          enumListResult,
+        ] = await Promise.allSettled([
+          branchApi.get(opts),
+          userAdminApi.getUserAdminPublic(true),
+          roleApi.get(opts),
+          provinceApi.get(opts),
+          districtApi.get(opts),
+          propTypeApi.get(opts),
+          lookupApi.getUserAdmin(),
+          axiosClient.get<any, IApiResponse<IUserItem[]>>(meRoutes.managedUsers),
+          utilsApi.enumList(),
+        ]);
+
+        const safeData = <T,>(result: PromiseSettledResult<T | undefined>) =>
+          result.status === "fulfilled" ? (result.value as any)?.data ?? [] : [];
+
         set(() => ({
-          enumList: enumListResult.data,
-          branches: branchResult.data,
-          managers: managerResult.data,
-          provinces: provinceResult.data,
-          districts: districtResult.data,
-          roles: roleResult.data,
-          propType: propTypeResult.data,
-          listUserAdmin: userAdminResult.data,
+          enumList:
+            enumListResult.status === "fulfilled"
+              ? enumListResult.value.data ?? {}
+              : {
+                  ApartmentUnitType: [],
+                  CustomerType: [],
+                  Direction: [],
+                  Equipments: [],
+                  Errors: [],
+                  Law: [],
+                  Literacy: [],
+                  Location: [],
+                  LocationFeature: [],
+                  MobileNetwork: [],
+                  PaymentMethod: [],
+                  Purpose: [],
+                  RequimentStatus: [],
+                  Root: [],
+                  Sex: [],
+                  StatusBase: [],
+                  NewsStatus: [],
+                  StatusUsage: [],
+                  Structures: [],
+                  SubAddresses: [],
+                  TransStatus: [],
+                  UsageLaw: [],
+                  UserStatus: [],
+                  Utilities: [],
+                  UserWebsiteStatus: [],
+                  UserWebsiteType: [],
+                },
+          branches: safeData(branchResult),
+          managers: safeData(managerResult),
+          provinces: safeData(provinceResult),
+          districts: safeData(districtResult),
+          roles: safeData(roleResult),
+          propType: safeData(propTypeResult),
+          listUserAdmin: safeData(userAdminResult),
           loading: false,
-          managedUsers: managedUsersResult?.data || [],
+          managedUsers:
+            managedUsersResult.status === "fulfilled"
+              ? managedUsersResult.value?.data ?? []
+              : [],
         }));
       },
 

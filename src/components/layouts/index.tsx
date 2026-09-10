@@ -29,6 +29,7 @@ import TopNotification from "./top-notification";
 import ServerConfigModal from "@/lib/pages/config/server";
 import { Server } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ChangePasswordModal } from "@/lib/components/shared/MyModal/ChangePasswordShadcn";
 
 const AntProvider = dynamic(() => import("@/lib/components/AntProvider"), {
   ssr: false,
@@ -44,7 +45,13 @@ type LayoutProps = {
 const RoutesShowMobileMenu = Object.values(AppRoutes).map((route) => route.url);
 
 const RootLayout = ({ children, session }: LayoutProps) => {
+  const sessionUser = session?.user as any;
   const [serverConfigOpen, setServerConfigOpen] = useState(false);
+  const [mustChangePassword, setMustChangePassword] = useState(
+    Boolean(
+      sessionUser?.MustChangePassword ?? sessionUser?.mustChangePassword
+    )
+  );
   const { loading, init, setSmallScreen } = useAdminContext();
   const pathname = usePathname();
 
@@ -54,6 +61,14 @@ const RootLayout = ({ children, session }: LayoutProps) => {
   useEffect(() => {
     setSmallScreen(isMobile);
   }, [isMobile, setSmallScreen]);
+
+  useEffect(() => {
+    setMustChangePassword(
+      Boolean(
+        sessionUser?.MustChangePassword ?? sessionUser?.mustChangePassword
+      )
+    );
+  }, [sessionUser?.MustChangePassword, sessionUser?.mustChangePassword]);
   const { getCountOld, visible } = usePropStore();
   useEffect(() => {
     init();
@@ -139,6 +154,15 @@ const RootLayout = ({ children, session }: LayoutProps) => {
               />
             </div>
           )}
+
+          <ChangePasswordModal
+            isOpen={mustChangePassword}
+            required
+            onClose={() => {
+              setMustChangePassword(false);
+              window.location.reload();
+            }}
+          />
 
           {visible && (
             <BottomFixed>

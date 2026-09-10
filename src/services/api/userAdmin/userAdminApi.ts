@@ -21,6 +21,58 @@ import {
 const url = "UserAdmin";
 const meUrl = "Me";
 
+const normalizePascalFields = <T>(value: T): T => {
+  if (Array.isArray(value)) {
+    return value.map((item) => normalizePascalFields(item)) as T;
+  }
+
+  if (!value || typeof value !== "object") {
+    return value;
+  }
+
+  const record = value as Record<string, any>;
+  const normalized: Record<string, any> = {};
+
+  for (const [key, nestedValue] of Object.entries(record)) {
+    const keepKey = [
+      "data",
+      "message",
+      "status",
+      "totalRow",
+      "errorCode",
+      "traceId",
+    ].includes(key);
+
+    const normalizedKey = keepKey
+      ? key
+      : key.charAt(0).toUpperCase() + key.slice(1);
+
+    normalized[normalizedKey] = normalizePascalFields(nestedValue);
+  }
+
+  return normalized as T;
+};
+
+const normalizeUserAdminPayload = <T>(payload: T): T => {
+  if (!payload || typeof payload !== "object") {
+    return payload;
+  }
+
+  const record = payload as Record<string, any>;
+  if (Array.isArray(record)) {
+    return record.map((item) => normalizeUserAdminPayload(item)) as T;
+  }
+
+  if (typeof record.data !== "undefined") {
+    return {
+      ...record,
+      data: normalizeUserAdminPayload(record.data),
+    } as T;
+  }
+
+  return normalizePascalFields(payload);
+};
+
 const notiRoutes = {
   useGetNotifications(params: ISearchOptions) {
     const key = params
@@ -58,17 +110,20 @@ const userAdminApi = {
   mutateKey: url,
   useGet(params: IUserAdminOpts) {
     return useSWR(url, async (route) =>
-      axiosClient.get<any, IListData<IUserAdminResponse>>(route, {
-        params,
-      })
+      axiosClient
+        .get<any, IListData<IUserAdminResponse>>(route, {
+          params,
+        })
+        .then((response) => normalizeUserAdminPayload(response))
     );
   },
 
   getUserAdminPublic(managerOnly: boolean) {
-    return axiosClient.get<any, IListData<IUserAdminPublic>>(
-      `${url}/GetUserAdminPublic`,
-      { params: { managerOnly } }
-    );
+    return axiosClient
+      .get<any, IListData<IUserAdminPublic>>(`${url}/GetUserAdminPublic`, {
+        params: { managerOnly },
+      })
+      .then((response) => normalizeUserAdminPayload(response));
   },
   countStatus(params?: IUserAdminOpts) {
     return axiosClient.get<any, IListData<ICountItem>>(`${url}/CountStatus`, {
@@ -77,17 +132,19 @@ const userAdminApi = {
   },
 
   get(params: IUserAdminOpts) {
-    return axiosClient.get<any, IListData<IUserAdminResponse>>(url, {
-      params,
-    });
+    return axiosClient
+      .get<any, IListData<IUserAdminResponse>>(url, {
+        params,
+      })
+      .then((response) => normalizeUserAdminPayload(response));
   },
   count(params: ISearchOptions) {
     return axiosClient.get(`${url}/count`, { params });
   },
   getById(id: number) {
-    return axiosClient.get<any, ISingleData<IUserAdminResponse>>(
-      `${url}/${id}`
-    );
+    return axiosClient
+      .get<any, ISingleData<IUserAdminResponse>>(`${url}/${id}`)
+      .then((response) => normalizeUserAdminPayload(response));
   },
   add(data: IUserAdminRequest) {
     return axiosClient.post<any, ISingleData<IUserAdminResponse>>(url, {

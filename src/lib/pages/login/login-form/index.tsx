@@ -1,7 +1,7 @@
 // LoginForm.tsx
 import { Modal, Typography, Flex, Input, Button, Checkbox } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { signIn, signOut } from "next-auth/react";
+import { getSession, signIn, signOut } from "next-auth/react";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { openUpgradeModal } from "@/lib/components/shared/MyModal";
@@ -16,6 +16,7 @@ const rememberedLoginKey = "cchouse-remembered-login";
 type Props = {
   isVisible: boolean;
   onModeChange: () => void;
+  onMustChangePassword?: () => void;
 };
 
 // Auth.js v5 luôn trả "CredentialsSignin" — map message từ API sang tiếng Việt
@@ -31,6 +32,9 @@ const parseAuthError = (error: string): string => {
   }
   return error;
 };
+
+const hasMustChangePassword = (user?: any) =>
+  Boolean(user?.MustChangePassword ?? user?.mustChangePassword ?? false);
 
 const showRejectedAccount = async (
   error: string,
@@ -71,7 +75,7 @@ const getLoginErrorMessage = async (values: IUserLogin) => {
   }
 };
 
-const LoginForm = ({ isVisible, onModeChange }: Props) => {
+const LoginForm = ({ isVisible, onModeChange, onMustChangePassword }: Props) => {
   const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
@@ -118,6 +122,17 @@ const LoginForm = ({ isVisible, onModeChange }: Props) => {
       const result = await signIn("credentials", { redirect: false, ...values });
 
       if (result?.ok && !result?.error) {
+        const session = await getSession();
+
+        if (hasMustChangePassword(session?.user)) {
+          onMustChangePassword?.();
+          NotiBase(
+            "info",
+            "Tài khoản cần đổi mật khẩu trước khi sử dụng. Vui lòng đổi mật khẩu để tiếp tục."
+          );
+          return;
+        }
+
         NotiBase("success", "Đăng nhập thành công, hệ thống đang chuyển hướng...");
         setTimeout(() => {
           window.location.href = `${AppRoutes.property.url}?TransType=1`;

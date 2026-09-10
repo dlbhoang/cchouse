@@ -21,6 +21,8 @@ import MyCard from "@/lib/components/shared/MyCard";
 import { UploadItem } from "@/lib/components/shared/MyFormItem";
 import { appConst } from "@/lib/core/configs/appConst";
 import { ETableName } from "@/lib/core/enum";
+import { globalHandleFailed } from "@/lib/core/utils/ant-func";
+import { FormatDateSubmit } from "@/lib/core/utils/myFormat";
 import { useAdminContext } from "@/lib/stored";
 import { fileServices } from "@/services/api/services/fileServices";
 import type {
@@ -29,6 +31,7 @@ import type {
   IUserAdminResponse,
 } from "@/services/api/userAdmin/IUserAdmin";
 import userAdminApi from "@/services/api/userAdmin/userAdminApi";
+import { NotiBase } from "@/lib/components/shared/NotiBase";
 
 type Props = {
   model?: IUserAdminResponse;
@@ -129,20 +132,30 @@ const PendingReviewModal = ({
         ...values,
         Id: reviewData.Id,
         Email: `${values.Email}${values.EmailExt ?? ""}`,
-        DateOfBirth: values.DateOfBirth ?? reviewData.DateOfBirth,
+        DateOfBirth: FormatDateSubmit(
+          values.DateOfBirth?.toString() ?? reviewData.DateOfBirth
+        ),
         UserAccess: values.UserAccess
           ? {
               ...values.UserAccess,
-              DateStart:
-                values.UserAccess.DateStart ?? reviewData.UserAccess?.DateStart,
-              TimeFrom: dayjs(values.UserAccess.TimeFrom).format("HH:mm"),
-              TimeTo: dayjs(values.UserAccess.TimeTo).format("HH:mm"),
+              DateStart: FormatDateSubmit(
+                values.UserAccess.DateStart?.toString() ??
+                  reviewData.UserAccess?.DateStart?.toString()
+              ),
+              TimeFrom: dayjs(values.UserAccess.TimeFrom).format("HH:mm:ss"),
+              TimeTo: dayjs(values.UserAccess.TimeTo).format("HH:mm:ss"),
             }
           : undefined,
       });
       onCompleted();
       setActivationOpen(false);
       onClose();
+    } catch (error: any) {
+      const message =
+        error?.data?.message ??
+        error?.response?.data?.message ??
+        "Dữ liệu kích hoạt chưa hợp lệ, vui lòng kiểm tra lại biểu mẫu.";
+      NotiBase("error", message);
     } finally {
       setLoading(false);
     }
@@ -242,10 +255,17 @@ const PendingReviewModal = ({
           form={activationForm}
           layout="vertical"
           onFinish={activate}
+          onFinishFailed={globalHandleFailed(activationForm)}
           autoComplete="off"
           disabled={loading}
         >
           <Form.Item name="Id" hidden>
+            <Input />
+          </Form.Item>
+          <Form.Item name="Email" hidden>
+            <Input />
+          </Form.Item>
+          <Form.Item name="EmailExt" hidden>
             <Input />
           </Form.Item>
           <Card>
