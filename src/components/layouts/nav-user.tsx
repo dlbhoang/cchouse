@@ -10,7 +10,7 @@ import {
   Search,
 } from "lucide-react";
 import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { performLogout } from "@/services/auth/logout";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -154,7 +154,7 @@ export function NavUser({ user }: { user: IUserLogged }) {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() =>
-              signOut({
+              performLogout({
                 callbackUrl: "/login",
               })
             }

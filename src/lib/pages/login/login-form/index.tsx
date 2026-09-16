@@ -1,7 +1,8 @@
 // LoginForm.tsx
 import { Modal, Typography, Flex, Input, Button, Checkbox } from "antd";
 import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
-import { getSession, signIn, signOut } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
+import { performLogout } from "@/services/auth/logout";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { openUpgradeModal } from "@/lib/components/shared/MyModal";
@@ -49,7 +50,7 @@ const showRejectedAccount = async (
   const rejectedPrefix = "Tài khoản bị từ chối|";
   if (error.startsWith(rejectedPrefix)) {
     const [, reason, rejectedBy, rejectedAt] = error.split("|");
-    await signOut({ redirect: false });
+    await performLogout({ redirect: false });
     Modal.info({
       title: "Tài khoản bị từ chối",
       content: (
@@ -66,11 +67,18 @@ const showRejectedAccount = async (
   }
 
   if (error.toLowerCase().includes("đăng nhập ở thiết bị khác") || error.toLowerCase().includes("device") || error.toLowerCase().includes("already logged in")) {
-    await signOut({ redirect: false });
+    await performLogout({ redirect: false });
     Modal.warning({
       title: "Tài khoản đang được sử dụng",
       content: "Tài khoản đang đăng nhập ở thiết bị khác. Vui lòng đăng xuất trước khi đăng nhập",
       okText: "Đã hiểu",
+      okButtonProps: {
+        style: {
+          background: "var(--Brand-Main, #0588F0)",
+          borderColor: "var(--Brand-Main, #0588F0)",
+          color: "#fff",
+        },
+      },
     });
     return true;
   }

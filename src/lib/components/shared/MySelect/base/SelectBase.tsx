@@ -8,7 +8,7 @@ const onSearch = (value: string) => {
 type SelectBaseProps = Omit<SelectProps, "options" | "onChange" | "mode"> & {
   value?: SelectProps["value"];
   loading?: boolean;
-  mode?: "multiple" | "tags";
+  mode?: "multiple" | "single" | "tags";
   allowClear?: SelectProps["allowClear"];
   placeholder?: SelectProps["placeholder"];
   options?: SelectProps["options"];
@@ -32,6 +32,7 @@ const normalizeValue = (
 
   if (typeof value === "string") {
     const trimmedValue = value.trim();
+
     if (!trimmedValue) {
       return value;
     }
@@ -41,6 +42,7 @@ const normalizeValue = (
         .split(",")
         .map((item) => item.trim())
         .filter(Boolean);
+
       return pieces.map((item) => normalizeValue(item, options)) as Array<string | number>;
     }
 
@@ -53,6 +55,7 @@ const normalizeValue = (
     }
 
     const numericValue = Number(trimmedValue);
+
     if (!Number.isNaN(numericValue) && String(numericValue) === trimmedValue) {
       return numericValue;
     }
@@ -70,24 +73,30 @@ const SelectBase = ({
   options,
   showSearch = true,
   onChange,
+  className,
   ...props
 }: SelectBaseProps) => {
   const normalizedValue = normalizeValue(value, options);
+  const antMode = mode === "single" ? undefined : mode;
 
   return (
     <Select
       {...props}
+      className={className}
       showSearch={showSearch}
       allowClear={allowClear}
-      mode={mode}
+      mode={antMode}
       value={normalizedValue}
       placeholder={placeholder}
       optionFilterProp="children"
       onChange={(val, opts) => {
         if (onChange) {
-          if (Array.isArray(val) && val?.includes("all")) {
+          if (Array.isArray(val) && val.includes("all")) {
             const optionList = (options ?? []).filter((item: any) => !item.disabled);
-            onChange(optionList.map((item: any) => item.value), optionList);
+            onChange(
+              optionList.map((item: any) => item.value),
+              optionList
+            );
           } else {
             onChange(normalizeValue(val, options), opts);
           }
@@ -97,7 +106,11 @@ const SelectBase = ({
       filterOption={(input, option) => {
         const label = (option?.label ?? "").toString().toLowerCase();
         const slug = ((option as any)?.slug ?? "").toLowerCase();
-        return label.includes(input.toLowerCase()) || slug.includes(input.toLowerCase());
+
+        return (
+          label.includes(input.toLowerCase()) ||
+          slug.includes(input.toLowerCase())
+        );
       }}
       maxTagCount="responsive"
       options={
@@ -109,7 +122,7 @@ const SelectBase = ({
               },
               ...(options ?? []),
             ]
-          : (options ?? [])
+          : options ?? []
       }
       loading={loading}
       notFoundContent={loading ? <Spin size="small" /> : "Không có dữ liệu"}

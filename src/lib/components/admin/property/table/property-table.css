@@ -39,24 +39,41 @@
   vertical-align: top;
 }
 
-.property-table-shell .ant-table-thead > tr > th,
-.property-table-shell .ant-table-tbody > tr > th,
+/* Header: bỏ border trên, giữ border dưới đậm hơn để tách khỏi tbody */
+.property-table-shell .ant-table-thead > tr > th {
+  border-top: none !important;
+  border-block-start: none !important;
+  border-bottom: 1px solid #d9dce1 !important;
+  border-block-end: 1px solid #d9dce1 !important;
+}
+
+/* Body: đường kẻ ngang giữa các dòng */
 .property-table-shell .ant-table-tbody > tr > td {
+  border-top: none !important;
+  border-block-start: none !important;
+  border-bottom: 1px solid #eceef1 !important;
+  border-block-end: 1px solid #eceef1 !important;
+}
+
+.property-table-shell .ant-table-tbody > tr:last-child > td {
   border-bottom: none !important;
   border-block-end: none !important;
 }
 
-.property-table-shell .ant-table-thead > tr,
-.property-table-shell .ant-table-tbody > tr {
-  border-bottom: none !important;
-  border-block-end: none !important;
+/* Đường kẻ dọc giữa các cột (header + body), đậm hơn hairline mặc định 1 chút */
+.property-table-shell .ant-table-thead > tr > th:not(:last-child),
+.property-table-shell .ant-table-tbody > tr > td:not(:last-child) {
+  border-right: 1px solid #d9dce1 !important;
+  border-inline-end: 1px solid #d9dce1 !important;
 }
 
-.property-table-shell .ant-table-thead > tr > th,
-.property-table-shell .ant-table-tbody > tr > th,
-.property-table-shell .ant-table-tbody > tr > td {
-  border-right: none !important;
-  border-inline-end: none !important;
+.property-table-shell .ant-table-bordered .ant-table-container {
+  border: none !important;
+}
+
+.property-table-shell .ant-table-bordered .ant-table-container::before,
+.property-table-shell .ant-table-bordered .ant-table-container::after {
+  display: none !important;
 }
 
 .property-table-shell .ant-table-tbody .ant-typography {

@@ -142,7 +142,7 @@ const ContactZone = ({ model, form }: Props) => {
         >
           <StatusUsageSelect
             onChange={(val) => {
-              if ([3, 6].includes(val)) setHasRentInfo(true);
+              if (typeof val === "number" && [3, 6].includes(val)) setHasRentInfo(true);
               else setHasRentInfo(false);
             }}
           />

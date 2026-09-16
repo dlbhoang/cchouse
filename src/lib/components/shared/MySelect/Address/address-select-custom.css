@@ -1,0 +1,228 @@
+.property-address-dropdown-panel {
+  width: 360px;
+  padding: 8px 8px 10px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.property-address-dropdown-toggle {
+  height: 40px;
+  margin-bottom: 12px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f5f5;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.property-address-dropdown-toggle-label {
+  color: #222;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.property-address-field {
+  position: relative;
+  margin-bottom: 10px;
+  padding-top: 6px;
+}
+
+.property-address-field-label {
+  position: absolute;
+  z-index: 10;
+
+  top: 0;
+  left: 12px;
+
+  padding: 0 4px;
+
+  background: #fff;
+
+  color: #777;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+
+  pointer-events: none;
+}
+
+.property-address-field-required {
+  color: #ff4d4f;
+  margin-left: 1px;
+}
+.property-address-field-item {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+
+/* Ant Design Select Custom Styles */
+.property-address-field-select {
+  width: 100% !important;
+  height: 40px !important;
+}
+
+.property-address-field-select.ant-select {
+  width: 100% !important;
+  height: 40px !important;
+  font-size: 14px !important;
+}
+
+.property-address-field-select.ant-select .ant-select-selector {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 32px 0 11px !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  background: #fff !important;
+  border: 1px solid #dcdcdc !important;
+  border-radius: 8px !important;
+
+  box-shadow: none !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.property-address-field-select.ant-select
+  .ant-select-selection-item {
+  padding: 0 !important;
+  margin: 0 !important;
+
+  color: #222 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 38px !important;
+}
+
+.property-address-field-select.ant-select
+  .ant-select-selection-placeholder {
+  padding: 0 !important;
+  margin: 0 !important;
+
+  color: #9ca3af !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 38px !important;
+}
+
+.property-address-field-select.ant-select
+  .ant-select-arrow {
+  right: 10px !important;
+
+  color: #222 !important;
+  font-size: 12px !important;
+}
+
+.property-address-field-select.ant-select:hover
+  .ant-select-selector {
+  border-color: #c8c8c8 !important;
+}
+
+.property-address-field-select.ant-select-focused
+  .ant-select-selector,
+.property-address-field-select.ant-select-open
+  .ant-select-selector {
+  border-color: #1890ff !important;
+  box-shadow: none !important;
+}
+
+.property-address-field-select.ant-select
+  .ant-select-clear {
+  display: none !important;
+}
+.property-address-field-input.ant-input {
+  width: 100% !important;
+  height: 40px !important;
+
+  padding: 0 11px !important;
+
+  background: #fff !important;
+  border: 1px solid #dcdcdc !important;
+  border-radius: 8px !important;
+
+  color: #222 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+
+  box-shadow: none !important;
+}
+
+.property-address-field-input.ant-input::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+.property-address-field-input.ant-input:hover {
+  border-color: #c8c8c8 !important;
+}
+
+.property-address-field-input.ant-input:focus {
+  border-color: #1890ff !important;
+  box-shadow: none !important;
+}
+.property-address-dropdown-panel .ant-row {
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+}
+
+.property-address-dropdown-panel .ant-col {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
+
+.property-address-dropdown-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.property-filter-drawer-clear-btn,
+.property-filter-drawer-apply-btn {
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 12px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 38px !important;
+  box-shadow: none !important;
+}
+
+.property-filter-drawer-clear-btn {
+  border: 1px solid #d9d9d9 !important;
+  background: #fff !important;
+  color: #222 !important;
+}
+
+.property-filter-drawer-clear-btn:hover {
+  border-color: #bfbfbf !important;
+  color: #222 !important;
+}
+
+.property-filter-drawer-apply-btn {
+  border: 1px solid #1890ff !important;
+  background: #1890ff !important;
+  color: #fff !important;
+}
+
+.property-filter-drawer-apply-btn:hover {
+  border-color: #40a9ff !important;
+  background: #40a9ff !important;
+}
+
+.property-drawer-reset-icon,
+.property-drawer-check-icon {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .property-address-dropdown-panel {
+    width: calc(100vw - 24px);
+  }
+}

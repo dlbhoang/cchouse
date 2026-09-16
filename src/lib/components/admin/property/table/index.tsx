@@ -63,8 +63,6 @@ export const PropertyTable = ({
     userSession: session?.user,
     listCompare,
     onCompare: toggleCompare,
-    // handleShowWebsite: (id: number) =>
-    //   router.push(`${AppRoutes.property.url}/propPreview/${id}`),
     handleOpenImages: async (id: number) => {
       const result = await imagesApi.get({
         ContentId: id,
@@ -74,11 +72,9 @@ export const PropertyTable = ({
       setOpenImages(true);
     },
     handleOpenQU: (id: number) => {
-      // setOpenQU(true);
       setSeletedData(data?.data?.find((x) => x.Id === id));
     },
     handleOpenPreview: (id: number) => {
-      // setOpenPreview(true);
       setSeletedData(data?.data?.find((x) => x.Id === id));
     },
     handleOpenVideo(val) {
@@ -131,7 +127,6 @@ export const PropertyTable = ({
               []
             }
             cols={cols}
-            bordered
             useCustomPagination
             onPageIndexChange={onPageIndexChange}
           />
@@ -142,7 +137,6 @@ export const PropertyTable = ({
             searchOptions={searchOptions}
             data={data?.data || []}
             cols={cols}
-            bordered
             useCustomPagination
             onPageIndexChange={onPageIndexChange}
           />

@@ -66,18 +66,19 @@ export const DesktopView = ({
 
       {/* Hàng 1: tìm kiếm + khu vực + trạng thái + actions */}
       <div className="property-filter-search-row">
-        <div className="property-search-combo">
-          <Form.Item name="TransType" className="property-trans-type-form-item">
-            <Select
-              className="property-trans-type-select"
-              options={[
-                { label: "Mua bán", value: ETransType.sell },
-                { label: "Cho thuê", value: ETransType.rent },
-              ]}
-              onChange={() => form.submit()}
-            />
-          </Form.Item>
+        <Form.Item name="TransType" className="property-trans-type-form-item">
+          <Select
+            className="property-trans-type-select"
+            popupClassName="property-trans-type-dropdown"
+            options={[
+              { label: "Mua bán", value: ETransType.sell },
+              { label: "Cho thuê", value: ETransType.rent },
+            ]}
+            onChange={() => form.submit()}
+          />
+        </Form.Item>
 
+        <div className="property-search-combo">
           <div className="property-search-input-wrap">
             <AdvPropSearch
               form={form}
@@ -138,10 +139,8 @@ export const DesktopView = ({
         </Form.Item>
 
         <Form.Item className="property-field-item property-price-item">
-          <FloatingField label="Khoảng giá" required>
-            <PriceFilter form={form} />
-          </FloatingField>
-        </Form.Item>
+  <PriceFilter form={form} />
+</Form.Item>
 
         <Form.Item className="property-field-item property-area-item">
           <FloatingField label="Diện tích" required>

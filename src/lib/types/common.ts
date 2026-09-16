@@ -1,12 +1,11 @@
-import { SelectProps } from 'antd';
-
+import type { ReactNode } from "react";
 export type Direction = 'vertical' | 'horizontal';
 
 export type OptionType = {
   value: number | string;
   label: string;
   slug?: string;
-  disabled?: boolean | undefined;
+  disabled?: boolean;
 };
 
 export type CheckboxType = {
@@ -15,23 +14,28 @@ export type CheckboxType = {
 };
 
 export type SelectType = {
-  parentVal?: number | string | string[] | null;
-  value?: number | number[] | string | string[] | null;
-  mode?: 'multiple' | 'tags';
+  parentVal?: number | string | null;
+  value?: number | string | (number | string)[] | null;
+  mode?: 'multiple' | 'single' | 'tags';
   allowClear?: boolean;
   disabled?: boolean;
+  loading?: boolean;
+  placeholder?: string;
+  label?: string;
+  required?: boolean;
+  className?: string;
+  suffixIcon?: ReactNode;
+  options?: OptionType[];
   onChange?: (
     val: number | number[] | string | string[],
     opts?: OptionType | OptionType[]
   ) => void;
-} & SelectProps;
+};
 
 export interface IFormFieldProps {
   name: string;
   hiddenLabel?: boolean;
   isRequired?: boolean;
-
   placeholder?: string;
-
   className?: string;
 }

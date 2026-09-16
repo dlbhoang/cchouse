@@ -114,8 +114,42 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
       }}
     >
       <div style={{ display: "flex", gap: 0 }}>
-        {/* Cột trái: Xem gần đây */}
+        {/* Cột trái: Gợi ý tìm kiếm */}
         <div style={{ flex: 1, padding: "0 16px", borderRight: "1px solid #f0f0f0" }}>
+          <div style={{ color: "#a3a3a3", fontSize: 13, padding: "4px 8px", marginBottom: 4 }}>
+            Gợi ý tìm kiếm
+          </div>
+          {suggestItems.length === 0 ? (
+            <div style={{ color: "#a3a3a3", fontSize: 13, padding: "6px 8px" }}>
+              {isTyping ? "Đang tìm..." : !searchWatch ? "Trống" : "Không tìm thấy dữ liệu"}
+            </div>
+          ) : (
+            suggestItems.map((item) => (
+              <div
+                key={item.key}
+                onClick={item.onClick}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "6px 8px",
+                  borderRadius: 8,
+                  cursor: "pointer",
+                  fontSize: 13,
+                  color: "#404040",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#f5f5f5")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              >
+                <MapPin size={14} color="#a3a3a3" />
+                <span>{item.label}</span>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Cột phải: Xem gần đây */}
+        <div style={{ flex: 1, padding: "0 16px" }}>
           <div style={{ color: "#a3a3a3", fontSize: 13, padding: "4px 8px", marginBottom: 4 }}>
             Xem gần đây
           </div>
@@ -142,40 +176,6 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
                 onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
               >
                 <History size={14} color="#a3a3a3" />
-                <span>{item.label}</span>
-              </div>
-            ))
-          )}
-        </div>
-
-        {/* Cột phải: Gợi ý tìm kiếm */}
-        <div style={{ flex: 1, padding: "0 16px" }}>
-          <div style={{ color: "#a3a3a3", fontSize: 13, padding: "4px 8px", marginBottom: 4 }}>
-            Gợi ý tìm kiếm
-          </div>
-          {suggestItems.length === 0 ? (
-            <div style={{ color: "#a3a3a3", fontSize: 13, padding: "6px 8px" }}>
-              {isTyping ? "Đang tìm..." : "Không tìm thấy dữ liệu"}
-            </div>
-          ) : (
-            suggestItems.map((item) => (
-              <div
-                key={item.key}
-                onClick={item.onClick}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "6px 8px",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  fontSize: 13,
-                  color: "#404040",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "#f5f5f5")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-              >
-                <MapPin size={14} color="#a3a3a3" />
                 <span>{item.label}</span>
               </div>
             ))
@@ -235,8 +235,6 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
             style={{ height: 40 }}
           />
 
-          
-
           <style>{`
             .adv-search-input {
               border-radius: 10px !important;
@@ -245,7 +243,7 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
             .adv-search-input:hover,
             .adv-search-input:focus,
             .adv-search-input-focused {
-              border-color: #0588f0 !important;
+              border: none !important;
               box-shadow: none !important;
             }
           `}</style>

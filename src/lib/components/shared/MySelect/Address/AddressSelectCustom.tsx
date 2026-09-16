@@ -1,4 +1,5 @@
 import { DownOutlined } from "@ant-design/icons";
+import "./address-select-custom.css";
 import {
   Button,
   Col,
@@ -7,10 +8,10 @@ import {
   type FormInstance,
   Input,
   Row,
+  Switch,
   Typography,
-  theme,
 } from "antd";
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { useAdminContext } from "@/lib/stored";
 import streetApi from "@/services/api/streetApi";
@@ -20,7 +21,20 @@ import { ProvinceSelect } from "./ProvinceSelect";
 import { StreetSelect } from "./StreetSelect";
 import { WardSelect } from "./WardSelect";
 
-const { useToken } = theme;
+type AddressFieldProps = {
+  label: string;
+  children: ReactNode;
+};
+
+/** Khối label-trên / ô-dưới dùng riêng cho panel Khu vực (không phụ thuộc FloatingField). */
+const AddressField = ({ label, children }: AddressFieldProps) => (
+  <div className="property-address-field">
+    <div className="property-address-field-label">
+      {label} <span className="property-address-field-required">*</span>
+    </div>
+    {children}
+  </div>
+);
 
 type Props = {
   form: FormInstance;
@@ -30,9 +44,13 @@ type Props = {
   nameStreet: string;
   nameAddressNumber: string;
   isHiddenField?: boolean;
+  /** Tên field (Form) cho toggle "Tìm theo địa chỉ mới sau sáp nhập". */
+  nameIsNewAddress?: string;
+  /** Tên field (Form) cho ô "Thửa đất". */
+  nameLandParcel?: string;
+  /** Tên field (Form) cho ô "Tờ bản đồ". */
+  nameMapSheet?: string;
 };
-
-const colStyle = { xs: 24, lg: 12 };
 
 export const AddressSelectCustom = ({
   form,
@@ -42,8 +60,10 @@ export const AddressSelectCustom = ({
   nameStreet,
   nameAddressNumber,
   isHiddenField,
+  nameIsNewAddress = "IsNewAddress",
+  nameLandParcel = "LandParcelNumber",
+  nameMapSheet = "MapSheetNo",
 }: Props) => {
-  const { token } = useToken();
   const { districts } = useAdminContext();
   const provinceWatch = Form.useWatch(nameProvince, form);
   const districtWatch = Form.useWatch(nameDistrict, form);
@@ -83,28 +103,124 @@ export const AddressSelectCustom = ({
   });
 
   const dropdownRender = () => (
-    <div
-      style={{
-        backgroundColor: token.colorBgElevated,
-        borderRadius: token.borderRadiusLG,
-        boxShadow: token.boxShadowSecondary,
-        padding: 10,
-      }}
-    >
-      <Form.Item name={nameProvince}><ProvinceSelect onChange={() => form.resetFields([nameDistrict, nameWard, nameStreet])} /></Form.Item>
-      <Form.Item name={nameDistrict}><DistrictSelect parentVal={provinceWatch} onChange={() => form.resetFields([nameWard, nameStreet])} /></Form.Item>
-      <Form.Item name={nameWard}><WardSelect parentVal={districtWatch} /></Form.Item>
-      <Form.Item name={nameStreet}><StreetSelect parentVal={districtWatch} /></Form.Item>
-      {!isHiddenField && <Form.Item name={nameAddressNumber}><Input placeholder="Số nhà" /></Form.Item>}
-      <Row gutter={[12, 12]}>
-        <Col {...colStyle}>
-          <Button block htmlType="button" onClick={() => {
-            form.resetFields([nameProvince, nameDistrict, nameWard, nameStreet, nameAddressNumber]);
-            setStreetName(undefined); setWardName(undefined); handleApply();
-          }}>Đặt lại</Button>
+    <div className="property-address-dropdown-panel">
+      <div className="property-address-dropdown-toggle">
+        <span className="property-address-dropdown-toggle-label">
+          Tìm theo địa chỉ mới sau sáp nhập
+        </span>
+        <Form.Item name={nameIsNewAddress} valuePropName="checked" noStyle>
+          <Switch size="small" />
+        </Form.Item>
+      </div>
+
+      <AddressField label="Tỉnh/Thành phố">
+        <Form.Item name={nameProvince} className="property-address-field-item" noStyle>
+          <ProvinceSelect
+            className="property-address-field-select"
+            allowClear={false}
+            suffixIcon={<DownOutlined />}
+            placeholder="Chọn"
+            onChange={() => form.resetFields([nameDistrict, nameWard, nameStreet])}
+          />
+        </Form.Item>
+      </AddressField>
+
+      <AddressField label="Quận/Huyện">
+        <Form.Item name={nameDistrict} className="property-address-field-item" noStyle>
+          <DistrictSelect
+            className="property-address-field-select"
+            allowClear={false}
+            suffixIcon={<DownOutlined />}
+            placeholder="Chọn"
+            parentVal={provinceWatch}
+            onChange={() => form.resetFields([nameWard, nameStreet])}
+          />
+        </Form.Item>
+      </AddressField>
+
+      <AddressField label="Phường/Xã">
+        <Form.Item name={nameWard} className="property-address-field-item" noStyle>
+          <WardSelect
+            className="property-address-field-select"
+            allowClear={false}
+            suffixIcon={<DownOutlined />}
+            placeholder="Chọn"
+            parentVal={districtWatch}
+          />
+        </Form.Item>
+      </AddressField>
+
+      <AddressField label="Đường/Phố">
+        <Form.Item name={nameStreet} className="property-address-field-item" noStyle>
+          <StreetSelect
+            className="property-address-field-select"
+            allowClear={false}
+            suffixIcon={<DownOutlined />}
+            placeholder="Chọn"
+            parentVal={districtWatch}
+          />
+        </Form.Item>
+      </AddressField>
+
+      {!isHiddenField && (
+        <AddressField label="Số nhà">
+          <Form.Item name={nameAddressNumber} className="property-address-field-item" noStyle>
+            <Input className="property-address-field-input" placeholder="Nhập" />
+          </Form.Item>
+        </AddressField>
+      )}
+
+      <Row gutter={12}>
+        <Col span={12}>
+          <AddressField label="Thửa đất">
+            <Form.Item name={nameLandParcel} className="property-address-field-item" noStyle>
+              <Input className="property-address-field-input" placeholder="Nhập" />
+            </Form.Item>
+          </AddressField>
         </Col>
-        <Col {...colStyle}><Button block type="primary" htmlType="button" onClick={handleApply}>Áp dụng</Button></Col>
+        <Col span={12}>
+          <AddressField label="Tờ bản đồ">
+            <Form.Item name={nameMapSheet} className="property-address-field-item" noStyle>
+              <Input className="property-address-field-input" placeholder="Nhập" />
+            </Form.Item>
+          </AddressField>
+        </Col>
       </Row>
+
+      <div className="property-address-dropdown-footer">
+        <Button
+          block
+          htmlType="button"
+          className="property-filter-drawer-clear-btn"
+          onClick={() => {
+            form.resetFields([
+              nameProvince,
+              nameDistrict,
+              nameWard,
+              nameStreet,
+              nameAddressNumber,
+              nameLandParcel,
+              nameMapSheet,
+            ]);
+            setStreetName(undefined);
+            setWardName(undefined);
+            handleApply();
+          }}
+        >
+          <span className="property-drawer-reset-icon">↺</span>
+          Đặt lại
+        </Button>
+        <Button
+          block
+          type="primary"
+          htmlType="button"
+          className="property-filter-drawer-apply-btn"
+          onClick={handleApply}
+        >
+          <span className="property-drawer-check-icon">✓</span>
+          Áp dụng
+        </Button>
+      </div>
     </div>
   );
 
