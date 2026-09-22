@@ -281,12 +281,29 @@ button:not(:disabled),
 
 .login-field-input,
 .login-field-input input {
-  color: #a1a1aa !important;
+  color: #18181b !important;
   font-family: Inter, sans-serif !important;
   font-size: 14px !important;
   font-style: normal;
   font-weight: 500 !important;
   line-height: 20px !important;
+}
+
+.login-field-input::placeholder,
+.login-field-input input::placeholder {
+  color: #a1a1aa !important;
+}
+
+.login-field-input:-webkit-autofill,
+.login-field-input input:-webkit-autofill,
+.login-field-input:-webkit-autofill:hover,
+.login-field-input input:-webkit-autofill:hover,
+.login-field-input:-webkit-autofill:focus,
+.login-field-input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #18181b !important;
+  transition: background-color 9999s ease-in-out 0s;
 }
 
 .register-form .ant-input,
@@ -884,6 +901,19 @@ button:not(:disabled),
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    width: 100%;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  #__next {
+    width: 100%;
+    min-width: 0;
   }
   body {
     @apply bg-background text-foreground;

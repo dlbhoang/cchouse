@@ -1,0 +1,78 @@
+/**
+ * Ép các antd Select tái sử dụng (AddressSelectCustom, TransStatusSelect,
+ * PropTypeSelect, DirectionSelect, LocationSelectCustom) khớp khung
+ * combobox 40px của Figma: bỏ viền/nền riêng, để khung `.fig-field` lo phần vỏ.
+ */
+
+.fig-antd-plain .ant-select {
+  width: 100%;
+}
+
+.fig-antd-plain .ant-select .ant-select-selector {
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.fig-antd-plain .ant-select-selection-search {
+  inset-inline-start: 0 !important;
+  inset-inline-end: 0 !important;
+}
+
+.fig-antd-plain .ant-select-selection-search-input {
+  height: 20px !important;
+}
+
+.fig-antd-plain .ant-select-selection-item,
+.fig-antd-plain .ant-select-selection-placeholder {
+  padding-inline-end: 0 !important;
+  font-size: var(--fig-text-sm);
+  font-weight: 500;
+  line-height: var(--fig-leading-sm);
+}
+
+.fig-antd-plain .ant-select-selection-item {
+  color: var(--fig-text-main);
+}
+
+.fig-antd-plain .ant-select-selection-placeholder {
+  color: var(--fig-text-subtle);
+}
+
+/* Ẩn mũi tên mặc định của antd — dùng lucide ChevronDown trong khung Figma */
+.fig-antd-plain .ant-select-arrow {
+  display: none !important;
+}
+
+/* Multiple: tag gọn, không tràn chiều cao khung 40px */
+.fig-antd-plain .ant-select-multiple .ant-select-selection-overflow {
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.fig-antd-plain .ant-select-multiple .ant-select-selection-item {
+  height: 20px;
+  margin: 0 4px 0 0;
+  padding: 0 4px;
+  line-height: 20px;
+  background: var(--fig-brand-blue-l50);
+  border: none;
+  border-radius: 4px;
+}
+
+/* Select HTML thuần trong thanh tìm kiếm / phân trang */
+.fig-native-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Trạng thái focus của khung combobox */
+.fig-field:focus-within {
+  border-color: var(--fig-brand-main);
+}

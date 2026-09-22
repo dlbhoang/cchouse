@@ -10,6 +10,7 @@ import {
 import { History, MapPin, RotateCcwIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SpeechToText } from "@/lib/components/shared/SpeechToText";
+import AreaSelector, { type AreaSelection } from "@/lib/components/shared/AreaSelector";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { usePropStore } from "@/lib/stored";
 import propertyApi from "@/services/api/property/propertyApi";
@@ -31,6 +32,7 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [suggestItems, setSuggestItems] = useState<SuggestItem[]>([]);
   const [recentItems, setRecentItems] = useState<SuggestItem[]>([]);
+  const [areaSelectorOpen, setAreaSelectorOpen] = useState(false);
 
   const searchWatch = Form.useWatch("search", form);
   const transTypeWatch = Form.useWatch("TransType", form);
@@ -102,7 +104,26 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
     setRecentItems(items);
   }, [recentData]);
 
-  const dropdownContent = (
+  const handleAreaApply = (selection: AreaSelection) => {
+    const address = [
+      selection.houseNumber,
+      selection.street,
+      selection.ward,
+      selection.district,
+      selection.province,
+    ]
+      .filter(Boolean)
+      .join(", ");
+
+    form.setFieldValue("search", address);
+    setAreaSelectorOpen(false);
+    setOpenDropdown(false);
+    form.submit();
+  };
+
+  const dropdownContent = areaSelectorOpen ? (
+    <AreaSelector onApply={handleAreaApply} />
+  ) : (
     <div
       style={{
         background: "#fff",
@@ -194,8 +215,7 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
         <Space
           style={{ cursor: "pointer", color: "#0588f0", fontSize: 13 }}
           onClick={() => {
-            setOpenDropdown(false);
-            // TODO: mở modal/chọn khu vực
+            setAreaSelectorOpen(true);
           }}
         >
           <MapPin size={14} color="#0588f0" />
@@ -208,10 +228,13 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
   return (
     <Dropdown
       open={openDropdown}
-      onOpenChange={setOpenDropdown}
+      onOpenChange={(nextOpen) => {
+        setOpenDropdown(nextOpen);
+        if (!nextOpen) setAreaSelectorOpen(false);
+      }}
       trigger={["click"]}
       dropdownRender={() => dropdownContent}
-      overlayStyle={{ width: 600 }}
+      overlayStyle={{ width: areaSelectorOpen ? 384 : 600 }}
     >
       <Form.Item name="search" noStyle>
         <Space.Compact style={{ width: "100%" }}>

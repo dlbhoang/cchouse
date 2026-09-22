@@ -960,185 +960,236 @@
 }
 
 /* Price dropdown content -------------------------------------------- */
+/* NOTE: PopoverContent renders via a React Portal (appended to <body>),
+   so it sits OUTSIDE the .property-filter-card DOM subtree. CSS custom
+   properties only inherit through the DOM tree, so --pf-blue/--pf-border/
+   --pf-text/etc defined on .property-filter-card are NOT available here.
+   All tokens this dropdown needs are therefore redefined locally below. */
 .property-price-dropdown {
-  width: 280px;
-  padding: 12px !important;
+  --pf-price-border: #e5e5e5;
+  --pf-price-blue: var(--Brand-Main, #0588f0);
+  --pf-price-text: var(--Text-Main, #0a0a0a);
+  --pf-price-placeholder: #737b86;
+  --pf-price-font: var(--Font-family-Text, Inter), sans-serif;
+  width: 300px;
+  padding: 0 !important;
   border-radius: 12px !important;
-  border: 1px solid var(--pf-border) !important;
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08) !important;
+  border: 1px solid var(--pf-price-border) !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  overflow: hidden;
 }
 
 .property-price-dropdown-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--pf-price-border);
 }
 
 .property-price-dropdown-title {
-  color: #101828;
-  font-family: var(--pf-font-text);
+  color: var(--pf-price-text);
+  font-family: var(--pf-price-font);
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
+  line-height: 20px;
 }
 
 .property-price-dropdown-close {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
+  width: 16px;
+  height: 16px;
+  padding: 0;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   background: transparent;
-  color: #0b172a;
+  color: var(--pf-price-text);
   cursor: pointer;
 }
-.property-price-dropdown-close svg { width: 14px; height: 14px; }
+.property-price-dropdown-close svg { width: 16px; height: 16px; }
 
 .property-price-dropdown-close:hover {
-  background: #f3f4f6;
+  color: var(--pf-price-blue);
 }
 
-.property-price-dropdown-divider {
-  height: 1px;
-  background: #eef2f6;
-  margin: 8px -12px 4px;
+.property-price-dropdown-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 12px;
 }
 
 .property-price-dropdown-list {
-  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
   overflow-y: auto;
-  margin: 4px -6px 6px;
+  margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 .property-price-dropdown-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
   text-align: left;
-  padding: 7px 10px;
-  margin: 0 6px;
+  padding: 5px 8px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background: transparent;
-  color: var(--pf-text);
-  font-family: var(--pf-font-text);
+  color: var(--pf-price-text);
+  font-family: var(--pf-price-font);
   font-size: 13px;
   font-weight: 400;
+  line-height: 18px;
   cursor: pointer;
-  width: calc(100% - 12px);
 }
 
 .property-price-dropdown-item:hover {
-  background: #f7f8fa;
+  background: #f5f5f5;
 }
 
 .property-price-dropdown-item.is-active {
-  background: #f2f3f5;
-  font-weight: 600;
+  background: #f5f5f5;
+  padding: 6px 8px;
+  font-weight: 700;
+}
+
+.property-price-dropdown-item-check {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-left: auto;
+  color: var(--pf-price-text);
+}
+
+.property-price-dropdown-range {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
 .property-price-dropdown-section-title {
-  margin: 2px 0 8px;
-  color: #0b172a;
-  font-family: var(--pf-font-text);
-  font-size: 12.5px;
+  margin: 0;
+  color: #3e3e3e;
+  font-family: var(--pf-price-font);
+  font-size: 11px;
   font-weight: 700;
+  line-height: 14px;
 }
 
 .property-price-dropdown-inputs {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 6px;
 }
 
 .property-price-dropdown-field {
+  position: relative;
   flex: 1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
 }
 
 .property-price-dropdown-field-label {
-  color: var(--pf-placeholder);
-  font-family: var(--pf-font-text);
-  font-size: 11.5px;
-  font-weight: 500;
+  position: absolute;
+  top: -8px;
+  left: 9px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 4px;
+  background: #fff;
+  color: #737373;
+  font-family: var(--pf-price-font);
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+  pointer-events: none;
 }
 
 .property-price-dropdown-required {
-  color: #ff4d4f;
-  margin-left: 2px;
+  color: #dc3e42;
+  font-size: 9px;
 }
 
 .property-price-dropdown-input {
   width: 100%;
-  height: 32px;
+  height: 34px;
   box-sizing: border-box;
   padding: 0 10px;
-  border: 1px solid var(--pf-border);
+  border: 1px solid var(--pf-price-border);
   border-radius: 8px;
   background: #fff;
-  color: var(--pf-text);
-  font-family: var(--pf-font-text);
+  color: var(--pf-price-text);
+  font-family: var(--pf-price-font);
   font-size: 13px;
+  font-weight: 500;
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .property-price-dropdown-input::placeholder {
-  color: #b3b9c2;
+  color: #a1a1aa;
+  font-weight: 500;
 }
 
 .property-price-dropdown-input:focus {
-  border-color: var(--pf-blue);
+  border-color: var(--pf-price-blue);
   box-shadow: 0 0 0 1px rgba(5, 136, 240, 0.12);
 }
 
 .property-price-dropdown-arrow-icon {
   flex-shrink: 0;
-  margin-top: 16px;
-  color: var(--pf-placeholder);
-  font-size: 14px;
+  width: 16px;
+  height: 16px;
+  color: var(--pf-price-placeholder);
 }
 
 .property-price-dropdown-footer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: center;
   gap: 8px;
+  padding: 12px;
 }
 
 .property-price-dropdown-reset-btn,
 .property-price-dropdown-apply-btn {
   display: inline-flex;
+  flex: 1 0 0;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  height: 34px;
+  gap: 6px;
+  padding: 7px 12px;
   border-radius: 8px;
-  font-family: var(--pf-font-text);
+  font-family: var(--pf-price-font);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
+  line-height: 18px;
   cursor: pointer;
 }
 .property-price-dropdown-reset-btn svg,
 .property-price-dropdown-apply-btn svg { width: 14px; height: 14px; }
 
 .property-price-dropdown-reset-btn {
-  border: 1px solid #dfe7f0;
-  background: #f4f6f8;
-  color: #0f172a;
+  border: 1px solid var(--pf-price-border);
+  background: #fff;
+  color: var(--pf-price-text);
 }
 
 .property-price-dropdown-reset-btn:hover {
-  background: #eceff2;
+  background: #f5f5f5;
 }
 
 .property-price-dropdown-apply-btn {
-  border: 1px solid var(--pf-blue);
-  background: linear-gradient(180deg, #0d8cff 0%, #0588f0 100%);
+  border: 1px solid var(--pf-price-blue);
+  background: var(--pf-price-blue);
   color: #fff;
 }
 

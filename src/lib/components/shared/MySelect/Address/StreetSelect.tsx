@@ -5,31 +5,46 @@ import type { SelectType } from "@/lib/types/common";
 import streetApi from "@/services/api/streetApi";
 import SelectBase from "../base/SelectBase";
 
+type Props = SelectType & {
+  /**
+   * Khi true: parentVal được hiểu là ProvinceId (địa chỉ mới sau sáp nhập,
+   * bỏ qua cấp Quận/Huyện). Khi false/undefined: parentVal là DistrictId (mặc định).
+   */
+  isNew?: boolean;
+};
+
 export const StreetSelect = ({
   parentVal,
   value,
   mode,
+  isNew,
   onChange,
   ...props
-}: SelectType) => {
+}: Props) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<IStreetResponse[]>([]);
   useEffect(() => {
-    if (parentVal) {
-      setLoading(true);
-      const fetchData = async () => {
+    if (!parentVal) {
+      setData([]);
+      return;
+    }
+    setLoading(true);
+    const fetchData = async () => {
+      try {
         const result = await streetApi.get({
-          DistrictId: parentVal,
+          ...(isNew ? { ProvinceId: parentVal } : { DistrictId: parentVal }),
+          IsNew: isNew,
           pageIndex: 1,
           pageSize: 10000,
         });
-        setData(result.data);
+        setData(result.data ?? []);
+      } finally {
         setLoading(false);
-      };
+      }
+    };
 
-      fetchData();
-    }
-  }, [parentVal]);
+    fetchData();
+  }, [parentVal, isNew]);
   return (
     <SelectBase
       value={value}

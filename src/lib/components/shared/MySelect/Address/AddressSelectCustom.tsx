@@ -70,9 +70,14 @@ export const AddressSelectCustom = ({
   const wardWatch = Form.useWatch(nameWard, form);
   const streetWatch = Form.useWatch(nameStreet, form);
   const addressWatch = Form.useWatch(nameAddressNumber, form);
+  const isNewAddressWatch = Form.useWatch(nameIsNewAddress, form);
   const [wardName, setWardName] = useState<string>();
   const [streetName, setStreetName] = useState<string>();
   const [open, setOpen] = useState(false);
+
+  // Địa chỉ mới sau sáp nhập: bỏ cấp Quận/Huyện, Phường/Xã & Đường/Phố tra theo Tỉnh/Thành.
+  const wardParentVal = isNewAddressWatch ? provinceWatch : districtWatch;
+  const streetParentVal = isNewAddressWatch ? provinceWatch : districtWatch;
 
   const handleApply = () => form.submit();
 
@@ -87,11 +92,11 @@ export const AddressSelectCustom = ({
   }, [streetWatch]);
 
   useEffect(() => {
-    if (!districtWatch) {
+    if (!wardParentVal) {
       setWardName(undefined);
       setStreetName(undefined);
     }
-  }, [districtWatch]);
+  }, [wardParentVal]);
 
   const addressLabel = CombineAddress({
     AddressNumber: addressWatch,
@@ -109,7 +114,12 @@ export const AddressSelectCustom = ({
           Tìm theo địa chỉ mới sau sáp nhập
         </span>
         <Form.Item name={nameIsNewAddress} valuePropName="checked" noStyle>
-          <Switch size="small" />
+          <Switch
+            size="small"
+            onChange={() =>
+              form.resetFields([nameDistrict, nameWard, nameStreet])
+            }
+          />
         </Form.Item>
       </div>
 
@@ -125,18 +135,20 @@ export const AddressSelectCustom = ({
         </Form.Item>
       </AddressField>
 
-      <AddressField label="Quận/Huyện">
-        <Form.Item name={nameDistrict} className="property-address-field-item" noStyle>
-          <DistrictSelect
-            className="property-address-field-select"
-            allowClear={false}
-            suffixIcon={<DownOutlined />}
-            placeholder="Chọn"
-            parentVal={provinceWatch}
-            onChange={() => form.resetFields([nameWard, nameStreet])}
-          />
-        </Form.Item>
-      </AddressField>
+      {!isNewAddressWatch && (
+        <AddressField label="Quận/Huyện">
+          <Form.Item name={nameDistrict} className="property-address-field-item" noStyle>
+            <DistrictSelect
+              className="property-address-field-select"
+              allowClear={false}
+              suffixIcon={<DownOutlined />}
+              placeholder="Chọn"
+              parentVal={provinceWatch}
+              onChange={() => form.resetFields([nameWard, nameStreet])}
+            />
+          </Form.Item>
+        </AddressField>
+      )}
 
       <AddressField label="Phường/Xã">
         <Form.Item name={nameWard} className="property-address-field-item" noStyle>
@@ -145,7 +157,9 @@ export const AddressSelectCustom = ({
             allowClear={false}
             suffixIcon={<DownOutlined />}
             placeholder="Chọn"
-            parentVal={districtWatch}
+            parentVal={wardParentVal}
+            isNew={isNewAddressWatch}
+            onChange={() => form.resetFields([nameStreet])}
           />
         </Form.Item>
       </AddressField>
@@ -157,7 +171,8 @@ export const AddressSelectCustom = ({
             allowClear={false}
             suffixIcon={<DownOutlined />}
             placeholder="Chọn"
-            parentVal={districtWatch}
+            parentVal={streetParentVal}
+            isNew={isNewAddressWatch}
           />
         </Form.Item>
       </AddressField>

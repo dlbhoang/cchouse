@@ -329,13 +329,7 @@ const LoginForm = ({ isVisible, onModeChange, onMustChangePassword }: Props) => 
       </Flex>
 
       {/* ── Điều khoản ── */}
-      <Flex align="flex-start" gap={4}>
-          <Checkbox className="login-checkbox" style={{ marginTop: 2 }} />
-        <Text style={{ fontSize: isMobile ? 11 : 14, color: "#575855", lineHeight: 1.45 }}>
-          Bằng việc đăng ký tôi đồng ý cung cấp thông tin cá nhân, tuân thủ các{" "}
-          <Link onClick={openTermsModal}>Quy định</Link> và <Link>Chính sách bảo mật</Link> của công ty ban hành.
-        </Text>
-      </Flex>
+    
     </Flex>
   );
 };
