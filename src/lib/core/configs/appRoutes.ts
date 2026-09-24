@@ -86,6 +86,10 @@ export const AppRoutes = {
   recruitment: { url: `${admin}/config/recruitment`, name: 'Tuyển dụng' },
   role: { url: `${admin}/config/role`, name: 'Chức vụ & Quyền' },
   address: { url: `${admin}/config/address`, name: 'Địa chỉ' },
+  addressConversion: {
+    url: `${admin}/config/address-conversion`,
+    name: 'Chuyển đổi địa chỉ',
+  },
   banner: { url: `${admin}/config/banner`, name: 'Cài đặt ảnh' },
 
   rule: { url: `${admin}/rule`, name: 'Thời gian làm việc' },

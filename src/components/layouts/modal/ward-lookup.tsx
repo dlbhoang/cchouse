@@ -1,8 +1,9 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Copy, Loader2, MapPin, RefreshCw, ArrowLeftRight } from "lucide-react";
+import { Check, ChevronDown, Copy, Loader2, MapPin, RefreshCw, ArrowLeftRight } from "lucide-react";
 import Image from "next/image";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -16,13 +17,6 @@ import { Form } from "@/components/ui/form";
 import DistrictCbxField from "@/components/ui/form-field/district-cbx";
 import WardCbxField from "@/components/ui/form-field/ward-cbx";
 import ProvinceCbxField from "@/components/ui/form-field/province-cbx";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import type {
   ISearchWardDto,
   IWardResponse,
@@ -30,7 +24,6 @@ import type {
 import { cn } from "@/lib/utils";
 import wardApi from "@/services/api/wardApi";
 import { findWardAgencyData } from "@/data/ward-agencies";
-import { WardLookupTabs, type Tab } from "./ward-lookup-tabs";
 
 // ─────────────────────────────────────────────
 // Types
@@ -317,18 +310,57 @@ const WardLookupDialog = ({
   open: boolean;
   onClose: () => void;
 }) => {
-  const [tab, setTab] = useState<Tab>("ward");
   const [searchByNewAddress, setSearchByNewAddress] = useState(false);
-  const [agencySelections, setAgencySelections] = useState<Record<string, string>>({});
-  const [selectedDistrict, setSelectedDistrict] = useState<string>("");
+  const [selectedAgencyTypes, setSelectedAgencyTypes] = useState<string[]>([]);
+  const [agencyTypeOpen, setAgencyTypeOpen] = useState(false);
+  const agencyTypeTriggerRef = useRef<HTMLButtonElement>(null);
+  const [agencyTypeMenuStyle, setAgencyTypeMenuStyle] = useState<React.CSSProperties>({});
   const [wards, setWards] = useState<ISearchWardDto[]>([]);
   const [agencyGroups, setAgencyGroups] = useState<AgencyGroup[]>([]);
   const [originalAddress, setOriginalAddress] = useState<string>("");
-  // ID + Tên của phường MỚI sau khi tra cứu — dùng để lookup WARD_AGENCIES_MAP.
-  // Lưu cả tên để fallback khi WardId từ backend lệch với ID trong file tĩnh.
-  const [resolvedNewWardId, setResolvedNewWardId] = useState<number>(0);
-  const [resolvedNewWardName, setResolvedNewWardName] = useState<string>("");
   const dialogBodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!agencyTypeOpen) return;
+
+    const updateMenuPosition = () => {
+      const trigger = agencyTypeTriggerRef.current;
+      if (!trigger) return;
+      const rect = trigger.getBoundingClientRect();
+      const dialog = dialogBodyRef.current;
+      if (!dialog) return;
+      const dialogRect = dialog.getBoundingClientRect();
+      const viewportPadding = 8;
+      const gap = 4;
+      const desiredHeight = 256;
+      const spaceBelow = window.innerHeight - rect.bottom - viewportPadding - gap;
+      const spaceAbove = rect.top - viewportPadding - gap;
+      const openAbove = spaceBelow < Math.min(desiredHeight, 180) && spaceAbove > spaceBelow;
+      const availableHeight = Math.max(
+        120,
+        Math.min(desiredHeight, openAbove ? spaceAbove : spaceBelow)
+      );
+      setAgencyTypeMenuStyle({
+        position: "absolute",
+        left: rect.left - dialogRect.left,
+        top: openAbove
+          ? rect.top - dialogRect.top - availableHeight - gap
+          : rect.bottom - dialogRect.top + gap,
+        width: rect.width,
+        maxHeight: availableHeight,
+        zIndex: 100,
+      });
+    };
+
+    updateMenuPosition();
+    window.addEventListener("resize", updateMenuPosition);
+    window.addEventListener("scroll", updateMenuPosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updateMenuPosition);
+      window.removeEventListener("scroll", updateMenuPosition, true);
+    };
+  }, [agencyTypeOpen]);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -339,70 +371,39 @@ const WardLookupDialog = ({
     },
   });
 
-  const wardId = form.watch("WardId");
-  const hasResult = tab === "ward" ? wards.length > 0 : agencyGroups.length > 0;
+  const hasResult = wards.length > 0 || agencyGroups.length > 0;
 
   const filteredAgencyGroups = useMemo(() => {
-    return agencyGroups
-      .map((group) => {
-        const selectedIndex = agencySelections[group.label];
-        if (selectedIndex === undefined || selectedIndex === "") {
-          return group;
-        }
-        const index = Number(selectedIndex);
-        const item = group.items[index];
-        return item ? { ...group, items: [item] } : group;
-      })
-      .filter((group) => group.items.length > 0);
-  }, [agencyGroups, agencySelections]);
+    if (selectedAgencyTypes.length === 0) return [];
+    return agencyGroups.filter((group) => selectedAgencyTypes.includes(group.label));
+  }, [agencyGroups, selectedAgencyTypes]);
 
   const handleSearchModeChange = (checked: boolean) => {
     setSearchByNewAddress(checked);
     form.reset({ ProvinceId: 1, DistrictId: 0, WardId: 0 });
     setWards([]);
     setAgencyGroups([]);
-    setAgencySelections({});
+    setSelectedAgencyTypes([]);
+    setAgencyTypeOpen(false);
     setOriginalAddress("");
-    setSelectedDistrict("");
-    setResolvedNewWardId(0);
-    setResolvedNewWardName("");
   };
 
   const handleReset = () => {
-    if (tab === "agency") {
-      setAgencyGroups([]);
-      setAgencySelections({});
-      return;
-    }
-
     form.reset({ ProvinceId: 1, DistrictId: 0, WardId: 0 });
     setWards([]);
     setAgencyGroups([]);
     setOriginalAddress("");
-    setSelectedDistrict("");
-    setAgencySelections({});
+    setSelectedAgencyTypes([]);
+    setAgencyTypeOpen(false);
     setSearchByNewAddress(false);
-    setResolvedNewWardId(0);
-    setResolvedNewWardName("");
   };
 
   const handleClose = () => {
     onClose();
     handleReset();
-    setTab("ward");
   };
 
   const onSubmit = async (data: z.infer<typeof schema>) => {
-    if (tab === "agency") {
-      // Can phai co ket qua chuyen doi phuong truoc (resolvedNewWardId/Name la phuong moi)
-      if (resolvedNewWardId < 1 && !resolvedNewWardName) {
-        toast.warning("Vui lòng chuyển đổi phường/xã ở tab Chuyển đổi Phường/Xã trước");
-        return;
-      }
-      setAgencyGroups(buildAgencyGroups(resolvedNewWardId, resolvedNewWardName));
-      return;
-    }
-
     if (!searchByNewAddress && data.DistrictId < 1) {
       form.setError("DistrictId", { message: "Vui lòng chọn Quận / Huyện" });
       return;
@@ -417,7 +418,6 @@ const WardLookupDialog = ({
     const provinceLabel = getLabel("ProvinceId");
     const parts = [wardLabel, districtLabel, provinceLabel].filter(Boolean);
     setOriginalAddress(parts.join(", "));
-    setSelectedDistrict(districtLabel);
 
     const result = searchByNewAddress
       ? (() => {
@@ -458,10 +458,9 @@ const WardLookupDialog = ({
       if (mergedResults.length === 0) {
         toast.warning("Không tìm thấy dữ liệu");
         setWards([]);
-        setResolvedNewWardId(0);
-        setResolvedNewWardName("");
         setAgencyGroups([]);
-        setAgencySelections({});
+        setSelectedAgencyTypes([]);
+    setAgencyTypeOpen(false);
         return;
       }
       setWards(mergedResults);
@@ -469,8 +468,6 @@ const WardLookupDialog = ({
       // Ten duoc dung de fallback tra cuu neu WardId tu backend lech voi file tinh.
       const newWardId = searchByNewAddress ? data.WardId : mergedResults[0].WardId;
       const newWardName = searchByNewAddress ? wardLabel : mergedResults[0].WardName;
-      setResolvedNewWardId(newWardId);
-      setResolvedNewWardName(newWardName);
       setAgencyGroups(buildAgencyGroups(newWardId, newWardName));
     }
   };
@@ -540,46 +537,81 @@ const WardLookupDialog = ({
 
   const renderAgencyDropdowns = () => (
     <>
-      {AGENCY_DROPDOWN_FIELDS.map((field) => {
-        // Dung resolvedNewWardId + resolvedNewWardName (phuong moi) de lay options dung
-        const options =
-          resolvedNewWardId > 0 || resolvedNewWardName
-            ? getAgencyOptions(resolvedNewWardId, resolvedNewWardName, field)
-            : [];
-        return (
-          <FloatingField
-            key={field}
-            label={field}
-            required
-            filled={!!agencySelections[field]}
-            className="mb-4"
-          >
-            <Select
-              value={agencySelections[field] ?? ""}
-              onValueChange={(value) =>
-                setAgencySelections((prev) => ({ ...prev, [field]: value }))
-              }
-              disabled={resolvedNewWardId <= 0 && !resolvedNewWardName}
-            >
-              <SelectTrigger className={selectTriggerClass}>
-                <SelectValue placeholder="" />
-              </SelectTrigger>
-              <SelectContent className="rounded-xl border-neutral-200 p-1">
-                {options.map((option) => (
-                  <SelectItem
-                    key={option.value}
-                    value={option.value}
-                    className="rounded-md cursor-pointer text-sm text-neutral-950 focus:bg-[#E8F4FE] focus:text-[#0588F0] data-[state=checked]:bg-[#E8F4FE] data-[state=checked]:text-[#0588F0] font-[family-name:var(--font-inter,Inter,sans-serif)]"
-                  >
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </FloatingField>
-        );
-      })}
+      {renderAddressFields()}
 
+      <div className="mb-2 text-sm text-neutral-500">
+        Chọn loại cơ quan cần tra cứu tại phường/xã đã chọn.
+      </div>
+
+      <FloatingField
+        label="Loại cơ quan"
+        required
+        filled={selectedAgencyTypes.length > 0}
+        className="mb-4"
+      >
+        <div className="relative w-full">
+          <button
+            ref={agencyTypeTriggerRef}
+            type="button"
+            className="flex w-full h-[42px] items-center justify-between rounded-md bg-transparent px-3 text-sm text-neutral-950 shadow-none outline-none"
+            onClick={() => setAgencyTypeOpen((open) => !open)}
+            aria-expanded={agencyTypeOpen}
+            aria-haspopup="listbox"
+          >
+            <span className={selectedAgencyTypes.length > 0 ? "truncate" : "text-neutral-500"}>
+              {selectedAgencyTypes.length === 0
+                ? "Chọn một hoặc nhiều loại cơ quan"
+                : selectedAgencyTypes.length === 1
+                  ? selectedAgencyTypes[0]
+                  : `Đã chọn ${selectedAgencyTypes.length} loại cơ quan`}
+            </span>
+            <ChevronDown className={cn("h-4 w-4 shrink-0 text-neutral-500 transition-transform", agencyTypeOpen && "rotate-180")} />
+          </button>
+
+          {agencyTypeOpen && agencyTypeMenuStyle.left !== undefined && dialogBodyRef.current &&
+            createPortal(
+              <div
+                style={agencyTypeMenuStyle}
+                className="max-h-64 overflow-y-auto rounded-xl border border-neutral-200 bg-white p-1 shadow-lg"
+                role="listbox"
+                aria-multiselectable="true"
+              >
+                {AGENCY_DROPDOWN_FIELDS.map((field) => {
+                  const checked = selectedAgencyTypes.includes(field);
+                  return (
+                    <button
+                      key={field}
+                      type="button"
+                      role="option"
+                      aria-selected={checked}
+                      className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left text-sm text-neutral-950 hover:bg-[#E8F4FE]"
+                      onClick={() => {
+                        setSelectedAgencyTypes((prev) =>
+                          checked
+                            ? prev.filter((item) => item !== field)
+                            : [...prev, field]
+                        );
+                      }}
+                    >
+                      <span
+                        className={cn(
+                          "flex h-4 w-4 shrink-0 items-center justify-center rounded border",
+                          checked
+                            ? "border-[#0588F0] bg-[#0588F0] text-white"
+                            : "border-neutral-300 bg-white"
+                        )}
+                      >
+                        {checked && <Check className="h-3 w-3" />}
+                      </span>
+                      <span>{field}</span>
+                    </button>
+                  );
+                })}
+              </div>,
+              dialogBodyRef.current
+            )}
+        </div>
+      </FloatingField>
     </>
   );
 
@@ -588,7 +620,7 @@ const WardLookupDialog = ({
       <DialogContent
         ref={dialogBodyRef}
         overlayClassName="bg-black/30"
-        className="p-0 gap-0 w-[1152px] max-w-[calc(100vw-32px)] max-h-[calc(100vh-32px)] flex flex-col overflow-visible rounded-xl"
+        className="p-0 gap-0 w-[1152px] max-w-[calc(100vw-32px)] max-h-[calc(100dvh-32px)] flex flex-col overflow-visible rounded-xl"
       >
         <div className="flex flex-1 min-h-0 flex-col bg-white overflow-visible">
 
@@ -601,9 +633,6 @@ const WardLookupDialog = ({
 
           <div className="flex flex-1 min-h-0 flex-col self-stretch bg-white px-6 pt-4 pb-6 gap-6 overflow-hidden">
 
-            {/* ── Tabs ── */}
-            <WardLookupTabs value={tab} onChange={setTab} />
-
             {/* ── Two-column body ── */}
             <div className="flex flex-1 min-h-0 items-stretch self-stretch gap-6 max-md:flex-col max-md:overflow-y-auto">
 
@@ -612,13 +641,13 @@ const WardLookupDialog = ({
                 <Form {...form}>
                   <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className="flex flex-1 min-h-0 flex-col gap-4"
+                    className="flex flex-1 min-h-0 flex-col gap-4 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent hover:scrollbar-thumb-neutral-400"
                   >
-                    {/* Scrollable selection area */}
-                    <div className="flex-1 min-h-0 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent hover:scrollbar-thumb-neutral-400">
+                    {/* Keep the action buttons directly after the fields. The whole form scrolls when needed. */}
+                    <div className="shrink-0">
                       <div className="flex flex-col items-start self-stretch">
                         <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
-                          Chọn địa chỉ cần chuyển đổi
+                          Chọn khu vực, chuyển đổi phường/xã và cơ quan cần tra cứu
                         </span>
 
                         <div className="flex items-center justify-between self-stretch rounded-[6px] border border-[#E5E5E5] bg-[linear-gradient(90deg,_var(--Neutral-Gray-3,_#E5E5E5)_0%,_var(--Neutral-White,_#FFF)_100%)] px-4 py-3 mb-4">
@@ -631,7 +660,7 @@ const WardLookupDialog = ({
                           />
                         </div>
 
-                        {tab === "ward" ? renderAddressFields() : renderAgencyDropdowns()}
+                        {renderAgencyDropdowns()}
                       </div>
                     </div>
 
@@ -659,7 +688,7 @@ const WardLookupDialog = ({
                           ? <Loader2 className="w-4 h-4 animate-spin text-white" />
                           : <ArrowLeftRight className="w-4 h-4 text-black" />
                         }
-                        <span className="text-white text-base font-medium">Chuyển đổi ngay</span>
+                        <span className="text-white text-base font-medium">Tra cứu thông tin</span>
                       </button>
                     </div>
                   </form>
@@ -669,7 +698,7 @@ const WardLookupDialog = ({
            {/* ── RIGHT ── */}
 <div className="flex flex-1 flex-col min-w-0 min-h-0">
   <span className="text-neutral-950 text-sm font-bold mb-4 font-[family-name:var(--font-inter,Inter,sans-serif)]">
-    Kết quả chuyển đổi
+    Kết quả tra cứu và chuyển đổi
   </span>
 
   <div
@@ -696,9 +725,10 @@ const WardLookupDialog = ({
       </div>
     )}
 
-    {hasResult &&
-      tab === "ward" &&
-      wards.map((ward) => (
+    {wards.length > 0 && (
+      <>
+        <h3 className="mb-3 text-sm font-bold text-neutral-950">Chuyển đổi Phường/Xã</h3>
+        {wards.map((ward) => (
         <div
           key={ward.WardId}
           className="flex flex-col items-start self-stretch py-4 px-4 gap-3 rounded-xl border border-solid border-neutral-200 mb-4"
@@ -736,9 +766,11 @@ const WardLookupDialog = ({
             
           </ul>
         </div>
-      ))}
+        ))}
+      </>
+    )}
 
-    {hasResult && tab === "agency" && (
+    {agencyGroups.length > 0 && (
       <div className="flex flex-col items-start self-stretch gap-4 w-full">
         {filteredAgencyGroups.length > 0 ? (
           filteredAgencyGroups.map((group) => (
@@ -747,15 +779,13 @@ const WardLookupDialog = ({
               group={group}
             />
           ))
-        ) : (
+        ) : selectedAgencyTypes.length > 0 ? (
           <div className="flex flex-col items-center self-stretch bg-white py-6 rounded-xl border border-solid border-neutral-200">
             <span className="text-neutral-500 text-sm">
-              {agencyGroups.length > 0
-                ? "Không tìm thấy cơ quan phù hợp với bộ lọc hiện tại."
-                : "Không có dữ liệu cơ quan cho lựa chọn phường hiện tại."}
+              Không có dữ liệu cho loại cơ quan đã chọn.
             </span>
           </div>
-        )}
+        ) : null}
       </div>
     )}
   </div>

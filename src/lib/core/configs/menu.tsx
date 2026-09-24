@@ -173,6 +173,10 @@ export const MENU_CONFIG: MyMenuItem[] = [
             ...AppRoutes.address,
             url: AppRoutes.address.url.replace(AppRoutes.config.url, ""),
           },
+          {
+            ...AppRoutes.addressConversion,
+            url: AppRoutes.addressConversion.url.replace(AppRoutes.config.url, ""),
+          },
         ],
       },
     ],

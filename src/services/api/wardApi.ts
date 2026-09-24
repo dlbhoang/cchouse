@@ -26,7 +26,7 @@ const wardApi = {
     return axiosClient.get<any, ISingleData<IWardResponse>>(`${url}/${id}`);
   },
   add(data: IWardRequest) {
-    return axiosClient.post<any, ISingleData<IWardResponse>>(url, data);
+    return axiosClient.post<any, ISingleData<number>>(url, data);
   },
   update(data: IWardRequest) {
     return axiosClient.put<any, ISingleData<IWardResponse>>(
