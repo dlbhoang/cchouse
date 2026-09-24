@@ -223,6 +223,11 @@ export const navigationData: NavigationItem[] = [
         url: AppRoutes.address.url,
         description: "Quản lý địa chỉ và khu vực",
       },
+      {
+         title: "Chuyển đổi địa chỉ",
+        url: AppRoutes.addressconversion.url,
+        description: "Chuyển đổi địa chỉ bất động sản ",
+      }
     ],
   },
   {

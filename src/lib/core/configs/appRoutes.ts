@@ -41,6 +41,8 @@ export const AppRoutes = {
     name: 'Đặt lịch nghỉ phép',
   },
 
+  addressconversion:{url: `${admin}/config/address-conversion`, name: 'Chuyển đổi địa chỉ'},
+
   activity: { url: `${admin}/activity`, name: 'Lịch sử hoạt động' },
   customer: { url: `${admin}/customer`, name: 'Khách hàng' },
   userWebsite: {
