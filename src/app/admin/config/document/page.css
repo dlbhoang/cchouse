@@ -1,0 +1,249 @@
+.document-management-page {
+  min-height: 100%;
+  padding: 20px;
+  background: #fbfbfd;
+}
+
+.document-management-heading {
+  margin-bottom: 14px;
+}
+
+.document-management-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.document-management-heading .ant-typography {
+  margin-bottom: 0;
+}
+
+.document-management-card {
+  border: 1px solid #edf0f3;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(20 31 55 / 4%);
+}
+
+.document-management-card .ant-card-body {
+  padding: 16px;
+}
+
+.document-filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.document-filter-item {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.document-filter-item > label {
+  color: #555b66;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.document-filter-date { flex: 0 0 250px; }
+.document-filter-status { flex: 0 0 170px; }
+.document-filter-type { flex: 0 0 190px; }
+
+.document-filter-item .ant-picker,
+.document-filter-item .ant-select {
+  width: 100%;
+}
+
+.document-filter-row .ant-picker,
+.document-filter-row .ant-select-selector,
+.document-filter-row .ant-input-affix-wrapper,
+.document-filter-row .ant-input-group-addon .ant-btn {
+  border-radius: 5px;
+}
+
+.document-management-page .ant-input-search-button,
+.document-management-page .ant-btn-primary {
+  background: #5266d8 !important;
+  border-color: #5266d8 !important;
+  box-shadow: none !important;
+}
+
+.document-management-page .ant-input-search-button:hover,
+.document-management-page .ant-btn-primary:hover {
+  background: #4457c5 !important;
+  border-color: #4457c5 !important;
+}
+
+.document-table-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.document-table-toolbar .ant-btn-primary {
+  border-radius: 5px;
+}
+
+.document-management-card .ant-table-thead > tr > th {
+  color: #343a46;
+  background: #f4f5f7;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  font-family: Inter, sans-serif;
+}
+
+.document-management-card .ant-table-tbody > tr > td {
+  font-size: 12px;
+  white-space: nowrap;
+  font-family: Inter, sans-serif;
+}
+
+.document-management-card .document-table-name {
+  color: #282c35;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.document-page-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #272b35;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.document-page-count svg,
+.document-approver-name svg {
+  flex: 0 0 auto;
+  color: #717887;
+  stroke-width: 1.8;
+}
+
+.document-approver {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  font-family: Inter, sans-serif;
+}
+
+.document-approver-name {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  color: #20242d;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.document-approver-date {
+  padding-left: 19px;
+  color: #858b98;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.document-status {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.document-status.approved { color: #16834a; background: #e8f7ee; }
+.document-status.pending { color: #2764c5; background: #eaf2ff; }
+.document-status.rejected { color: #c63d43; background: #fff0f0; }
+.document-status.unknown { color: #606775; background: #f1f2f4; }
+
+.document-management-card .ant-pagination {
+  margin-bottom: 0;
+}
+
+.document-management-card .ant-pagination .ant-pagination-item-active {
+  border-color: #5266d8;
+}
+
+.document-management-card .ant-pagination .ant-pagination-item-active a {
+  color: #5266d8;
+}
+
+.document-table-loading {
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+}
+
+@media (max-width: 768px) {
+  .document-management-page {
+    padding: 12px;
+  }
+
+  .document-management-card .ant-card-body {
+    padding: 12px;
+  }
+
+  .document-filter-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .document-filter-row > * {
+    width: 100% !important;
+  }
+
+  .document-filter-item {
+    flex-basis: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .document-filter-row {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .document-filter-date {
+    flex: 0 0 190px;
+  }
+
+  .document-filter-status,
+  .document-filter-type {
+    flex: 0 0 126px;
+  }
+
+  .document-filter-row .ant-input-search {
+    flex: 1 1 170px !important;
+    min-width: 0 !important;
+    width: auto !important;
+  }
+
+  .document-filter-row > .ant-btn {
+    flex: 0 0 34px;
+  }
+
+  .document-filter-row .ant-input-search-button {
+    padding-inline: 10px;
+  }
+}

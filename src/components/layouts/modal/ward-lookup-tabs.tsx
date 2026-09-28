@@ -1,40 +1,12 @@
-"use client";
-
-import { cn } from "@/lib/utils";
-
-export type Tab = "ward" | "agency";
-
-interface WardLookupTabsProps {
-  value: Tab;
-  onChange: (value: Tab) => void;
-}
-
-export function WardLookupTabs({ value, onChange }: WardLookupTabsProps) {
+export function WardLookupTabs() {
   return (
-    <div className="flex flex-row items-end justify-start gap-1">
+    <div className="flex flex-row items-end justify-start">
       <button
         type="button"
-        className={cn(
-          "flex h-10 shrink-0 items-center justify-center px-4 pb-3 pt-2 text-sm transition-colors border-b-2",
-          value === "ward"
-            ? "border-[#0588F0] font-semibold text-[#0A0A0A]"
-            : "border-transparent font-medium text-neutral-600 hover:text-neutral-900"
-        )}
-        onClick={() => onChange("ward")}
+        aria-current="page"
+        className="flex h-10 shrink-0 items-center justify-center border-b-2 border-[#0588F0] px-4 pb-3 pt-2 text-sm font-semibold text-[#0A0A0A]"
       >
-        Chuyển đổi Phường/Xã
-      </button>
-      <button
-        type="button"
-        className={cn(
-          "flex h-10 shrink-0 items-center justify-center px-4 pb-3 pt-2 text-sm transition-colors border-b-2",
-          value === "agency"
-            ? "border-[#0588F0] font-semibold text-[#0A0A0A]"
-            : "border-transparent font-medium text-neutral-600 hover:text-neutral-900"
-        )}
-        onClick={() => onChange("agency")}
-      >
-        Tra cứu hành chính
+        Cơ quan hành chính
       </button>
     </div>
   );

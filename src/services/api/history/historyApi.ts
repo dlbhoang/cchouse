@@ -33,8 +33,5 @@ const historyApi = {
 		return axiosClient.get<any, IListData<IHistory>>(`${url}`, { params });
 	},
 
-	// getOld(params: IHistoryOpts) {
-	//     return axiosClient.get<any, IListData<IHistoryOld>>(`${url}/HistoryOld`, { params });
-	// },
 };
 export default historyApi;

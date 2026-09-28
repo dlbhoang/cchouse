@@ -1,0 +1,304 @@
+.document-management-page {
+  min-height: 100%;
+  padding: 20px;
+  background: #fbfbfd;
+}
+
+.document-management-heading {
+  margin-bottom: 14px;
+}
+
+.document-management-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.document-management-heading .ant-typography {
+  margin-bottom: 0;
+}
+
+.document-management-card {
+  border: 1px solid #edf0f3;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgb(20 31 55 / 4%);
+}
+
+.document-management-card .ant-card-body {
+  padding: 16px;
+}
+
+.document-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.document-floating-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+}
+
+.document-floating-label {
+  position: absolute;
+  top: -9px;
+  left: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 4px;
+  background: #fff;
+  color: #737373;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.document-floating-required {
+  color: #ef4444;
+  font-size: 10px;
+}
+
+.document-filter-item {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.document-filter-date { flex: 0 0 260px; }
+.document-filter-status { flex: 0 0 240px; }
+.document-filter-type { flex: 0 0 230px; }
+
+.document-floating-control.ant-select,
+.document-floating-control.ant-picker {
+  width: 100%;
+}
+
+.document-floating-control.ant-select .ant-select-selector,
+.document-floating-control.ant-picker {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.document-floating-control.ant-select .ant-select-selection-item,
+.document-floating-control.ant-select .ant-select-selection-placeholder,
+.document-floating-control .ant-picker-input > input {
+  font-size: 14px;
+}
+
+.document-filter-search {
+  flex: 1 1 220px;
+  min-width: 0;
+  height: 40px;
+  border-color: #e5e5e5 !important;
+  border-radius: 10px !important;
+}
+
+.document-search-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 10px !important;
+}
+
+.document-reset-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-color: #e5e5e5 !important;
+  border-radius: 10px !important;
+}
+
+.document-management-page .ant-input-search-button,
+.document-management-page .ant-btn-primary {
+  background: #0588f0 !important;
+  border-color: #0588f0 !important;
+  box-shadow: none !important;
+}
+
+.document-management-page .ant-input-search-button:hover,
+.document-management-page .ant-btn-primary:hover {
+  background: #0473cc !important;
+  border-color: #0473cc !important;
+}
+
+.document-table-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.document-table-toolbar .ant-btn-primary {
+  border-radius: 10px;
+}
+
+.document-management-card .ant-table-thead > tr > th {
+  color: #343a46;
+  background: #f4f5f7;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  font-family: Inter, sans-serif;
+}
+
+.document-management-card .ant-table-tbody > tr > td {
+  font-size: 12px;
+  white-space: nowrap;
+  font-family: Inter, sans-serif;
+}
+
+.document-management-card .document-table-name {
+  color: #282c35;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.document-page-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #272b35;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+}
+
+.document-page-count svg,
+.document-approver-name svg {
+  flex: 0 0 auto;
+  color: #717887;
+  stroke-width: 1.8;
+}
+
+.document-approver {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+  font-family: Inter, sans-serif;
+}
+
+.document-approver-name {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 5px;
+  overflow: hidden;
+  color: #20242d;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 17px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.document-approver-date {
+  padding-left: 19px;
+  color: #858b98;
+  font-size: 11px;
+  line-height: 15px;
+}
+
+.document-status {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.document-status.approved { color: #16834a; background: #e8f7ee; }
+.document-status.pending { color: #2764c5; background: #eaf2ff; }
+.document-status.rejected { color: #c63d43; background: #fff0f0; }
+.document-status.unknown { color: #606775; background: #f1f2f4; }
+
+.document-management-card .ant-pagination {
+  margin-bottom: 0;
+}
+
+.document-management-card .ant-pagination .ant-pagination-item-active {
+  border-color: #0588f0;
+}
+
+.document-management-card .ant-pagination .ant-pagination-item-active a {
+  color: #0588f0;
+}
+
+.document-table-loading {
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+}
+
+@media (max-width: 768px) {
+  .document-management-page {
+    padding: 12px;
+  }
+
+  .document-management-card .ant-card-body {
+    padding: 12px;
+  }
+
+  .document-filter-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .document-filter-row > * {
+    width: 100% !important;
+  }
+
+  .document-filter-item {
+    flex-basis: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .document-filter-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .document-filter-date {
+    flex: 0 0 190px;
+  }
+
+  .document-filter-status,
+  .document-filter-type {
+    flex: 0 0 126px;
+  }
+
+  .document-filter-search {
+    flex: 1 1 170px !important;
+    min-width: 0 !important;
+  }
+
+  .document-search-btn,
+  .document-reset-btn {
+    flex: 0 0 auto;
+  }
+}

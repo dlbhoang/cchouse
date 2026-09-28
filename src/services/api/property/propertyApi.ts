@@ -30,18 +30,19 @@ const crud = {
 	},
 
 	useGetCoordinates(params: IPropAdminOpts) {
-		return useSWR(`${url}/GetCoordinates`, async (route) => {
+		return useSWR([`${url}/GetCoordinates`, params] as const, async ([route, options]) => {
 			return axiosClient.get<any, IListData<IPropAdminMap>>(route, {
-				params: { ...params, Status: params.Status?.toString() ?? 1 },
+				params: { ...options, Status: options.Status?.toString() ?? 1 },
 			});
 		});
 	},
 
-	mutateKey: url,
+	mutateKey: (key: unknown) =>
+		Array.isArray(key) && (key[0] === url || key[0] === `${url}/GetCoordinates`),
 	useGet(params: IPropAdminOpts) {
-		return useSWR(url, async () => {
-			return axiosClient.get<any, IListData<IPropResponse>>(url, {
-				params: { ...params, Status: params.Status?.toString() ?? 1 },
+		return useSWR([url, params] as const, async ([route, options]) => {
+			return axiosClient.get<any, IListData<IPropResponse>>(route, {
+				params: { ...options, Status: options.Status?.toString() ?? 1 },
 			});
 		});
 	},

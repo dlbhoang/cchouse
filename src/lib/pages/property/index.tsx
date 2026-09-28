@@ -55,6 +55,7 @@ const PropertyPage = ({ transType }: Props) => {
 
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [selectedPropId, setSelectedPropId] = useState<number>();
+  const [resultsTotal, setResultsTotal] = useState(0);
   const [addTransType, setAddTransType] = useState(transType);
   const [addQuery, setAddQuery] = useState<{
     AddressNumber?: string;
@@ -185,7 +186,6 @@ const PropertyPage = ({ transType }: Props) => {
       : transType === ETransType.sell
         ? "Quản lý nhà bán"
         : "Quản lý nhà thuê";
-  const total = meta?.totalRow ?? 0;
   const filterSummary = buildFilterSummary(searchOptions, transType);
 
   return (
@@ -198,7 +198,7 @@ const PropertyPage = ({ transType }: Props) => {
                 <div>
                   <h1>{title}</h1>
                   <p>
-                    Hiện có <b>{total}</b> bất động sản được tìm kiếm theo: {filterSummary}
+                    Hiện có <b>{resultsTotal}</b> bất động sản được tìm kiếm theo: {filterSummary}
                   </p>
                 </div>
                 <button
@@ -217,6 +217,7 @@ const PropertyPage = ({ transType }: Props) => {
                   onPageIndexChange={handlePageIndexChange}
                   onOpenDetail={handleOpenDetail}
                   onOpenAdd={handleOpenAdd}
+                  onTotalChange={setResultsTotal}
                 />
               </div>
         </div>

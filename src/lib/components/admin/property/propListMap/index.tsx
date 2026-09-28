@@ -1,7 +1,6 @@
 import { Card, List, Segmented, Space, Tag, Typography } from "antd";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import RenderArea from "@/lib/components/shared/CustomRender/RenderArea";
 import { appConst } from "@/lib/core/configs/appConst";
@@ -59,13 +58,7 @@ type Props = {
 export const PropListMap = ({ opts }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const { data, isValidating, mutate } = propertyApi.useGet(opts);
-
-  useEffect(() => {
-    mutate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  const { data, isValidating } = propertyApi.useGet(opts);
 
   const handlePageIndexChange = (pageIndex: number, pageSize: number) => {
     router.push(

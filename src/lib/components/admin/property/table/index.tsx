@@ -45,7 +45,7 @@ export const PropertyTable = ({
   onOpenAdd,
   onTotalChange,
 }: Props) => {
-  const { data, isLoading, isValidating, mutate } =
+  const { data, isLoading, isValidating } =
     isPropCart === true
       ? userAdminApi.useGetSaveProps(searchOptions.UserAdminId ?? 0)
       : propertyApi.useGet(searchOptions);
@@ -99,12 +99,6 @@ export const PropertyTable = ({
   const handleHistoryCancel = () => {
     setOpenHistory(false);
   };
-
-  useEffect(() => {
-    if (data !== undefined) {
-      mutate();
-    }
-  }, [searchOptions]);
 
   useEffect(() => {
     const total = isPropCart

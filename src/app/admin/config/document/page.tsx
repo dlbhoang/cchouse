@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import DocumentPage from "@/lib/pages/config/document";
+import "./page.css";
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -11,4 +12,3 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Page() {
   return <DocumentPage />;
 }
-

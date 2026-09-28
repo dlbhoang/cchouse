@@ -81,7 +81,6 @@ const NoteModal = ({
               refresh={activeTab === "2"}
               instanceId={historyId}
               TableName={tableName || "tblProp"}
-              oldTableName="tblProperty"
               noteOnly
             />
           ),
