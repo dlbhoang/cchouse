@@ -7,6 +7,7 @@ import {
   MapPin,
   RefreshCw,
   SearchX,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -40,7 +41,8 @@ import type {
 import { cn } from "@/lib/utils";
 import { findWardAgencyData, WARD_AGENCIES } from "@/data/ward-agencies";
 import wardApi from "@/services/api/wardApi";
-import { WardLookupTabs } from "./ward-lookup-tabs";
+import mergeWardApi, { type IMergeWard } from "@/services/api/mergeWardApi";
+import { WardLookupTabs, type WardLookupTab } from "./ward-lookup-tabs";
 
 // ─────────────────────────────────────────────
 // Types
@@ -53,6 +55,9 @@ interface AgencyItem {
 interface AgencyGroup {
   label: string;
   items: AgencyItem[];
+}
+interface WardConversionResult extends ISearchWardDto {
+  DistrictName?: string;
 }
 
 // ─────────────────────────────────────────────
@@ -165,7 +170,7 @@ function buildAllAgencyGroups(preferredWard?: (typeof WARD_AGENCIES)[number]): A
   }).filter((group) => group.items.length > 0);
 }
 
-function findAgencyWardFromLegacyAddress(wardName: string, districtName: string) {
+function findAgencyWardsFromLegacyAddress(wardName: string, districtName: string) {
   const normalize = (value: string) =>
     value
       .normalize("NFD")
@@ -181,7 +186,7 @@ function findAgencyWardFromLegacyAddress(wardName: string, districtName: string)
     ?? (/^\d+$/.test(ward) ? ward : undefined);
   const district = normalize(districtName);
   const numericDistrict = district.match(/(?:^|\s)(?:quan|q)\s*0*(\d+)(?:\s|$)/)?.[1];
-  if (!ward) return undefined;
+  if (!ward) return [];
 
   const matchingWards = WARD_AGENCIES.filter((candidate) =>
     candidate.MergedFrom.some((source) => {
@@ -196,7 +201,7 @@ function findAgencyWardFromLegacyAddress(wardName: string, districtName: string)
     })
   );
 
-  return matchingWards.length === 1 ? matchingWards[0] : undefined;
+  return matchingWards;
 }
 
 // ─────────────────────────────────────────────
@@ -324,6 +329,11 @@ function AgencyCard({ group }: { group: AgencyGroup }) {
             <span className="flex-1 text-neutral-950 text-sm">
               {showAgencyName && <><span className="font-semibold">{item.name}:</span>{" "}</>}
               {item.address}
+              {!!item.legacyAreas?.length && (
+                <span className="ml-1 text-neutral-500">
+                  ({item.legacyAreas.filter((area) => area.includes(" cũ")).slice(0, 2).join("; ") || item.legacyAreas[0]})
+                </span>
+              )}
             </span>
             <div className="flex shrink-0 items-center gap-3">
               <button
@@ -429,14 +439,7 @@ function AgencyCombobox({
                       : [...value, itemIndex]);
                   }}
                 >
-                  <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="truncate">{item.name}</span>
-                    {!!item.legacyAreas?.length && (
-                      <span className="truncate text-xs font-normal text-neutral-500">
-                        Khu vực cũ liên quan: {item.legacyAreas.slice(0, 2).join("; ")}
-                      </span>
-                    )}
-                  </span>
+                  <span className="truncate">{item.name}</span>
                   <Check
                     className={cn(
                       "ml-auto h-4 w-4 shrink-0",
@@ -463,15 +466,15 @@ const WardLookupDialog = ({
   open: boolean;
   onClose: () => void;
 }) => {
+  const [activeTab, setActiveTab] = useState<WardLookupTab>("agency");
   const [searchByNewAddress, setSearchByNewAddress] = useState(false);
-  const [availableAgencyGroups, setAvailableAgencyGroups] = useState<AgencyGroup[]>([]);
-  const [agencyGroups, setAgencyGroups] = useState<AgencyGroup[]>([]);
-  const [conversionWards, setConversionWards] = useState<ISearchWardDto[]>([]);
+  const [agencyGroups] = useState<AgencyGroup[]>(() => buildAllAgencyGroups());
+  const [conversionWards, setConversionWards] = useState<WardConversionResult[]>([]);
   const [conversionAddress, setConversionAddress] = useState("");
   const [selectedAgencyItems, setSelectedAgencyItems] = useState<Record<string, string[]>>({});
   const dialogBodyRef = useRef<HTMLDivElement>(null);
 
-  const addressForm = useForm<AddressFormValues>({
+  const conversionForm = useForm<AddressFormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
       ProvinceId: 1,
@@ -479,9 +482,8 @@ const WardLookupDialog = ({
       WardId: 0,
     },
   });
-  const selectedWardId = addressForm.watch("WardId");
-  const selectedDistrictId = addressForm.watch("DistrictId");
-  const agencyLookupKey = searchByNewAddress ? selectedWardId : selectedDistrictId;
+  const selectedWardId = conversionForm.watch("WardId");
+  const selectedDistrictId = conversionForm.watch("DistrictId");
 
   useEffect(() => {
     let active = true;
@@ -496,55 +498,76 @@ const WardLookupDialog = ({
       try {
         const selectedWardName =
           document
-            .querySelector<HTMLElement>('[data-field="address-WardId"] button')
+            .querySelector<HTMLElement>('[data-field="conversion-WardId"] button')
             ?.innerText?.trim() ?? "";
         const districtName = !searchByNewAddress
-          ? document.querySelector<HTMLElement>('[data-field="address-DistrictId"] button')?.innerText?.trim() ?? ""
+          ? document.querySelector<HTMLElement>('[data-field="conversion-DistrictId"] button')?.innerText?.trim() ?? ""
           : "";
         const address = [
           selectedWardName,
           districtName,
-          document.querySelector<HTMLElement>('[data-field="address-ProvinceId"] button')?.innerText?.trim() ?? "",
+          document.querySelector<HTMLElement>('[data-field="conversion-ProvinceId"] button')?.innerText?.trim() ?? "",
         ].filter(Boolean).join(", ");
         setConversionAddress(address);
 
-        const directWard = findWardAgencyData(Number(selectedWardId), selectedWardName);
-        const localWard = searchByNewAddress
-          ? directWard
-          : directWard ?? findAgencyWardFromLegacyAddress(selectedWardName, districtName);
-
-        let resolvedWard: {
-          WardId: number;
-          WardName: string;
-          UBNDAddress: string;
-          MergedFrom: string[];
-        } | undefined = localWard;
-        if (!resolvedWard && !searchByNewAddress) {
-          const response = await wardApi.getMergedTo(Number(selectedWardId));
-          const apiWard = (Array.isArray(response.data) ? response.data[0] : response.data) as
-            | (Partial<ISearchWardDto> & Partial<IWardResponse>)
-            | undefined;
-          if (apiWard) {
-            const wardId = apiWard.WardId ?? apiWard.Id;
-            const wardName = apiWard.WardName ?? apiWard.Name;
-            const agencyData = findWardAgencyData(wardId, wardName);
-            resolvedWard = agencyData ?? (wardId && wardName ? {
-              WardId: wardId,
-              WardName: wardName,
-              UBNDAddress: apiWard.Headquarters ?? "",
-              MergedFrom: apiWard.MergedFrom ?? [],
-            } : undefined);
+        let mergeRecords: IMergeWard[] = [];
+        try {
+          const mergeResponse = await mergeWardApi.get();
+          mergeRecords = mergeResponse.data ?? [];
+        } catch {
+          // Dữ liệu tĩnh vẫn cho phép tra cứu khi API ánh xạ không khả dụng.
+        }
+        let mappedWards: WardConversionResult[] = [];
+        if (searchByNewAddress) {
+          const currentWard = findWardAgencyData(undefined, selectedWardName)
+            ?? findWardAgencyData(Number(selectedWardId), selectedWardName);
+          const oldAddresses = mergeRecords
+            .filter((record) => record.NewWardId === Number(selectedWardId))
+            .map((record) => `${record.OldWardName}, ${record.OldDistrictName} cũ`);
+          mappedWards = [{
+            WardId: Number(selectedWardId),
+            WardName: selectedWardName,
+            Headquarters: currentWard?.UBNDAddress ?? "",
+            MergedFrom: oldAddresses.length > 0 ? [...new Set(oldAddresses)] : currentWard?.MergedFrom ?? [],
+          }];
+        } else {
+          const oldWardMappings = mergeRecords.filter(
+            (record) => record.OldWardId === Number(selectedWardId)
+          );
+          const uniqueNewWards = new Map<number, WardConversionResult>();
+          oldWardMappings.forEach((record) => {
+            uniqueNewWards.set(record.NewWardId, {
+              WardId: record.NewWardId,
+              WardName: record.NewWardName,
+              Headquarters: "",
+              DistrictName: record.NewDistrictName,
+              MergedFrom: [`${record.OldWardName}, ${record.OldDistrictName} cũ`],
+            });
+          });
+          mappedWards = [...uniqueNewWards.values()];
+          if (mappedWards.length === 0) {
+            const localMatches = findAgencyWardsFromLegacyAddress(selectedWardName, districtName);
+            mappedWards = localMatches.map((ward) => ({
+              WardId: ward.WardId,
+              WardName: ward.WardName,
+              Headquarters: ward.UBNDAddress,
+              MergedFrom: ward.MergedFrom,
+            }));
+          }
+          if (mappedWards.length === 0) {
+            const response = await wardApi.getMergedTo(Number(selectedWardId));
+            const apiWard = (Array.isArray(response.data) ? response.data[0] : response.data) as
+              | (Partial<ISearchWardDto> & Partial<IWardResponse>)
+              | undefined;
+            if (apiWard) {
+              const id = apiWard.WardId ?? apiWard.Id;
+              const name = apiWard.WardName ?? apiWard.Name;
+              if (id && name) mappedWards = [{ WardId: id, WardName: name, Headquarters: apiWard.Headquarters ?? "", DistrictName: apiWard.DistrictName, MergedFrom: apiWard.MergedFrom ?? [] }];
+            }
           }
         }
 
-        if (active && resolvedWard) {
-          setConversionWards([{
-            WardId: resolvedWard.WardId,
-            WardName: resolvedWard.WardName,
-            Headquarters: resolvedWard.UBNDAddress,
-            MergedFrom: resolvedWard.MergedFrom,
-          }]);
-        }
+        if (active) setConversionWards(mappedWards);
 
       } catch {
         if (active) {
@@ -557,55 +580,28 @@ const WardLookupDialog = ({
     return () => { active = false; };
   }, [selectedWardId, selectedDistrictId, searchByNewAddress]);
 
-  useEffect(() => {
-    setAvailableAgencyGroups([]);
-    setAgencyGroups([]);
-    setSelectedAgencyItems({});
-    if (!searchByNewAddress && Number(selectedDistrictId) > 0) {
-      const districtName = document.querySelector<HTMLElement>('[data-field="address-DistrictId"] button')?.innerText?.trim() ?? "";
-      const wardName = document.querySelector<HTMLElement>('[data-field="address-WardId"] button')?.innerText?.trim() ?? "";
-      const oldAddressMatch = Number(selectedWardId) > 0
-        ? findAgencyWardFromLegacyAddress(wardName, districtName)
-        : undefined;
-      const convertedAddressMatch = conversionWards[0]
-        ? findWardAgencyData(undefined, conversionWards[0].WardName)
-        : undefined;
-      setAvailableAgencyGroups(buildAllAgencyGroups(oldAddressMatch ?? convertedAddressMatch));
-    } else if (searchByNewAddress && Number(selectedWardId) > 0) {
-      const wardName = document.querySelector<HTMLElement>('[data-field="address-WardId"] button')?.innerText?.trim() ?? "";
-      const ward = findWardAgencyData(undefined, wardName)
-        ?? findWardAgencyData(Number(selectedWardId), wardName);
-      setAvailableAgencyGroups(buildAllAgencyGroups(ward));
-    }
-  }, [agencyLookupKey, searchByNewAddress, conversionWards]);
-
-  useEffect(() => {
-    setAgencyGroups(availableAgencyGroups);
-  }, [availableAgencyGroups]);
-
   const handleConversionModeChange = (checked: boolean) => {
     setSearchByNewAddress(checked);
-    addressForm.reset({ ProvinceId: 1, DistrictId: 0, WardId: 0 });
+    conversionForm.reset({ ProvinceId: 1, DistrictId: 0, WardId: 0 });
     setConversionWards([]);
     setConversionAddress("");
-    setAvailableAgencyGroups([]);
-    setAgencyGroups([]);
-    setSelectedAgencyItems({});
   };
 
-  const handleReset = () => {
-    addressForm.reset({ ProvinceId: 1, DistrictId: 0, WardId: 0 });
+  const handleResetConversion = () => {
+    conversionForm.reset({ ProvinceId: 1, DistrictId: 0, WardId: 0 });
     setSearchByNewAddress(false);
     setConversionWards([]);
     setConversionAddress("");
-    setAvailableAgencyGroups([]);
-    setAgencyGroups([]);
+  };
+
+  const handleResetAgency = () => {
     setSelectedAgencyItems({});
   };
 
   const handleClose = () => {
     onClose();
-    handleReset();
+    handleResetConversion();
+    handleResetAgency();
   };
 
   const renderAddressFields = (isNewAddress: boolean) => (
@@ -613,11 +609,11 @@ const WardLookupDialog = ({
       <FloatingField
         label="Tỉnh/Thành phố"
         required
-        filled={addressForm.watch("ProvinceId") > 0}
+        filled={conversionForm.watch("ProvinceId") > 0}
         className="mb-4"
-        error={addressForm.formState.errors.ProvinceId?.message}
+        error={conversionForm.formState.errors.ProvinceId?.message}
       >
-        <div className={cbxFieldClass} data-field="address-ProvinceId">
+        <div className={cbxFieldClass} data-field="conversion-ProvinceId">
           <ProvinceCbxField
             name="ProvinceId"
             hiddenLabel
@@ -632,11 +628,11 @@ const WardLookupDialog = ({
         <FloatingField
           label="Quận/Huyện"
           required
-          filled={addressForm.watch("DistrictId") > 0}
+          filled={conversionForm.watch("DistrictId") > 0}
           className="mb-4"
-          error={addressForm.formState.errors.DistrictId?.message}
+          error={conversionForm.formState.errors.DistrictId?.message}
         >
-          <div className={cbxFieldClass} data-field="address-DistrictId">
+          <div className={cbxFieldClass} data-field="conversion-DistrictId">
             <DistrictCbxField
               name="DistrictId"
               parentName="ProvinceId"
@@ -652,11 +648,11 @@ const WardLookupDialog = ({
       <FloatingField
         label="Phường/Xã"
         required
-        filled={addressForm.watch("WardId") > 0}
+        filled={conversionForm.watch("WardId") > 0}
         className="mb-4"
-        error={addressForm.formState.errors.WardId?.message}
+        error={conversionForm.formState.errors.WardId?.message}
       >
-        <div className={cbxFieldClass} data-field="address-WardId">
+        <div className={cbxFieldClass} data-field="conversion-WardId">
           <WardCbxField
             name="WardId"
             parentName={isNewAddress ? "ProvinceId" : "DistrictId"}
@@ -674,7 +670,7 @@ const WardLookupDialog = ({
   const renderAgencyDropdowns = () => (
     <>
       {AGENCY_DROPDOWN_FIELDS.map((agencyType) => {
-        const group = availableAgencyGroups.find((item) => item.label === agencyType);
+        const group = agencyGroups.find((item) => item.label === agencyType);
         const items = group?.items ?? [];
 
         return (
@@ -685,20 +681,33 @@ const WardLookupDialog = ({
             filled
             className="mb-4"
           >
-            <div className={cbxFieldClass}>
-              <AgencyCombobox
-                agencyType={agencyType}
-                items={items}
-                value={selectedAgencyItems[agencyType] ?? []}
-                disabled={items.length === 0}
-                portalContainer={dialogBodyRef}
-                onChange={(value) =>
-                  setSelectedAgencyItems((current) => ({
-                    ...current,
-                    [agencyType]: value,
-                  }))
-                }
-              />
+            <div className="flex w-full items-center gap-2">
+              <div className={cn(cbxFieldClass, "flex-1")}>
+                <AgencyCombobox
+                  agencyType={agencyType}
+                  items={items}
+                  value={selectedAgencyItems[agencyType] ?? []}
+                  disabled={items.length === 0}
+                  portalContainer={dialogBodyRef}
+                  onChange={(value) =>
+                    setSelectedAgencyItems((current) => ({
+                      ...current,
+                      [agencyType]: value,
+                    }))
+                  }
+                />
+              </div>
+              {(selectedAgencyItems[agencyType]?.length ?? 0) > 0 && (
+                <button
+                  type="button"
+                  aria-label={`Bỏ chọn ${agencyType}`}
+                  title={`Bỏ chọn ${agencyType}`}
+                  className="flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-md border border-neutral-200 bg-white text-neutral-500 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600"
+                  onClick={() => setSelectedAgencyItems((current) => ({ ...current, [agencyType]: [] }))}
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
             </div>
           </FloatingField>
         );
@@ -732,7 +741,7 @@ const WardLookupDialog = ({
           </div>
 
           <div className="border-b border-neutral-200 px-6">
-            <WardLookupTabs />
+            <WardLookupTabs value={activeTab} onChange={setActiveTab} />
           </div>
 
           <div className="flex flex-1 min-h-0 flex-col self-stretch bg-white px-6 pt-4 pb-6 gap-6 overflow-hidden">
@@ -743,29 +752,43 @@ const WardLookupDialog = ({
               {/* ── LEFT ── */}
               <div className="flex flex-1 flex-col min-w-0 min-h-0 max-md:min-h-[360px]">
                 <div className="flex-1 min-h-0 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent hover:scrollbar-thumb-neutral-400">
-                  <Form {...addressForm}>
-                    <div className="flex flex-col">
-                      <span className="mb-4 text-sm font-bold text-neutral-950 font-[family-name:var(--font-inter,Inter,sans-serif)]">
-                        Chọn địa chỉ và cơ quan cần tra cứu
-                      </span>
-                      <div className="mb-4 flex h-10 items-center justify-between self-stretch rounded-[6px] border border-[#E5E5E5] bg-[linear-gradient(90deg,_var(--Neutral-Gray-3,_#E5E5E5)_0%,_var(--Neutral-White,_#FFF)_100%)] px-2">
-                        <span className="text-sm text-neutral-950 font-[family-name:var(--font-inter,Inter,sans-serif)]">Tìm theo địa chỉ mới sau sáp nhập</span>
-                        <ToggleSwitch checked={searchByNewAddress} onChange={handleConversionModeChange} />
-                      </div>
-                      {renderAddressFields(searchByNewAddress)}
-                      {renderAgencyDropdowns()}
-                      <div className="mt-1 flex items-center self-stretch">
+                  {activeTab === "conversion" ? (
+                    <Form {...conversionForm}>
+                      <div className="flex flex-col">
+                        <span className="mb-4 text-sm font-bold text-neutral-950 font-[family-name:var(--font-inter,Inter,sans-serif)]">
+                          Chọn địa chỉ cần chuyển đổi
+                        </span>
+                        <div className="mb-4 flex h-10 items-center justify-between self-stretch rounded-[6px] border border-[#E5E5E5] bg-[linear-gradient(90deg,_var(--Neutral-Gray-3,_#E5E5E5)_0%,_var(--Neutral-White,_#FFF)_100%)] px-2">
+                          <span className="text-sm text-neutral-950 font-[family-name:var(--font-inter,Inter,sans-serif)]">Tìm theo địa chỉ mới sau sáp nhập</span>
+                          <ToggleSwitch checked={searchByNewAddress} onChange={handleConversionModeChange} />
+                        </div>
+                        {renderAddressFields(searchByNewAddress)}
                         <button
                           type="button"
-                          className="flex flex-1 items-center justify-center gap-2 rounded-[10px] border border-neutral-200 bg-white px-6 py-2 text-left transition-colors hover:bg-neutral-50 font-[family-name:var(--font-inter,Inter,sans-serif)]"
-                          onClick={handleReset}
+                          className="mt-1 flex items-center justify-center gap-2 rounded-[10px] border border-neutral-200 bg-white px-6 py-2 transition-colors hover:bg-neutral-50 font-[family-name:var(--font-inter,Inter,sans-serif)]"
+                          onClick={handleResetConversion}
                         >
                           <RefreshCw className="h-4 w-4 text-neutral-950" />
                           <span className="text-base font-medium text-neutral-950">Đặt lại</span>
                         </button>
                       </div>
+                    </Form>
+                  ) : (
+                    <div className="flex flex-col">
+                      <span className="mb-4 text-sm font-bold text-neutral-950 font-[family-name:var(--font-inter,Inter,sans-serif)]">
+                        Chọn cơ quan cần tra cứu
+                      </span>
+                      {renderAgencyDropdowns()}
+                      <button
+                        type="button"
+                        className="mt-1 flex items-center justify-center gap-2 rounded-[10px] border border-neutral-200 bg-white px-6 py-2 transition-colors hover:bg-neutral-50 font-[family-name:var(--font-inter,Inter,sans-serif)]"
+                        onClick={handleResetAgency}
+                      >
+                        <RefreshCw className="h-4 w-4 text-neutral-950" />
+                        <span className="text-base font-medium text-neutral-950">Đặt lại</span>
+                      </button>
                     </div>
-                  </Form>
+                  )}
                 </div>
               </div>
 
@@ -776,7 +799,7 @@ const WardLookupDialog = ({
                 </span>
 
                 <div className="flex-1 min-h-0 w-full overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent hover:scrollbar-thumb-neutral-400">
-                  {conversionWards.length === 0 && !hasSelectedAgencies && (
+                  {(activeTab === "conversion" ? conversionWards.length === 0 : !hasSelectedAgencies) && (
                     <div className="flex min-h-[280px] flex-col items-center justify-center self-stretch rounded-xl border border-solid border-neutral-200 bg-white py-11">
                       <Image
                         src="/icon.png"
@@ -789,7 +812,7 @@ const WardLookupDialog = ({
                     </div>
                   )}
 
-                  {conversionWards.length > 0 && (
+                  {activeTab === "conversion" && conversionWards.length > 0 && (
                     <div className="flex w-full flex-col gap-4">
                       <h3 className="m-0 text-sm font-bold text-neutral-950">Kết quả chuyển đổi</h3>
                       {conversionWards.map((ward) => (
@@ -804,14 +827,14 @@ const WardLookupDialog = ({
                             <span className="font-semibold">{searchByNewAddress ? "Địa chỉ cũ: " : "Phường/Xã mới: "}</span>
                             {searchByNewAddress
                               ? ward.MergedFrom.join(", ")
-                              : `Phường ${ward.WardName}, Thành phố Hồ Chí Minh`}
+                              : `Phường ${ward.WardName}${ward.DistrictName ? `, ${ward.DistrictName}` : ""}, Thành phố Hồ Chí Minh`}
                           </div>
                         </div>
                       ))}
                     </div>
                   )}
 
-                  {hasSelectedAgencies && (
+                  {activeTab === "agency" && hasSelectedAgencies && (
                     <div className="flex w-full flex-col items-start self-stretch gap-4">
                       <h3 className="m-0 text-sm font-bold text-neutral-950">Kết quả tra cứu cơ quan</h3>
                       {selectedAgencyResults.map((group) => (
