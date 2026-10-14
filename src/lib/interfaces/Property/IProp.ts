@@ -10,8 +10,10 @@ export interface IPropAdminMap {
     Lat?: number;
     Lng?: number;
     DisplayAddress?: string;
+    PropTypeName?: string;
   };
   CustomDisplayStructures?: string;
+  PricePerSquareMeter?: string;
   Status: number;
 
   Length?: number;

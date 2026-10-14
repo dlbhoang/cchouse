@@ -36,19 +36,21 @@ const areaData = [
   },
   {
     id: 4,
-    text: "Từ 300- 400",
+    text: "Từ 300 - 400",
     areaFrom: 300,
     areaTo: 400,
   },
 ];
 type Props = {
   form: FormInstance;
+  mapMode?: boolean;
+  adminMode?: boolean;
 };
 const colStyle = {
   xs: 24,
   lg: 12,
 };
-export const AreaFilter = ({ form }: Props) => {
+export const AreaFilter = ({ form, mapMode = false, adminMode = false }: Props) => {
   const areaFrm = Form.useWatch("AreaFrm", form);
   const areaTo = Form.useWatch("AreaTo", form);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -84,7 +86,89 @@ export const AreaFilter = ({ form }: Props) => {
       placeholder="Diện tích"
       value={selectValue}
       // eslint-disable-next-line react/no-unstable-nested-components
-      dropdownRender={(menu) => (
+      popupClassName={
+        mapMode
+          ? "admin-map-area-dropdown"
+          : adminMode
+            ? "property-admin-area-dropdown"
+            : undefined
+      }
+      className={mapMode ? "admin-map-area-select" : undefined}
+      dropdownRender={(menu) => mapMode ? (
+        <div className="admin-map-area-content">
+          <div className="admin-map-area-options">{menu}</div>
+          <div className="admin-map-area-section">
+            <strong>Diện tích</strong>
+            <div className="admin-map-area-inputs">
+              <label><span>Từ <i>*</i></span><Form.Item name="AreaFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+              <label><span>Đến <i>*</i></span><Form.Item name="AreaTo" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+            </div>
+          </div>
+          <div className="admin-map-area-section">
+            <strong>Diện tích sàn</strong>
+            <div className="admin-map-area-inputs">
+              <label><span>Từ <i>*</i></span><Form.Item name="FloorAreaFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+              <label><span>Đến <i>*</i></span><Form.Item name="FloorAreaTo" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+            </div>
+          </div>
+          <div className="admin-map-area-section">
+            <strong>Ngang (m) - Dài (m)</strong>
+            <div className="admin-map-area-inputs">
+              <label><span>Từ <i>*</i></span><Form.Item name="WidthFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+              <label><span>Đến <i>*</i></span><Form.Item name="LengthFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+            </div>
+          </div>
+          <div className="admin-map-area-footer">
+            <Button type="button" variant="outline" onClick={() => form.resetFields(["AreaFrm", "AreaTo", "FloorAreaFrm", "FloorAreaTo", "WidthFrm", "LengthFrm"])}>
+              <span className="property-drawer-reset-icon">↻</span>Đặt lại
+            </Button>
+            <Button type="button" onClick={() => { form.submit(); setIsDropdownOpen(false); }}>
+              <span className="property-drawer-check-icon">✓</span>Áp dụng
+            </Button>
+          </div>
+        </div>
+      ) : adminMode ? (
+        <div className="property-admin-area-content">
+          <div className="property-admin-area-options">{menu}</div>
+          <section className="property-admin-area-section">
+            <strong>Diện tích</strong>
+            <div className="property-admin-area-inputs">
+              <label><span>Từ <i>*</i></span><Form.Item name="AreaFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+              <label><span>Đến <i>*</i></span><Form.Item name="AreaTo" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+            </div>
+          </section>
+          <section className="property-admin-area-section">
+            <strong>Diện tích sàn</strong>
+            <div className="property-admin-area-inputs">
+              <label><span>Từ <i>*</i></span><Form.Item name="FloorAreaFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+              <label><span>Đến <i>*</i></span><Form.Item name="FloorAreaTo" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+            </div>
+          </section>
+          <section className="property-admin-area-section">
+            <strong>Ngang (m) - Dài (m)</strong>
+            <div className="property-admin-area-inputs">
+              <label><span>Từ <i>*</i></span><Form.Item name="WidthFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+              <label><span>Đến <i>*</i></span><Form.Item name="LengthFrm" noStyle><Input placeholder="Nhập" inputMode="numeric" /></Form.Item></label>
+            </div>
+          </section>
+          <div className="property-admin-area-footer">
+            <button
+              type="button"
+              className="property-admin-area-reset-btn"
+              onClick={() => form.resetFields(["AreaFrm", "AreaTo", "FloorAreaFrm", "FloorAreaTo", "WidthFrm", "LengthFrm"])}
+            >
+              <span aria-hidden="true">↻</span>Đặt lại
+            </button>
+            <button
+              type="button"
+              className="property-admin-area-apply-btn"
+              onClick={() => { form.submit(); setIsDropdownOpen(false); }}
+            >
+              <span aria-hidden="true">✓</span>Áp dụng
+            </button>
+          </div>
+        </div>
+      ) : (
         <Space direction="vertical" style={{ paddingInline: 8 }}>
           {menu}
           <Text strong>Diện tích</Text>

@@ -125,7 +125,7 @@ Props): ColumnsType<IPropResponse> => {
       },
     },
     {
-      title: "Địa chỉ",
+      title: "Số nhà, tên đường",
       dataIndex: ["PropAddress", "AddressNumber"],
       render(value, record) {
         const { LandNumber, MapNumber } = record.PropAddress;

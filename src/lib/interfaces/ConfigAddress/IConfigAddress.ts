@@ -28,11 +28,15 @@ export type IDistrictResponse = IDistrictRequest & {
 };
 
 export type IWardRequest = IConfigAddress & {
-  DistrictId: number;
+  DistrictId?: number;
+  ProvinceId?: number;
+  IsNew?: boolean;
 };
 export type IWardResponse = IWardRequest & {
   Slug: string;
   DistrictName: string;
+  ProvinceName: string;
+  IsNew?: boolean;
 };
 
 export type ISearchWardDto = {
@@ -44,6 +48,9 @@ export type ISearchWardDto = {
 
 export type IStreetRequest = IConfigAddress & {
   DistrictId: number;
+  WardId?: number | null;
+  OldWardId?: number | null;
+  UpdateWardLinks?: boolean;
 };
 export type IStreetResponse = IStreetRequest & {
   Slug: string;

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import MapPage from "@/lib/pages/map";
 
@@ -9,5 +10,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
-  return <MapPage />;
+  return (
+    <Suspense fallback={<div className="min-h-[60vh]" />}>
+      <MapPage />
+    </Suspense>
+  );
 }

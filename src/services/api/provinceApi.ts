@@ -28,13 +28,16 @@ const provinceApi = {
     return axiosClient.get<any, ISingleData<IProvinceResponse>>(`${url}/${id}`);
   },
   add(data: IProvinceRequest) {
-    return axiosClient.post<any, ISingleData<IProvinceResponse>>(url, data);
+    return axiosClient.post<any, ISingleData<number>>(url, data);
   },
   update(data: IProvinceRequest) {
-    return axiosClient.put<any, ISingleData<IProvinceResponse>>(
+    return axiosClient.put<any, ISingleData<number>>(
       `${url}/${data.Id}`,
       data
     );
+  },
+  delete(id: number) {
+    return axiosClient.delete(`${url}/${id}`);
   },
   upload(data: FormData) {
     return axiosClient.post(`${url}/upload`, data, {

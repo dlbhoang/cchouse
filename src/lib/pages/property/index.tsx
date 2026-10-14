@@ -69,6 +69,7 @@ const PropertyPage = ({ transType }: Props) => {
     ...Object.fromEntries(query?.entries() ?? []),
     TransType: transType,
     ProvinceId: 1,
+    pageSize: Number(query?.get("pageSize")) || 10,
   } as any as IPropAdminOpts;
 
   const { data: meta, mutate: mutateMeta } = propertyApi.useGetMeta(

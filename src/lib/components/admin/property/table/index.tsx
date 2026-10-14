@@ -101,9 +101,9 @@ export const PropertyTable = ({
   };
 
   useEffect(() => {
+    const props = Array.isArray(data?.data) ? data.data : [];
     const total = isPropCart
-      ? data?.data?.filter((x) => x.TransType === searchOptions.TransType)
-          ?.length
+      ? props.filter((x) => x.TransType === searchOptions.TransType).length
       : data?.totalRow;
     onTotalChange?.(total || 0);
   }, [data, isPropCart, searchOptions.TransType]);
@@ -114,12 +114,11 @@ export const PropertyTable = ({
         {isPropCart ? (
           <TableBase
             loading={isLoading || isValidating}
-            total={data?.data.length || 0}
+            total={Array.isArray(data?.data) ? data.data.length : 0}
             searchOptions={searchOptions}
-            data={
-              data?.data.filter((x) => x.TransType === searchOptions.TransType) ||
-              []
-            }
+            data={(Array.isArray(data?.data) ? data.data : []).filter(
+              (x) => x.TransType === searchOptions.TransType
+            )}
             cols={cols}
             useCustomPagination
             onPageIndexChange={onPageIndexChange}

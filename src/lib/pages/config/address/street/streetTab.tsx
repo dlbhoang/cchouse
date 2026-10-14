@@ -41,15 +41,16 @@ const StreetTab = ({ provinceId, districtId }: Props) => {
   };
 
   useEffect(() => {
+    const streets = Array.isArray(data?.data) ? data.data : [];
     if (searchText && searchText !== "") {
-      const filtered = data?.data.filter(
+      const filtered = streets.filter(
         (item) =>
           item.Name.toLowerCase().includes(searchText.toLowerCase()) ||
           item.Slug.toLowerCase().includes(searchText.toLowerCase())
       );
       setResult(filtered);
     } else {
-      setResult(data?.data);
+      setResult(streets);
     }
   }, [data?.data, searchText]);
 

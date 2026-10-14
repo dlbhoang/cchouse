@@ -46,12 +46,14 @@ type DesktopViewProps = {
   form: FormInstance<IPropAdminOpts>;
   model: IPropAdminOpts;
   handleRefresh: () => void;
+  mapMode?: boolean;
 };
 
 export const DesktopView = ({
   form,
   model,
   handleRefresh,
+  mapMode = false,
 }: DesktopViewProps) => {
   const [moreOpen, setMoreOpen] = useState(false);
   const transTypeValue = Form.useWatch("TransType", form) ?? ETransType.sell;
@@ -82,8 +84,9 @@ export const DesktopView = ({
           <div className="property-search-input-wrap">
             <AdvPropSearch
               form={form}
-              placeholder="Tìm kiếm bất động sản..."
+              placeholder={mapMode ? "Tìm kiếm bất động sản" : "Tìm kiếm bất động sản..."}
               handleRefresh={handleRefresh}
+              showVoice={!mapMode}
             />
           </div>
         </div>
@@ -96,6 +99,7 @@ export const DesktopView = ({
             nameWard="WardId"
             nameStreet="StreetId"
             nameAddressNumber="AddressNumber"
+            mapMode={mapMode}
           />
         </div>
 
@@ -115,6 +119,7 @@ export const DesktopView = ({
           htmlType="submit"
           icon={<SearchOutlined />}
           className="property-filter-search-btn"
+          style={{ backgroundColor: "#0588f0", borderColor: "#0588f0", color: "#fff" }}
         >
           Tìm kiếm
         </Button>
@@ -123,6 +128,7 @@ export const DesktopView = ({
           htmlType="button"
           icon={<ReloadOutlined />}
           className="property-filter-reset-btn"
+          style={{ backgroundColor: "#fff", borderColor: "#0588f0", color: "#0588f0" }}
           onClick={handleRefresh}
           aria-label="Làm mới bộ lọc"
         />
@@ -135,6 +141,7 @@ export const DesktopView = ({
             form={form}
             locationName="Location"
             locationFeatureName="LocationFeature"
+            mapMode={mapMode}
           />
         </Form.Item>
 
@@ -143,13 +150,23 @@ export const DesktopView = ({
 </Form.Item>
 
         <Form.Item className="property-field-item property-area-item">
-          <FloatingField label="Diện tích" required>
-            <AreaFilter form={form} />
+          {mapMode ? (
+            <AreaFilter form={form} mapMode />
+          ) : (
+          <FloatingField label="Diện tích">
+              <AreaFilter form={form} adminMode />
           </FloatingField>
+          )}
         </Form.Item>
 
-        <Form.Item name="PropTypeIds" className="property-field-item">
-          <FloatingField label="Loại BĐS" required>
+        {!mapMode && (
+          <Form.Item name="Direction" className="property-field-item property-direction-item">
+            <DirectionSelect mode="multiple" placeholder="Hướng" />
+          </Form.Item>
+        )}
+
+        <Form.Item name="PropTypeIds" className="property-field-item property-proptype-item">
+          <FloatingField label="Loại BĐS">
             <PropTypeSelect mode="multiple" placeholder="Loại BĐS" />
           </FloatingField>
         </Form.Item>
@@ -158,6 +175,7 @@ export const DesktopView = ({
           htmlType="button"
           icon={<FilterOutlined />}
           className="property-filter-more-btn"
+          style={{ backgroundColor: "#fff", borderColor: "#0588f0", color: "#0588f0" }}
           onClick={() => setMoreOpen(true)}
         >
           Lọc thêm
@@ -169,7 +187,7 @@ export const DesktopView = ({
         open={moreOpen}
         onCancel={() => setMoreOpen(false)}
         centered
-        width={520}
+        width={384}
         className="property-filter-more-modal"
         closeIcon={<span style={{ color: "#0B172A", fontSize: 20, lineHeight: 1 }}>×</span>}
         footer={
@@ -190,7 +208,10 @@ export const DesktopView = ({
               type="primary"
               htmlType="submit"
               className="property-filter-drawer-apply-btn"
-              onClick={() => setMoreOpen(false)}
+              onClick={() => {
+                form.submit();
+                setMoreOpen(false);
+              }}
             >
               <span className="property-drawer-check-icon">✓</span>
               Áp dụng
@@ -199,9 +220,9 @@ export const DesktopView = ({
         }
         styles={{
           header: { borderBottom: "1px solid #EEF2F6", padding: "18px 20px 14px", background: "#fff" },
-          body: { background: "#fff", padding: "16px 18px 12px" },
-          footer: { borderTop: "1px solid #EEF2F6", padding: "12px 18px 16px", background: "#fff" },
-          content: { borderRadius: "14px", overflow: "hidden" },
+          body: { background: "#fff", padding: "12px 16px" },
+          footer: { borderTop: "1px solid #EEF2F6", padding: "12px 16px 16px", background: "#fff" },
+          content: { borderRadius: "16px", overflow: "hidden" },
         }}
       >
         <Flex vertical gap={16} className="property-filter-more-body">
@@ -223,7 +244,6 @@ export const DesktopView = ({
           </div>
 
           <div className="property-filter-drawer-section">
-            <div className="property-filter-drawer-section-title">Số lượng</div>
             <CountRangeFilter
               form={form}
               label="Số tầng"
@@ -245,11 +265,9 @@ export const DesktopView = ({
           </div>
 
           <div className="property-filter-drawer-section">
-            <div className="property-filter-drawer-section-title">Thông tin chi tiết</div>
-
             <Form.Item name="Direction" className="property-drawer-form-item">
               <FloatingField label="Hướng nhà" required>
-                <DirectionSelect mode="multiple" placeholder="Hướng nhà" />
+                <DirectionSelect mode="multiple" placeholder="Chọn" />
               </FloatingField>
             </Form.Item>
 
@@ -267,18 +285,21 @@ export const DesktopView = ({
 
             <Form.Item name="CustomerType" className="property-drawer-form-item">
               <FloatingField label="Nhận diện khách hàng" required>
-                <CustomerTypeSelect />
+                <CustomerTypeSelect placeholder="Chọn" />
               </FloatingField>
             </Form.Item>
 
             <div className="property-drawer-inline-row">
               <Form.Item name="UserAdminId" className="property-drawer-form-item">
                 <FloatingField label="Nhân viên" required>
-                  <UserAdminSelect />
+                  <UserAdminSelect placeholder="Chọn" />
                 </FloatingField>
               </Form.Item>
 
-              <DateFilter form={form} />
+              <div className="property-filter-more-date">
+                <span className="property-filter-more-date-label">Thời gian <i>*</i></span>
+                <DateFilter form={form} placeholderText="Chọn" />
+              </div>
             </div>
           </div>
 

@@ -38,6 +38,7 @@ export interface INewsOpts extends ISearchOptions {
 export interface IConfigAddressFilter extends ISearchOptions {
   DistrictId?: number | string | string[];
   ProvinceId?: number | string | string[];
+  WardId?: number | string | string[];
   IsNew?: boolean;
 }
 

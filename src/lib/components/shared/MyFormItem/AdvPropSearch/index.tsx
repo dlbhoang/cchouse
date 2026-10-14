@@ -7,10 +7,12 @@ import {
   Space,
   Tooltip,
 } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import { History, MapPin, RotateCcwIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SpeechToText } from "@/lib/components/shared/SpeechToText";
 import AreaSelector, { type AreaSelection } from "@/lib/components/shared/AreaSelector";
+import "./adv-prop-search.css";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { usePropStore } from "@/lib/stored";
 import propertyApi from "@/services/api/property/propertyApi";
@@ -20,6 +22,7 @@ type Props = {
   placeholder: string;
   handleRefresh: () => void;
   onFocus?: () => void;
+  showVoice?: boolean;
 };
 
 type SuggestItem = {
@@ -28,7 +31,12 @@ type SuggestItem = {
   onClick?: () => void;
 };
 
-export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
+export const AdvPropSearch = ({
+  form,
+  placeholder,
+  handleRefresh,
+  showVoice = true,
+}: Props) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [suggestItems, setSuggestItems] = useState<SuggestItem[]>([]);
   const [recentItems, setRecentItems] = useState<SuggestItem[]>([]);
@@ -125,79 +133,50 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
     <AreaSelector onApply={handleAreaApply} />
   ) : (
     <div
-      style={{
-        background: "#fff",
-        borderRadius: 12,
-        boxShadow: "0 6px 24px rgba(0,0,0,0.12)",
-        padding: "12px 0",
-        width: "100%",
-        minWidth: 600,
-      }}
+      className="adv-prop-search-dropdown-panel"
     >
-      <div style={{ display: "flex", gap: 0 }}>
+      <div className="adv-prop-search-dropdown-body">
         {/* Cột trái: Gợi ý tìm kiếm */}
-        <div style={{ flex: 1, padding: "0 16px", borderRight: "1px solid #f0f0f0" }}>
-          <div style={{ color: "#a3a3a3", fontSize: 13, padding: "4px 8px", marginBottom: 4 }}>
+        <div className="adv-prop-search-column">
+          <div className="adv-prop-search-column-title">
             Gợi ý tìm kiếm
           </div>
           {suggestItems.length === 0 ? (
-            <div style={{ color: "#a3a3a3", fontSize: 13, padding: "6px 8px" }}>
+            <div className="adv-prop-search-empty">
               {isTyping ? "Đang tìm..." : !searchWatch ? "Trống" : "Không tìm thấy dữ liệu"}
             </div>
           ) : (
-            suggestItems.map((item) => (
+            suggestItems.slice(0, 5).map((item) => (
               <div
                 key={item.key}
                 onClick={item.onClick}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "6px 8px",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  fontSize: 13,
-                  color: "#404040",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "#f5f5f5")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                className="adv-prop-search-option"
               >
-                <MapPin size={14} color="#a3a3a3" />
-                <span>{item.label}</span>
+                <MapPin size={16} aria-hidden="true" />
+                <span className="adv-prop-search-option-label">{item.label}</span>
               </div>
             ))
           )}
         </div>
 
         {/* Cột phải: Xem gần đây */}
-        <div style={{ flex: 1, padding: "0 16px" }}>
-          <div style={{ color: "#a3a3a3", fontSize: 13, padding: "4px 8px", marginBottom: 4 }}>
+        <div className="adv-prop-search-column">
+          <div className="adv-prop-search-column-title">
             Xem gần đây
           </div>
           {recentItems.length === 0 ? (
-            <div style={{ color: "#a3a3a3", fontSize: 13, padding: "6px 8px" }}>
+            <div className="adv-prop-search-empty">
               Trống
             </div>
           ) : (
-            recentItems.map((item) => (
+            recentItems.slice(0, 4).map((item) => (
               <div
                 key={item.key}
                 onClick={item.onClick}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "6px 8px",
-                  borderRadius: 8,
-                  cursor: "pointer",
-                  fontSize: 13,
-                  color: "#404040",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "#f5f5f5")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                className="adv-prop-search-option"
               >
-                <History size={14} color="#a3a3a3" />
-                <span>{item.label}</span>
+                <History size={16} aria-hidden="true" />
+                <span className="adv-prop-search-option-label">{item.label}</span>
               </div>
             ))
           )}
@@ -206,14 +185,10 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
 
       {/* Dòng chọn khu vực */}
       <div
-        style={{
-          borderTop: "1px solid #f0f0f0",
-          marginTop: 8,
-          padding: "8px 16px 0",
-        }}
+        className="adv-prop-search-dropdown-bottom"
       >
         <Space
-          style={{ cursor: "pointer", color: "#0588f0", fontSize: 13 }}
+          className="adv-prop-search-area-action"
           onClick={() => {
             setAreaSelectorOpen(true);
           }}
@@ -233,8 +208,11 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
         if (!nextOpen) setAreaSelectorOpen(false);
       }}
       trigger={["click"]}
+      overlayClassName="adv-prop-search-dropdown"
       dropdownRender={() => dropdownContent}
-      overlayStyle={{ width: areaSelectorOpen ? 384 : 600 }}
+      overlayStyle={{
+        width: areaSelectorOpen ? 384 : "min(760px, calc(100vw - 32px))",
+      }}
     >
       <Form.Item name="search" noStyle>
         <Space.Compact style={{ width: "100%" }}>
@@ -247,12 +225,16 @@ export const AdvPropSearch = ({ form, placeholder, handleRefresh }: Props) => {
             onFocus={() => setOpenDropdown(true)}
             onChange={(e) => form.setFieldValue("search", e.target.value)}
             prefix={
-              <SpeechToText
-                onTranscriptChange={(text) => {
-                  form.setFieldValue("search", text);
-                }}
-                onListeningChange={setIsListening}
-              />
+              showVoice ? (
+                <SpeechToText
+                  onTranscriptChange={(text) => {
+                    form.setFieldValue("search", text);
+                  }}
+                  onListeningChange={setIsListening}
+                />
+              ) : (
+                <SearchOutlined />
+              )
             }
             className="adv-search-input"
             style={{ height: 40 }}

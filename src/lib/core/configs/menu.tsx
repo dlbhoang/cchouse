@@ -170,12 +170,12 @@ export const MENU_CONFIG: MyMenuItem[] = [
             url: AppRoutes.role.url.replace(AppRoutes.config.url, ""),
           },
           {
-            ...AppRoutes.address,
-            url: AppRoutes.address.url.replace(AppRoutes.config.url, ""),
+            ...AppRoutes.addressManager,
+            url: AppRoutes.addressManager.url.replace(AppRoutes.config.url, ""),
           },
           {
-            ...AppRoutes.addressConversion,
-            url: AppRoutes.addressConversion.url.replace(AppRoutes.config.url, ""),
+            ...AppRoutes.agencyManager,
+            url: AppRoutes.agencyManager.url.replace(AppRoutes.config.url, ""),
           },
         ],
       },

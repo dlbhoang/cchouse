@@ -9,9 +9,10 @@ import { usePropertyFilter } from "./usePropertyFilter";
 type Props = {
   model: IPropAdminOpts;
   onSubmit: (values: IPropAdminOpts) => void;
+  mapMode?: boolean;
 };
 
-const PropertyFilter = ({ model, onSubmit }: Props) => {
+const PropertyFilter = ({ model, onSubmit, mapMode = false }: Props) => {
   const { smallScreen } = useAdminContext();
   const { form, handleRefresh } = usePropertyFilter(model, onSubmit);
 
@@ -29,7 +30,12 @@ const PropertyFilter = ({ model, onSubmit }: Props) => {
       {smallScreen ? (
         <MobileView form={form} model={model} handleRefresh={handleRefresh} />
       ) : (
-        <DesktopView form={form} model={model} handleRefresh={handleRefresh} />
+        <DesktopView
+          form={form}
+          model={model}
+          handleRefresh={handleRefresh}
+          mapMode={mapMode}
+        />
       )}
     </Form>
   );

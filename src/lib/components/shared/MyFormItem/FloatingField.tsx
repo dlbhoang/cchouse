@@ -1,4 +1,3 @@
-import { Dot } from "lucide-react";
 import { type ReactNode } from "react";
 
 type Props = {
@@ -13,11 +12,7 @@ export const FloatingField = ({ label, required, children }: Props) => (
     <div className="property-floating-label">
       <span className="property-floating-label-text">{label}</span>
       {required && (
-        <Dot
-          className="property-floating-label-required"
-          size={18}
-          strokeWidth={4}
-        />
+        <span className="property-floating-label-required">*</span>
       )}
     </div>
   </div>

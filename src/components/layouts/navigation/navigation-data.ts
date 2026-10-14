@@ -220,13 +220,13 @@ export const navigationData: NavigationItem[] = [
       },
       {
         title: "Địa chỉ",
-        url: AppRoutes.address.url,
+        url: AppRoutes.addressManager.url,
         description: "Quản lý địa chỉ và khu vực",
       },
       {
-         title: "Chuyển đổi địa chỉ",
-        url: AppRoutes.addressconversion.url,
-        description: "Chuyển đổi địa chỉ bất động sản ",
+        title: AppRoutes.agencyManager.name,
+        url: AppRoutes.agencyManager.url,
+        description: "Quản lý cơ quan hành chính",
       }
     ],
   },

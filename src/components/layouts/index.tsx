@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Session } from "next-auth";
-import { type ReactNode, useEffect } from "react";
+import { type CSSProperties, type ReactNode, useEffect } from "react";
 import { useState } from "react";
 import {
   SidebarInset,
@@ -54,6 +54,7 @@ const RootLayout = ({ children, session }: LayoutProps) => {
   );
   const { loading, init, setSmallScreen } = useAdminContext();
   const pathname = usePathname();
+  const isMapPage = pathname === AppRoutes.map.url;
 
   const hideMobileMenu = !RoutesShowMobileMenu.includes(pathname ?? "");
 
@@ -79,10 +80,21 @@ const RootLayout = ({ children, session }: LayoutProps) => {
 
   return (
     <AntProvider locale={vi_VN}>
-      <SidebarProvider defaultOpen={false}>
+      <SidebarProvider
+        defaultOpen={false}
+        style={
+          isMapPage
+            ? ({ "--sidebar-width-icon": "68px" } as CSSProperties)
+            : undefined
+        }
+      >
         <AppSidebar />
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 z-30">
+          <header
+            className={`flex shrink-0 items-center gap-2 z-30 ${
+              isMapPage ? "h-[68px] border-b border-gray-100 bg-white" : "h-16"
+            }`}
+          >
             <div className="flex justify-between w-full items-center px-4">
               <div className="flex gap-2 items-center">
                 <SidebarTrigger className="hidden md:flex -ml-1" />
@@ -125,7 +137,11 @@ const RootLayout = ({ children, session }: LayoutProps) => {
               )}
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 bg-gray-50">
+          <div
+            className={`flex flex-1 flex-col p-4 ${
+              isMapPage ? "gap-2 bg-white" : "gap-4 bg-gray-50"
+            }`}
+          >
             {loading ? (
               <>
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">

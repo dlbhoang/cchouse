@@ -7,6 +7,7 @@
 export interface AgencyItem {
   name: string;
   address: string;
+  oldAddress?: string;
 }
 
 export interface AgencyMap {

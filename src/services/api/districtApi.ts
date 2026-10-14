@@ -25,13 +25,16 @@ const districtApi = {
     return axiosClient.get<any, ISingleData<IDistrictResponse>>(`${url}/${id}`);
   },
   add(data: IDistrictRequest) {
-    return axiosClient.post<any, ISingleData<IDistrictResponse>>(url, data);
+    return axiosClient.post<any, ISingleData<number>>(url, data);
   },
   update(data: IDistrictRequest) {
-    return axiosClient.put<any, ISingleData<IDistrictResponse>>(
+    return axiosClient.put<any, ISingleData<number>>(
       `${url}/${data.Id}`,
       data
     );
+  },
+  delete(id: number) {
+    return axiosClient.delete(`${url}/${id}`);
   },
   upload(data: FormData) {
     return axiosClient.post(`${url}/upload`, data, {

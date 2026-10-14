@@ -83,15 +83,16 @@ const CartHeader = ({ onClose }: { onClose: () => void }) => (
 
 const useCartData = (userId: number) => {
   const { data } = userAdminApi.useGetSaveProps(userId);
+  const items = Array.isArray(data?.data) ? data.data : [];
 
-  const cartSell = data?.data.filter((x) => x.TransType === ETransType.sell);
-  const cartRent = data?.data.filter((x) => x.TransType === ETransType.rent);
+  const cartSell = items.filter((x) => x.TransType === ETransType.sell);
+  const cartRent = items.filter((x) => x.TransType === ETransType.rent);
 
   return {
     data,
     cartSell,
     cartRent,
-    totalCount: data?.data.length ?? 0,
+    totalCount: items.length,
     sellCount: cartSell?.length ?? 0,
     rentCount: cartRent?.length ?? 0,
   };

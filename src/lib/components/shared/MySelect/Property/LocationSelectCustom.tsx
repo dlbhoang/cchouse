@@ -20,11 +20,13 @@ type Props = {
   form: FormInstance;
   locationName: string;
   locationFeatureName: string;
+  mapMode?: boolean;
 };
 export const LocationSelectCustom = ({
   form,
   locationName,
   locationFeatureName,
+  mapMode = false,
 }: Props) => {
   const { enumList } = useAdminContext();
 
@@ -54,45 +56,56 @@ export const LocationSelectCustom = ({
   };
 
   const dropdownRender = () => (
-    <div style={contentStyle}>
-      <Typography.Text strong>Vị trí: </Typography.Text>
-      <Form.Item name={locationName}>
-        <Radio.Group>
+    <div
+      className={mapMode ? "map-location-dropdown-content" : undefined}
+      style={mapMode ? undefined : contentStyle}
+    >
+      <Typography.Text strong>Vị trí</Typography.Text>
+      <Form.Item name={locationName} className={mapMode ? "map-location-radio-item" : undefined}>
+        <Radio.Group className={mapMode ? "map-location-radio-group" : undefined}>
           <Radio value={1}>Mặt tiền</Radio>
           <Radio value={2}>Hẻm</Radio>
         </Radio.Group>
       </Form.Item>
-      <Typography.Text strong>Đặc điểm: </Typography.Text>
-      <Form.Item name={locationFeatureName}>
-        <Radio.Group>
-          <Row>
-            {enumList.LocationFeature.map((e) => (
-              <Col xs={12}>
-                <Radio value={e.Value}>{e.Name}</Radio>
-              </Col>
-            ))}
-          </Row>
+      <Typography.Text strong>Đặc điểm</Typography.Text>
+      <Form.Item name={locationFeatureName} className={mapMode ? "map-location-radio-item map-location-feature-item" : undefined}>
+        <Radio.Group className={mapMode ? "map-location-feature-group" : undefined}>
+          {mapMode ? (
+            enumList.LocationFeature.map((e) => (
+              <Radio key={e.Value} value={e.Value}>{e.Name}</Radio>
+            ))
+          ) : (
+            <Row>
+              {enumList.LocationFeature.map((e) => (
+                <Col key={e.Value} xs={12}>
+                  <Radio value={e.Value}>{e.Name}</Radio>
+                </Col>
+              ))}
+            </Row>
+          )}
         </Radio.Group>
       </Form.Item>
-      <Row gutter={[12, 12]}>
-        <Col {...colStyle}>
-          <Button
-            block
-            htmlType="button"
-            onClick={() => {
-              form.resetFields([locationFeatureName, locationName]);
-              handleApply();
-            }}
-          >
-            Đặt lại
-          </Button>
-        </Col>
-        <Col {...colStyle}>
-          <Button block type="primary" htmlType="button" onClick={handleApply}>
-            Áp dụng
-          </Button>
-        </Col>
-      </Row>
+      {!mapMode && (
+        <Row gutter={[12, 12]}>
+          <Col {...colStyle}>
+            <Button
+              block
+              htmlType="button"
+              onClick={() => {
+                form.resetFields([locationFeatureName, locationName]);
+                handleApply();
+              }}
+            >
+              Đặt lại
+            </Button>
+          </Col>
+          <Col {...colStyle}>
+            <Button block type="primary" htmlType="button" onClick={handleApply}>
+              Áp dụng
+            </Button>
+          </Col>
+        </Row>
+      )}
     </div>
   );
 
@@ -117,6 +130,7 @@ export const LocationSelectCustom = ({
     <Dropdown
       trigger={["click"]}
       dropdownRender={dropdownRender}
+      overlayClassName={mapMode ? "map-location-dropdown" : undefined}
       open={open}
       onOpenChange={setOpen}
     >
@@ -126,7 +140,7 @@ export const LocationSelectCustom = ({
         } ${location || feature ? "has-value" : ""}`}
       >
         <span className="property-custom-dropdown-label">
-          Vị trí <span>*</span>
+          Vị trí
         </span>
         <Typography.Text ellipsis className="property-custom-dropdown-value">
           {location && feature ? `${location}, ${feature}` : location || feature || ""}

@@ -3,7 +3,7 @@
    Pixel layout based on Search_bar.png (1308px reference canvas)
    ================================================================ */
 .property-filter-card {
-  --pf-blue: var(--Brand-Main, #0588F0);
+  --pf-blue: #0588F0;
   --pf-border: #d9dde3;
   --pf-placeholder: #737b86;
   --pf-text: var(--Text-Main, #0A0A0A);
@@ -11,10 +11,11 @@
   width: 100%;
   box-sizing: border-box;
   background: #fff;
-  border: 1px solid #d7dce2;
-  border-radius: 10px;
-  padding: 16px !important;
-  gap: 12px !important;
+  border: 1px solid #fafafa;
+  border-radius: 8px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  padding: 24px 16px !important;
+  gap: 16px !important;
 }
 
 .property-page-content {
@@ -115,7 +116,14 @@
   width: 100%;
   height: 36px;
   display: grid !important;
-  grid-template-columns: 150px minmax(320px, 2.2fr) 170px 170px auto 36px;
+  grid-template-columns:
+    minmax(180px, 1.15fr)
+    minmax(300px, 2.4fr)
+    minmax(180px, 1.15fr)
+    minmax(180px, 1.15fr)
+    minmax(126px, .72fr)
+    36px;
+  justify-content: stretch;
   column-gap: 12px !important;
   align-items: center !important;
 }
@@ -131,8 +139,8 @@
   box-sizing: border-box;
 }
 .property-trans-type-form-item {
-  width: 150px !important;
-  min-width: 150px !important;
+  width: 100% !important;
+  min-width: 0 !important;
   height: 36px !important;
 }
 .property-trans-type-select,
@@ -231,7 +239,7 @@
 .property-search-combo .ant-input-prefix svg { font-size: 18px !important; }
 
 /* Region --------------------------------------------------------- */
-.property-region-field { width: 170px; min-width: 0; }
+.property-region-field { width: 100%; min-width: 0; }
 .property-custom-dropdown-trigger {
   position: relative !important;
   width: 100% !important;
@@ -398,9 +406,10 @@
 ------------------------------------------------------------------- */
 
 .property-price-trigger {
-  width: 280px !important;
-  max-width: 280px !important;
-  flex: 0 0 280px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  flex: 1 1 auto !important;
   height: 36px !important;
   min-height: 36px !important;
   box-sizing: border-box !important;
@@ -510,7 +519,7 @@
     background-color 0.15s ease, color 0.15s ease, font-size 0.15s ease;
 }
 .property-floating-label-text.ant-typography,
-.property-floating-label-required.ant-typography {
+.property-floating-label-required {
   font-family: var(--pf-font-text) !important;
   font-size: var(--Font-sizes-text-sm, 14px) !important;
   font-style: normal !important;
@@ -518,7 +527,7 @@
   font-weight: 500 !important;
 }
 .property-floating-label-text.ant-typography { color: inherit !important; }
-.property-floating-label-required.ant-typography { color: #ff4d4f !important; }
+.property-floating-label-required { color: #ff4d4f !important; }
 .property-status-form-item,
 .property-status-form-item .ant-select { width: 100% !important; }
 
@@ -566,26 +575,27 @@
 }
 
 /* Actions -------------------------------------------------------- */
-.property-filter-search-btn.ant-btn {
+.property-filter-card .property-filter-search-btn.ant-btn {
   height: 36px !important;
   min-width: 126px !important;
   border-radius: 8px !important;
-  border: 1px solid var(--pf-blue) !important;
-  background: var(--pf-blue) !important;
+  border: 1px solid #0588f0 !important;
+  background: #0588f0 !important;
+  background-color: #0588f0 !important;
   box-shadow: none !important;
   font-size: 14px !important;
   font-weight: 500 !important;
   padding: 0 16px !important;
 }
 .property-filter-search-btn.ant-btn .anticon { font-size: 14px !important; }
-.property-filter-reset-btn.ant-btn {
+.property-filter-card .property-filter-reset-btn.ant-btn {
   width: 36px !important;
   min-width: 36px !important;
   height: 36px !important;
   padding: 0 !important;
   border-radius: 8px !important;
-  border: 1px solid var(--pf-blue) !important;
-  color: var(--pf-blue) !important;
+  border: 1px solid #0588f0 !important;
+  color: #0588f0 !important;
   background: #fff !important;
   box-shadow: none !important;
 }
@@ -595,20 +605,26 @@
   width: 100%;
   height: 36px;
   display: grid !important;
-  grid-template-columns: 1fr 1.3fr 1fr 1fr 1fr auto;
-  column-gap: 12px !important;
+  grid-template-columns:
+    minmax(160px, 1fr)
+    minmax(170px, 1.1fr)
+    minmax(170px, 1.1fr)
+    minmax(160px, 1fr)
+    minmax(160px, 1fr)
+    minmax(126px, .85fr);
+  column-gap: 8px !important;
   align-items: center !important;
 }
 .property-field-item,
 .property-field-item .ant-select { width: 100%; min-width: 0; }
 .property-location-item,
 .property-location-item .ant-select { width: 100% !important; }
-.property-filter-more-btn.ant-btn {
+.property-filter-card .property-filter-more-btn.ant-btn {
   height: 36px !important;
-  min-width: 170px !important;
+  min-width: 126px !important;
   border-radius: 8px !important;
-  border: 1px solid var(--pf-blue) !important;
-  color: var(--pf-blue) !important;
+  border: 1px solid #0588f0 !important;
+  color: #0588f0 !important;
   background: #fff !important;
   box-shadow: none !important;
   font-size: 14px !important;
@@ -810,13 +826,13 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin: 18px 0 14px;
+  margin: 16px 0 10px;
 }
 
 .property-page-header h1 {
   margin: 0 0 4px;
   color: #1f2937;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.2px;
   line-height: 1.25;
@@ -866,9 +882,10 @@
 @media (max-width: 1280px) {
   .property-filter-card { padding: 16px !important; }
   .property-filter-search-row {
-    grid-template-columns: 150px minmax(320px, 2.2fr) 170px 170px auto 36px;
+    grid-template-columns: minmax(132px, .9fr) minmax(200px, 1.8fr) minmax(140px, 1fr) minmax(140px, 1fr) minmax(126px, .9fr) 36px;
+    column-gap: 8px !important;
   }
-  .property-region-field { width: 170px; }
+  .property-region-field { width: 100%; }
   .property-filter-row { grid-template-columns: repeat(3, minmax(180px, 1fr)); height: auto; row-gap: 10px !important; }
   .property-location-item,
   .property-location-item .ant-select { width: 100% !important; }
@@ -1197,6 +1214,622 @@
   background: #0478d9;
   border-color: #0478d9;
 }
+
+/* Property admin price menu follows Figma component Khoang_gia (432-38173). */
+.property-admin-price-dropdown {
+  --pf-price-border: #e5e5e5;
+  --pf-price-blue: #0588f0;
+  --pf-price-text: #0a0a0a;
+  --pf-price-muted: #737373;
+  --pf-price-subtle: #a1a1aa;
+  width: 340px !important;
+  max-width: calc(100vw - 24px) !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid var(--pf-price-border) !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-header {
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--pf-price-border);
+}
+
+.property-admin-price-dropdown .property-price-dropdown-title {
+  color: var(--pf-price-text);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-close {
+  width: 20px;
+  height: 20px;
+  color: var(--pf-price-text);
+}
+
+.property-admin-price-dropdown .property-price-dropdown-list {
+  max-height: none;
+  margin: 0;
+  padding: 12px 12px 0;
+  gap: 0;
+  overflow: visible;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-list li {
+  height: 32px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-item {
+  height: 32px;
+  min-height: 32px;
+  box-sizing: border-box;
+  padding: 0 8px;
+  border-radius: 6px;
+  color: var(--pf-price-text);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-item:hover,
+.property-admin-price-dropdown .property-price-dropdown-item.is-active {
+  background: #f5f5f5;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-item.is-active {
+  font-weight: 600;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-section-title {
+  margin: 16px 16px 8px;
+  color: var(--pf-price-text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-inputs {
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-field-label {
+  color: var(--pf-price-muted);
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-required {
+  color: #ff4d4f;
+  font-size: 12px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-input {
+  height: 36px;
+  padding: 0 10px;
+  border-color: var(--pf-price-border);
+  border-radius: 8px;
+  color: var(--pf-price-text);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-input::placeholder {
+  color: var(--pf-price-subtle);
+  font-weight: 400;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-input:focus {
+  border-color: var(--pf-price-blue);
+  box-shadow: 0 0 0 2px rgb(5 136 240 / 12%);
+}
+
+.property-admin-price-dropdown .property-price-dropdown-arrow-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--pf-price-text);
+}
+
+.property-admin-price-dropdown .property-price-dropdown-footer {
+  gap: 8px;
+  padding: 20px 12px 12px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-reset-btn,
+.property-admin-price-dropdown .property-price-dropdown-apply-btn {
+  height: 36px;
+  min-height: 36px;
+  padding: 0 12px;
+  gap: 6px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-reset-btn {
+  border-color: var(--pf-price-border);
+  background: #fff;
+  color: var(--pf-price-text);
+}
+
+.property-admin-price-dropdown .property-price-dropdown-apply-btn {
+  border-color: #0588f0 !important;
+  background: #0588f0 !important;
+  background-color: #0588f0 !important;
+  background-image: none !important;
+  color: #fff !important;
+}
+
+.property-admin-price-dropdown .property-price-dropdown-apply-btn:hover {
+  border-color: #40a9ff !important;
+  background: #40a9ff !important;
+  background-color: #40a9ff !important;
+}
+
+/* Area popup for the property list (Figma section Lọc Diện tích). */
+.property-admin-area-dropdown {
+  width: 360px !important;
+  min-width: 360px !important;
+  max-width: calc(100vw - 24px) !important;
+  padding: 0 !important;
+  overflow: hidden;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.property-admin-area-content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 12px 14px;
+  background: #fff;
+}
+
+.property-admin-area-options .ant-select-dropdown {
+  position: static !important;
+  box-shadow: none !important;
+}
+
+.property-admin-area-options .ant-select-item-option {
+  min-height: 32px !important;
+  padding: 6px 8px !important;
+  border-radius: 6px;
+  color: #0a0a0a;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.property-admin-area-options .ant-select-item-option:hover,
+.property-admin-area-options .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background: #f5f5f5 !important;
+}
+
+.property-admin-area-options .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  font-weight: 600;
+}
+
+.property-admin-area-options .ant-select-item-option-state {
+  display: none;
+}
+
+.property-admin-area-section {
+  margin-top: 14px;
+}
+
+.property-admin-area-section > strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #0a0a0a;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.property-admin-area-inputs {
+  display: flex;
+  gap: 8px;
+}
+
+.property-admin-area-inputs > label {
+  position: relative;
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.property-admin-area-inputs > label > span {
+  position: absolute;
+  z-index: 1;
+  top: -7px;
+  left: 9px;
+  padding: 0 4px;
+  background: #fff;
+  color: #737373;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.property-admin-area-inputs > label > span i {
+  color: #ff4d4f;
+  font-style: normal;
+}
+
+.property-admin-area-inputs .ant-form-item,
+.property-admin-area-inputs .ant-input {
+  width: 100%;
+}
+
+.property-admin-area-inputs .ant-input {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  color: #0a0a0a;
+  font-size: 13px;
+}
+
+.property-admin-area-inputs .ant-input::placeholder {
+  color: #a1a1aa;
+}
+
+.property-admin-area-inputs .ant-input:focus {
+  border-color: #0588f0;
+  box-shadow: 0 0 0 2px rgb(5 136 240 / 12%);
+}
+
+.property-admin-area-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.property-admin-area-footer > button {
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #fff;
+  color: #0a0a0a;
+  font-family: var(--Font-family-Text, Inter), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.property-admin-area-footer > button:hover {
+  border-color: #b3b3b3;
+}
+
+.property-admin-area-dropdown .property-admin-area-footer > button.property-admin-area-apply-btn {
+  border-color: #0588f0 !important;
+  background: #0588f0 !important;
+  background-color: #0588f0 !important;
+  background-image: none !important;
+  color: #fff !important;
+}
+
+.property-admin-area-dropdown .property-admin-area-footer > button.property-admin-area-apply-btn:hover {
+  border-color: #40a9ff !important;
+  background: #40a9ff !important;
+  background-color: #40a9ff !important;
+  background-image: none !important;
+}
+
+/* Desktop Bộ lọc popup, following the Figma layout and control styling. */
+.property-filter-more-modal {
+  width: min(384px, calc(100vw - 24px)) !important;
+  max-width: calc(100vw - 24px) !important;
+  padding-bottom: 0;
+}
+
+.property-filter-more-modal .ant-modal-content {
+  display: flex;
+  flex-direction: column;
+  height: min(808px, calc(100vh - 24px));
+  max-height: min(808px, calc(100vh - 24px));
+  border: 1px solid #e5e5e5;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.property-filter-more-modal .ant-modal-header {
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 8px 16px 6px !important;
+  border-bottom: 0;
+}
+
+.property-filter-more-modal .ant-modal-title {
+  color: #0a0a0a;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 22px;
+  text-transform: none !important;
+}
+
+.property-filter-more-modal .ant-modal-body {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 10px 16px 14px !important;
+}
+
+.property-filter-more-modal .ant-modal-footer {
+  flex: 0 0 auto;
+  padding: 11px 16px 15px !important;
+  border-top: 0;
+}
+
+.property-filter-more-body {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 12px !important;
+}
+
+.property-filter-more-modal .property-filter-drawer-toggle {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.property-filter-more-modal .property-filter-drawer-toggle button {
+  height: 34px;
+  border-radius: 0;
+  color: #0a0a0a;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.property-filter-more-modal .property-filter-drawer-toggle button.active {
+  background: #0a0a0a;
+  color: #fff;
+  box-shadow: none;
+}
+
+.property-filter-more-modal .property-filter-drawer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.property-filter-more-body > .property-filter-drawer-section:nth-child(2) {
+  gap: 24px;
+}
+
+.property-filter-more-modal .property-count-range {
+  margin: 0;
+}
+
+.property-filter-more-modal .property-count-range-label {
+  margin-bottom: 4px;
+  color: #0a0a0a;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.property-filter-more-modal .property-count-range-pills {
+  gap: 6px;
+}
+
+.property-filter-more-modal .property-count-pill {
+  min-width: 38px;
+  width: auto;
+  height: 28px;
+  padding: 0 11px;
+  border: 1px solid #e5e5e5;
+  border-radius: 14px;
+  background: #f5f5f5;
+  color: #0a0a0a;
+  font-size: 13px;
+  line-height: 26px;
+}
+
+.property-filter-more-modal .property-count-pill.active {
+  border: 1px solid #0588f0;
+  background: #eff7ff;
+  color: #0588f0;
+  box-shadow: none;
+}
+
+.property-filter-more-modal .property-drawer-form-item {
+  width: 100%;
+  min-width: 0;
+  margin: 0 !important;
+}
+
+.property-filter-more-modal .property-drawer-form-item .ant-form-item-control,
+.property-filter-more-modal .property-drawer-form-item .ant-form-item-control-input,
+.property-filter-more-modal .property-drawer-form-item .ant-form-item-control-input-content,
+.property-filter-more-modal .property-drawer-form-item .property-floating-field,
+.property-filter-more-modal .property-drawer-form-item .ant-select {
+  width: 100%;
+  min-width: 0;
+}
+
+.property-filter-more-modal .property-floating-field .property-floating-label {
+  top: 0 !important;
+  left: 8px !important;
+  transform: translateY(-50%) !important;
+  padding: 0 4px !important;
+  background: #fff !important;
+  color: #737373 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+}
+
+.property-filter-more-modal .property-floating-label-text,
+.property-filter-more-modal .property-floating-label-required {
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 16px !important;
+}
+
+.property-filter-more-modal .property-floating-field .ant-select-selector,
+.property-filter-more-modal .property-floating-field .ant-input,
+.property-filter-more-modal .property-floating-field .ant-picker {
+  min-height: 40px !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  font-size: 14px !important;
+}
+
+.property-filter-more-modal .property-floating-field .ant-select-selection-placeholder {
+  opacity: 1 !important;
+  color: #a1a1aa !important;
+  font-size: 13px !important;
+}
+
+.property-filter-more-modal .property-floating-field .ant-select-selection-item {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.property-filter-more-modal .property-drawer-inline-row {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.property-filter-more-modal .property-filter-more-date {
+  position: relative;
+  min-width: 0;
+  padding-top: 0;
+}
+
+.property-filter-more-modal .property-filter-more-date-label {
+  position: absolute;
+  z-index: 1;
+  top: -6px;
+  left: 8px;
+  padding: 0 3px;
+  transform: translateY(-50%);
+  background: #fff;
+  color: #737373;
+  font-size: 12px;
+  line-height: 16px;
+  pointer-events: none;
+}
+
+.property-filter-more-modal .property-filter-more-date-label i {
+  color: #ff4d4f;
+  font-style: normal;
+}
+
+.property-filter-more-modal .property-filter-more-date > div > div {
+  min-height: 40px;
+  padding: 7px 9px !important;
+  border-color: #e5e5e5 !important;
+  border-radius: 8px !important;
+  box-sizing: border-box;
+}
+
+.property-filter-more-modal .property-filter-more-date > div > div > span {
+  overflow: hidden;
+  color: #737373 !important;
+  font-size: 14px !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.property-filter-more-modal .property-filter-more-date > div > div > span[data-empty="true"] {
+  opacity: 1;
+}
+
+.property-filter-more-modal .property-filter-more-date svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.property-filter-more-modal .property-filter-more-date svg rect,
+.property-filter-more-modal .property-filter-more-date svg path {
+  stroke: #0a0a0a;
+}
+
+.property-filter-more-modal .property-filter-drawer-checklist {
+  flex-direction: row;
+  gap: 14px;
+  padding: 0;
+}
+
+.property-filter-more-modal .property-filter-drawer-checklist .ant-form-item {
+  margin: 0 !important;
+}
+
+.property-filter-more-modal .property-filter-drawer-checklist .ant-checkbox-wrapper {
+  color: #0a0a0a;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.property-filter-more-modal .property-filter-drawer-checklist .ant-checkbox-inner {
+  width: 20px;
+  height: 20px;
+  border-color: #b3b3b3;
+}
+
+.property-filter-more-modal .property-filter-drawer-checklist .ant-checkbox-checked .ant-checkbox-inner {
+  border-color: #0588f0 !important;
+  background-color: #0588f0 !important;
+}
+
+.property-filter-more-modal .property-filter-drawer-footer {
+  gap: 8px;
+}
+
+.property-filter-more-modal .property-filter-drawer-clear-btn.ant-btn,
+.property-filter-more-modal .property-filter-drawer-apply-btn.ant-btn {
+  height: 40px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.property-filter-more-modal .property-filter-drawer-clear-btn.ant-btn {
+  border-color: #e5e5e5;
+  background: #fff;
+}
+
+.property-filter-more-modal .ant-modal-footer .property-filter-drawer-apply-btn.ant-btn.ant-btn-primary {
+  border-color: #0588f0 !important;
+  background: #0588f0 !important;
+  background-color: #0588f0 !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.property-filter-more-modal .ant-modal-footer .property-filter-drawer-apply-btn.ant-btn.ant-btn-primary:hover {
+  border-color: #0078dc !important;
+  background: #0078dc !important;
+  background-color: #0078dc !important;
+  background-image: none !important;
+}
+
 .property-address-field-select {
   width: 100%;
 }

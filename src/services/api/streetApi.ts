@@ -26,13 +26,16 @@ const streetApi = {
     return axiosClient.get<any, ISingleData<IStreetResponse>>(`${url}/${id}`);
   },
   add(data: IStreetRequest) {
-    return axiosClient.post<any, ISingleData<IStreetResponse>>(url, data);
+    return axiosClient.post<any, ISingleData<number>>(url, data);
   },
   update(data: IStreetRequest) {
-    return axiosClient.put<any, ISingleData<IStreetResponse>>(
+    return axiosClient.put<any, ISingleData<number>>(
       `${url}/${data.Id}`,
       data
     );
+  },
+  delete(id: number) {
+    return axiosClient.delete(`${url}/${id}`);
   },
   upload(data: FormData) {
     return axiosClient.post(`${url}/upload`, data, {

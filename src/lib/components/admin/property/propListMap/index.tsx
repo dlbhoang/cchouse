@@ -1,9 +1,7 @@
-import { Card, List, Segmented, Space, Tag, Typography } from "antd";
+import { Card, List, Segmented, Tag, Typography } from "antd";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-import RenderArea from "@/lib/components/shared/CustomRender/RenderArea";
-import { appConst } from "@/lib/core/configs/appConst";
 import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
@@ -15,40 +13,31 @@ const { Text } = Typography;
 
 const PropItem = ({ item }: { item: IPropResponse }) => {
   return (
-    <List.Item
-      key={item.Id}
-      actions={[
-        <Text strong>Giá: {item.DisplayPrice}</Text>,
-        <Text>
-          <RenderArea
-            title="DTTT: "
-            area={item.Area}
-            length={item.Length}
-            width={item.Width}
-          />
-        </Text>,
-        <Link href={`?PropertyId=${item.Id}`}>Chi tiết</Link>,
-      ]}
-    >
-      <List.Item.Meta
-        title={
-          <Space>
-            <Tag
-              style={{
-                color: "#ffffff",
-                backgroundColor: appConst.PROP_STATUS_COLORS[item.Status - 1],
-              }}
-            >
-              {`Mã: ${item?.Id}`}
-            </Tag>
-            <Link href={`?PropertyId=${item.Id}`}>
-              {CombineAddress({ ...item.PropAddress })}
-            </Link>
-          </Space>
-        }
-        description={<Text>Loại: {item.PropAddress.PropTypeName}</Text>}
-      />
-      <Text>Kết cấu: {item.CustomDisplayStructures}</Text>
+    <List.Item key={item.Id}>
+      <div className="map-property-item">
+        <div className="map-property-item-heading">
+          <Tag className="map-property-item-id">Mã: {item.Id}</Tag>
+          <Link href={`?PropertyId=${item.Id}`} className="map-property-item-address">
+            {CombineAddress({ ...item.PropAddress })}
+          </Link>
+        </div>
+        <div className="map-property-item-line">
+          <span>Kết cấu:</span> {item.CustomDisplayStructures || "—"}
+        </div>
+        <div className="map-property-item-line">
+          <span>Loại:</span> {item.PropAddress.PropTypeName || "—"}
+        </div>
+        <div className="map-property-item-footer">
+          <span>
+            <span>DTTT:</span> {item.Area?.toLocaleString("vi-VN")}m²
+            {item.Length && item.Width ? ` (${item.Width}×${item.Length}m)` : ""}
+          </span>
+          <span className="map-property-item-price">
+            <span>Giá:</span> <strong>{item.DisplayPrice || "—"}</strong>
+            {item.PricePerSquareMeter && <small>{item.PricePerSquareMeter}</small>}
+          </span>
+        </div>
+      </div>
     </List.Item>
   );
 };
@@ -81,28 +70,23 @@ export const PropListMap = ({ opts }: Props) => {
 
   return (
     <Card
-      style={{
-        height: "85vh",
-        overflow: "auto",
-        minWidth: 400,
-        maxWidth: 450,
-      }}
-      bodyStyle={{ paddingBlock: 0 }}
+      className="map-property-list-card"
+      bodyStyle={{ padding: 0, height: "100%" }}
     >
       <List
         header={
-          <Space.Compact direction="vertical" block>
+          <div className="map-property-list-heading">
             <Segmented
               options={[
                 { value: ETransType.sell, label: "Mua bán" },
                 { value: ETransType.rent, label: "Cho thuê" },
               ]}
               block
-              defaultValue={opts.TransType ?? ETransType.sell}
+              value={opts.TransType ?? ETransType.sell}
               onChange={(val) => handleTransTypeChange(val as ETransType)}
             />
-            <Text>Tìm được {data?.totalRow ?? 0} kết quả</Text>
-          </Space.Compact>
+            <Text>Hiển thị {data?.totalRow ?? 0} kết quả</Text>
+          </div>
         }
         itemLayout="vertical"
         pagination={{
@@ -114,7 +98,7 @@ export const PropListMap = ({ opts }: Props) => {
           showSizeChanger: false,
         }}
         loading={isValidating}
-        dataSource={data?.data}
+        dataSource={Array.isArray(data?.data) ? data.data : []}
         renderItem={(item) => <PropItem item={item} />}
       />
     </Card>

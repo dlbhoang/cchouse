@@ -39,8 +39,9 @@ import type {
   IWardResponse,
 } from "@/lib/interfaces/ConfigAddress/IConfigAddress";
 import { cn } from "@/lib/utils";
-import { findWardAgencyData, WARD_AGENCIES } from "@/data/ward-agencies";
-import wardApi from "@/services/api/wardApi";
+import { WARD_AGENCIES, type WardAgencyData } from "@/data/ward-agencies";
+import lookupApi from "@/services/api/lookupApi";
+import wardApi, { type IConvertOldAddressResponse } from "@/services/api/wardApi";
 import mergeWardApi, { type IMergeWard } from "@/services/api/mergeWardApi";
 import { WardLookupTabs, type WardLookupTab } from "./ward-lookup-tabs";
 
@@ -58,6 +59,8 @@ interface AgencyGroup {
 }
 interface WardConversionResult extends ISearchWardDto {
   DistrictName?: string;
+  ConvertedAddress?: string | null;
+  IsAmbiguous?: boolean;
 }
 
 // ─────────────────────────────────────────────
@@ -148,10 +151,13 @@ function getLegacyAreaAliases(mergedFrom: string[]): string[] {
   }))];
 }
 
-function buildAllAgencyGroups(preferredWard?: (typeof WARD_AGENCIES)[number]): AgencyGroup[] {
+function buildAllAgencyGroups(
+  wards: WardAgencyData[],
+  preferredWard?: WardAgencyData
+): AgencyGroup[] {
   return AGENCY_TAGS.map((tag) => {
     const uniqueItems = new Map<string, { item: AgencyItem; preferred: boolean }>();
-    WARD_AGENCIES.forEach((ward) => (ward.Agencies[tag] ?? []).forEach((item) => {
+    wards.forEach((ward) => (ward.Agencies[tag] ?? []).forEach((item) => {
       const key = `${item.name}|${item.address}`;
       const existing = uniqueItems.get(key);
       uniqueItems.set(key, {
@@ -170,7 +176,11 @@ function buildAllAgencyGroups(preferredWard?: (typeof WARD_AGENCIES)[number]): A
   }).filter((group) => group.items.length > 0);
 }
 
-function findAgencyWardsFromLegacyAddress(wardName: string, districtName: string) {
+function findAgencyWardsFromLegacyAddress(
+  wards: WardAgencyData[],
+  wardName: string,
+  districtName: string
+) {
   const normalize = (value: string) =>
     value
       .normalize("NFD")
@@ -188,7 +198,7 @@ function findAgencyWardsFromLegacyAddress(wardName: string, districtName: string
   const numericDistrict = district.match(/(?:^|\s)(?:quan|q)\s*0*(\d+)(?:\s|$)/)?.[1];
   if (!ward) return [];
 
-  const matchingWards = WARD_AGENCIES.filter((candidate) =>
+  const matchingWards = wards.filter((candidate) =>
     candidate.MergedFrom.some((source) => {
       const normalizedSource = normalize(source);
       const matchesWard = numericWard
@@ -468,11 +478,34 @@ const WardLookupDialog = ({
 }) => {
   const [activeTab, setActiveTab] = useState<WardLookupTab>("agency");
   const [searchByNewAddress, setSearchByNewAddress] = useState(false);
-  const [agencyGroups] = useState<AgencyGroup[]>(() => buildAllAgencyGroups());
+  const [agencyWards, setAgencyWards] = useState<WardAgencyData[]>([]);
+  const [agencyGroups, setAgencyGroups] = useState<AgencyGroup[]>([]);
   const [conversionWards, setConversionWards] = useState<WardConversionResult[]>([]);
   const [conversionAddress, setConversionAddress] = useState("");
   const [selectedAgencyItems, setSelectedAgencyItems] = useState<Record<string, string[]>>({});
   const dialogBodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    let active = true;
+    lookupApi.getWardAgencies()
+      .then((response) => {
+        const wards = Array.isArray(response.data) && response.data.length > 0
+          ? response.data
+          : WARD_AGENCIES;
+        if (active) {
+          setAgencyWards(wards);
+          setAgencyGroups(buildAllAgencyGroups(wards));
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setAgencyWards(WARD_AGENCIES);
+          setAgencyGroups(buildAllAgencyGroups(WARD_AGENCIES));
+        }
+      });
+    return () => { active = false; };
+  }, [open]);
 
   const conversionForm = useForm<AddressFormValues>({
     resolver: zodResolver(schema),
@@ -519,8 +552,8 @@ const WardLookupDialog = ({
         }
         let mappedWards: WardConversionResult[] = [];
         if (searchByNewAddress) {
-          const currentWard = findWardAgencyData(undefined, selectedWardName)
-            ?? findWardAgencyData(Number(selectedWardId), selectedWardName);
+          const currentWard = agencyWards.find((ward) => ward.WardId === Number(selectedWardId))
+            ?? agencyWards.find((ward) => ward.WardName.toLocaleLowerCase() === selectedWardName.toLocaleLowerCase());
           const oldAddresses = mergeRecords
             .filter((record) => record.NewWardId === Number(selectedWardId))
             .map((record) => `${record.OldWardName}, ${record.OldDistrictName} cũ`);
@@ -531,22 +564,54 @@ const WardLookupDialog = ({
             MergedFrom: oldAddresses.length > 0 ? [...new Set(oldAddresses)] : currentWard?.MergedFrom ?? [],
           }];
         } else {
-          const oldWardMappings = mergeRecords.filter(
-            (record) => record.OldWardId === Number(selectedWardId)
-          );
-          const uniqueNewWards = new Map<number, WardConversionResult>();
-          oldWardMappings.forEach((record) => {
-            uniqueNewWards.set(record.NewWardId, {
-              WardId: record.NewWardId,
-              WardName: record.NewWardName,
-              Headquarters: "",
-              DistrictName: record.NewDistrictName,
-              MergedFrom: [`${record.OldWardName}, ${record.OldDistrictName} cũ`],
+          let apiConversion: IConvertOldAddressResponse | undefined;
+          try {
+            const response = await wardApi.convertOldAddress({
+              OldWardId: Number(selectedWardId),
+              OldDistrictId: Number(selectedDistrictId),
             });
-          });
-          mappedWards = [...uniqueNewWards.values()];
+            apiConversion = response.data;
+          } catch {
+            // Retain the merge-list fallback for deployments where this endpoint is not yet available.
+          }
+
+          if (apiConversion) {
+            const candidates = apiConversion.IsAmbiguous
+              ? apiConversion.Candidates
+              : [{
+                  WardId: apiConversion.NewWardId,
+                  WardName: apiConversion.NewWardName,
+                  DistrictId: apiConversion.NewDistrictId,
+                  DistrictName: apiConversion.NewDistrictName,
+                  Description: "",
+                }];
+            mappedWards = candidates.map((candidate) => ({
+              WardId: candidate.WardId,
+              WardName: candidate.WardName,
+              Headquarters: "",
+              DistrictName: candidate.DistrictName,
+              MergedFrom: [candidate.Description].filter(Boolean),
+              ConvertedAddress: apiConversion?.NewFullAddress,
+              IsAmbiguous: apiConversion?.IsAmbiguous,
+            }));
+          } else {
+            const oldWardMappings = mergeRecords.filter(
+              (record) => record.OldWardId === Number(selectedWardId)
+            );
+            const uniqueNewWards = new Map<number, WardConversionResult>();
+            oldWardMappings.forEach((record) => {
+              uniqueNewWards.set(record.NewWardId, {
+                WardId: record.NewWardId,
+                WardName: record.NewWardName,
+                Headquarters: "",
+                DistrictName: record.NewDistrictName,
+                MergedFrom: [`${record.OldWardName}, ${record.OldDistrictName} cũ`],
+              });
+            });
+            mappedWards = [...uniqueNewWards.values()];
+          }
           if (mappedWards.length === 0) {
-            const localMatches = findAgencyWardsFromLegacyAddress(selectedWardName, districtName);
+            const localMatches = findAgencyWardsFromLegacyAddress(agencyWards, selectedWardName, districtName);
             mappedWards = localMatches.map((ward) => ({
               WardId: ward.WardId,
               WardName: ward.WardName,
@@ -578,7 +643,7 @@ const WardLookupDialog = ({
 
     void resolveSelectedAddress();
     return () => { active = false; };
-  }, [selectedWardId, selectedDistrictId, searchByNewAddress]);
+  }, [selectedWardId, selectedDistrictId, searchByNewAddress, agencyWards]);
 
   const handleConversionModeChange = (checked: boolean) => {
     setSearchByNewAddress(checked);
@@ -678,7 +743,7 @@ const WardLookupDialog = ({
             key={agencyType}
             label={agencyType}
             required
-            filled
+          filled={(selectedAgencyItems[agencyType]?.length ?? 0) > 0}
             className="mb-4"
           >
             <div className="flex w-full items-center gap-2">
@@ -827,7 +892,9 @@ const WardLookupDialog = ({
                             <span className="font-semibold">{searchByNewAddress ? "Địa chỉ cũ: " : "Phường/Xã mới: "}</span>
                             {searchByNewAddress
                               ? ward.MergedFrom.join(", ")
-                              : `Phường ${ward.WardName}${ward.DistrictName ? `, ${ward.DistrictName}` : ""}, Thành phố Hồ Chí Minh`}
+                              : ward.IsAmbiguous
+                                ? `${ward.WardName}${ward.DistrictName ? `, ${ward.DistrictName}` : ""} (chưa xác định duy nhất)`
+                                : ward.ConvertedAddress ?? `${ward.WardName}${ward.DistrictName ? `, ${ward.DistrictName}` : ""}`}
                           </div>
                         </div>
                       ))}

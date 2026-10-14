@@ -8,9 +8,14 @@ const getPolygon = async (
     (r) => r.json(),
     (reason) => console.error(reason)
   );
-  if (!e1 || !e1.level2s) return console.error('Unexpected data', e1);
+  if (!e1 || !Array.isArray(e1.level2s)) {
+    console.error("Unexpected map polygon data", e1);
+    return [];
+  }
 
-  return e1.level2s.filter((e2: any) => e2.level2_id.toString() === districtId);
+  return e1.level2s.filter(
+    (e2: any) => e2?.level2_id?.toString() === districtId
+  );
 };
 
 export const MapServices = {

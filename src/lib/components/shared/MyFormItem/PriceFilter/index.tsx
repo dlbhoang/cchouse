@@ -1,6 +1,7 @@
 import { ChevronDown, RotateCcw, Check, X } from "lucide-react";
 import { Form, FormInstance } from "antd";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   Popover,
   PopoverContent,
@@ -21,11 +22,18 @@ const priceData = [
   { id: 9, text: "Trên 500", priceFrom: 500, priceTo: undefined },
 ];
 
+const mapPriceData = priceData.slice(0, 3).concat([
+  { id: 4, text: "Từ 30 - 40", priceFrom: 30, priceTo: 40 },
+]);
+
 type Props = {
   form: FormInstance;
 };
 
 export const PriceFilter = ({ form }: Props) => {
+  const pathname = usePathname();
+  const isMapPage = pathname?.startsWith("/admin/map");
+  const options = isMapPage ? mapPriceData : priceData;
   const priceFrm = Form.useWatch("PriceFrm", form);
   const priceTo = Form.useWatch("PriceTo", form);
   const transType = Form.useWatch("TransType", form);
@@ -86,7 +94,11 @@ export const PriceFilter = ({ form }: Props) => {
       <PopoverTrigger asChild>
         <button
           type="button"
-          className={cn("property-price-trigger", open && "is-open")}
+          className={cn(
+            "property-price-trigger",
+            isMapPage && "admin-map-price-trigger",
+            open && "is-open"
+          )}
         >
           <span className="property-price-trigger-left">
             <span className="property-price-trigger-label">Khoảng giá</span>
@@ -109,23 +121,30 @@ export const PriceFilter = ({ form }: Props) => {
         </button>
       </PopoverTrigger>
 
-      <PopoverContent align="start" className="property-price-dropdown">
-        <div className="property-price-dropdown-header">
-          <span className="property-price-dropdown-title">Khoảng giá</span>
-          <button
-            type="button"
-            className="property-price-dropdown-close"
-            onClick={() => setOpen(false)}
-            aria-label="Đóng"
-          >
-            <X size={18} />
-          </button>
-        </div>
-
-        <div className="property-price-dropdown-divider" />
+      <PopoverContent
+        align="start"
+        className={cn(
+          "property-price-dropdown",
+          isMapPage ? "admin-map-price-dropdown" : "property-admin-price-dropdown"
+        )}
+      >
+        {!isMapPage && (
+          <div className="property-price-dropdown-header">
+            <span className="property-price-dropdown-title">Khoảng giá</span>
+            <button
+              type="button"
+              className="property-price-dropdown-close"
+              onClick={() => setOpen(false)}
+              aria-label="Đóng"
+            >
+              <X size={18} />
+            </button>
+          </div>
+        )}
+        {!isMapPage && <div className="property-price-dropdown-divider" />}
 
         <ul className="property-price-dropdown-list">
-          {priceData.map((item) => (
+          {options.map((item) => (
             <li key={item.id}>
               <button
                 type="button"
@@ -136,13 +155,16 @@ export const PriceFilter = ({ form }: Props) => {
                 )}
               >
                 {item.text} {methodName.toLowerCase()}
+                {isMapPage && isPresetActive(item) && (
+                  <Check className="property-price-dropdown-item-check" />
+                )}
               </button>
             </li>
           ))}
         </ul>
 
         <p className="property-price-dropdown-section-title">
-          Khoảng giá ({methodName.toLowerCase()})
+          {isMapPage ? "Khoảng giá" : `Khoảng giá (${methodName.toLowerCase()})`}
         </p>
 
         <div className="property-price-dropdown-inputs">
@@ -152,14 +174,13 @@ export const PriceFilter = ({ form }: Props) => {
             </span>
             <input
               className="property-price-dropdown-input"
-              placeholder="Giá từ"
+              placeholder={isMapPage ? "Nhập" : "Giá từ"}
               inputMode="numeric"
               value={fromValue}
               onChange={(e) => setFromValue(e.target.value.replace(/[^\d]/g, ""))}
             />
           </label>
-
-          <span className="property-price-dropdown-arrow-icon">→</span>
+          {!isMapPage && <span className="property-price-dropdown-arrow-icon">→</span>}
 
           <label className="property-price-dropdown-field">
             <span className="property-price-dropdown-field-label">
@@ -167,7 +188,7 @@ export const PriceFilter = ({ form }: Props) => {
             </span>
             <input
               className="property-price-dropdown-input"
-              placeholder="Giá đến"
+              placeholder={isMapPage ? "Nhập" : "Giá đến"}
               inputMode="numeric"
               value={toValue}
               onChange={(e) => setToValue(e.target.value.replace(/[^\d]/g, ""))}

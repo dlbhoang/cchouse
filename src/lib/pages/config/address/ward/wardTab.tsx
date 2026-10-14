@@ -42,15 +42,16 @@ const WardTab = ({ districtId }: Props) => {
   };
 
   useEffect(() => {
+    const wards = Array.isArray(data?.data) ? data.data : [];
     if (searchText && searchText !== "") {
-      const filtered = data?.data.filter(
+      const filtered = wards.filter(
         (item) =>
           item.Name.toLowerCase().includes(searchText.toLowerCase()) ||
           item.Slug.toLowerCase().includes(searchText.toLowerCase())
       );
       setResult(filtered);
     } else {
-      setResult(data?.data);
+      setResult(wards);
     }
   }, [data?.data, searchText]);
 

@@ -41,8 +41,6 @@ export const AppRoutes = {
     name: 'Đặt lịch nghỉ phép',
   },
 
-  addressconversion:{url: `${admin}/config/address-conversion`, name: 'Chuyển đổi địa chỉ'},
-
   activity: { url: `${admin}/activity`, name: 'Lịch sử hoạt động' },
   customer: { url: `${admin}/customer`, name: 'Khách hàng' },
   userWebsite: {
@@ -88,9 +86,13 @@ export const AppRoutes = {
   recruitment: { url: `${admin}/config/recruitment`, name: 'Tuyển dụng' },
   role: { url: `${admin}/config/role`, name: 'Chức vụ & Quyền' },
   address: { url: `${admin}/config/address`, name: 'Địa chỉ' },
-  addressConversion: {
-    url: `${admin}/config/address-conversion`,
-    name: 'Chuyển đổi địa chỉ',
+  addressManager: {
+    url: `${admin}/config/address-manager`,
+    name: 'Quản lý địa chỉ',
+  },
+  agencyManager: {
+    url: `${admin}/config/agency-manager`,
+    name: 'Quản lý cơ quan hành chính',
   },
   banner: { url: `${admin}/config/banner`, name: 'Cài đặt ảnh' },
 

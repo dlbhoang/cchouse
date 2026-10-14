@@ -1,11 +1,9 @@
 import MarkerClusterGroup from "@changey/react-leaflet-markercluster";
 import "@changey/react-leaflet-markercluster/dist/styles.min.css";
-import { Col, GlobalToken, Row, Tag, Typography, theme } from "antd";
 import L from "leaflet";
-import "leaflet-boundary-canvas";
 import "leaflet/dist/leaflet.css";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MapContainer,
   Marker,
@@ -15,19 +13,23 @@ import {
   useMapEvents,
 } from "react-leaflet";
 
-import { appConst } from "@/lib/core/configs/appConst";
 import { IPropAdminMap } from "@/lib/interfaces/Property/IProp";
-import { useAdminContext } from "@/lib/stored";
-import RenderArea from "../shared/CustomRender/RenderArea";
 
-const { Text, Paragraph, Title } = Typography;
+const propertyPin = (label?: string) => {
+  const safeLabel = String(label ?? "BĐS")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 
-const { useToken } = theme;
-
-const icons = new L.Icon({
-  iconUrl: "/home-removebg-preview.png",
-  iconSize: [50, 50],
-});
+  return L.divIcon({
+    className: "admin-map-property-pin-wrapper",
+    html: `<span class="admin-map-property-pin">${safeLabel}</span>`,
+    iconSize: [72, 28],
+    iconAnchor: [36, 28],
+  });
+};
 
 const curPosition = new L.Icon({
   iconUrl: "/my_location.png",
@@ -36,79 +38,84 @@ const curPosition = new L.Icon({
 
 type Props = {
   data: IPropAdminMap[];
-  geo: any;
   polygon?: any;
 };
 
 const hcmPosition = { lat: 10.823099, lng: 106.629662 };
 
 function MyComponent({
-  geo,
   data,
-  token,
   polygon,
-}: { token: GlobalToken } & Props) {
+}: Props) {
   const map = useMap();
+  const properties = Array.isArray(data) ? data : [];
 
-  const osm = L.TileLayer.boundaryCanvas(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      boundary: geo,
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Vietnam shape <a href="https://github.com/johan/world.geo.json">johan/word.geo.json</a>',
+  useEffect(() => {
+    const osm = L.tileLayer(
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }
+    );
+    osm.addTo(map);
+    map.invalidateSize();
+    return () => {
+      osm.remove();
+    };
+  }, [map]);
+
+  useEffect(() => {
+    const address = properties[0]?.PropAddress;
+    if (properties.length === 1 && address?.Lat && address?.Lng) {
+      map.setView({ lat: address.Lat, lng: address.Lng });
     }
-  );
-  map.addLayer(osm);
-  // map.fitBounds(L.geoJSON(geo).getBounds());
+  }, [properties, map]);
 
-  if (data.length === 1 && data[0].PropAddress.Lat && data[0].PropAddress.Lng) {
-    map.setView({ lat: data[0].PropAddress.Lat, lng: data[0].PropAddress.Lng });
-  }
-
-  const markers = data
-    .filter((x) => (x.PropAddress.Lat ?? 0) > 0 && (x.PropAddress.Lng ?? 0) > 0)
+  const markers = properties
+    .filter((x) => (x?.PropAddress?.Lat ?? 0) > 0 && (x?.PropAddress?.Lng ?? 0) > 0)
     .map((e) => (
       <Marker
-        icon={icons}
+        icon={propertyPin(e.DisplayPrice)}
         key={e.Id}
         position={[e.PropAddress.Lat ?? 0, e.PropAddress.Lng ?? 0]}
       >
-        <Popup maxWidth={300} maxHeight={250}>
-          <Row gutter={[12, 12]} align="middle" justify="space-between">
-            <Col span={24}>
-              <Paragraph style={{ margin: 0 }} ellipsis={{ rows: 2 }}>
-                <Tag
-                  style={{
-                    color: "#ffffff",
-                    backgroundColor: appConst.PROP_STATUS_COLORS[e.Status - 1],
-                  }}
-                >
-                  {`Mã: ${e?.Id}`}
-                </Tag>
-                {e.PropAddress.DisplayAddress}
-              </Paragraph>
-            </Col>
-            <Col span={24}>
-              <RenderArea
-                area={e.Area}
-                length={e.Length}
-                width={e.Width}
-                title="DTTT: "
-              />
-            </Col>
-
-            <Col span={24}>
-              <b>Kêt cấu:</b> {e.CustomDisplayStructures}
-            </Col>
-            <Col>
-              <Title style={{ margin: 0, color: token["blue-7"] }} level={5}>
-                {e.DisplayPrice}
-              </Title>
-            </Col>
-            <Col>
-              <Link href={`?PropertyId=${e.Id}`}>Chi tiết</Link>
-            </Col>
-          </Row>
+        <Popup
+          className="admin-map-property-popup"
+          closeButton={false}
+          maxWidth={330}
+          minWidth={300}
+          offset={[0, -12]}
+        >
+          <Link className="admin-map-property-card" href={`?PropertyId=${e.Id}`}>
+            <div className="admin-map-property-card-heading">
+              <span className="admin-map-property-card-id">Mã: {e.Id}</span>
+              <strong>{e.PropAddress.DisplayAddress}</strong>
+            </div>
+            <div className="admin-map-property-card-line">
+              <span>Kết cấu:</span> {e.CustomDisplayStructures || "—"}
+            </div>
+            {e.PropAddress.PropTypeName && (
+              <div className="admin-map-property-card-line">
+                <span>Loại:</span> {e.PropAddress.PropTypeName}
+              </div>
+            )}
+            <div className="admin-map-property-card-footer">
+              <span>
+                <span className="admin-map-property-card-muted">DTTT:</span>{" "}
+                {e.Area?.toLocaleString("vi-VN")}m²
+                {e.Width && e.Length ? ` (${e.Width}x${e.Length}m)` : ""}
+              </span>
+              <span className="admin-map-property-card-price">
+                <span className="admin-map-property-card-muted">Giá:</span>{" "}
+                <b>{e.DisplayPrice || "—"}</b>
+                {e.PricePerSquareMeter && (
+                  <small>{e.PricePerSquareMeter}</small>
+                )}
+              </span>
+            </div>
+          </Link>
         </Popup>
       </Marker>
     ));
@@ -156,18 +163,30 @@ const LocationMarker = () => {
   );
 };
 
-const Leaflet = ({ data, geo, polygon }: Props) => {
-  const { token } = useToken();
-  const { smallScreen } = useAdminContext();
+const MapSizeObserver = () => {
+  const map = useMap();
 
+  useEffect(() => {
+    const container = map.getContainer();
+    const observer = new ResizeObserver(() => map.invalidateSize());
+    observer.observe(container);
+    map.invalidateSize();
+    return () => observer.disconnect();
+  }, [map]);
+
+  return null;
+};
+
+const Leaflet = ({ data, polygon }: Props) => {
   return (
     <MapContainer
       center={hcmPosition}
       zoom={12}
-      style={{ height: smallScreen ? "100vh" : "85vh" }}
+      style={{ height: "100%", width: "100%" }}
       zoomControl={false}
     >
-      <MyComponent geo={geo} data={data} token={token} polygon={polygon} />
+      <MapSizeObserver />
+      <MyComponent data={data} polygon={polygon} />
       {/* <LocationMarker /> */}
     </MapContainer>
   );

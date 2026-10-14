@@ -28,6 +28,7 @@ interface IListData<T> {
   expandedRowRender?: (index: number) => JSX.Element;
   onRowClick?: (record: T) => void;
   useCustomPagination?: boolean;
+  scrollY?: number | string;
 }
 
 function TableBase<T>({
@@ -42,6 +43,7 @@ function TableBase<T>({
   expandedRowRender,
   onRowClick,
   useCustomPagination = false,
+  scrollY,
   ...props
 }: IListData<T>) {
   const router = useRouter();
@@ -95,7 +97,7 @@ function TableBase<T>({
           pagination={false}
           bordered={bordered}
           loading={false}
-          scroll={{ x: "max-content" }}
+          scroll={{ x: "max-content", ...(scrollY ? { y: scrollY } : {}) }}
           expandable={
             expandedRowRender && {
               expandedRowRender: (record: any, index: number) =>

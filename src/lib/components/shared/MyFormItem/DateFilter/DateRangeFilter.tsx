@@ -8,6 +8,7 @@ export type DateRangeFilterProps = {
   toDate?: string | null;
   onChange?: (range: { fromDate?: string; toDate?: string }) => void;
   placeholder?: [string, string];
+  placeholderText?: string;
   format?: string;
 };
 
@@ -30,6 +31,7 @@ export const DateRangeFilter = ({
   toDate,
   onChange,
   placeholder = ["Từ ngày", "Đến ngày"],
+  placeholderText,
   format = "DD/MM/YYYY",
 }: DateRangeFilterProps) => {
   const [open, setOpen] = useState(false);
@@ -392,6 +394,7 @@ export const DateRangeFilter = ({
     <div ref={anchorRef} style={{ position: "relative", width: "100%" }}>
       <div
         onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
         style={{
           display: "flex",
           alignItems: "center",
@@ -405,12 +408,13 @@ export const DateRangeFilter = ({
         }}
       >
         <span
+          data-empty={displayText() ? "false" : "true"}
           style={{
             color: displayText() ? "#0f172a" : "#9ca3af",
             fontSize: 15,
           }}
         >
-          {displayText() ?? `${placeholder[0]} → ${placeholder[1]}`}
+          {displayText() ?? placeholderText ?? `${placeholder[0]} → ${placeholder[1]}`}
         </span>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
           <rect

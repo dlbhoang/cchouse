@@ -4,9 +4,10 @@ import { DateRangeFilter } from "./DateRangeFilter";
 
 type DateFilterProps = {
   form: FormInstance;
+  placeholderText?: string;
 };
 
-export const DateFilter = ({ form }: DateFilterProps) => {
+export const DateFilter = ({ form, placeholderText }: DateFilterProps) => {
   const fromDate: string | undefined = Form.useWatch("fromDate", form);
   const toDate: string | undefined = Form.useWatch("toDate", form);
 
@@ -14,6 +15,7 @@ export const DateFilter = ({ form }: DateFilterProps) => {
     <DateRangeFilter
       fromDate={fromDate}
       toDate={toDate}
+      placeholderText={placeholderText}
       onChange={({ fromDate, toDate }) => {
         form.setFieldsValue({ fromDate, toDate });
       }}

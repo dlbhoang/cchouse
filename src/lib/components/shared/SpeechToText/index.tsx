@@ -1,5 +1,5 @@
-import { AudioMutedOutlined, AudioOutlined } from "@ant-design/icons";
 import { notification, Space } from "antd";
+import { Mic, MicOff } from "lucide-react";
 import { useEffect } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
@@ -44,7 +44,8 @@ export const SpeechToText = ({
   }, [listening, onListeningChange]);
 
   return listening ? (
-    <AudioMutedOutlined
+    <MicOff
+      size={18}
       style={{
         cursor: "pointer",
       }}
@@ -52,9 +53,10 @@ export const SpeechToText = ({
     />
   ) : (
     <Space>
-      <AudioOutlined
+      <Mic
+        size={18}
         style={{
-          color: "#1677ff",
+          color: "#202b35",
           cursor: "pointer",
         }}
         onClick={() =>

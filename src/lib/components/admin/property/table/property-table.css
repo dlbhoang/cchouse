@@ -24,7 +24,7 @@
   font-size: 13.5px;
   font-weight: 600;
   line-height: 1.4;
-  padding: 12px 14px;
+  padding: 8px 9px;
   white-space: nowrap;
 }
 
@@ -35,7 +35,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: var(--Line-height-text-sm, 20px);
-  padding: 14px;
+  padding: 8px 9px;
   vertical-align: top;
 }
 
@@ -63,8 +63,8 @@
 /* Đường kẻ dọc giữa các cột (header + body), đậm hơn hairline mặc định 1 chút */
 .property-table-shell .ant-table-thead > tr > th:not(:last-child),
 .property-table-shell .ant-table-tbody > tr > td:not(:last-child) {
-  border-right: 1px solid #d9dce1 !important;
-  border-inline-end: 1px solid #d9dce1 !important;
+  border-right: 0 !important;
+  border-inline-end: 0 !important;
 }
 
 .property-table-shell .ant-table-bordered .ant-table-container {
