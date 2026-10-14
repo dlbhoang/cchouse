@@ -84,7 +84,9 @@ const WardCbxField = ({
               Images: [],
               Slug: ward.WardName,
               DistrictName: "",
-            })) as IWardResponse[]
+              ProvinceName: "",
+              IsNew: true,
+            }))
           );
         }
       } catch {
@@ -101,7 +103,9 @@ const WardCbxField = ({
                 Images: [],
                 Slug: ward.WardName,
                 DistrictName: "",
-              })) as IWardResponse[])
+                ProvinceName: "",
+                IsNew: true,
+              })))
             : []
         );
       } finally {

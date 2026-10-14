@@ -388,17 +388,26 @@ export default function AddressModal({
         const name = wards[0]?.name.trim() || initialWard.name.trim();
         const oldDistrictId = wards[0]?.oldDistrictId ?? initialWard.oldDistrictId;
         if (mode === "old" && !oldDistrictId) throw new Error("Vui lòng chọn Quận/Huyện cũ");
+        const streetsToAdd = (wards[0]?.streets ?? [])
+          .filter((item) => item.name.trim())
+          .map((street) => {
+            const oldWard = streetOldWardOpts.find((item) => item.id === street.oldWardId);
+            const districtId = oldWard?.districtId ?? oldDistrictId;
+            if (!districtId) {
+              throw new Error(`Chưa xác định được Quận/Huyện cũ cho đường "${street.name.trim()}"`);
+            }
+            return { street, districtId };
+          });
         await wardApi.update({
           ...base(name),
           Id: initialWard.id,
           ...(mode === "old" ? { DistrictId: oldDistrictId } : { ProvinceId: provinceId }),
           IsNew: mode === "new",
         });
-        for (const street of (wards[0]?.streets ?? []).filter((item) => item.name.trim())) {
-          const oldWard = streetOldWardOpts.find((item) => item.id === street.oldWardId);
+        for (const { street, districtId } of streetsToAdd) {
           await streetApi.add({
             ...base(street.name.trim()),
-            DistrictId: oldWard?.districtId ?? oldDistrictId,
+            DistrictId: districtId,
             WardId: mode === "new" ? initialWard.id : null,
             OldWardId: street.oldWardId ?? null,
           });
@@ -406,6 +415,16 @@ export default function AddressModal({
       } else if (mode === "new") {
         for (const w of wards.filter((x) => x.name.trim())) {
           if (!provinceId) throw new Error("Chưa chọn Tỉnh/Thành phố");
+          const streetsToAdd = w.streets
+            .filter((street) => street.name.trim())
+            .map((street) => {
+              const oldWard = streetOldWardOpts.find((old) => old.id === street.oldWardId);
+              const districtId = oldWard?.districtId ?? w.oldDistrictId;
+              if (!districtId) {
+                throw new Error(`Chưa xác định được Quận/Huyện cũ cho đường "${street.name.trim()}"`);
+              }
+              return { street, districtId };
+            });
           const wardPayload = {
             ...base(w.name.trim()),
             Id: w.id ?? 0,
@@ -416,13 +435,12 @@ export default function AddressModal({
             ? await wardApi.update(wardPayload)
             : await wardApi.add(wardPayload);
           const savedWardId = w.id ?? Number(savedWard.data);
-          for (const s of w.streets.filter((x) => x.name.trim())) {
-            const oldWard = streetOldWardOpts.find((old) => old.id === s.oldWardId);
+          for (const { street, districtId } of streetsToAdd) {
             await streetApi.add({
-              ...base(s.name.trim()),
-              DistrictId: oldWard?.districtId ?? w.oldDistrictId,
+              ...base(street.name.trim()),
+              DistrictId: districtId,
               WardId: savedWardId,
-              OldWardId: s.oldWardId ?? null,
+              OldWardId: street.oldWardId ?? null,
             });
           }
         }

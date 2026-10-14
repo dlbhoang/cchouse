@@ -55,7 +55,9 @@ export default function MergeWardTab() {
   const options = useMemo(() => {
     const districtById = new Map(districts.map((district) => [district.Id, district.Name]));
     return wards.map((ward) => {
-      const districtName = districtById.get(ward.DistrictId);
+      const districtName = ward.DistrictId
+        ? districtById.get(ward.DistrictId)
+        : undefined;
       return {
         value: ward.Id,
         label: districtName ? `${ward.Name} (${districtName})` : ward.Name,

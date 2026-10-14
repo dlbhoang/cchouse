@@ -50,9 +50,12 @@ export const WardSelect = ({
               Type: ward.WardType,
               Images: [],
               Slug: ward.WardName,
-              DistrictId: 0,
+              DistrictId: isNew ? 0 : Number(parentVal),
+              ProvinceId: isNew ? Number(parentVal) : undefined,
               DistrictName: "",
-            })) as IWardResponse[]
+              ProvinceName: "",
+              IsNew: true,
+            }))
           );
         }
       } catch {
@@ -66,9 +69,12 @@ export const WardSelect = ({
                 Type: ward.WardType,
                 Images: [],
                 Slug: ward.WardName,
-                DistrictId: 0,
+                DistrictId: isNew ? 0 : Number(parentVal),
+                ProvinceId: isNew ? Number(parentVal) : undefined,
                 DistrictName: "",
-              })) as IWardResponse[])
+                ProvinceName: "",
+                IsNew: true,
+              })))
             : []
         );
       } finally {

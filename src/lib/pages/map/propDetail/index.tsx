@@ -27,7 +27,7 @@ const display = (value: unknown) => {
   return String(value);
 };
 
-const hasValue = (value: unknown) => {
+const hasValue = (value: unknown): boolean => {
   if (value === null || value === undefined || value === false) return false;
   if (typeof value === "string") return value.trim().length > 0;
   if (typeof value === "number") return value > 0;
@@ -105,9 +105,9 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
           uid: file.uid || file.Id?.toString() || `${data.Id}-${index}`,
           name: file.name || file.FileName || "Hình ảnh",
           url,
-          blobName: file.blobName || file.BlobName,
-          createdBy: file.createdBy || file.CreatedBy,
-          createdDate: file.createdDate || file.CreatedDate,
+          blobName: file.BlobName,
+          createdBy: file.CreatedBy,
+          createdDate: file.CreatedDate,
           type: file.type || "image/png",
         }];
       });
