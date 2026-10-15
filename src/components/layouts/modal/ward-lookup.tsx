@@ -533,13 +533,16 @@ const WardLookupDialog = ({
           document
             .querySelector<HTMLElement>('[data-field="conversion-WardId"] button')
             ?.innerText?.trim() ?? "";
-        const districtName = !searchByNewAddress
+        const districtLabel = !searchByNewAddress
           ? document.querySelector<HTMLElement>('[data-field="conversion-DistrictId"] button')?.innerText?.trim() ?? ""
           : "";
+        const [districtName, legacyOrigin] = districtLabel.split(" — ");
+        const selectedProvinceName =
+          document.querySelector<HTMLElement>('[data-field="conversion-ProvinceId"] button')?.innerText?.trim() ?? "";
         const address = [
           selectedWardName,
           districtName,
-          document.querySelector<HTMLElement>('[data-field="conversion-ProvinceId"] button')?.innerText?.trim() ?? "",
+          legacyOrigin || selectedProvinceName,
         ].filter(Boolean).join(", ");
         setConversionAddress(address);
 
@@ -591,7 +594,11 @@ const WardLookupDialog = ({
               Headquarters: "",
               DistrictName: candidate.DistrictName,
               MergedFrom: [candidate.Description].filter(Boolean),
-              ConvertedAddress: apiConversion?.NewFullAddress,
+              // Post-2025 addresses have no district level. Some imported
+              // catalogs attach a synthetic district placeholder, so omit it.
+              ConvertedAddress: [apiConversion?.NewWardName, apiConversion?.ProvinceName]
+                .filter(Boolean)
+                .join(", "),
               IsAmbiguous: apiConversion?.IsAmbiguous,
             }));
           } else {
@@ -703,6 +710,7 @@ const WardLookupDialog = ({
               parentName="ProvinceId"
               hiddenLabel
               placeholder=""
+              showLegacyOrigin
               popoverModal={false}
               portalContainer={dialogBodyRef}
             />
@@ -893,8 +901,8 @@ const WardLookupDialog = ({
                             {searchByNewAddress
                               ? ward.MergedFrom.join(", ")
                               : ward.IsAmbiguous
-                                ? `${ward.WardName}${ward.DistrictName ? `, ${ward.DistrictName}` : ""} (chưa xác định duy nhất)`
-                                : ward.ConvertedAddress ?? `${ward.WardName}${ward.DistrictName ? `, ${ward.DistrictName}` : ""}`}
+                                ? `${ward.WardName} (chưa xác định duy nhất)`
+                                : ward.ConvertedAddress ?? ward.WardName}
                           </div>
                         </div>
                       ))}

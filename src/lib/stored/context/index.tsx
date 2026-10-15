@@ -114,7 +114,9 @@ export const useAdminContext = create(
           userAdminApi.getUserAdminPublic(true),
           roleApi.get(opts),
           provinceApi.get(opts),
-          districtApi.get(opts),
+          // District selectors filter by ProvinceId on the client. Fetch the complete
+          // district catalog so older districts beyond the first global page remain searchable.
+          districtApi.get({ ...opts, pageSize: 1000 }),
           propTypeApi.get(opts),
           lookupApi.getUserAdmin(),
           axiosClient.get<any, IApiResponse<IUserItem[]>>(meRoutes.managedUsers),

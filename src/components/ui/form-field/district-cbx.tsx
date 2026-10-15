@@ -33,10 +33,12 @@ const DistrictCbxField = ({
   parentName,
   popoverModal = true,
   portalContainer,
+  showLegacyOrigin = false,
 }: IFormFieldProps & {
   parentName: string;
   popoverModal?: boolean;
   portalContainer?: React.RefObject<HTMLElement | null>;
+  showLegacyOrigin?: boolean;
 }) => {
   const label = "Quận / Huyện";
 
@@ -46,10 +48,22 @@ const DistrictCbxField = ({
 
   const provinceId = form.watch(parentName);
 
+  const legacyOriginByProvinceCode: Record<string, string> = {
+    "79": "TP. Hồ Chí Minh cũ",
+    "74": "Bình Dương cũ",
+    "77": "Bà Rịa–Vũng Tàu cũ",
+  };
+
   const options = districts
     .filter((e) => Number(e.ProvinceId) === Number(provinceId))
     .map((e) => ({
       label: e.Name,
+      origin: showLegacyOrigin
+        ? legacyOriginByProvinceCode[e.RefKey.match(/^LEGACY2024-(\d+)-/)?.[1] ?? ""]
+        : undefined,
+      displayLabel: showLegacyOrigin
+        ? `${e.Name} — ${legacyOriginByProvinceCode[e.RefKey.match(/^LEGACY2024-(\d+)-/)?.[1] ?? ""] ?? "địa giới cũ"}`
+        : e.Name,
       value: e.Id,
     }));
 
@@ -79,7 +93,7 @@ const DistrictCbxField = ({
                     {Number(field.value) > 0
                       ? options.find(
                           (item) => Number(item.value) === Number(field.value)
-                        )?.label
+                        )?.displayLabel
                       : placeholder}
                   </span>
                   <ChevronDown className="opacity-50 flex-shrink-0 ml-2" />
@@ -107,7 +121,7 @@ const DistrictCbxField = ({
                       <CommandItem
                         value={option.value?.toString() || ""}
                         key={option.value}
-                        keywords={[option.label]}
+                        keywords={[option.label, option.origin ?? ""]}
                         className="rounded-lg cursor-pointer data-[selected=true]:bg-[#E8F4FE] data-[selected=true]:text-[#0588F0]"
                         onSelect={() => {
                           field.onChange(option.value);
@@ -115,7 +129,7 @@ const DistrictCbxField = ({
                           setOpen(false);
                         }}
                       >
-                        {option.label}
+                        {option.displayLabel}
                         <Check
                           className={cn(
                             "ml-auto",
