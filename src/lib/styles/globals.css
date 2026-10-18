@@ -606,8 +606,8 @@ button:not(:disabled),
 }
 
 .terms-modal .ant-modal-close {
-  top: 20px;
-  right: 20px;
+  top: 18px;
+  right: 24px;
 }
 
 @media (max-width: 600px) {
@@ -698,9 +698,9 @@ button:not(:disabled),
   color: #737373;
 }
 
-.news-addtype-modal .ant-modal-content {
-  border-radius: 14px;
-  padding: 20px 20px 16px;
+.news-addtype-modal.ant-modal .ant-modal-content {
+  border-radius: 10px;
+  padding: 0;
   overflow: hidden;
 }
 
@@ -755,27 +755,37 @@ button:not(:disabled),
   box-shadow: 0 0 0 1px #0588f0 !important;
 }
 
-.news-addtype-modal .ant-modal-header {
-  border-bottom: none;
-  margin-bottom: 20px;
-  padding: 0;
+.news-addtype-modal.ant-modal .ant-modal-header {
+  border-bottom: 1px solid #f5f5f5;
+  margin-bottom: 0;
+  padding: 16px 24px;
 }
 
-.news-addtype-modal .ant-modal-title {
+.news-addtype-modal.ant-modal .ant-modal-body {
+  padding: 24px;
+}
+
+.news-addtype-modal .ant-form-item {
+  margin-bottom: 0;
+}
+
+.news-addtype-modal.ant-modal .ant-modal-title {
   font-size: 16px;
   font-weight: 700;
-  color: #111827;
+  color: #0a0a0a;
+  line-height: 28px;
 }
 
-.news-addtype-modal .ant-modal-footer {
-  border-top: none;
-  margin-top: 24px;
+.news-addtype-modal.ant-modal .ant-modal-footer {
+  border-top: 1px solid #e5e5e5;
+  margin-top: 0;
+  padding: 16px 24px;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
 }
 
-.news-addtype-modal .ant-modal-close {
+.news-addtype-modal.ant-modal .ant-modal-close {
   top: 20px;
   right: 20px;
 }
@@ -1005,11 +1015,12 @@ button:not(:disabled),
 
 .news-type-tabs-bar {
   display: flex;
+  max-width: 1312px;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 
 .news-type-tabs-list {
@@ -1022,13 +1033,13 @@ button:not(:disabled),
 .news-type-tab {
   display: inline-flex;
   align-items: center;
-  height: 36px;
-  padding: 0 16px;
+  height: 32px;
+  padding: 0 14px;
   border: none;
   border-radius: 999px;
   background-color: #f0f0f0;
   color: #1f1f1f;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
@@ -1058,10 +1069,10 @@ button:not(:disabled),
   align-items: center;
   height: 28px;
   padding: 0 12px;
-  border: 1px solid #FFD591;
+  border: 1px solid #e5e5e5;
   border-radius: 999px;
-  background-color: #FFF7E6;
-  color: #874D00;
+  background-color: #ffffff;
+  color: #18181b;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -1070,12 +1081,13 @@ button:not(:disabled),
 }
 
 .news-pending-badge:hover {
-  background-color: #FFECB3;
+  border-color: #d4d4d8;
+  background-color: #f4f4f5;
 }
 
 .news-pending-badge--active {
-  background-color: #874D00;
-  border-color: #874D00;
+  background-color: #18181b;
+  border-color: #18181b;
   color: #ffffff;
 }
 
@@ -1091,6 +1103,8 @@ button:not(:disabled),
   display: flex;
   align-items: center;
   gap: 8px;
+  height: 40px;
+  padding-left: 16px;
   margin-left: auto;
 }
 
@@ -1101,39 +1115,39 @@ button:not(:disabled),
 }
 
 .news-add-type-btn.ant-btn {
-  height: 36px;
-  border-radius: 999px;
-  border: 1px solid #b9e0fb;
-  background-color: #f0f9ff;
-  color: #0588f0;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  color: #0a0a0a;
   font-size: 14px;
   font-weight: 500;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 0 18px;
-  margin-left: -10px;
-  box-shadow: 0 3px 8px rgba(5, 136, 240, 0.1);
+  gap: 8px;
+  padding: 0 16px;
+  margin-left: 0;
+  box-shadow: none;
   outline: none;
 }
 
 .news-add-type-btn.ant-btn:hover,
 .news-add-type-btn.ant-btn:focus {
-  border-color: #0588f0;
-  background-color: #0588f0;
-  color: #ffffff;
-  box-shadow: 0 5px 12px rgba(5, 136, 240, 0.2);
+  border-color: #aeb4bf;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  box-shadow: none;
   outline: none;
 }
 
 .news-more-btn.ant-btn {
-  height: 36px;
-  width: 36px;
-  min-width: 36px;
-  border-radius: 50%;
-  border: 1px solid #b9e0fb;
-  background-color: #f0f9ff;
-  color: #0588f0;
+  height: 40px;
+  width: 40px;
+  min-width: 40px;
+  border-radius: 10px;
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  color: #0a0a0a;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1161,10 +1175,10 @@ button:not(:disabled),
 
 .news-more-btn.ant-btn:hover,
 .news-more-btn.ant-btn:focus {
-  border-color: #0588f0;
-  background-color: #0588f0;
-  color: #ffffff;
-  box-shadow: 0 5px 12px rgba(5, 136, 240, 0.2);
+  border-color: #aeb4bf;
+  background-color: #ffffff;
+  color: #0a0a0a;
+  box-shadow: none;
   outline: none;
 }
 
@@ -1173,8 +1187,9 @@ button:not(:disabled),
   display: none !important;
 }
 
-.news-type-modal .ant-modal-content {
-  border-radius: 12px;
+.news-type-modal.ant-modal .ant-modal-content {
+  padding: 0;
+  border-radius: 10px;
   overflow: hidden;
 }
 
@@ -1189,21 +1204,20 @@ button:not(:disabled),
 .news-type-modal-header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  gap: 32px;
   width: 100%;
-  padding: 24px 28px 16px;
+  padding: 16px 24px;
   background: #ffffff;
   border-bottom: 1px solid #f3f4f6;
 }
 
 .news-type-modal-title {
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
+  font-size: 16px;
+  font-weight: 700;
   text-transform: uppercase;
-  line-height: 1.1;
-  color: #111827;
+  line-height: 28px;
+  color: #0a0a0a;
 }
 
 .news-type-modal-count {
@@ -1213,9 +1227,9 @@ button:not(:disabled),
 }
 
 .news-type-modal-close {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1236,8 +1250,8 @@ button:not(:disabled),
 
 .news-type-modal-body {
   width: 100%;
-  padding: 16px 16px 0;
-  background: #f8fafc;
+  padding: 24px;
+  background: #ffffff;
 }
 
 .news-type-modal-body .ant-table-wrapper {
@@ -1246,7 +1260,8 @@ button:not(:disabled),
 
 .news-type-modal-body .ant-table {
   background: #ffffff;
-  border-radius: 16px;
+  border-radius: 0;
+  border: 1px solid #e5e5e5;
   overflow: hidden;
 }
 
@@ -1267,15 +1282,16 @@ button:not(:disabled),
 
 .news-type-modal-footer {
   width: 100%;
-  padding: 16px 28px;
-  background: #f8fafc;
+  padding: 16px 24px;
+  border-top: 1px solid #e5e5e5;
+  background: #ffffff;
   display: flex;
   justify-content: flex-end;
 }
 
 .news-type-modal-cancel-btn {
-  height: 38px;
-  padding: 0 24px;
+  height: 40px;
+  padding: 8px 16px;
   border-radius: 10px;
   border: 1px solid #e5e5e5;
   background: #ffffff;
@@ -1287,8 +1303,8 @@ button:not(:disabled),
 }
 
 .news-type-modal-cancel-btn:hover {
-  border-color: #c7c7c7;
-  background: #fafafa;
+  border-color: #aeb4bf;
+  background: #ffffff;
 }
 
 /*My custom*/
@@ -1443,11 +1459,51 @@ button:not(:disabled),
 .news-listing {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
+  width: 100%;
+  max-width: 1340px;
+  min-width: 0;
+}
+
+/* Figma Page_data: 10px between the heading, filter card and data card. */
+.news-listing > .news-filter-form {
+  margin-bottom: 0;
+}
+
+.news-type-tabs-bar {
+  margin-bottom: 0;
+  max-width: none;
+  padding: 16px;
 }
 
 .news-form-modal-wrap .ant-modal-mask {
   background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Keep the article editor inside the viewport and let its form body scroll. */
+.news-form-modal.ant-modal .ant-modal-content {
+  display: flex;
+  flex-direction: column;
+  height: min(750px, calc(100dvh - 160px));
+  max-height: calc(100dvh - 96px);
+  overflow: hidden;
+}
+
+.news-form-modal.ant-modal .ant-modal-body {
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 767px) {
+  .news-form-modal {
+    max-width: calc(100vw - 24px);
+    margin: 12px auto;
+  }
+
+  .news-form-modal.ant-modal .ant-modal-content {
+    height: calc(100dvh - 24px);
+    max-height: calc(100dvh - 24px);
+  }
 }
 
 .news-listing .ant-breadcrumb {
@@ -1485,7 +1541,7 @@ button:not(:disabled),
   background: transparent !important;
   padding: 0 !important;
   border: none !important;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .news-filter-toolbar {
@@ -1589,7 +1645,7 @@ button:not(:disabled),
 .news-filter-form .ant-select-focused .ant-select-selector,
 .news-filter-form .ant-input:focus,
 .news-filter-form .ant-picker-focused {
-  border-color: #1677ff !important;
+  border-color: #0588f0 !important;
   box-shadow: 0 0 0 2px rgba(22, 119, 255, 0.1) !important;
 }
 
@@ -1618,8 +1674,8 @@ button:not(:disabled),
 }
 
 button.news-create-btn.ant-btn {
-  background: #1677ff !important;
-  border-color: #1677ff !important;
+  background: #0588f0 !important;
+  border-color: #0588f0 !important;
   color: #ffffff !important;
   border-radius: 8px !important;
   height: 40px;
@@ -1636,8 +1692,8 @@ button.news-create-btn.ant-btn span {
 }
 
 button.news-create-btn.ant-btn:hover {
-  background: #1366d6 !important;
-  border-color: #1366d6 !important;
+  background: #0d74ce !important;
+  border-color: #0d74ce !important;
   box-shadow: 0 4px 10px rgba(22, 119, 255, 0.32);
 }
 
@@ -1726,8 +1782,8 @@ button.news-create-btn.ant-btn:active {
 }
 
 .news-type-icon-btn:hover {
-  border-color: #c7c7c7;
-  background: #fafafa;
+  border-color: #aeb4bf;
+  background: #ffffff;
 }
 
 .news-type-icon-btn.danger {
@@ -1763,7 +1819,7 @@ button.news-create-btn.ant-btn:active {
 }
 
 .news-type-action-btn.confirm:hover:not(:disabled) {
-  background: #0471cc;
+  background: #0d74ce;
 }
 
 .news-type-action-btn.cancel {
@@ -1790,24 +1846,71 @@ button.news-create-btn.ant-btn:active {
   padding: 0;
 }
 
-.news-table {
-  background: #ffffff;
+.news-data-panel {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #e5e5e5;
   border-radius: 12px;
-  padding: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.news-table {
+  background: #f5f5f5;
+  padding: 16px;
+  min-width: 0;
+}
+
+.news-table--empty {
+  padding: 0;
+  background: #ffffff;
+}
+
+.news-empty-state {
+  display: flex;
+  min-height: 420px;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-sizing: border-box;
+  background: #ffffff;
+  color: #a1a1aa;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  text-align: center;
+}
+
+.news-empty-state-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: none;
 }
 
 .news-table .ant-table-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
   background: #ffffff;
-  border: 1px solid #f0f0f0;
-  border-radius: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: none;
 }
 
 .news-table .ant-table,
 .news-table .ant-table-container,
 .news-table .ant-table-content {
   background: #ffffff !important;
+}
+
+.news-table .ant-table table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed !important;
 }
 
 .news-table .ant-table-thead > tr > th {
@@ -1828,14 +1931,41 @@ button.news-create-btn.ant-btn:active {
 }
 
 .news-table .ant-table-tbody > tr:hover > td {
-  background: #fafbff !important;
+  background: #f8f8f8 !important;
 }
 
 .news-table .ant-table-cell {
   vertical-align: middle !important;
 }
+
+@media (max-width: 1199px) {
+  .news-listing > .news-filter-form {
+    margin-bottom: 8px;
+  }
+
+  .news-type-tabs-bar {
+    margin-bottom: 0;
+  }
+
+  .news-table .ant-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .news-table .ant-table-content {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .news-table .ant-table table {
+    width: 1308px !important;
+    min-width: 1308px !important;
+    max-width: none !important;
+  }
+}
+
 .news-thumbnail {
-  border-radius: 8px !important;
+  border-radius: 6px !important;
   object-fit: cover;
 }
 
@@ -1846,7 +1976,7 @@ button.news-create-btn.ant-btn:active {
 }
 
 .news-title-link:hover {
-  color: #1677ff !important;
+  color: #0588f0 !important;
 }
 
 .news-date-cell {
@@ -1859,11 +1989,11 @@ button.news-create-btn.ant-btn:active {
 }
 
 .news-table .ant-space .ant-btn {
-  border: 1px solid #e5e7eb !important;
-  border-radius: 8px !important;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 10px !important;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
   padding: 0;
   display: inline-flex;
   align-items: center;
@@ -1873,36 +2003,128 @@ button.news-create-btn.ant-btn:active {
 }
 
 .news-action-btn {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  width: 32px;
-  height: 32px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: #fff;
-  color: #141414;
+  color: #000000;
   cursor: pointer;
   padding: 0;
   transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .news-action-btn:hover {
-  border-color: #1677ff;
-  color: #1677ff;
+  border-color: #aeb4bf;
+  color: #000000;
+  background-color: #ffffff;
 }
 
 .news-action-btn--delete {
-  color: #ff4d4f !important;
+  color: #0a0a0a !important;
   border-color: #e5e7eb !important;
 }
 
 .news-action-btn--delete:hover {
-  border-color: #ff4d4f !important;
-  color: #ff4d4f !important;
+  border-color: #aeb4bf !important;
+  color: #0a0a0a !important;
+}
+
+/* Pin the news page's primary actions to the Figma Brand/Main. */
+.news-listing .news-filter-create-btn,
+.news-table .news-view-btn {
+  background-color: #0588f0 !important;
+  border-color: #0588f0 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.news-listing .news-filter-create-btn:hover,
+.news-table .news-view-btn:hover {
+  background-color: #0d74ce !important;
+  border-color: #0d74ce !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+/* Override Ant Design's app-wide green hover token for the Figma tertiary buttons. */
+.news-listing .news-type-tabs-actions .news-add-type-btn.ant-btn:hover:not(:disabled):not(.ant-btn-disabled),
+.news-listing .news-type-tabs-actions .news-more-btn.ant-btn:hover:not(:disabled):not(.ant-btn-disabled),
+.news-table .news-action-btn.ant-btn:hover:not(:disabled):not(.ant-btn-disabled),
+.news-table button.news-action-btn:hover:not(:disabled) {
+  background-color: #ffffff !important;
+  border-color: #aeb4bf !important;
+  color: #0a0a0a !important;
+  box-shadow: none !important;
 }
 
 @media (max-width: 768px) {
+  .news-listing {
+    gap: 12px;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .news-listing > .news-filter-form {
+    margin-bottom: 8px;
+  }
+
+  .news-type-tabs-bar {
+    margin-bottom: 0;
+  }
+
+  .news-type-tabs-bar {
+    width: 100%;
+    max-width: 100%;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .news-type-tabs-list {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .news-type-tabs-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .news-type-tab {
+    flex-shrink: 0;
+  }
+
+  .news-type-tabs-actions {
+    align-self: flex-end;
+  }
+
+  .news-table {
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .news-table .ant-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .news-table .ant-table-content {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .news-table .ant-table table {
+    width: 1308px !important;
+    min-width: 1308px !important;
+    max-width: none !important;
+  }
+
   .news-filter-row {
     flex-direction: column;
     align-items: stretch;
@@ -2279,4 +2501,149 @@ button.news-create-btn.ant-btn:active {
 }
 .app-popconfirm .app-popconfirm-ok-danger:hover {
   filter: brightness(0.92);
+}
+
+/* Verified Figma news dialogs: 2747:162624 and 2790:143532. */
+.news-form-modal.ant-modal .ant-modal-content { padding: 0; border-radius: 10px; }
+.news-form-modal { max-width: calc(100vw - 96px); }
+.news-confirm-modal.ant-modal .ant-modal-content {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+.news-confirm-modal.ant-modal .ant-modal-body { padding: 24px; }
+.news-confirm-title { margin: 0 0 8px; color: #0a0a0a; font-size: 18px; font-weight: 600; line-height: 28px; }
+.news-confirm-description { color: #737373; font-size: 14px; line-height: 20px; }
+.news-confirm-description strong { color: #0a0a0a; font-weight: 600; }
+.news-confirm-modal.ant-modal .ant-modal-footer { margin: 0; padding: 16px 24px; border-top: 1px solid #e5e5e5; }
+.news-confirm-modal .ant-btn, .news-addtype-modal .ant-btn, .news-preview-modal .ant-btn {
+  height: 40px; border-radius: 10px; padding: 8px 16px; box-shadow: none;
+}
+.news-confirm-modal .ant-btn-default:hover, .news-addtype-modal .ant-btn-default:hover,
+.news-preview-modal .ant-btn-default:hover, .news-type-modal .ant-btn-default:hover,
+.news-type-modal .news-action-btn.ant-btn:hover {
+  background: #ffffff !important; border-color: #aeb4bf !important; color: #0a0a0a !important;
+}
+.news-confirm-modal .ant-btn-primary:not(.ant-btn-dangerous), .news-addtype-modal .ant-btn-primary,
+.news-preview-modal .ant-btn-primary {
+  background: #0588f0 !important; border-color: #0588f0 !important;
+}
+.news-confirm-modal .ant-btn-primary:not(.ant-btn-dangerous):hover, .news-addtype-modal .ant-btn-primary:hover,
+.news-preview-modal .ant-btn-primary:hover {
+  background: #0d74ce !important; border-color: #0d74ce !important;
+}
+.news-confirm-modal .ant-btn-primary.ant-btn-dangerous { background: #ef4444; border-color: #ef4444; }
+.news-confirm-modal .ant-btn-primary.ant-btn-dangerous:hover { background: #dc2626; border-color: #dc2626; }
+.news-type-modal .news-action-btn, .news-type-icon-btn, .news-type-action-btn {
+  width: 40px; height: 40px; border-radius: 10px; color: #000000; padding: 0;
+}
+.news-type-icon-btn:hover, .news-type-action-btn.cancel:hover { border-color: #aeb4bf; background: #ffffff; }
+.news-type-action-btn.confirm { background: #0588f0; color: #ffffff; }
+.news-type-action-btn.confirm:hover:not(:disabled) { background: #0d74ce; }
+/* The date popup uses the same verified brand token as the news controls. */
+.news-date-picker-popup .ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner {
+  background: #0588f0 !important; color: #ffffff !important;
+}
+.news-date-picker-popup .ant-picker-cell-in-view.ant-picker-cell-selected:hover .ant-picker-cell-inner {
+  background: #0d74ce !important;
+}
+.news-date-picker-popup .ant-picker-cell-today .ant-picker-cell-inner::before { border-color: #0588f0 !important; }
+@media (max-width: 767px) {
+  .news-form-modal { max-width: calc(100vw - 24px); }
+  .news-listing { gap: 10px; }
+  .news-listing > .news-filter-form { margin-bottom: 0; }
+  .news-filter-outer, .news-type-tabs-bar, .news-table { padding: 12px; }
+}
+
+/* Topic management uses bare 24px Lucide icons in Figma, rather than the 40px news row buttons. */
+.news-type-modal .news-action-btn, .news-type-icon-btn,
+.news-type-modal .news-type-action-btn {
+  width: 24px; min-width: 24px; height: 24px;
+  padding: 0; border: none; border-radius: 0; background: transparent; box-shadow: none;
+}
+.news-type-modal .news-type-delete-btn { color: #dc3e42; }
+.news-type-modal .news-type-delete-btn.ant-btn:hover { color: #dc3e42 !important; }
+.news-type-modal .news-type-icon-btn:hover { background: transparent; }
+.news-type-modal .news-type-modal-body .ant-table.ant-table-small .ant-table-thead > tr > th {
+  height: 44px; padding: 11px 12px; line-height: 20px; font-size: 14px; font-weight: 500;
+  background: #f5f5f5; color: #0a0a0a; border-bottom: 1px solid #e5e5e5 !important;
+}
+.news-type-modal .news-type-modal-body .ant-table.ant-table-small .ant-table-tbody > tr:not(.ant-table-measure-row) > td { height: 48px; padding: 11px 12px; line-height: 20px; border-bottom: 1px solid #e5e5e5 !important; }
+.news-type-modal .news-type-modal-body .ant-table { border: 1px solid #e5e5e5; box-shadow: none; }
+.news-type-modal-body .ant-space-item { display: flex; align-items: center; line-height: 0; }
+.news-type-modal-body .ant-space { display: flex; }
+.news-type-modal-body { max-height: calc(100dvh - 240px); overflow-y: auto; }
+.news-type-modal.ant-modal .ant-modal-body { padding: 0; }
+.news-type-modal .news-type-action-btn.confirm { background: #0588f0; color: #ffffff; }
+.news-type-modal .news-type-action-btn.confirm:hover:not(:disabled) { background: #0d74ce; color: #ffffff; }
+.news-type-modal .news-type-action-btn.cancel { background: #ffffff; color: #0a0a0a; }
+
+.news-add-type-btn.ant-btn, .news-type-modal-cancel-btn { font-size: 16px; line-height: 24px; }
+.news-confirm-modal .ant-btn, .news-addtype-modal .ant-btn, .news-preview-modal .ant-btn {
+  font-size: 16px; line-height: 24px;
+}
+.news-form-modal .tox .tox-tbtn { width: 32px; height: 32px; }
+.news-form-modal .tox .tox-tbtn svg { width: 16px; height: 16px; }
+.news-form-modal .tox .tox-toolbar__group { padding: 0 4px; }
+.news-form-modal .tox .tox-toolbar, .news-form-modal .tox .tox-toolbar__primary { background: #ffffff; }
+.news-form-modal .tox:not(.tox-tinymce-inline) .tox-editor-header { padding: 4px 0; box-shadow: none; border-bottom: 1px solid #e5e5e5; }
+
+.news-preview-modal { max-width: calc(100vw - 96px); }
+.news-preview-modal.ant-modal .ant-modal-content {
+  height: min(752px, calc(100dvh - 160px)); padding: 0;
+  display: flex; flex-direction: column; overflow: hidden; border-radius: 10px;
+}
+.news-preview-modal.ant-modal .ant-modal-header { padding: 16px 24px; margin: 0; border-bottom: 1px solid #e5e5e5; }
+.news-preview-modal.ant-modal .ant-modal-close { top: 18px; right: 24px; width: 24px; height: 24px; color: #0a0a0a; }
+.news-preview-modal.ant-modal .ant-modal-body { padding: 24px; flex: 1; min-height: 0; overflow-y: auto; }
+.news-preview-modal.ant-modal .ant-modal-footer { margin: 0; padding: 16px 24px; border-top: 1px solid #e5e5e5; }
+.news-preview-content { color: #0a0a0a; font-family: Inter, sans-serif; font-size: 12px; font-weight: 500; line-height: 16px; }
+.news-preview-content p { margin: 0 0 12px; }
+.news-preview-content img { display: block; max-width: 100%; height: auto; border-radius: 8px; margin-block: 24px; }
+@media (max-width: 767px) {
+  .news-preview-modal { max-width: calc(100vw - 24px); }
+  .news-preview-modal.ant-modal .ant-modal-content { height: calc(100dvh - 24px); }
+  .news-preview-modal.ant-modal .ant-modal-body { padding: 16px; }
+}
+
+/* Figma strokes sit inside the frames and do not reduce their layout width. */
+.news-data-panel { border: none; box-shadow: inset 0 0 0 1px #e5e5e5; }
+.news-table .ant-table-wrapper { border: none; box-shadow: inset 0 0 0 1px #e5e5e5; }
+.news-table .ant-table-tbody > tr > td { height: 100px; padding: 12px; }
+.news-table .ant-table-thead > tr > th { height: 44px; padding: 12px; }
+.news-table .news-action-btn.ant-btn { width: 40px; min-width: 40px; height: 40px; flex: none; }
+
+/* Figma draws these separators inside the frame, without adding to its height. */
+.news-addtype-modal.ant-modal .ant-modal-header,
+.news-preview-modal.ant-modal .ant-modal-header,
+.news-type-modal-header { border-bottom: 1px solid #e5e5e5; box-shadow: none; }
+.news-addtype-modal.ant-modal .ant-modal-footer,
+.news-preview-modal.ant-modal .ant-modal-footer,
+.news-type-modal-footer { border-top: 1px solid #e5e5e5; box-shadow: none; }
+.news-table .ant-table-thead > tr > th,
+.news-table .ant-table-tbody > tr > td { border-bottom: none !important; box-shadow: inset 0 -1px 0 #e5e5e5; }
+.news-table .ant-table-tbody > tr:last-child > td { box-shadow: none; }
+
+.news-table .news-action-btn .lucide { color: #000000; }
+
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="group"] { padding-inline: 12px; }
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] {
+  width: 44px !important; height: 44px !important; padding: 10px !important; border-radius: 10px;
+}
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] > svg { width: 24px; height: 24px; }
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] > span,
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] > svg:not(:first-child) { display: none; }
+
+.news-form-modal.ant-modal, .news-preview-modal.ant-modal { max-width: calc(100vw - 96px) !important; }
+.news-form-modal .tox .tox-tbtn svg.lucide { fill: none !important; stroke: #0a0a0a; }
+@media (max-width: 767px) {
+  .news-form-modal.ant-modal, .news-preview-modal.ant-modal { max-width: calc(100vw - 24px) !important; }
+}
+/* Tailwind's important collapsed-size utility lives in this layer. */
+@layer utilities {
+  .group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] {
+    width: 44px !important; height: 44px !important; padding: 10px !important;
+  }
 }

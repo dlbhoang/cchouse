@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
 import { Input, Modal } from "antd";
+import { ChevronDown, ImageIcon, Pencil, Plus, X } from "lucide-react";
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 import TinyEditor from "@/lib/components/shared/tiny-editor";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
@@ -14,85 +15,19 @@ import newsTypeApi from "@/services/api/news/newsTypeApi";
 import { fileServices } from "@/services/api/services/fileServices";
 import NewPreview from "../preview";
 import styles from "./index.module.css";
+import { newsEditorIcons } from "./editor-icons";
+import { validateNews, type ErrorKey, type FormErrors } from "./validation";
 
 type Props = {
   model?: INewsRequest | INewsResponse;
   onClose?: () => void;
   hideHeader?: boolean;
   onReject?: (item: INewsResponse, reason: string) => Promise<void>;
+  onApprove?: (item: INewsResponse) => Promise<void>;
 };
-
-type ErrorKey =
-  | "NewsTypeId"
-  | "SourceType"
-  | "Thumbnail"
-  | "Title"
-  | "Summary"
-  | "Content"
-  | "Source";
-
-type FormErrors = Partial<Record<ErrorKey, string>>;
 
 const TITLE_MAX = 150;
 const SUMMARY_MAX = 350;
-
-/* ---------------------------------------------------------
-   Icon nhỏ tự vẽ (thay @ant-design/icons) — không kéo thêm lib
-   --------------------------------------------------------- */
-const IconClose = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
-    <path d="M18 6 6 18M6 6l12 12" />
-  </svg>
-);
-
-const IconEye = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z" />
-    <circle cx="12" cy="12" r="3" />
-  </svg>
-);
-
-const IconChevron = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-    <path d="m6 9 6 6 6-6" />
-  </svg>
-);
-
-const IconUploadCloud = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
-    <path d="M7 18a4.6 4.4 0 0 1-1.4-8.9A5.5 5.5 0 0 1 16.6 7.5 4.5 4.5 0 0 1 18 16.5" />
-    <path d="M12 12v9" />
-    <path d="m8 16 4-4 4 4" />
-  </svg>
-);
-
-const IconTrash = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 6h18" />
-    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-  </svg>
-);
-
-const IconPlus = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
-    <path d="M12 5v14M5 12h14" />
-  </svg>
-);
-
-const SquarePenIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-    <path d="m16 3 5 5L8 21H3v-5L16 3Z" />
-    <path d="M18 6l-3-3" />
-    <path d="M9 15l6-6" />
-  </svg>
-);
-
-const isContentEmpty = (html?: string) => {
-  if (!html) return true;
-  const text = html.replace(/<[^>]*>/g, "").trim();
-  return text.length === 0;
-};
 
 // Try to extract a readable source string from the article HTML.
 const extractSourceFromContent = (html?: string): string | undefined => {
@@ -163,47 +98,39 @@ const parseContentMeta = (html?: string) => {
 
 const getEditableValues = (model?: INewsRequest | INewsResponse): INewsRequest => {
   const item = model as INewsResponse | undefined;
-  const usePending = item?.HasPendingChanges;
-  const content = usePending ? item?.PendingContent : item?.Content;
+  const content = item?.Content;
   const meta = parseContentMeta(content);
-  const thumbnail = usePending ? item?.PendingThumbnail : item?.Thumbnail;
+  const thumbnail = Array.isArray(item?.Thumbnail)
+    ? item.Thumbnail
+    : item?.Thumbnail
+      ? fileServices.mapFromString(String(item.Thumbnail))
+      : [];
 
   return {
     ...(item as INewsRequest),
-    NewsTypeId: usePending ? item?.PendingNewsTypeId ?? item?.NewsTypeId : item?.NewsTypeId,
-    Title: usePending ? item?.PendingTitle ?? "" : item?.Title ?? meta.title ?? "",
-    Summary: usePending ? item?.PendingSummary ?? "" : item?.Summary ?? meta.summary ?? "",
-    Source: usePending ? item?.PendingSource ?? "" : item?.Source ?? meta.source ?? "",
-    SourceType: usePending ? item?.PendingSourceType || "write" : item?.SourceType || "write",
+    NewsTypeId: item?.NewsTypeId,
+    Title: item?.Title ?? meta.title ?? "",
+    Summary: item?.Summary ?? meta.summary ?? "",
+    Source: item?.Source ?? meta.source ?? "",
+    SourceType: item?.SourceType || "write",
     Content: meta.content || content || "",
-    Thumbnail: thumbnail ? (fileServices.mapFromString(thumbnail) as any) : [],
+    Thumbnail: thumbnail as any,
   } as INewsRequest;
 };
 
-const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
+const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: Props) => {
   const router = useRouter();
 
   const [isSubmit, setIsSubmit] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
+  const [thumbnailImageOpen, setThumbnailImageOpen] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [shakeField, setShakeField] = useState<ErrorKey | null>(null);
   const [rejectPanelOpen, setRejectPanelOpen] = useState(false);
   const [rejectReason, setRejectReason] = useState("");
+  const [approvePanelOpen, setApprovePanelOpen] = useState(false);
 
   const [values, setValues] = useState<INewsRequest>(() => getEditableValues(model));
-
-  // ✅ FIX: đồng bộ lại values mỗi khi model prop thay đổi.
-  // Cần thiết vì model thường được fetch bất đồng bộ từ trang cha
-  // (model = undefined lúc mount, có giá trị thật sau khi API trả về),
-  // trong khi useState(() => ...) chỉ chạy đúng 1 lần lúc mount nên
-  // không tự cập nhật lại khi model đổi.
-  useEffect(() => {
-    if (model) {
-      setValues(getEditableValues(model));
-    } else {
-      setValues(getEditableValues());
-    }
-  }, [model]);
 
   // If model provided but Content is missing, fetch full record to populate the editor
   useEffect(() => {
@@ -304,9 +231,17 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
   const handleFilePick = () => fileInputRef.current?.click();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const selectedFile = e.target.files?.[0];
     e.target.value = "";
-    if (!file) return;
+    if (!selectedFile) return;
+    // Some browsers identify .svg as application/octet-stream; the API accepts image/svg+xml.
+    const file = /\.svg$/i.test(selectedFile.name) && selectedFile.type !== "image/svg+xml"
+      ? new File([selectedFile], selectedFile.name, { type: "image/svg+xml", lastModified: selectedFile.lastModified })
+      : selectedFile;
+    if (file.size > 8 * 1024 * 1024) {
+      NotiBase("error", "Ảnh tải lên không được vượt quá 8 MB");
+      return;
+    }
 
     // Preview cục bộ ngay lập tức trong lúc upload cho mượt
     const localUrl = URL.createObjectURL(file);
@@ -320,8 +255,8 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
     try {
       const formData = new FormData();
-      formData.append("files", file);
-      formData.append("TableName", ETableName.News as unknown as string);
+      formData.append("Files", file);
+      formData.append("TableName", String(ETableName.News));
       formData.append("resize", "false");
       formData.append("watermark", "false");
 
@@ -354,8 +289,11 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
           } as IMyUploadFile,
         ],
       }));
-    } catch {
-      NotiBase("error", "Tải ảnh thất bại, vui lòng thử lại");
+    } catch (error: unknown) {
+      const response = error as { data?: { message?: string; traceId?: string }; message?: string };
+      const errorMessage = response?.data?.message || response?.message || "Tải ảnh thất bại, vui lòng thử lại";
+      const traceId = response?.data?.traceId;
+      NotiBase("error", traceId ? `${errorMessage} (Mã lỗi: ${traceId})` : errorMessage);
       setValues((prev) => ({ ...prev, Thumbnail: [] }));
     }
   };
@@ -377,22 +315,8 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
   // ----------------------------------------------------------------
   // Validate tay
   // ----------------------------------------------------------------
-  const validate = (): FormErrors => {
-    const next: FormErrors = {};
-    if (!values.NewsTypeId) next.NewsTypeId = "Vui lòng chọn loại tin";
-    if (!values.SourceType) next.SourceType = "Vui lòng chọn nguồn tin";
-    if (!thumbnailList.length) next.Thumbnail = "Vui lòng chọn hình minh hoạ";
-    else if (thumbnailList.some((file) => file.status === "error")) {
-      next.Thumbnail = "Ảnh không thể tải, vui lòng chọn ảnh khác";
-    }
-    if (!values.Title?.trim()) next.Title = "Vui lòng nhập tiêu đề";
-    if (!values.Summary?.trim()) next.Summary = "Vui lòng nhập tóm tắt";
-    if (isContentEmpty(values.Content)) next.Content = "Vui lòng nhập nội dung";
-    return next;
-  };
-
   const runValidation = () => {
-    const next = validate();
+    const next = validateNews(values);
     setErrors(next);
     const firstKey = Object.keys(next)[0] as ErrorKey | undefined;
     if (firstKey) {
@@ -413,7 +337,6 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
       setIsSubmit(true);
       const payload: INewsRequest = {
         ...values,
-        SourceType: values.Source?.trim() ? "share" : "write",
       };
       if (payload.Thumbnail && Array.isArray(payload.Thumbnail)) {
         const res = fileServices.processFiles(payload.Thumbnail as any);
@@ -461,6 +384,17 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
     }
   };
 
+  const handleApprove = async () => {
+    if (!model?.Id || !onApprove) return;
+    setIsSubmit(true);
+    try {
+      await onApprove(model as INewsResponse);
+      setApprovePanelOpen(false);
+    } finally {
+      setIsSubmit(false);
+    }
+  };
+
   const titleLen = values.Title?.length ?? 0;
   const summaryLen = values.Summary?.length ?? 0;
 
@@ -472,18 +406,10 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
             {model ? "CHỈNH SỬA BÀI VIẾT" : "THÊM BÀI VIẾT"}
           </h1>
           {onClose && (
-            <button type="button" className={styles["news-form-close"]} onClick={onClose}>
-              <IconClose />
+            <button type="button" className={styles["news-form-close"]} onClick={onClose} aria-label="Đóng bài viết">
+              <X size={24} />
             </button>
           )}
-        </div>
-      )}
-
-      {/* Bản công khai được giữ nguyên đến khi bản sửa được duyệt. */}
-      {model && (model as INewsResponse)?.Status === 1 && (
-        <div className={styles["status-warning-banner"]}>
-          Bài viết này đang <strong>hiển thị công khai</strong>. Khi lưu, phiên bản hiện tại vẫn hiển thị;
-          bản sửa sẽ <strong>chờ duyệt</strong> và chỉ thay thế sau khi được duyệt.
         </div>
       )}
 
@@ -521,7 +447,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
                   <span
                     className={[styles["select-chevron"], typeOpen ? styles["select-chevron-open"] : ""].join(" ")}
                   >
-                    <IconChevron />
+                    <ChevronDown size={16} />
                   </span>
                 </div>
 
@@ -553,48 +479,35 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
                         onChange={(e) => setNewTypeName(e.target.value)}
                       />
                       <button type="button" className={styles["select-add-btn"]} onClick={handleAddNewType}>
-                        <IconPlus /> Thêm
+                        <Plus size={16} /> Thêm
                       </button>
                     </div>
                   </div>
                 )}
 
-                <span className={styles["field-label"]}>
+                <span className={[styles["field-label"], !typeOpen && !values.NewsTypeId ? styles["field-label-resting"] : "", typeOpen ? styles["field-label-active"] : ""].join(" ")}>
                   Loại tin <span className={styles["required"]}>*</span>
                 </span>
                 {errors.NewsTypeId && <div className={styles["field-error"]}>{errors.NewsTypeId}</div>}
               </div>
 
-              {/* Nguồn — custom radio */}
-              <div className={styles["field-wrapper"]}>
-                <span className={styles["field-label-plain"]}>
-                  Nguồn <span className={styles["required"]}>*</span>
-                </span>
-                <div
-                  className={[styles["radio-group"], shakeField === "SourceType" ? styles["shake"] : ""].join(" ")}
-                >
-                  {[
-                    { value: "write", label: "Viết bài" },
-                    { value: "share", label: "Chia sẻ" },
-                  ].map((opt) => (
-                    <div
-                      key={opt.value}
-                      className={styles["radio-option"]}
-                      onClick={() => handleFieldChange("SourceType", opt.value as any)}
-                    >
-                      <span
-                        className={[
-                          styles["radio-circle"],
-                          values.SourceType === opt.value ? styles["radio-circle-active"] : "",
-                        ].join(" ")}
-                      >
-                        <span className={styles["radio-circle-inner"]} />
-                      </span>
-                      <span className={styles["radio-label"]}>{opt.label}</span>
-                    </div>
-                  ))}
+              {model && (
+                <div className={styles["field-wrapper"]}>
+                  <span className={styles["field-label-plain"]}>Nguồn <span className={styles["required"]}>*</span></span>
+                  <div className={styles["radio-group"]} role="radiogroup" aria-label="Nguồn bài viết">
+                    {[{ value: "write", label: "Viết bài" }, { value: "share", label: "Chia sẻ" }].map((option) => (
+                      <button type="button" role="radio" aria-checked={values.SourceType === option.value}
+                        key={option.value} className={styles["radio-option"]}
+                        onClick={() => handleFieldChange("SourceType", option.value as "write" | "share")}>
+                        <span className={[styles["radio-circle"], values.SourceType === option.value ? styles["radio-circle-active"] : ""].join(" ")}>
+                          <span className={styles["radio-circle-inner"]} />
+                        </span>
+                        <span className={styles["radio-label"]}>{option.label}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Hình minh hoạ */}
@@ -613,18 +526,26 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
               {thumbnailPreview ? (
                 <div className={styles["upload-preview-wrap"]}>
-                  <img
-                    className={[
-                      styles["upload-preview-img"],
-                      thumbnailPreview.status === "uploading" ? styles["upload-preview-loading"] : "",
-                    ].join(" ")}
-                    src={thumbnailPreview.url}
-                    alt="thumbnail"
-                    onError={handleThumbnailLoadError}
-                  />
+                  <button
+                    type="button"
+                    className={styles["upload-preview-image-button"]}
+                    onClick={() => setThumbnailImageOpen(true)}
+                    aria-label="Xem ảnh minh họa"
+                    disabled={thumbnailPreview.status === "uploading"}
+                  >
+                    <img
+                      className={[
+                        styles["upload-preview-img"],
+                        thumbnailPreview.status === "uploading" ? styles["upload-preview-loading"] : "",
+                      ].join(" ")}
+                      src={thumbnailPreview.url}
+                      alt="Ảnh minh họa bài viết"
+                      onError={handleThumbnailLoadError}
+                    />
+                  </button>
                   {thumbnailPreview.status === "uploading" && <span className={styles["upload-spinner"]} />}
                   <button type="button" className={styles["upload-edit-btn"]} onClick={handleFilePick} aria-label="Chỉnh sửa ảnh">
-                    <SquarePenIcon />
+                    <Pencil size={24} />
                   </button>
                 </div>
               ) : (
@@ -637,14 +558,31 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
                   ].join(" ")}
                   onClick={handleFilePick}
                 >
-                  <IconUploadCloud />
+                  <ImageIcon size={24} />
                   <span className={styles["upload-hint"]}>Tải ảnh</span>
                 </button>
               )}
               {errors.Thumbnail && <div className={styles["field-error"]}>{errors.Thumbnail}</div>}
+              <Modal
+                open={thumbnailImageOpen && Boolean(thumbnailPreview?.url)}
+                title="Hình minh họa"
+                footer={null}
+                centered
+                onCancel={() => setThumbnailImageOpen(false)}
+                width={720}
+              >
+                {thumbnailPreview?.url && (
+                  <img
+                    src={thumbnailPreview.url}
+                    alt="Ảnh minh họa bài viết"
+                    style={{ display: "block", width: "100%", maxHeight: "70vh", objectFit: "contain" }}
+                  />
+                )}
+              </Modal>
             </div>
           </div>
 
+          <div className={styles["form-article-fields"]}>
           {/* Tiêu đề */}
           <div className={styles["field-wrapper"]}>
             <div
@@ -666,7 +604,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
                 onChange={(e) => handleFieldChange("Title", e.target.value as any)}
               />
             </div>
-            <span className={[styles["field-label"], titleFocused ? styles["field-label-active"] : ""].join(" ")}>
+            <span className={[styles["field-label"], !titleFocused && !values.Title ? styles["field-label-resting"] : "", titleFocused ? styles["field-label-active"] : ""].join(" ")}>
               Tiêu đề <span className={styles["required"]}>*</span>
             </span>
             <div className={styles["field-footer"]}>
@@ -694,7 +632,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
             >
               <textarea
                 className={styles["textarea"]}
-                rows={4}
+                rows={2}
                 maxLength={SUMMARY_MAX}
                 placeholder="Nhập tóm tắt bài viết..."
                 value={values.Summary || ""}
@@ -703,7 +641,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
                 onChange={(e) => handleFieldChange("Summary", e.target.value as any)}
               />
             </div>
-            <span className={[styles["field-label"], summaryFocused ? styles["field-label-active"] : ""].join(" ")}>
+            <span className={[styles["field-label"], !summaryFocused && !values.Summary ? styles["field-label-resting"] : "", summaryFocused ? styles["field-label-active"] : ""].join(" ")}>
               Tóm tắt <span className={styles["required"]}>*</span>
             </span>
             <div className={styles["field-footer"]}>
@@ -721,9 +659,6 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
 
           {/* Nội dung */}
           <div className={styles["field-wrapper"]}>
-            <div className={styles["field-label-static"]}>
-              Nội dung <span className={styles["required"]}>*</span>
-            </div>
             <div
               className={[
                 styles["editor-wrapper"],
@@ -732,13 +667,15 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
               ].join(" ")}
             >
               {/* NOTE: TinyEditor cần nhận prop value/onChange — chỉnh lại tên prop nếu component thật dùng tên khác (vd initialValue/onEditorChange) */}
-              <TinyEditor value={values.Content} onChange={(html: string) => handleFieldChange("Content", html as any)} />
+              <TinyEditor statusbar={false} icons={newsEditorIcons} height={168} toolbar="bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | link | bullist numlist blockquote | image media" value={values.Content} onChange={(html: string) => handleFieldChange("Content", html as any)} />
             </div>
             {errors.Content && <div className={styles["field-error"]}>{errors.Content}</div>}
           </div>
 
+          </div>
+
           {/* Nguồn thông tin */}
-          <div className={styles["field-wrapper"]}>
+          <div className={`${styles["field-wrapper"]} ${styles["form-source-field"]} ${model ? styles["form-source-field-edit"] : ""}`}>
             <div
               className={[
                 styles["input-box"],
@@ -767,17 +704,15 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
               />
             </div>
             <span
-              className={[styles["field-label"], sourceFocused || values.Source ? styles["field-label-active"] : ""].join(
+              className={[styles["field-label"], !sourceFocused && !values.Source ? styles["field-label-resting"] : "", sourceFocused ? styles["field-label-active"] : ""].join(
                 " "
               )}
             >
-              Nguồn thông tin
+              {model ? "Nguồn thông tin" : "Nguồn"}
             </span>
             <div className={styles["field-footer"]}>
               {errors.Source && <span className={styles["field-error"]}>{errors.Source}</span>}
-              <span className={styles["source-hint"]}>
-                các thông tin chia sẻ từ nơi khác bắt buộc ghi đường link trích dẫn
-              </span>
+              {model && <span className={styles["source-hint"]}>các thông tin chia sẻ từ nơi khác bắt buộc ghi đường link trích dẫn</span>}
             </div>
           </div>
         </div>
@@ -787,9 +722,9 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
       <div className={styles["news-form-bottom-fixed"]}>
         <div className={styles["bottom-actions"]}>
           <button type="button" className={styles["preview-button"]} onClick={handlePreview}>
-            <IconEye /> Xem trước
+            Xem trước
           </button>
-          {model && onReject && (
+          {model && (model as INewsResponse).Status === 2 && onReject && (
             <button
               type="button"
               className={styles["reject-button"]}
@@ -799,6 +734,16 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
               Từ chối
             </button>
           )}
+          {model && (model as INewsResponse).Status === 2 && onApprove && (
+            <button
+              type="button"
+              className={styles["approve-button"]}
+              onClick={() => setApprovePanelOpen(true)}
+              disabled={isSubmit}
+            >
+              Duyệt bài
+            </button>
+          )}
           <button
             type="button"
             className={styles["submit-button"]}
@@ -806,10 +751,23 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject }: Props) => {
             disabled={isSubmit}
           >
             {isSubmit && <span className={styles["btn-spinner"]} />}
-            {model ? "Gửi duyệt bài" : "Gửi duyệt bài"}
+            {model ? "Xác nhận" : "Gửi duyệt bài"}
           </button>
         </div>
       </div>
+
+      <Modal
+        title="Duyệt bài viết?"
+        open={approvePanelOpen}
+        onCancel={() => !isSubmit && setApprovePanelOpen(false)}
+        onOk={handleApprove}
+        confirmLoading={isSubmit}
+        okText="Duyệt bài"
+        cancelText="Hủy"
+        maskClosable={false}
+      >
+        <p>Bài viết sẽ được hiển thị công khai. Sau khi duyệt, nội dung không thể chỉnh sửa.</p>
+      </Modal>
 
       {/* Modal lý do từ chối */}
       <Modal

@@ -198,6 +198,7 @@ function TableBase<T>({
                     defaultCurrent={1}
                     total={total}
                     defaultPageSize={baseFilter.pageSize}
+                    pageSize={Number(searchOptions.pageSize ?? baseFilter.pageSize)}
                     pageSizeOptions={["10", "20", "30", "40", "50"]}
                     current={Number(searchOptions.pageIndex ?? 1)}
                     showSizeChanger

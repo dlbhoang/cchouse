@@ -4,6 +4,7 @@ import { ChevronDown, Check, SquarePenIcon, Trash2Icon, X } from "lucide-react";
 import { useState } from "react";
 import { mutate } from "swr";
 
+import NewsConfirmButton from "../../news/confirm";
 import TableNoPaging from "@/lib/components/shared/TableNoPaging";
 import type { INewsType } from "@/services/api/news/INews";
 import newsTypeApi from "@/services/api/news/newsTypeApi";
@@ -86,7 +87,7 @@ export const NewsTypeTable = ({ data, loading, onEditType, counts }: Props) => {
     {
       key: "action",
       title: "Thao tác",
-      width: 100,
+      width: 88,
       align: "center",
       render: (_value, record) => {
         const isEditing = editingId === record.Id;
@@ -97,18 +98,20 @@ export const NewsTypeTable = ({ data, loading, onEditType, counts }: Props) => {
               <button
                 type="button"
                 className="news-type-action-btn confirm"
+                aria-label="Lưu loại tin tức"
                 onClick={() => confirmEdit(record)}
                 disabled={saving || !editingName.trim()}
               >
-                <Check className="size-4" />
+                <Check className="size-6" />
               </button>
               <button
                 type="button"
                 className="news-type-action-btn cancel"
+                aria-label="Hủy chỉnh sửa loại tin tức"
                 onClick={cancelEdit}
                 disabled={saving}
               >
-                <X className="size-4" />
+                <X className="size-6" />
               </button>
             </div>
           );
@@ -119,21 +122,25 @@ export const NewsTypeTable = ({ data, loading, onEditType, counts }: Props) => {
             <button
               type="button"
               className="news-type-icon-btn"
+              aria-label="Chỉnh sửa loại tin tức"
               onClick={() => handleEditClick(record)}
             >
-              <SquarePenIcon className="size-4" />
+              <SquarePenIcon className="size-6" />
             </button>
 
-            <button
-              type="button"
-              className="news-type-icon-btn danger"
-              onClick={async () => {
+            <NewsConfirmButton
+              label="Xóa loại tin tức"
+              className="news-type-delete-btn"
+              title="Xác nhận xóa"
+              description={<>Bạn có muốn xóa loại tin <strong>“{record.Name}”</strong>?</>}
+              confirmText="Xóa"
+              danger
+              icon={<Trash2Icon className="size-6" />}
+              onConfirm={async () => {
                 await newsTypeApi.delete(record.Id ?? 0);
                 mutate(newsTypeApi.mutateKey);
               }}
-            >
-              <Trash2Icon className="size-4" />
-            </button>
+            />
           </Space>
         );
       },

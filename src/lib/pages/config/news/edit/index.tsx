@@ -1,5 +1,5 @@
 "use client";
-import { Card, Space, Switch, Typography } from "antd";
+import { Alert, Button, Card, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 
 import NewsForm from "@/lib/components/admin/news/form";
@@ -13,7 +13,6 @@ type Props = {
 
 const EditNewsPage = ({ id }: Props) => {
   const [data, setData] = useState<INewsResponse>();
-  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -29,6 +28,32 @@ const EditNewsPage = ({ id }: Props) => {
     data?.StatusName?.toLowerCase().includes("ẩn") ||
       data?.StatusName?.toLowerCase().includes("hidden")
   );
+  const isApproved = Boolean(
+    [0, 1, 4].includes(data?.Status ?? -1) ||
+      data?.StatusName?.toLocaleLowerCase() === "đang hiển thị" ||
+      data?.StatusName?.toLocaleLowerCase() === "đã duyệt" ||
+      data?.ApprovedDate ||
+      data?.ApprovedBy
+  );
+
+  if (!data) {
+    return <Card loading title={<TitlePage title="Chỉnh sửa bài viết" />} />;
+  }
+
+  if (isApproved) {
+    return (
+      <Card title={<TitlePage title="Chỉnh sửa bài viết" />}>
+        <Space direction="vertical" size="middle">
+          <Alert
+            type="info"
+            showIcon
+            message="Tin đã duyệt không thể chỉnh sửa. Hãy ẩn hoặc xóa tin rồi tạo tin mới."
+          />
+          <Button href="/admin/config/news">Quay lại danh sách tin</Button>
+        </Space>
+      </Card>
+    );
+  }
 
   return (
     <Card
@@ -36,28 +61,7 @@ const EditNewsPage = ({ id }: Props) => {
       extra={
         data && (
           <Space>
-            <Switch
-              checked={!isHidden}
-              loading={updating}
-              onChange={async () => {
-                if (!data) return;
-                setUpdating(true);
-                try {
-                  if (isHidden) {
-                    await newsApi.show(data.Id ?? 0);
-                  } else {
-                    await newsApi.hidden(data.Id ?? 0);
-                  }
-                  const res = await newsApi.getById(data.Id ?? 0);
-                  setData(res.data);
-                } finally {
-                  setUpdating(false);
-                }
-              }}
-            />
-            <Typography.Text>
-              {isHidden ? "Ẩn bài" : "Đang hiển thị"}
-            </Typography.Text>
+            <Typography.Text>{isHidden ? "Đã ẩn" : data.StatusName}</Typography.Text>
           </Space>
         )
       }

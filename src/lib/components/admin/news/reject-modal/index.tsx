@@ -7,10 +7,9 @@ import newsApi from "@/services/api/news/newsApi";
 
 type Props = {
   id: number;
-  hasPendingChanges?: boolean;
 };
 
-const RejectNewsModal = ({ id, hasPendingChanges }: Props) => {
+const RejectNewsModal = ({ id }: Props) => {
   const [open, setOpen] = useState(false);
   const [reason, setReason] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,7 @@ const RejectNewsModal = ({ id, hasPendingChanges }: Props) => {
         onClick={() => setOpen(true)}
       />
       <Modal
-        title={hasPendingChanges ? "Từ chối bản cập nhật?" : "Từ chối bài viết?"}
+        title="Từ chối bài viết?"
         open={open}
         onCancel={() => {
           setOpen(false);
@@ -62,9 +61,7 @@ const RejectNewsModal = ({ id, hasPendingChanges }: Props) => {
         cancelText="Huỷ"
       >
         <p style={{ marginBottom: 8 }}>
-          {hasPendingChanges
-            ? "Bản sửa sẽ bị hủy, nội dung đang hiển thị công khai (nếu có) được giữ nguyên."
-            : "Bài viết sẽ không được duyệt. Vui lòng nhập lý do để người đăng biết và chỉnh sửa lại."}
+          Bài viết sẽ không được duyệt. Vui lòng nhập lý do để người đăng biết và chỉnh sửa lại.
         </p>
         <Input.TextArea
           placeholder="Nhập lý do từ chối..."

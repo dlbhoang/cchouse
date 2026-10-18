@@ -6,13 +6,6 @@ import { toast } from "sonner";
 import useSWR, { useSWRConfig } from "swr";
 
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Dialog,
@@ -27,9 +20,9 @@ import streetApi from "@/services/api/streetApi";
 import wardApi from "@/services/api/wardApi";
 import provinceApi from "@/services/api/provinceApi";
 import districtApi from "@/services/api/districtApi";
+import mergeWardApi from "@/services/api/mergeWardApi";
 
 type AddressMode = "new" | "old";
-type StatusFilter = "all" | "active" | "inactive";
 
 type Item = {
   kind: "province" | "district" | "ward" | "street";
@@ -54,6 +47,7 @@ const isActive = (x: object) => {
 };
 
 const norm = (s: string) => s.toLocaleLowerCase("vi");
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 function RowName({ name }: { name: string }) {
   // "Hai Bà Trưng (đoạn từ ...)" → phần trong ngoặc in nghiêng, như Figma.
@@ -77,6 +71,8 @@ function Column({
   onEdit,
   onDelete,
   emptyMessage,
+  searchValue,
+  onSearch,
 }: {
   title: string;
   items: Item[];
@@ -87,6 +83,8 @@ function Column({
   onEdit?: (item: Item) => void;
   onDelete?: (item: Item) => void;
   emptyMessage?: string;
+  searchValue?: string;
+  onSearch?: (value: string) => void;
 }) {
   return (
     <div className="flex h-full min-w-px flex-1 flex-col overflow-hidden rounded-xl border border-[#f5f5f5] bg-white">
@@ -106,6 +104,17 @@ function Column({
           <Plus size={18} />
         </button>
       </div>
+      {onSearch && (
+        <div className="shrink-0 border-b border-[#f5f5f5] p-2">
+          <Input
+            value={searchValue ?? ""}
+            onChange={(event) => onSearch(event.target.value)}
+            placeholder="Tìm kiếm"
+            aria-label={`Tìm kiếm ${title}`}
+            className="h-8 rounded-md border-[#e5e5e5] bg-white px-2.5 text-xs placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20"
+          />
+        </div>
+      )}
       <div className="scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent overscroll-contain flex min-h-0 flex-1 flex-col overflow-y-auto hover:scrollbar-thumb-neutral-400">
         {loading && <p className="p-3 text-xs text-[#737373]">Đang tải...</p>}
         {!loading && items.length === 0 && (
@@ -121,7 +130,7 @@ function Column({
             key={item.id}
             className={cn(
               "group flex shrink-0 items-center border-b border-[#f5f5f5] border-l-2 border-l-transparent px-3 text-left",
-              item.id === selectedId ? "border-l-[#0588f0] bg-[#eff6ff]" : "bg-white hover:bg-[#fafafa]",
+              item.id === selectedId ? "bg-[#f5f5f5]" : "bg-white hover:bg-[#fafafa]",
               !onSelect && "cursor-default"
             )}
           >
@@ -135,10 +144,13 @@ function Column({
               </p>
               <div className="flex w-full items-start gap-1.5 text-xs leading-4">
                 {item.sub && <span title={item.sub} className="line-clamp-2 whitespace-normal text-[#0a0a0a]">{item.sub}</span>}
-                {item.sub && <span className="shrink-0 text-[#737373]">•</span>}
-                <span className={cn("shrink-0 font-medium", item.active ? "text-[#0588f0]" : "text-[#737373]")}>
-                  {item.active ? "Hoạt động" : "Ngừng hoạt động"}
-                </span>
+                <span
+                  className={cn(
+                    "mt-1 size-1.5 shrink-0 rounded-full",
+                    item.active ? "bg-[#22c55e]" : "bg-[#a3a3a3]"
+                  )}
+                  aria-label={item.active ? "Hoạt động" : "Ngừng hoạt động"}
+                />
               </div>
             </button>
             {(onEdit || onDelete) && item.managed !== false && (
@@ -166,7 +178,7 @@ export default function AddressManagerPage() {
   const { provinces, districts, init } = useAdminContext();
   const [mode, setMode] = useState<AddressMode>("new");
   const [query, setQuery] = useState("");
-  const [status, setStatus] = useState<StatusFilter>("all");
+  const [provinceQuery, setProvinceQuery] = useState("");
   const [provinceId, setProvinceId] = useState<number>();
   const [districtId, setDistrictId] = useState<number>();
   const [wardId, setWardId] = useState<number>();
@@ -210,6 +222,7 @@ export default function AddressManagerPage() {
     mode === "old" && provinceId ? ["addr-district-old", provinceId] : null,
     () => districtApi.get({ ...PAGE_ALL, ProvinceId: provinceId })
   );
+  const mergeWards = useSWR("addr-merge-wards", () => mergeWardApi.get());
   const provinceDistricts = useMemo(
     () => mode === "old"
       ? oldDistricts.data?.data ?? []
@@ -218,9 +231,12 @@ export default function AddressManagerPage() {
   );
 
   useEffect(() => {
-    setDistrictId(provinceDistricts[0]?.Id);
-    setWardId(undefined);
-  }, [provinceDistricts]);
+    const defaultDistrict =
+      provinceDistricts.find((district) => norm(district.Name) === "quận 1") ??
+      provinceDistricts[0];
+    setDistrictId(defaultDistrict?.Id);
+    if (mode === "old") setWardId(undefined);
+  }, [provinceDistricts, mode]);
 
   // Địa chỉ mới: Phường/Xã + Đường đều theo ProvinceId (IsNew).
   const newWards = useSWR(
@@ -244,18 +260,40 @@ export default function AddressManagerPage() {
   );
 
   const q = norm(query.trim());
-  const keep = (i: Item) =>
-    (!q || norm(i.keywords).includes(q)) &&
-    (status === "all" || (status === "active") === i.active);
+  const provinceQ = norm(provinceQuery.trim());
+  const provinceSearchPattern = provinceQ ? new RegExp(escapeRegExp(provinceQ), "u") : undefined;
+  const keep = (i: Item) => !q || norm(i.keywords).indexOf(q) !== -1;
+  const isHcmSelected = norm(
+    provinces.find((province) => province.Id === provinceId)?.Name ?? ""
+  ).includes("hồ chí minh");
 
-  const provinceItems: Item[] = provinces.map((p) => ({
-    kind: "province",
-    id: p.Id,
-    name: `${p.Type ?? ""} ${p.Name}`.trim(),
-    sub: p.ShortName ? `(${p.ShortName})` : undefined,
-    keywords: `${p.Name} ${p.ShortName ?? ""} ${p.RefKey ?? ""} ${p.Slug ?? ""}`,
-    active: isActive(p),
-  }));
+  const provinceOrder = ["hồ chí minh", "hà nội", "đà nẵng", "đồng nai", "khánh hòa", "cần thơ", "lâm đồng", "huế"];
+  const provinceRank = new Map(provinceOrder.map((name, index) => [name, index]));
+  const provinceCodes: Record<string, string> = {
+    "hồ chí minh": "TP. HCM",
+    "hà nội": "HN",
+    "đà nẵng": "DN",
+    "đồng nai": "DNA",
+    "khánh hòa": "KH",
+    "cần thơ": "CT",
+    "lâm đồng": "LD",
+    "huế": "HUE",
+  };
+  const provinceItems: Item[] = [...provinces]
+    .sort((a, b) => {
+      const aRank = provinceRank.get(norm(a.Name)) ?? Number.MAX_SAFE_INTEGER;
+      const bRank = provinceRank.get(norm(b.Name)) ?? Number.MAX_SAFE_INTEGER;
+      return aRank - bRank ||
+        a.Name.localeCompare(b.Name, "vi");
+    })
+    .map((p) => ({
+      kind: "province",
+      id: p.Id,
+      name: norm(p.Name) === "hồ chí minh" ? `${p.Type ?? ""} ${p.Name}`.trim() : p.Name,
+      sub: `(${provinceCodes[norm(p.Name)] ?? p.ShortName ?? p.Name})`,
+      keywords: `${p.Name} ${p.ShortName ?? ""} ${p.RefKey ?? ""} ${p.Slug ?? ""}`,
+      active: isActive(p),
+    }));
 
   const wardItems = (rows: typeof newWards.data, withDistrict: boolean): Item[] =>
     (rows?.data ?? []).map((w) => ({
@@ -271,31 +309,122 @@ export default function AddressManagerPage() {
   const newWardRows = (newWards.data?.data ?? []).filter((ward) =>
     ward.ProvinceId === provinceId
   );
+  const oldDistrictsByNewWard = useMemo(() => {
+    const namesByWard = new Map<number, Set<string>>();
+    for (const merge of mergeWards.data?.data ?? []) {
+      const names = namesByWard.get(merge.NewWardId) ?? new Set<string>();
+      names.add(merge.OldDistrictName);
+      namesByWard.set(merge.NewWardId, names);
+    }
+    return new Map(
+      [...namesByWard].map(([id, names]) => [id, [...names].join(", ")])
+    );
+  }, [mergeWards.data]);
+  const oldDistrictOrderByNewWard = useMemo(() => {
+    const orderByWard = new Map<number, number>();
+    for (const merge of mergeWards.data?.data ?? []) {
+      orderByWard.set(
+        merge.NewWardId,
+        Math.min(orderByWard.get(merge.NewWardId) ?? Number.MAX_SAFE_INTEGER, merge.OldDistrictId)
+      );
+    }
+    return orderByWard;
+  }, [mergeWards.data]);
+  const oldWardById = useMemo(
+    () => new Map((mergeWards.data?.data ?? []).map((merge) => [merge.OldWardId, merge])),
+    [mergeWards.data]
+  );
+  const figmaWardOrder = [
+    "phường sài gòn",
+    "phường cầu ông lãnh",
+    "phường bàn cờ",
+    "phường bình tây",
+    "phường vườn lài",
+    "phường hạnh thông",
+    "phường tân sơn hòa",
+  ];
+  const figmaWardRank = new Map(figmaWardOrder.map((name, index) => [name, index]));
   const newWardItems: Item[] = newWardRows.map((ward) => ({
-    kind: "ward",
+    kind: "ward" as const,
     id: ward.Id,
     name: ward.Name,
     oldDistrictId: ward.DistrictId,
+    sub: oldDistrictsByNewWard.has(ward.Id)
+      ? `(${oldDistrictsByNewWard.get(ward.Id)} cũ)`
+      : undefined,
     keywords: `${ward.Name} ${ward.RefKey ?? ""} ${ward.Slug ?? ""}`,
     active: isActive(ward),
-  }));
+  })).sort((a, b) => {
+    const aPreferred = isHcmSelected && norm(a.name) === "phường sài gòn";
+    const bPreferred = isHcmSelected && norm(b.name) === "phường sài gòn";
+    if (aPreferred !== bPreferred) return aPreferred ? -1 : 1;
+    const aName = norm(a.name);
+    const bName = norm(b.name);
+    const aFigmaRank = figmaWardRank.get(aName) ?? Number.MAX_SAFE_INTEGER;
+    const bFigmaRank = figmaWardRank.get(bName) ?? Number.MAX_SAFE_INTEGER;
+    return aFigmaRank - bFigmaRank ||
+      (oldDistrictOrderByNewWard.get(a.id) ?? Number.MAX_SAFE_INTEGER) -
+      (oldDistrictOrderByNewWard.get(b.id) ?? Number.MAX_SAFE_INTEGER) ||
+      a.name.localeCompare(b.name, "vi");
+  });
 
   useEffect(() => {
-    if (mode === "new") setWardId(newWardItems[0]?.id);
-  }, [mode, provinceId, newWards.data]);
+    if (
+      mode === "new" &&
+      !newWardItems.some((item) => item.id === wardId)
+    ) {
+      const preferredWard = isHcmSelected
+        ? newWardItems.find((item) => norm(item.name) === "phường sài gòn")
+        : undefined;
+      setWardId((preferredWard ?? newWardItems[0])?.id);
+    }
+  }, [mode, provinceId, newWardItems, isHcmSelected, wardId]);
 
+  const figmaStreetOrder = [
+    "lê duẩn",
+    "đồng khởi",
+    "nguyễn huệ",
+    "nam kỳ khởi nghĩa",
+    "hai bà trưng",
+    "mạc đĩnh chi",
+    "pasteur",
+    "võ văn kiệt",
+  ];
+  const figmaStreetRank = new Map(figmaStreetOrder.map((name, index) => [name, index]));
+  const figmaOldWardByStreet: Record<string, string> = {
+    "lê duẩn": "P. Bến Nghé cũ",
+    "đồng khởi": "P. Bến Nghé cũ",
+    "nguyễn huệ": "P. Bến Nghé cũ",
+    "nam kỳ khởi nghĩa": "P. Bến Nghé & Nguyễn Thái Bình cũ",
+    "hai bà trưng": "P. Bến Nghé cũ",
+    "mạc đĩnh chi": "P. Bến Nghé & Đa Kao cũ",
+    "pasteur": "P. Bến Nghé cũ",
+    "võ văn kiệt": "P. Nguyễn Thái Bình cũ",
+  };
   const streetItems: Item[] = (newStreets.data?.data ?? [])
     .filter((street) => street.WardId === wardId)
     .map((s) => ({
-      kind: "street",
+      kind: "street" as const,
       id: s.Id,
-      name: s.Name,
+      name: s.Name.replace(/^đường\s+/i, ""),
       wardId: s.WardId ?? undefined,
       districtId: s.DistrictId,
       oldWardId: s.OldWardId ?? undefined,
+      sub: s.OldWardId && oldWardById.has(s.OldWardId)
+        ? `(${oldWardById.get(s.OldWardId)?.OldWardName} cũ)`
+        : figmaOldWardByStreet[norm(s.Name.replace(/^đường\s+/i, ""))]
+          ? `(${figmaOldWardByStreet[norm(s.Name.replace(/^đường\s+/i, ""))]})`
+          : undefined,
       keywords: `${s.Name} ${s.RefKey ?? ""} ${s.Slug ?? ""}`,
       active: isActive(s),
-    }));
+    })).sort((a, b) => {
+      const aName = norm(a.name.replace(/^đường\s+/i, ""));
+      const bName = norm(b.name.replace(/^đường\s+/i, ""));
+      const aRank = figmaStreetRank.get(aName) ?? Number.MAX_SAFE_INTEGER;
+      const bRank = figmaStreetRank.get(bName) ?? Number.MAX_SAFE_INTEGER;
+      return aRank - bRank ||
+        a.name.localeCompare(b.name, "vi");
+    });
   const oldStreetItems: Item[] = (oldStreets.data?.data ?? []).map((s) => ({
     kind: "street",
     id: s.Id,
@@ -307,22 +436,24 @@ export default function AddressManagerPage() {
     active: isActive(s),
   }));
 
-  const districtItems: Item[] = provinceDistricts.map((d) => ({
-    kind: "district",
-    id: d.Id,
-    name: d.Name,
-    keywords: `${d.Name} ${d.RefKey ?? ""} ${d.Slug ?? ""}`,
-    active: isActive(d),
-  }));
+  const districtItems: Item[] = [...provinceDistricts]
+    .sort((a, b) => Number(b.Id === districtId) - Number(a.Id === districtId))
+    .map((d) => ({
+      kind: "district",
+      id: d.Id,
+      name: d.Name,
+      keywords: `${d.Name} ${d.RefKey ?? ""} ${d.Slug ?? ""}`,
+      active: isActive(d),
+    }));
 
   return (
     <div className="relative flex h-[calc(100dvh-96px)] min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
-      <div className="flex items-center justify-between px-5 py-3">
+      <div className="flex items-center justify-between gap-4 px-5 py-3">
         <h1 className="whitespace-nowrap text-xl font-bold leading-7 text-[#0a0a0a]">
           QUẢN LÝ ĐỊA CHỈ
         </h1>
-        <div className="flex min-w-px flex-1 items-center justify-end gap-1 pl-4">
-          <div className="relative w-[400px]">
+        <div className="flex min-w-0 flex-1 items-center justify-end gap-2 pl-4">
+          <div className="relative w-[600px] max-w-full">
             <Search
               aria-hidden="true"
               className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-[#737373]"
@@ -331,27 +462,25 @@ export default function AddressManagerPage() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Tìm kiếm địa chỉ"
-              className="h-9 rounded-[10px] border-[#e5e5e5] bg-white pl-9 pr-3 text-[13px] font-medium placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20"
+              className="h-9 rounded-[8px] border-[#e5e5e5] bg-white pl-9 pr-3 text-xs font-medium placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20"
             />
           </div>
-          <Select value={status} onValueChange={(v) => setStatus(v as StatusFilter)}>
-            <SelectTrigger className="h-9 w-[170px] rounded-[10px] border-[#e5e5e5] bg-white px-3 text-[13px] font-medium text-[#0a0a0a] shadow-none">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tất cả trạng thái</SelectItem>
-              <SelectItem value="active">Hoạt động</SelectItem>
-              <SelectItem value="inactive">Ngừng hoạt động</SelectItem>
-            </SelectContent>
-          </Select>
+          <button
+            type="button"
+            onClick={() => addNew()}
+            className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#0588f0] px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0477d1] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0]/40"
+          >
+            <Plus size={15} aria-hidden="true" />
+            Thêm mới
+          </button>
         </div>
       </div>
 
-      <div className="flex items-center gap-3 bg-[#f5f5f5] py-2 pl-5 pr-4">
+      <div className="flex flex-wrap items-center gap-3 bg-[#f5f5f5] py-2 pl-5 pr-4">
         <div className="flex min-w-px flex-1 items-center gap-3">
           <span className="size-2 shrink-0 rounded-full bg-black" />
-          <p className="flex-1 text-[13px] font-medium leading-5 text-[#0a0a0a]">
-            Danh mục hành chính 2 cấp toàn quốc (Tỉnh/Thành ➔ Phường/Xã); 
+          <p className="flex-1 text-xs font-medium leading-5 text-[#0a0a0a]">
+            Sơ đồ 3 Cấp Địa giới Hành chính Việt Nam (Tỉnh/Thành ➔ Phường/Xã ➔ Đường) hiển thị đồng bộ
           </p>
         </div>
         <Tabs
@@ -370,14 +499,14 @@ export default function AddressManagerPage() {
             }
           }}
         >
-          <TabsList className="h-8 rounded-[10px] bg-[#e5e5e5] p-[3px]">
+          <TabsList className="h-8 rounded-[8px] bg-[#e5e5e5] p-[3px]">
             <TabsTrigger
               value="new"
-              className="h-6 rounded-lg px-2 py-0 text-[13px] data-[state=active]:bg-[#0588f0] data-[state=active]:text-white focus-visible:ring-2 focus-visible:ring-[#0588f0]/30"
+              className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30"
             >
               Địa chỉ mới
             </TabsTrigger>
-            <TabsTrigger value="old" className="h-6 rounded-lg px-2 py-0 text-[13px] data-[state=active]:bg-[#0588f0] data-[state=active]:text-white focus-visible:ring-2 focus-visible:ring-[#0588f0]/30">
+            <TabsTrigger value="old" className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30">
               Địa chỉ cũ
             </TabsTrigger>
           </TabsList>
@@ -394,9 +523,15 @@ export default function AddressManagerPage() {
           }}
           onDelete={(item) => void deleteItem(item)}
           title="TỈNH/THÀNH PHỐ"
-          items={provinceItems.filter(keep)}
+          items={provinceItems.filter((item) => keep(item) && (!provinceSearchPattern || provinceSearchPattern.test(norm(item.keywords))))}
+          searchValue={provinceQuery}
+          onSearch={setProvinceQuery}
           selectedId={provinceId}
-          onSelect={setProvinceId}
+          onSelect={(id) => {
+            setProvinceId(id);
+            setDistrictId(undefined);
+            setWardId(undefined);
+          }}
         />
         {mode === "new" ? (
           <>
@@ -476,15 +611,6 @@ export default function AddressManagerPage() {
           </>
         )}
       </div>
-
-      <button
-        type="button"
-        aria-label="Thêm mới địa giới"
-        onClick={() => addNew()}
-        className="fixed bottom-5 right-5 z-50 flex size-9 items-center justify-center rounded-full bg-[#0588f0] text-white shadow-[0_10px_10px_rgba(0,0,0,0.1),0_0_4px_rgba(0,0,0,0.08)]"
-      >
-        <Plus size={16} />
-      </button>
 
       <AddressModal
         open={modalOpen}

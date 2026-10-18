@@ -1,4 +1,4 @@
-#!/bin/bash
+5#!/bin/bash
 set -Eeuo pipefail
 
 # ================== CẤU HÌNH ==================

@@ -1,4 +1,5 @@
 import { Col, Form, Input, Modal, Row } from "antd";
+import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { mutate } from "swr";
 
@@ -47,8 +48,10 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
     <Modal
       open={isModalOpen}
       title={model?.Id ? "Chỉnh sửa loại tin" : "Thêm mới chủ đề"}
-      width={400}
+      width={384}
       className="news-addtype-modal"
+      closeIcon={<X size={24} />}
+      centered
       onCancel={() => {
         form.resetFields();
         handleCancel();
@@ -61,7 +64,7 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
           backgroundColor: "#0588f0",
           borderColor: "#0588f0",
           borderRadius: 10,
-          height: 38,
+          height: 40,
           fontWeight: 500,
           boxShadow: "none",
         },
@@ -70,7 +73,7 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
         style: {
           borderRadius: 10,
           borderColor: "#e5e5e5",
-          height: 38,
+          height: 40,
           fontWeight: 500,
         },
       }}

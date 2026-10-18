@@ -1,13 +1,15 @@
 const FLOATING_FIELD_CSS = `
+  .news-filter-form { container-type: inline-size; width: 100%; min-width: 0; }
   .news-filter-outer {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 14px;
-    border: 1px solid rgba(5, 136, 240, 0.18);
-    border-radius: 16px;
-    background: linear-gradient(135deg, #f7fbff 0%, #ffffff 58%, #f4faff 100%);
-    box-shadow: 0 8px 24px rgba(5, 136, 240, 0.06);
+    max-width: 1340px;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: inset 0 0 0 1px #e5e5e5;
     box-sizing: border-box;
   }
   .news-filter-outer .news-filter-toolbar {
@@ -18,18 +20,18 @@ const FLOATING_FIELD_CSS = `
 
   .news-filter-toolbar {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin-top: 0;
     padding-top: 10px;
   }
 
-  /* ── Khung field bọc ngoài: cố định width nhỏ gọn, khớp .combobox (201px) trong index.css ── */
+  /* ── Filter fields sized for the 1440px news management frame. ── */
   .news-filter-field {
-    flex: 0 0 201px;
-    width: 201px;
-    min-height: 44px;
+    flex: 0 0 200px;
+    width: 200px;
+    min-height: 40px;
     display: flex;
     align-items: center;
   }
@@ -37,15 +39,15 @@ const FLOATING_FIELD_CSS = `
   .news-filter-field--source,
   .news-filter-field--date,
   .news-filter-field--status {
-    flex: 0 0 201px;
-    width: 201px;
-    max-width: 201px;
+    flex: 0 0 200px;
+    width: 200px;
+    max-width: 200px;
   }
   .news-filter-field--search {
-    flex: 1 1 280px;
-    min-width: 280px;
-    width: 280px;
-    max-width: 420px;
+    flex: 1 1 200px;
+    min-width: 180px;
+    width: 200px;
+    max-width: 283px;
   }
 
   .news-filter-clear-btn {
@@ -55,10 +57,10 @@ const FLOATING_FIELD_CSS = `
     gap: 6px;
     min-height: 36px;
     padding: 0 10px;
-    border: 1px solid #dbeafe;
-    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
     background: #ffffff;
-    color: #475569;
+    color: #0a0a0a;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -76,24 +78,24 @@ const FLOATING_FIELD_CSS = `
     display: flex;
     align-items: center;
     gap: 40px;
-    width: 201px;
-    height: 44px;
-    min-height: 44px;
+    width: 100%;
+    height: 40px;
+    min-height: 40px;
     padding: 0 12px;
     box-sizing: border-box;
-    border-radius: 11px;
-    background: rgba(255, 255, 255, 0.96);
-    border: 1px solid #dbeafe;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
     transition: border-color 0.18s cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .news-filter-floating-field:hover {
-    border-color: rgba(5, 136, 240, 0.48);
+    border-color: #bdbdbd;
     background: #ffffff;
   }
   .news-filter-floating-field:focus-within {
     border-color: #0588f0;
-    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.14), 0 3px 8px rgba(5, 136, 240, 0.08);
+    box-shadow: 0 0 0 2px rgba(5, 136, 240, 0.12);
   }
 
   /* ── Triệt tiêu toàn bộ border/shadow gốc của antd ở MỌI trạng thái,
@@ -240,6 +242,10 @@ const FLOATING_FIELD_CSS = `
     color: #0a0a0a;
   }
 
+  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within) .news-source-dropdown-text {
+    opacity: 0;
+  }
+
   .news-source-dropdown-icon {
     flex-shrink: 0;
     color: #a3a3a3;
@@ -280,6 +286,12 @@ const FLOATING_FIELD_CSS = `
     line-height: 1.4 !important;
     font-size: 14px !important;
   }
+  .news-filter-floating-field .ant-select-selection-placeholder,
+  .news-filter-floating-field .ant-select-selection-item,
+  .news-filter-floating-field .news-source-dropdown-text,
+  .news-filter-floating-field .ant-picker-input > input {
+    transform: none;
+  }
   /* Giá trị đã chọn / đã nhập: chữ đậm màu #0a0a0a, khớp text trong ô của index.css */
   .news-filter-floating-field .ant-select-selection-item,
   .news-filter-floating-field .ant-picker-input > input {
@@ -288,10 +300,10 @@ const FLOATING_FIELD_CSS = `
     font-weight: 500 !important;
   }
   .news-filter-floating-field .ant-select-selection-item {
-    padding: 4px 10px !important;
-    min-height: 28px !important;
-    border-radius: 12px !important;
-    background: rgba(15, 23, 42, 0.04) !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
     border: none !important;
     display: inline-flex !important;
     align-items: center !important;
@@ -330,6 +342,12 @@ const FLOATING_FIELD_CSS = `
     font-weight: 500 !important;
   }
 
+  /* The idle label replaces Ant Design's duplicate placeholder. */
+  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within) .ant-select-selection-placeholder,
+  .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within) .ant-picker-input > input::placeholder {
+    color: transparent !important;
+  }
+
   /* Icon mũi tên / clear trong Select, DatePicker — nhạt khi nghỉ, đậm dần khi hover/focus */
   .news-filter-floating-field .ant-select-arrow,
   .news-filter-floating-field .ant-select-clear,
@@ -354,7 +372,7 @@ const FLOATING_FIELD_CSS = `
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 0 4px;
+    padding: 0;
     background: transparent;
     color: #a1a1aa;
     font-family: Inter, var(--default-font-family, sans-serif);
@@ -364,28 +382,31 @@ const FLOATING_FIELD_CSS = `
     white-space: nowrap;
     pointer-events: none;
     z-index: 2;
-    transition: top 0.18s ease, font-size 0.18s ease, color 0.18s ease, background-color 0.18s ease;
+    transition: top 0.18s ease, transform 0.18s ease, padding 0.18s ease,
+      font-size 0.18s ease, color 0.18s ease, background-color 0.18s ease;
   }
   .news-filter-floating-label .required {
     color: #dc3e42;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 500;
-    line-height: 20px;
+    line-height: 12px;
   }
 
   .news-filter-floating-field--filled .news-filter-floating-label,
   .news-filter-floating-field:focus-within .news-filter-floating-label {
-    top: 0;
-    background: #f8fcff;
+    top: -7px;
+    transform: none;
+    padding: 0 4px;
+    background: #ffffff;
     color: #64748b;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 400;
-    line-height: 16px;
+    line-height: 12px;
   }
   .news-filter-floating-field--filled .news-filter-floating-label .required,
   .news-filter-floating-field:focus-within .news-filter-floating-label .required {
     font-size: 10px;
-    line-height: 16px;
+    line-height: 12px;
   }
   .news-filter-floating-field:focus-within .news-filter-floating-label {
     color: #0588f0;
@@ -403,26 +424,15 @@ const FLOATING_FIELD_CSS = `
     color: #ef4444;
   }
 
-  /* Ẩn text mặc định bên trong control (vd chữ "Chọn") khi box chưa có giá trị và chưa focus,
-     để chỉ còn label nổi đóng vai trò placeholder — không phụ thuộc component con có nhận
-     đúng prop placeholder hay không. */
-    .news-filter-floating-field:not(.news-filter-floating-field--filled) .ant-select-selection-placeholder,
-  .news-filter-floating-field:not(.news-filter-floating-field--filled) .news-source-dropdown-text:not(.news-source-dropdown-text--filled) {
-    opacity: 0;
-  }
-
-  .news-filter-floating-field:not(.news-filter-floating-field--filled) .ant-picker-input > input::placeholder {
-    opacity: 0;
-  }
-
   /* ── Ô tìm kiếm: đồng bộ phong cách với các box phía trên (border e5e5e5, radius 10, height 40) ── */
   .news-filter-field--search .news-filter-search-field {
-    min-width: 280px !important;
+    min-width: 180px !important;
+    max-width: 283px !important;
     width: 100% !important;
   }
   .news-filter-toolbar {
     align-items: center;
-    min-height: 44px;
+    min-height: 40px;
   }
   .news-filter-extra {
     display: flex;
@@ -435,18 +445,18 @@ const FLOATING_FIELD_CSS = `
   }
   .news-filter-search-field {
     width: 100% !important;
-    min-width: 280px !important;
+    min-width: 0 !important;
   }
   .news-filter-search-field .ant-input-affix-wrapper {
     width: 100% !important;
-    min-width: 280px !important;
-    height: 44px !important;
-    min-height: 44px !important;
-    max-height: 44px !important;
+    min-width: 0 !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
     box-sizing: border-box !important;
-    border-radius: 11px !important;
-    border: 1px solid #dbeafe !important;
-    background: rgba(255, 255, 255, 0.96) !important;
+    border-radius: 10px !important;
+    border: 1px solid #e5e5e5 !important;
+    background: #ffffff !important;
     padding: 0 14px !important;
     display: flex !important;
     align-items: center !important;
@@ -454,12 +464,12 @@ const FLOATING_FIELD_CSS = `
       box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .news-filter-search-field .ant-input-affix-wrapper:hover {
-    border-color: rgba(5, 136, 240, 0.48);
+    border-color: #bdbdbd;
   }
   .news-filter-search-field .ant-input-affix-wrapper-focused,
   .news-filter-search-field .ant-input-affix-wrapper:focus-within {
     border-color: #0588f0 !important;
-    box-shadow: 0 0 0 3px rgba(5, 136, 240, 0.14), 0 3px 8px rgba(5, 136, 240, 0.08) !important;
+    box-shadow: 0 0 0 2px rgba(5, 136, 240, 0.12) !important;
   }
   .news-filter-search-field .ant-input {
     font-size: 14px !important;
@@ -494,82 +504,62 @@ const FLOATING_FIELD_CSS = `
     flex: 0 0 auto;
   }
 
-  /* ── Menu dropdown "Nguồn": width được ép khớp chính xác với ô trigger qua inline style,
-     nên ở đây chỉ set style trang trí, không set width cố định để tránh lệch/hở 2 bên ── */
-  .news-source-menu .ant-dropdown-menu {
-    width: 100%;
-    padding: 6px;
-    border-radius: 12px;
-    box-shadow: 0 14px 32px rgba(5, 136, 240, 0.15);
-    border: 1px solid #dbeafe;
+  /* Figma: menu 240 × 92, viền không làm tăng kích thước nội dung. */
+  .news-source-menu.ant-dropdown .ant-dropdown-menu {
+    width: 100%; padding: 8px; border-radius: 8px; border: none;
     background: #ffffff;
+    box-shadow: inset 0 0 0 1px #e5e5e5, 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
   }
-
-  .news-source-menu .ant-dropdown-menu-item {
-    border-radius: 8px;
-    padding: 9px 12px;
-    font-size: 14px;
-    color: #111827;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: background 0.15s ease, color 0.15s ease;
+  .news-source-menu.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item {
+    padding: 8px 12px; font-size: 14px; line-height: 20px; color: #0a0a0a;
+    border-radius: 4px;
   }
+  .news-source-menu.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item:hover { background: #f5f5f5 !important; color: #0a0a0a; }
+  .news-source-menu.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item-selected { background: #ffffff !important; color: #0a0a0a !important; font-weight: 600; }
+  .news-source-menu.ant-dropdown .ant-dropdown-menu .ant-dropdown-menu-item + .ant-dropdown-menu-item { margin-top: 4px; }
 
-  .news-source-menu .ant-dropdown-menu-item .anticon {
-    font-size: 15px;
-    color: #94a3b8;
-    transition: color 0.15s ease;
-  }
-
-  .news-source-menu .ant-dropdown-menu-item:hover {
-    background: rgba(5, 136, 240, 0.08) !important;
-    color: #0588f0;
-  }
-
-  .news-source-menu .ant-dropdown-menu-item-selected {
-    background: rgba(5, 136, 240, 0.1) !important;
-    color: #0588f0 !important;
-    font-weight: 600;
-  }
-
-  .news-source-menu .ant-dropdown-menu-item:hover .anticon {
-    color: #0588f0;
-  }
-
-  .news-source-menu .ant-dropdown-menu-item + .ant-dropdown-menu-item {
-    margin-top: 2px;
-  }
-
-  /* ── Responsive: dưới 576px (mobile), field full-width, dùng layout Row/Col đã có ── */
-  @media (max-width: 575px) {
-    .news-filter-form .ant-row {
-      margin: 0 !important;
-      padding: 14px;
-      border: 1px solid rgba(5, 136, 240, 0.18);
-      border-radius: 16px;
-      background: linear-gradient(135deg, #f7fbff 0%, #ffffff 70%);
-      box-shadow: 0 8px 24px rgba(5, 136, 240, 0.06);
+  @container (max-width: 1199px) {
+    .news-filter-outer {
+      align-items: stretch;
     }
 
-    .news-filter-form .ant-row > .ant-col {
-      padding-inline: 0 !important;
+    .news-filter-toolbar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      min-width: 0;
     }
 
-    .news-filter-floating-field,
-    .news-filter-search-field .ant-input-affix-wrapper {
-      width: 100% !important;
-    }
+    .news-filter-field,
     .news-filter-field--user,
     .news-filter-field--source,
     .news-filter-field--date,
     .news-filter-field--status {
+      flex: initial;
+      width: 100%;
       max-width: none;
+      min-width: 0;
+    }
+
+    .news-filter-field--search,
+    .news-filter-clear-btn,
+    .news-filter-extra {
+      grid-column: 1 / -1;
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+    }
+
+    .news-filter-field--search .news-filter-search-field,
+    .news-filter-search-field,
+    .news-filter-search-field .ant-input-affix-wrapper {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: none !important;
     }
 
     .news-filter-extra {
       margin-left: 0;
-      width: 100%;
     }
 
     .news-filter-extra > * {
@@ -577,33 +567,97 @@ const FLOATING_FIELD_CSS = `
       justify-content: center;
     }
   }
-  .news-filter-create-btn {
+
+  @media (max-width: 767px) {
+    .news-filter-outer {
+      align-items: stretch;
+    }
+
+    .news-filter-toolbar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .news-filter-field,
+    .news-filter-field--user,
+    .news-filter-field--source,
+    .news-filter-field--date,
+    .news-filter-field--status {
+      flex: initial;
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+    }
+
+    .news-filter-field--search,
+    .news-filter-clear-btn,
+    .news-filter-extra {
+      grid-column: 1 / -1;
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+    }
+
+    .news-filter-search-field,
+    .news-filter-field--search .news-filter-search-field,
+    .news-filter-search-field .ant-input-affix-wrapper {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: none !important;
+    }
+
+    .news-filter-extra {
+      margin-left: 0;
+    }
+
+    .news-filter-extra > * {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .news-filter-toolbar {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .news-filter-field,
+    .news-filter-field--search,
+    .news-filter-clear-btn,
+    .news-filter-extra {
+      grid-column: 1;
+    }
+  }
+  .news-filter-form .news-filter-create-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    height: 44px;
+    gap: 8px;
+    height: 40px;
     padding: 0 16px;
-    border-radius: 11px;
-    background: var(--Brand-Main, #0588F0);
+    border-radius: 10px;
+    background: #0588F0 !important;
     color: #fff;
-    border: none;
+    border: none !important;
     cursor: pointer;
     font-family: Inter, var(--default-font-family, sans-serif);
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
     white-space: nowrap;
-    box-shadow: 0 5px 12px rgba(5, 136, 240, 0.22);
-    transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    box-shadow: none !important;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
-  .news-filter-create-btn:hover {
-    background: #0477d6;
-    box-shadow: 0 8px 16px rgba(5, 136, 240, 0.28);
-    transform: translateY(-1px);
+  .news-filter-form .news-filter-create-btn:hover {
+    background: #0d74ce !important;
+    border-color: #0d74ce !important;
   }
-  .news-filter-create-btn:active {
-    background: #0366bd;
+  .news-filter-form .news-filter-create-btn:active {
+    background: #0d74ce !important;
+    border-color: #0d74ce !important;
+    transform: none;
   }
   .news-filter-create-btn .anticon {
     font-size: 14px;

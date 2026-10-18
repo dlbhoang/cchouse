@@ -140,7 +140,7 @@ const TopNotification = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="relative">
-                <Bell className="h-5 w-5" />
+                <Bell className="h-6 w-6" />
                 {(count?.data ?? 0) > 0 && (
                   <Badge
                     variant="warning"

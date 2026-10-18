@@ -13,12 +13,15 @@ import {
 } from "@/components/ui/sidebar";
 import { NavMain } from "./nav-main";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  isNewsPage = false,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { isNewsPage?: boolean }) {
   const { isMobile, state } = useSidebar();
 
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+    <Sidebar collapsible="icon" {...props} className={[isNewsPage ? "news-sidebar" : "", props.className].filter(Boolean).join(" ")}>
+      <SidebarHeader className={isNewsPage ? "items-center px-3 py-4" : undefined}>
         {/* Option 1: Using state property (recommended) */}
         {isMobile ? (
           <Image
@@ -29,7 +32,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             height={40}
           />
         ) : state === "collapsed" ? (
-          <Image src="/logo.png" alt="cchouse logo" width={30} height={30} />
+          <Image
+            src="/logo.png"
+            alt="cchouse logo"
+            width={isNewsPage ? 44 : 30}
+            height={isNewsPage ? 44 : 30}
+          />
         ) : (
           <Image
             src="/logo/logo-w-slogan.jpg"
@@ -40,7 +48,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           />
         )}
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className={isNewsPage ? "pt-2" : undefined}>
         <NavMain items={navigationData} />
       </SidebarContent>
       <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>

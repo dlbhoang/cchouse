@@ -48,9 +48,11 @@ const newsApi = {
   hidden(id: number) {
     return axiosClient.put(`${url}/${id}/Hidden`);
   },
-
   show(id: number) {
     return axiosClient.put(`${url}/${id}/Show`);
+  },
+  expire(id: number) {
+    return axiosClient.put(`${url}/${id}/Expire`);
   },
 
   approve(id: number) {

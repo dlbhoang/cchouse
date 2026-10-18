@@ -157,7 +157,7 @@ export function CustomerWishlist({ className }: Props) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="relative">
-                <UserPlus2 className="h-5 w-5" />
+                <UserPlus2 className="h-6 w-6" />
                 {totalCount > 0 && (
                   <Badge
                     variant="warning"

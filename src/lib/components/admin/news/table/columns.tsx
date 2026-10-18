@@ -1,9 +1,9 @@
 import type { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
-import { CheckIcon, EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
+import { CalendarX2Icon, EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { mutate } from "swr";
-import BtnConfirm from "@/lib/components/shared/BtnConfirm";
+import NewsConfirmButton from "../confirm";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import type { INewsResponse } from "@/services/api/news/INews";
 import newsApi from "@/services/api/news/newsApi";
@@ -28,6 +28,7 @@ const statusNameClasses: { match: RegExp; className: string }[] = [
   { match: /ch[ờo]\s*duy[ệe]t|ch[ờo]\s*x[ửu]\s*l[ýy]/i, className: "news-status-pending" },
   { match: /t[ừu]\s*ch[ốo]i|h[ủu]y|l[ỗo]i/i, className: "news-status-rejected" },
   { match: /t[ạa]m\s*[ẩâ]n|t[ạa]m\s*ng[ừư]ng|[ẩâ]n/i, className: "news-status-hidden" },
+  { match: /h[ếe]t\s*h[ạa]n/i, className: "news-status-expired" },
   { match: /duy[ệe]t|hi[ểe]n\s*th[ịi]/i, className: "news-status-approved" },
 ];
 
@@ -35,6 +36,8 @@ const statusIndexClasses: Record<number, string> = {
   0: "news-status-hidden",
   1: "news-status-approved",
   2: "news-status-pending",
+  3: "news-status-rejected",
+  4: "news-status-expired",
 };
 
 const getStatusClassName = (status?: number, statusName?: string) => {
@@ -45,10 +48,22 @@ const getStatusClassName = (status?: number, statusName?: string) => {
   return (status !== undefined && statusIndexClasses[status]) || "news-status-default";
 };
 
-// Khớp với backend ENewsStatus: Hidden=0, Show=1, Pending=2, Rejected=3
-const NEWS_STATUS_HIDDEN = 0;
+// Khớp với backend ENewsStatus: Hidden=0, Show=1, Pending=2, Rejected=3, Expired=4
 const NEWS_STATUS_SHOW = 1;
+const NEWS_STATUS_HIDDEN = 0;
 const NEWS_STATUS_PENDING = 2;
+const NEWS_STATUS_EXPIRED = 4;
+
+const isApprovedNews = (record: INewsResponse) => {
+  const statusName = record.StatusName?.trim().toLocaleLowerCase();
+  return (
+    record.Status === NEWS_STATUS_HIDDEN || record.Status === NEWS_STATUS_EXPIRED ||
+    record.Status === NEWS_STATUS_SHOW ||
+    statusName === "đang hiển thị" ||
+    statusName === "đã duyệt" ||
+    Boolean(record.ApprovedDate || record.ApprovedBy)
+  );
+};
 
 const getThumbnailUrl = (value: unknown) => {
   const thumbnail = Array.isArray(value) ? value[0] : value;
@@ -68,7 +83,7 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Mã tin</span>,
     dataIndex: "Id",
-    width: 90,
+    width: 83,
     align: "center",
     render(value) {
       return <span className="news-id-badge">{value}</span>;
@@ -77,14 +92,12 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Loại tin</span>,
     dataIndex: "NewsTypeId",
-    width: 130,
+    width: 120,
     render(value, record) {
-      const name = record.Source?.trim() ? "Chia sẻ" : "Viết bài";
-      const id = Number(value);
-      const fallbackName = typeMap?.[id] ?? (value as any) ?? "—";
+      const name = typeMap[Number(value)] ?? "—";
       return (
-        <span className="news-type-text" title={name || fallbackName}>
-          {name || fallbackName}
+        <span className="news-type-text" title={name}>
+          {name}
         </span>
       );
     },
@@ -92,38 +105,55 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Hình ảnh</span>,
     dataIndex: "Thumbnail",
-    width: 90,
-    minWidth: 90,
+    width: 93,
+    minWidth: 93,
     align: "center",
     render(value, record) {
       const thumb = getThumbnailUrl(value);
       if (!thumb) return <div className="news-thumb-placeholder" />;
       return (
-        <img
-          src={thumb}
-          alt={record.Title ?? ""}
-          className="news-thumbnail"
-          style={{ width: 56, height: 56, objectFit: "cover", borderRadius: 8 }}
-        />
+        <button
+          type="button"
+          className="news-thumbnail-button"
+          onClick={() => onPreview?.(record)}
+          aria-label={`Xem tin: ${record.Title ?? ""}`}
+          title="Xem chi tiết bài viết"
+        >
+          <img
+            src={thumb}
+            alt=""
+            className="news-thumbnail"
+            style={{ width: 48, height: 40, objectFit: "cover", borderRadius: 6 }}
+          />
+        </button>
       );
     },
   },
   {
     title: () => <span className="news-th-label">Tiêu đề</span>,
     dataIndex: "Title",
-    width: 260,
+    width: 284,
     render(value, record) {
+      const approved = isApprovedNews(record);
       return (
         <div className="news-title-cell">
           <div className="news-title-row">
             <span className="news-title-text" title={value}>
               {value || "—"}
             </span>
-            {onEdit ? (
+            {onEdit && !approved ? (
               <button
                 type="button"
                 className="news-see-more"
                 onClick={() => onEdit(record)}
+              >
+                Xem thêm
+              </button>
+            ) : onPreview ? (
+              <button
+                type="button"
+                className="news-see-more"
+                onClick={() => onPreview(record)}
               >
                 Xem thêm
               </button>
@@ -161,7 +191,7 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Nguồn/ Người đăng</span>,
     dataIndex: "Source",
-    width: 160,
+    width: 155,
     render(value, record) {
       const firstLine = record.Source?.trim() ? "Chia sẻ" : "Viết bài";
       const createdBy = record.CreatedBy;
@@ -178,7 +208,7 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Lượt xem</span>,
     dataIndex: "ViewCount",
-    width: 90,
+    width: 87,
     align: "center",
     render(value) {
       return <span className="news-viewcount">{value ?? 0}</span>;
@@ -187,17 +217,17 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Ngày ra tin</span>,
     dataIndex: "CreatedDate",
-    width: 140,
+    width: 117,
     render: (_, record) => formatDateCell(record.CreatedDate),
   },
   {
     title: () => <span className="news-th-label">Trạng thái</span>,
     dataIndex: "StatusName",
-    width: 130,
+    width: 104,
     render(value, record) {
       const statusClass = getStatusClassName(record.Status, value);
       return (
-        <span className={`news-status-tag ${statusClass}`}>{value || "—"}</span>
+        <span className={`news-status-tag ${statusClass}`}>{record.Status === NEWS_STATUS_SHOW ? "Đã duyệt" : value || "—"}</span>
       );
     },
   },
@@ -225,116 +255,79 @@ const createColumns = (
   {
     key: "Action",
     title: () => <span className="news-th-label">Chức năng</span>,
-    width: 190,
+    width: 144,
     align: "center",
     render(_, record) {
       return (
         <div className="news-action-cell">
-          {(record.Status === NEWS_STATUS_PENDING || record.HasPendingChanges) && (
-            <BtnConfirm
-              onOkClick={async () => {
-                await newsApi.approve(record.Id ?? 0);
-                newsApi.revalidate();
-              }}
-              type="icon"
-              className="news-action-btn"
-              style={{
-                width: 40,
-                height: 40,
-                background: "#ffffff",
-                border: "1px solid #e5e5e5",
-                borderRadius: 10,
-              }}
-              title={record.HasPendingChanges ? "Duyệt bản cập nhật?" : "Xác nhận duyệt bài?"}
-              description={record.HasPendingChanges
-                ? "Bản sửa sẽ thay thế nội dung đang hiển thị công khai."
-                : "Sau khi duyệt, bài viết sẽ hiển thị công khai trên trang tin."}
-              overlayClassName="news-popconfirm news-popconfirm-approve"
-              btnText=""
-              icon={<CheckIcon className="size-4 text-[#22c55e]" />}
-            />
-          )}
-
           {record.Status === NEWS_STATUS_SHOW && (
-            <BtnConfirm
-              onOkClick={async () => {
-                await newsApi.hidden(record.Id ?? 0);
-                newsApi.revalidate();
-              }}
-              type="icon"
-              className="news-action-btn"
-              style={{
-                width: 40,
-                height: 40,
-                background: "#ffffff",
-                border: "1px solid #e5e5e5",
-                borderRadius: 10,
-              }}
-              title="Ẩn bài viết?"
-              description="Bài viết sẽ không còn hiển thị công khai trên trang tin."
-              overlayClassName="news-popconfirm news-popconfirm-hidden"
-              btnText=""
-              icon={<EyeOffIcon className="size-4 text-[#f59e0b]" />}
-            />
+            <>
+              <NewsConfirmButton
+                onConfirm={async () => {
+                  await newsApi.hidden(record.Id ?? 0);
+                  await newsApi.revalidate();
+                }}
+                label="Ẩn bài viết"
+                title="Ẩn bài viết?"
+                description="Bài viết sẽ không còn hiển thị công khai trên trang tin."
+                icon={<EyeOffIcon className="size-4" />}
+              />
+              <NewsConfirmButton
+                onConfirm={async () => {
+                  await newsApi.expire(record.Id ?? 0);
+                  await newsApi.revalidate();
+                }}
+                label="Đánh dấu hết hạn"
+                title="Đánh dấu bài viết hết hạn?"
+                description="Bài viết sẽ chuyển sang trạng thái Hết hạn và không còn hiển thị công khai."
+                confirmText="Đánh dấu hết hạn"
+                icon={<CalendarX2Icon className="size-4" />}
+              />
+            </>
           )}
 
           {record.Status === NEWS_STATUS_HIDDEN && (
-            <BtnConfirm
-              onOkClick={async () => {
+            <NewsConfirmButton
+              onConfirm={async () => {
                 await newsApi.show(record.Id ?? 0);
-                newsApi.revalidate();
+                await newsApi.revalidate();
               }}
-              type="icon"
-              className="news-action-btn"
-              style={{
-                width: 40,
-                height: 40,
-                background: "#ffffff",
-                border: "1px solid #e5e5e5",
-                borderRadius: 10,
-              }}
-              title="Hiện lại bài viết?"
-              description="Bài viết sẽ hiển thị công khai trở lại trên trang tin."
-              overlayClassName="news-popconfirm news-popconfirm-show"
-              btnText=""
-              icon={<EyeIcon className="size-4 text-[#22c55e]" />}
+              label="Hiển thị lại bài viết"
+              title="Hiển thị lại bài viết?"
+              description="Bài viết sẽ được hiển thị công khai trên trang tin."
+              confirmText="Hiển thị lại"
+              icon={<EyeIcon className="size-4" />}
             />
           )}
 
-          {onEdit ? (
-            <button
-              type="button"
-              className="news-action-btn"
-              onClick={() => onEdit(record)}
-            >
-              <SquarePenIcon className="size-4" />
-            </button>
-          ) : (
-            <Link href={`${AppRoutes.news.url}/edit/${record.Id}`}>
-              <button type="button" className="news-action-btn">
+          {!isApprovedNews(record) &&
+            (onEdit ? (
+              <button
+                type="button"
+                className="news-action-btn"
+                aria-label="Chỉnh sửa tin tức"
+                onClick={() => onEdit(record)}
+              >
                 <SquarePenIcon className="size-4" />
               </button>
-            </Link>
-          )}
-          <BtnConfirm
-            onOkClick={async () => {
+            ) : (
+              <Link href={`${AppRoutes.news.url}/edit/${record.Id}`}>
+                <button type="button" className="news-action-btn" aria-label="Chỉnh sửa tin tức">
+                  <SquarePenIcon className="size-4" />
+                </button>
+              </Link>
+            ))}
+          <NewsConfirmButton
+            onConfirm={async () => {
               await newsApi.delete(record.Id ?? 0);
-              newsApi.revalidate();
+              await newsApi.revalidate();
             }}
-            type="icon"
             danger
-            title="Xóa tin tức?"
+            label="Xóa tin tức"
+            title="Xác nhận xóa"
+            confirmText="Xóa"
             description="Tin tức sẽ bị xóa và không thể khôi phục."
-            overlayClassName="news-popconfirm news-popconfirm-delete"
-            className="news-action-btn"
-            style={{
-              width: 40,
-              height: 40,
-              background: "#ffffff",
-              border: "1px solid #e5e5e5",
-              borderRadius: 10,
-            }}
-            icon={<Trash2Icon className="size-4 text-[#ff4d4f]" />}
+            icon={<Trash2Icon className="size-4" />}
           />
         </div>
       );

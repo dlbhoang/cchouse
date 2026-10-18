@@ -1,4 +1,5 @@
 import { DatePicker, Form } from "antd";
+import { Calendar } from "lucide-react";
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
 
@@ -72,7 +73,9 @@ const NewsDateFilter = ({
 
   return (
     <>
+      <div style={{ width: "100%" }} onMouseDownCapture={() => { ignoreNextClearRef.current = false; }}>
       <DatePicker
+        suffixIcon={<Calendar size={16} />}
         popupClassName="news-date-picker-popup"
         open={open}
         value={selectingEnd
@@ -93,10 +96,14 @@ const NewsDateFilter = ({
           }
         }}
         onPanelChange={(nextMonth) => setPickerValue(nextMonth)}
-        placeholder="Chọn khoảng ngày"
+        placeholder="Chọn ngày"
+        inputReadOnly
         allowClear
         onChange={(date) => {
           if (!date) {
+            // Closing the custom preset panel can emit a stale null value.
+            // A new pointer interaction with the picker (including Clear)
+            // resets this guard before the user's action is handled.
             if (ignoreNextClearRef.current) {
               ignoreNextClearRef.current = false;
               return;
@@ -121,7 +128,7 @@ const NewsDateFilter = ({
           <div className="news-date-picker-wrapper">
             <div className="news-date-picker-presets">
               {presetDays.map((day) => (
-                <button key={day} type="button" onClick={() => setPreset(day)}>
+                <button key={day} type="button" onMouseDown={(event) => event.preventDefault()} onClick={() => setPreset(day)}>
                   {presetLabel(day)}
                 </button>
               ))}
@@ -133,13 +140,21 @@ const NewsDateFilter = ({
           </div>
         )}
       />
+      </div>
 
       <style>{`
         .news-date-picker-popup {
-          width: 300px !important;
+          width: min(320px, calc(100vw - 32px)) !important;
+          min-width: min(320px, calc(100vw - 32px)) !important;
+          max-width: min(320px, calc(100vw - 32px)) !important;
           padding: 0 !important;
           border-radius: 10px !important;
           overflow: hidden !important;
+        }
+
+        .news-date-picker-popup .ant-picker-panel-container {
+          width: 100% !important;
+          min-width: 0 !important;
         }
 
         .news-date-picker-wrapper {
@@ -158,6 +173,12 @@ const NewsDateFilter = ({
           background: white !important;
         }
 
+        .news-date-picker-popup .ant-picker-panel-layout > div {
+          flex: 1 1 auto !important;
+          width: 100% !important;
+          min-width: 0 !important;
+        }
+
         .news-date-picker-popup .ant-picker-body,
         .news-date-picker-popup .ant-picker-content {
           width: 100% !important;
@@ -168,8 +189,15 @@ const NewsDateFilter = ({
 
         /* Calendar panel */
         .news-date-picker-popup .ant-picker-panel {
+          width: 100% !important;
+          min-width: 0 !important;
           border: none !important;
           box-shadow: none !important;
+        }
+
+        .news-date-picker-popup .ant-picker-date-panel {
+          width: 100% !important;
+          min-width: 0 !important;
         }
 
         .news-date-picker-presets {
@@ -308,7 +336,9 @@ const NewsDateFilter = ({
 
         @media (max-width: 576px) {
           .news-date-picker-popup {
-            width: min(300px, calc(100vw - 32px)) !important;
+            width: min(320px, calc(100vw - 32px)) !important;
+            min-width: min(320px, calc(100vw - 32px)) !important;
+            max-width: min(320px, calc(100vw - 32px)) !important;
           }
 
           .news-date-picker-popup .ant-picker-panel {

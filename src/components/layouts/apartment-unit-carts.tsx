@@ -131,7 +131,7 @@ export function ApartmentUnitCarts({ className }: PropCartsProps) {
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="relative">
-                <HousePlus className="h-5 w-5" />
+                <HousePlus className="h-6 w-6" />
                 {totalCount > 0 && (
                   <Badge
                     variant="warning"

@@ -29,7 +29,15 @@ if (typeof window !== "undefined") {
 const TinyEditor = ({
   value,
   onChange,
+  height = 500,
+  toolbar,
+  icons,
+  statusbar = true,
 }: {
+  height?: number;
+  toolbar?: string;
+  icons?: Record<string, string>;
+  statusbar?: boolean;
   value?: string;
   onChange?: (value: string) => void;
 }) => {
@@ -52,7 +60,11 @@ const TinyEditor = ({
   }, [isEditorReady, value]);
 
   const options = {
-    height: 500,
+    height,
+    statusbar,
+    setup: (editor: any) => {
+      Object.entries(icons ?? {}).forEach(([name, svg]) => editor.ui.registry.addIcon(name, svg));
+    },
     menubar: false,
     plugins: [
       "advlist",
@@ -69,7 +81,7 @@ const TinyEditor = ({
       "table",
       "help",
     ],
-    toolbar:
+    toolbar: toolbar ??
       "undo redo | formatselect | " +
       "bold italic backcolor | alignleft aligncenter " +
       "alignright alignjustify | bullist numlist table | " +

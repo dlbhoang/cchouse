@@ -6,16 +6,18 @@ export const NewsStatusSelect = ({
   mode,
   value,
   onChange,
+  suffixIcon,
   placeholder = "Chọn",
 }: SelectType) => {
   const { enumList, loading } = useAdminContext();
   return (
     <SelectBase
       mode={mode}
+      suffixIcon={suffixIcon}
       placeholder={placeholder}
       allowClear
       options={(enumList.NewsStatus ?? []).map((e) => ({
-        label: e.Name,
+        label: Number(e.Value) === 1 ? "Đã duyệt" : e.Name,
         value: e.Value,
       }))}
       onChange={onChange}

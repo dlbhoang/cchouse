@@ -44,6 +44,33 @@ type LayoutProps = {
 //map all url from AppRoutes to array
 const RoutesShowMobileMenu = Object.values(AppRoutes).map((route) => route.url);
 
+const getPageLayout = (pathname: string | null) => {
+  if (pathname === AppRoutes.map.url) {
+    return {
+      isNewsPage: false,
+      sidebarStyle: { "--sidebar-width-icon": "68px" } as CSSProperties,
+      headerClass: "h-[68px] border-b border-gray-100 bg-white",
+      contentClass: "gap-2 bg-white",
+    };
+  }
+
+  if (pathname === AppRoutes.news.url) {
+    return {
+      isNewsPage: true,
+      sidebarStyle: { "--sidebar-width-icon": "68px" } as CSSProperties,
+      headerClass: "news-admin-header h-[78px] border-b border-gray-100 bg-white",
+      contentClass: "min-w-0 gap-4 bg-white px-4 pb-4 pt-4 max-md:px-3 max-md:pt-4 max-md:pb-24",
+    };
+  }
+
+  return {
+    isNewsPage: false,
+    sidebarStyle: undefined,
+    headerClass: "h-16",
+    contentClass: "gap-4 bg-gray-50",
+  };
+};
+
 const RootLayout = ({ children, session }: LayoutProps) => {
   const sessionUser = session?.user as any;
   const [serverConfigOpen, setServerConfigOpen] = useState(false);
@@ -54,7 +81,7 @@ const RootLayout = ({ children, session }: LayoutProps) => {
   );
   const { loading, init, setSmallScreen } = useAdminContext();
   const pathname = usePathname();
-  const isMapPage = pathname === AppRoutes.map.url;
+  const pageLayout = getPageLayout(pathname);
 
   const hideMobileMenu = !RoutesShowMobileMenu.includes(pathname ?? "");
 
@@ -82,18 +109,12 @@ const RootLayout = ({ children, session }: LayoutProps) => {
     <AntProvider locale={vi_VN}>
       <SidebarProvider
         defaultOpen={false}
-        style={
-          isMapPage
-            ? ({ "--sidebar-width-icon": "68px" } as CSSProperties)
-            : undefined
-        }
+        style={pageLayout.sidebarStyle}
       >
-        <AppSidebar />
-        <SidebarInset>
+        <AppSidebar isNewsPage={pageLayout.isNewsPage} />
+        <SidebarInset className={pageLayout.isNewsPage ? "min-w-0" : undefined}>
           <header
-            className={`flex shrink-0 items-center gap-2 z-30 ${
-              isMapPage ? "h-[68px] border-b border-gray-100 bg-white" : "h-16"
-            }`}
+            className={`flex shrink-0 items-center gap-2 z-30 ${pageLayout.headerClass}`}
           >
             <div className="flex justify-between w-full items-center px-4">
               <div className="flex gap-2 items-center">
@@ -138,9 +159,7 @@ const RootLayout = ({ children, session }: LayoutProps) => {
             </div>
           </header>
           <div
-            className={`flex flex-1 flex-col p-4 ${
-              isMapPage ? "gap-2 bg-white" : "gap-4 bg-gray-50"
-            }`}
+            className={`flex flex-1 flex-col p-4 ${pageLayout.contentClass}`}
           >
             {loading ? (
               <>

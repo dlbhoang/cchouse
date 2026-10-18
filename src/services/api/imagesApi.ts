@@ -42,10 +42,10 @@ const imagesApi = {
   },
 
   upload(data: FormData) {
+    // Axios defaults to application/json in this app. Declaring multipart here
+    // prevents FormData from being JSON-serialized; Axios/browser adds the boundary.
     return axiosClient.post(`${url}/Upload`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
+      headers: { "Content-Type": "multipart/form-data" },
     });
   },
 };
