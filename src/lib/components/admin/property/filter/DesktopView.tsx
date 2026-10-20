@@ -14,6 +14,7 @@ import {
   ReloadOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import { ListFilterPlus, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import {
   AdvPropSearch,
@@ -126,7 +127,7 @@ export const DesktopView = ({
 
         <Button
           htmlType="button"
-          icon={<ReloadOutlined />}
+          icon={mapMode ? <RotateCcw size={16} /> : <ReloadOutlined />}
           className="property-filter-reset-btn"
           style={{ backgroundColor: "#fff", borderColor: "#0588f0", color: "#0588f0" }}
           onClick={handleRefresh}
@@ -165,15 +166,21 @@ export const DesktopView = ({
           </Form.Item>
         )}
 
-        <Form.Item name="PropTypeIds" className="property-field-item property-proptype-item">
+        <div className="property-field-item property-proptype-item">
           <FloatingField label="Loại BĐS">
-            <PropTypeSelect mode="multiple" placeholder="Loại BĐS" />
+            <Form.Item name="PropTypeIds" noStyle>
+              <PropTypeSelect
+                mode="multiple"
+                placeholder="Loại BĐS"
+                onChange={mapMode ? () => form.submit() : undefined}
+              />
+            </Form.Item>
           </FloatingField>
-        </Form.Item>
+        </div>
 
         <Button
           htmlType="button"
-          icon={<FilterOutlined />}
+          icon={mapMode ? <ListFilterPlus size={16} /> : <FilterOutlined />}
           className="property-filter-more-btn"
           style={{ backgroundColor: "#fff", borderColor: "#0588f0", color: "#0588f0" }}
           onClick={() => setMoreOpen(true)}
@@ -197,7 +204,7 @@ export const DesktopView = ({
               htmlType="button"
               className="property-filter-drawer-clear-btn"
               onClick={() => {
-                form.resetFields();
+                handleRefresh();
                 setMoreOpen(false);
               }}
             >
@@ -265,36 +272,46 @@ export const DesktopView = ({
           </div>
 
           <div className="property-filter-drawer-section">
-            <Form.Item name="Direction" className="property-drawer-form-item">
+            <div className="property-drawer-form-item">
               <FloatingField label="Hướng nhà" required>
-                <DirectionSelect mode="multiple" placeholder="Chọn" />
+                <Form.Item name="Direction" noStyle>
+                  <DirectionSelect mode="multiple" placeholder="Chọn" />
+                </Form.Item>
               </FloatingField>
-            </Form.Item>
+            </div>
 
-            <Form.Item name="Legal" className="property-drawer-form-item">
+            <div className="property-drawer-form-item">
               <FloatingField label="Pháp lý">
-                <LawSelect placeholder="Chọn" allowClear />
+                <Form.Item name="Legal" noStyle>
+                  <LawSelect placeholder="Chọn" allowClear />
+                </Form.Item>
               </FloatingField>
-            </Form.Item>
+            </div>
 
-            <Form.Item name="FurnitureIds" className="property-drawer-form-item">
+            <div className="property-drawer-form-item">
               <FloatingField label="Nội thất">
-                <FurnitureSelect mode="multiple" placeholder="Chọn" />
+                <Form.Item name="FurnitureIds" noStyle>
+                  <FurnitureSelect mode="multiple" placeholder="Chọn" />
+                </Form.Item>
               </FloatingField>
-            </Form.Item>
+            </div>
 
-            <Form.Item name="CustomerType" className="property-drawer-form-item">
+            <div className="property-drawer-form-item">
               <FloatingField label="Nhận diện khách hàng" required>
-                <CustomerTypeSelect placeholder="Chọn" />
+                <Form.Item name="CustomerType" noStyle>
+                  <CustomerTypeSelect placeholder="Chọn" />
+                </Form.Item>
               </FloatingField>
-            </Form.Item>
+            </div>
 
             <div className="property-drawer-inline-row">
-              <Form.Item name="UserAdminId" className="property-drawer-form-item">
+              <div className="property-drawer-form-item">
                 <FloatingField label="Nhân viên" required>
-                  <UserAdminSelect placeholder="Chọn" />
+                  <Form.Item name="UserAdminId" noStyle>
+                    <UserAdminSelect placeholder="Chọn" />
+                  </Form.Item>
                 </FloatingField>
-              </Form.Item>
+              </div>
 
               <div className="property-filter-more-date">
                 <span className="property-filter-more-date-label">Thời gian <i>*</i></span>

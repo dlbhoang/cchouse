@@ -1,7 +1,5 @@
 "use client";
 
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -26,7 +24,6 @@ const MapPage = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const [panelVisible, setPanelVisible] = useState(true);
   const [detail, setDetail] = useState<IPropResponse>();
   const [polygon, setPolygon] = useState<any[]>([]);
 
@@ -59,7 +56,6 @@ const MapPage = () => {
       const response = await propertyApi.getById(Number(propertyId));
       if (active) {
         setDetail(response.data);
-        setPanelVisible(true);
       }
     };
     fetchDetail();
@@ -90,7 +86,9 @@ const MapPage = () => {
   }, [districts, provinces, searchParams]);
 
   const handleFilter = (values: IPropAdminOpts) => {
-    router.push(`${pathname}?${objToQueryString(values)}`);
+    const nextOptions = { ...values } as IPropAdminOpts & { PropertyId?: number };
+    delete nextOptions.PropertyId;
+    router.push(`${pathname}?${objToQueryString(nextOptions)}`);
   };
 
   const closeDetail = () => {
@@ -112,24 +110,15 @@ const MapPage = () => {
         <PropertyFilter onSubmit={handleFilter} model={searchOptions} mapMode />
       </div>
 
-      <section className={`admin-map-workspace ${panelVisible ? "has-panel" : "map-expanded"}`}>
-        {panelVisible && (
-          <aside className={`admin-map-results ${smallScreen ? "mobile-results" : ""}`}>
-            <PropListMap opts={searchOptions} />
-          </aside>
-        )}
+      <section className="admin-map-workspace has-panel">
+        <aside className={`admin-map-results ${smallScreen ? "mobile-results" : ""}`}>
+          <PropListMap opts={searchOptions} />
+        </aside>
 
         <div className="admin-map-canvas">
           <MyLeaflet
             data={Array.isArray(points?.data) ? points.data : []}
             polygon={polygon}
-          />
-          <Button
-            className="admin-map-panel-toggle"
-            aria-label={panelVisible ? "Thu gọn danh sách" : "Mở danh sách"}
-            title={panelVisible ? "Thu gọn danh sách" : "Mở danh sách"}
-            icon={panelVisible ? <LeftOutlined /> : <RightOutlined />}
-            onClick={() => setPanelVisible((current) => !current)}
           />
         </div>
       </section>

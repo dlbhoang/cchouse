@@ -1,8 +1,10 @@
 .admin-map-page {
-  --map-ink: #1b2430;
-  --map-muted: #737d89;
+  --map-ink: #0a0a0a;
+  --map-muted: #737373;
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  box-sizing: border-box;
   min-height: 620px;
   height: 100%;
   gap: 10px;
@@ -27,7 +29,7 @@
 
 .admin-map-heading h1 {
   margin: 0;
-  color: #1b2430;
+  color: #0a0a0a;
   font-size: 24px;
   font-weight: 700;
   line-height: 28px;
@@ -36,19 +38,21 @@
 .admin-map-filters {
   z-index: 20;
   flex: 0 0 auto;
+  min-width: 0;
 }
 
 .admin-map-filters .property-filter-card {
   display: grid !important;
-  grid-template-columns: 292px 174px repeat(4, 156px) 128px 40px;
-  justify-content: space-between;
+  grid-template-columns: minmax(220px, 2fr) minmax(145px, 1.15fr) repeat(4, minmax(120px, 1fr)) 128px 40px;
+  justify-content: stretch;
   align-items: center;
   gap: 8px !important;
-  min-height: 90px;
-  padding: 18px 16px !important;
-  border-color: #e5e8ec;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(27, 36, 48, 0.04);
+  min-height: 40px;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
 }
 
 .admin-map-filters .property-filter-search-row,
@@ -96,14 +100,14 @@
 }
 
 .admin-map-filters .property-map-region-trigger {
-  width: 174px !important;
+  width: 100% !important;
   height: 40px !important;
   min-height: 40px !important;
   box-sizing: border-box !important;
   padding: 0 12px !important;
-  gap: 40px !important;
-  border: 1px solid #e5e5e5 !important;
-  border-radius: 10px !important;
+  gap: 12px !important;
+  border: 1px solid #d9dde3 !important;
+  border-radius: 9px !important;
   background: #fff !important;
 }
 
@@ -132,6 +136,25 @@
 
 .admin-map-filters .property-map-region-trigger.has-value .property-custom-dropdown-value {
   color: #202b35 !important;
+}
+
+.admin-map-filters .property-location-item .property-custom-dropdown-trigger {
+  height: 40px !important;
+  min-height: 40px !important;
+}
+
+.admin-map-filters .property-price-item .property-price-trigger {
+  height: 40px !important;
+  min-height: 40px !important;
+}
+
+.admin-map-filters .property-filter-card .property-proptype-item .ant-select-selector {
+  height: 40px !important;
+  min-height: 40px !important;
+}
+
+.admin-map-filters .property-filter-search-row .ant-input-affix-wrapper {
+  min-height: 40px !important;
 }
 
 /* The map filter has a standalone search field, matching the reference bar. */
@@ -288,15 +311,33 @@
 .map-address-dropdown .property-address-field-label {
   position: absolute !important;
   z-index: 2;
-  top: -8px !important;
+  top: 50% !important;
   left: 12px !important;
-  padding: 0 4px !important;
+  padding: 0 !important;
   background: #fff !important;
   color: #8a9099 !important;
-  font-size: 12px !important;
+  font-size: 14px !important;
   font-weight: 400 !important;
-  line-height: 14px !important;
+  line-height: 20px !important;
+  transform: translateY(-50%);
+  transition: top 0.16s ease, left 0.16s ease, font-size 0.16s ease, line-height 0.16s ease, transform 0.16s ease, padding 0.16s ease, color 0.16s ease;
   pointer-events: none;
+}
+
+.map-address-dropdown .property-address-field:focus-within .property-address-field-label,
+.map-address-dropdown .property-address-field:has(.ant-select-selection-item) .property-address-field-label,
+.map-address-dropdown .property-address-field:has(.property-address-field-input:not(:placeholder-shown)) .property-address-field-label {
+  top: -8px !important;
+  left: 8px !important;
+  padding: 0 4px !important;
+  color: #737373 !important;
+  font-size: 12px !important;
+  line-height: 14px !important;
+  transform: none;
+}
+
+.map-address-dropdown .property-address-field:focus-within .property-address-field-label {
+  color: #3b82f6 !important;
 }
 
 .map-address-dropdown .property-address-field-select,
@@ -306,6 +347,12 @@
   max-width: none !important;
   height: 40px !important;
   min-height: 40px !important;
+}
+
+.map-address-dropdown .property-address-field:focus-within .property-address-field-select.ant-select .ant-select-selector,
+.map-address-dropdown .property-address-field:focus-within .property-address-field-input.ant-input {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12) !important;
 }
 
 .map-address-dropdown .property-address-field-select.ant-select {
@@ -415,14 +462,15 @@
 }
 
 .admin-map-filters .property-price-trigger.is-open {
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.12) !important;
+  border-color: #0588f0 !important;
+  box-shadow: 0 0 0 1px rgba(5, 136, 240, 0.12) !important;
 }
 
 /* Price range popover follows Figma node 986-65824. The popover is portaled
    to body, so its map-specific variant is identified by its own class. */
 .admin-map-price-dropdown {
   --pf-price-blue: #3b82f6;
+  z-index: 600 !important;
   width: 300px !important;
   padding: 0 !important;
   border-radius: 12px !important;
@@ -482,7 +530,7 @@
   height: 40px;
 }
 
-.admin-map-filters .admin-map-area-select .ant-select-selector {
+.admin-map-filters .property-filter-card .admin-map-area-select.ant-select .ant-select-selector {
   height: 40px !important;
   min-height: 40px !important;
   padding: 0 12px !important;
@@ -638,10 +686,40 @@
   white-space: nowrap;
 }
 
+.admin-map-filters .property-filter-card .property-filter-more-btn.ant-btn,
+.admin-map-filters .property-filter-card .property-filter-reset-btn.ant-btn {
+  height: 40px !important;
+  min-height: 40px !important;
+}
+
+.admin-map-filters .property-filter-card .property-filter-reset-btn.ant-btn {
+  width: 40px !important;
+  min-width: 40px !important;
+}
+
+.admin-map-filters .property-filter-more-btn.ant-btn:hover,
+.admin-map-filters .property-filter-more-btn.ant-btn:focus-visible,
+.admin-map-filters .property-filter-more-btn.ant-btn:active,
+.admin-map-filters .property-filter-reset-btn.ant-btn:hover,
+.admin-map-filters .property-filter-reset-btn.ant-btn:focus-visible,
+.admin-map-filters .property-filter-reset-btn.ant-btn:active {
+  border-color: #0588f0 !important;
+  color: #0588f0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.admin-map-filters .property-filter-more-btn .lucide-list-filter-plus,
+.admin-map-filters .property-filter-reset-btn .lucide-rotate-ccw {
+  width: 16px;
+  height: 16px;
+}
+
 .admin-map-workspace {
   position: relative;
   display: block;
   flex: 1 1 auto;
+  min-width: 0;
   min-height: 0;
   overflow: hidden;
   border: 1px solid #e5e8ec;
@@ -657,12 +735,12 @@
   width: 356px;
   min-width: 0;
   overflow: hidden;
-  border: 0;
-  border-radius: 16px;
+  border: 1px solid #e5e8ec;
+  border-radius: 12px;
   background: #fff;
   -webkit-backdrop-filter: blur(25px);
   backdrop-filter: blur(25px);
-  box-shadow: 0 2px 12px rgba(20, 33, 48, 0.12);
+  box-shadow: 0 2px 8px rgba(20, 33, 48, 0.08);
 }
 
 .admin-map-results > .ant-card {
@@ -723,9 +801,18 @@
 }
 
 .map-property-list-heading > .ant-typography {
-  color: #596573;
+  color: #4b5563;
   font-size: 12px;
   line-height: 18px;
+}
+
+.map-property-list-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #737373;
+  font-size: 13px;
 }
 
 .map-property-list-heading .ant-segmented {
@@ -738,7 +825,7 @@
 .map-property-list-heading .ant-segmented-item-selected {
   color: #14181d;
   background: #fff !important;
-  box-shadow: inset 0 -2px #1687f8;
+  box-shadow: inset 0 -2px #14181d;
 }
 
 .map-property-list-heading .ant-segmented-item-selected .ant-segmented-item-label {
@@ -896,35 +983,13 @@
   height: 100% !important;
 }
 
-.admin-map-panel-toggle.ant-btn {
-  position: absolute;
-  z-index: 500;
-  top: 50%;
-  left: 372px;
-  width: 32px;
-  height: 48px;
-  padding: 0;
-  transform: translateY(-50%);
-  border: 0;
-  border-radius: 8px;
-  color: #fff;
-  background: #ffad14;
-  box-shadow: 0 2px 8px rgba(20, 33, 48, 0.12);
-}
-
-.admin-map-panel-toggle.ant-btn:hover {
-  color: #fff;
-  background: #f5a000;
-}
-
-.admin-map-workspace.map-expanded .admin-map-panel-toggle {
-  left: 0;
-  border-radius: 0 8px 8px 0;
-}
-
 .admin-map-page .leaflet-container {
   font-family: inherit;
   background: #eaf0ed;
+}
+
+.admin-map-page .leaflet-tile {
+  filter: saturate(0.58) brightness(1.08) contrast(0.94);
 }
 
 /* Property detail overlay follows Figma node 2350-128765. */
@@ -1438,14 +1503,6 @@
 
   .admin-map-results.mobile-results > .ant-card {
     border-radius: 8px !important;
-  }
-
-  .admin-map-results.mobile-results + .admin-map-canvas .admin-map-panel-toggle {
-    top: 8px;
-    left: 8px;
-    transform: none;
-    border: 1px solid #d9dfe5;
-    border-radius: 8px;
   }
 }
 

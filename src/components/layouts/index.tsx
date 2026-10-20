@@ -50,7 +50,7 @@ const getPageLayout = (pathname: string | null) => {
       isNewsPage: false,
       sidebarStyle: { "--sidebar-width-icon": "68px" } as CSSProperties,
       headerClass: "h-[68px] border-b border-gray-100 bg-white",
-      contentClass: "gap-2 bg-white",
+      contentClass: "min-w-0 gap-2 bg-white",
     };
   }
 
@@ -112,7 +112,13 @@ const RootLayout = ({ children, session }: LayoutProps) => {
         style={pageLayout.sidebarStyle}
       >
         <AppSidebar isNewsPage={pageLayout.isNewsPage} />
-        <SidebarInset className={pageLayout.isNewsPage ? "min-w-0" : undefined}>
+        <SidebarInset
+          className={
+            pageLayout.isNewsPage || pathname === AppRoutes.map.url
+              ? "min-w-0"
+              : undefined
+          }
+        >
           <header
             className={`flex shrink-0 items-center gap-2 z-30 ${pageLayout.headerClass}`}
           >

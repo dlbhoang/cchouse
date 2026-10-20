@@ -149,7 +149,7 @@ export const AddressSelectCustom = ({
               className="property-address-field-select"
               allowClear={false}
               suffixIcon={<DownOutlined />}
-              placeholder="Chọn"
+              placeholder={mapMode ? "" : "Chọn"}
               onChange={() => form.resetFields([nameDistrict, nameWard, nameStreet])}
             />
           </Form.Item>
@@ -162,7 +162,7 @@ export const AddressSelectCustom = ({
                 className="property-address-field-select"
                 allowClear={false}
                 suffixIcon={<DownOutlined />}
-                placeholder="Chọn"
+                placeholder={mapMode ? "" : "Chọn"}
                 parentVal={provinceWatch}
                 onChange={() => form.resetFields([nameWard, nameStreet])}
               />
@@ -176,7 +176,7 @@ export const AddressSelectCustom = ({
               className="property-address-field-select"
               allowClear={false}
               suffixIcon={<DownOutlined />}
-              placeholder="Chọn"
+              placeholder={mapMode ? "" : "Chọn"}
               parentVal={wardParentVal}
               isNew={isNewAddressWatch}
               onChange={() => form.resetFields([nameStreet])}
@@ -190,7 +190,7 @@ export const AddressSelectCustom = ({
               className="property-address-field-select"
               allowClear={false}
               suffixIcon={<DownOutlined />}
-              placeholder="Chọn"
+              placeholder={mapMode ? "" : "Chọn"}
               parentVal={streetParentVal}
               isNew={isNewAddressWatch}
             />
@@ -200,7 +200,7 @@ export const AddressSelectCustom = ({
         {!isHiddenField && !isLandSelected && (
           <AddressField label="Số nhà">
             <Form.Item name={nameAddressNumber} className="property-address-field-item" noStyle>
-              <Input className="property-address-field-input" placeholder="Nhập" />
+              <Input className="property-address-field-input" placeholder={mapMode ? "" : "Nhập"} />
             </Form.Item>
           </AddressField>
         )}

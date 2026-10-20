@@ -3,6 +3,7 @@ import "@changey/react-leaflet-markercluster/dist/styles.min.css";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   MapContainer,
@@ -48,12 +49,14 @@ function MyComponent({
   polygon,
 }: Props) {
   const map = useMap();
+  const searchParams = useSearchParams();
   const properties = Array.isArray(data) ? data : [];
 
   useEffect(() => {
     const osm = L.tileLayer(
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png",
       {
+        subdomains: "abc",
         maxZoom: 19,
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -88,7 +91,14 @@ function MyComponent({
           minWidth={300}
           offset={[0, -12]}
         >
-          <Link className="admin-map-property-card" href={`?PropertyId=${e.Id}`}>
+          <Link
+            className="admin-map-property-card"
+            href={`?${(() => {
+              const params = new URLSearchParams(searchParams?.toString() ?? "");
+              params.set("PropertyId", e.Id.toString());
+              return params.toString();
+            })()}`}
+          >
             <div className="admin-map-property-card-heading">
               <span className="admin-map-property-card-id">Mã: {e.Id}</span>
               <strong>{e.PropAddress.DisplayAddress}</strong>
@@ -182,6 +192,7 @@ const Leaflet = ({ data, polygon }: Props) => {
     <MapContainer
       center={hcmPosition}
       zoom={12}
+      maxZoom={19}
       style={{ height: "100%", width: "100%" }}
       zoomControl={false}
     >

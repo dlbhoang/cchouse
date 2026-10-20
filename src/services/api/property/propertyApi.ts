@@ -38,13 +38,25 @@ const crud = {
 	},
 
 	mutateKey: (key: unknown) =>
-		Array.isArray(key) && (key[0] === url || key[0] === `${url}/GetCoordinates`),
+		Array.isArray(key) &&
+			(key[0] === url || key[0] === `${url}/GetCoordinates` || key[0] === `${url}/MapResults`),
 	useGet(params: IPropAdminOpts) {
 		return useSWR([url, params] as const, async ([route, options]) => {
 			return axiosClient.get<any, IListData<IPropResponse>>(route, {
 				params: { ...options, Status: options.Status?.toString() ?? 1 },
 			});
 		});
+	},
+	useGetMapResults(params: IPropAdminOpts) {
+		return useSWR([`${url}/MapResults`, params] as const, async ([, options]) => {
+			return axiosClient.get<any, IListData<IPropResponse>>(url, {
+				params: { ...options, Status: options.Status?.toString() ?? 1 },
+				// This query includes permission filtering and a total count; allow
+				// the API time to finish before surfacing a retry state.
+				timeout: 30000,
+				suppressErrorNotification: true,
+			} as any);
+		}, { shouldRetryOnError: false });
 	},
 
 	useGetMeta(query: string) {

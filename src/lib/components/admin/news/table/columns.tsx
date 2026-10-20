@@ -1,6 +1,6 @@
 import type { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
-import { CalendarX2Icon, EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
 import { mutate } from "swr";
 import NewsConfirmButton from "../confirm";
@@ -255,7 +255,7 @@ const createColumns = (
   {
     key: "Action",
     title: () => <span className="news-th-label">Chức năng</span>,
-    width: 144,
+    width: 112,
     align: "center",
     render(_, record) {
       return (
@@ -271,17 +271,6 @@ const createColumns = (
                 title="Ẩn bài viết?"
                 description="Bài viết sẽ không còn hiển thị công khai trên trang tin."
                 icon={<EyeOffIcon className="size-4" />}
-              />
-              <NewsConfirmButton
-                onConfirm={async () => {
-                  await newsApi.expire(record.Id ?? 0);
-                  await newsApi.revalidate();
-                }}
-                label="Đánh dấu hết hạn"
-                title="Đánh dấu bài viết hết hạn?"
-                description="Bài viết sẽ chuyển sang trạng thái Hết hạn và không còn hiển thị công khai."
-                confirmText="Đánh dấu hết hạn"
-                icon={<CalendarX2Icon className="size-4" />}
               />
             </>
           )}

@@ -62,14 +62,20 @@ export const LocationSelectCustom = ({
     >
       <Typography.Text strong>Vị trí</Typography.Text>
       <Form.Item name={locationName} className={mapMode ? "map-location-radio-item" : undefined}>
-        <Radio.Group className={mapMode ? "map-location-radio-group" : undefined}>
+        <Radio.Group
+          className={mapMode ? "map-location-radio-group" : undefined}
+          onChange={mapMode ? handleApply : undefined}
+        >
           <Radio value={1}>Mặt tiền</Radio>
           <Radio value={2}>Hẻm</Radio>
         </Radio.Group>
       </Form.Item>
       <Typography.Text strong>Đặc điểm</Typography.Text>
       <Form.Item name={locationFeatureName} className={mapMode ? "map-location-radio-item map-location-feature-item" : undefined}>
-        <Radio.Group className={mapMode ? "map-location-feature-group" : undefined}>
+        <Radio.Group
+          className={mapMode ? "map-location-feature-group" : undefined}
+          onChange={mapMode ? handleApply : undefined}
+        >
           {mapMode ? (
             enumList.LocationFeature.map((e) => (
               <Radio key={e.Value} value={e.Value}>{e.Name}</Radio>

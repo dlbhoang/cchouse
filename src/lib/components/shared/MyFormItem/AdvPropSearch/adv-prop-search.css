@@ -1,5 +1,5 @@
 .adv-prop-search-dropdown {
-  z-index: 1100;
+  z-index: 1100 !important;
 }
 
 .adv-prop-search-dropdown .ant-dropdown-menu,

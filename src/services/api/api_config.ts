@@ -38,6 +38,9 @@ axiosClient.interceptors.response.use(
   },
   async (error) => {
     const message = error?.response?.data?.message ?? error?.message ?? "";
+    if ((error?.config as any)?.suppressErrorNotification) {
+      return Promise.reject(error);
+    }
     const isPermissionError = message.includes("Không có quyền thực hiện");
 
     if (isPermissionError) {

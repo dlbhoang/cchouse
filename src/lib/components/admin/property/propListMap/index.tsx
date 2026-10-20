@@ -1,6 +1,6 @@
-import { Card, List, Segmented, Tag, Typography } from "antd";
+import { Button, Card, List, Segmented, Tag, Typography } from "antd";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
@@ -11,13 +11,13 @@ import propertyApi from "@/services/api/property/propertyApi";
 
 const { Text } = Typography;
 
-const PropItem = ({ item }: { item: IPropResponse }) => {
+const PropItem = ({ item, href }: { item: IPropResponse; href: string }) => {
   return (
     <List.Item key={item.Id}>
       <div className="map-property-item">
         <div className="map-property-item-heading">
           <Tag className="map-property-item-id">Mã: {item.Id}</Tag>
-          <Link href={`?PropertyId=${item.Id}`} className="map-property-item-address">
+          <Link href={href} className="map-property-item-address">
             {CombineAddress({ ...item.PropAddress })}
           </Link>
         </div>
@@ -47,7 +47,8 @@ type Props = {
 export const PropListMap = ({ opts }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { data, isValidating } = propertyApi.useGet(opts);
+  const searchParams = useSearchParams();
+  const { data, error, isValidating, mutate } = propertyApi.useGetMapResults(opts);
 
   const handlePageIndexChange = (pageIndex: number, pageSize: number) => {
     router.push(
@@ -74,6 +75,16 @@ export const PropListMap = ({ opts }: Props) => {
       bodyStyle={{ padding: 0, height: "100%" }}
     >
       <List
+        locale={{
+          emptyText: error ? (
+            <div className="map-property-list-error" role="status">
+              <span>Không tải được dữ liệu bản đồ.</span>
+              <Button type="link" onClick={() => mutate()}>
+                Thử lại
+              </Button>
+            </div>
+          ) : undefined,
+        }}
         header={
           <div className="map-property-list-heading">
             <Segmented
@@ -97,9 +108,13 @@ export const PropListMap = ({ opts }: Props) => {
           total: data?.totalRow ?? 0,
           showSizeChanger: false,
         }}
-        loading={isValidating}
+        loading={isValidating && !error}
         dataSource={Array.isArray(data?.data) ? data.data : []}
-        renderItem={(item) => <PropItem item={item} />}
+        renderItem={(item) => {
+          const detailParams = new URLSearchParams(searchParams?.toString() ?? "");
+          detailParams.set("PropertyId", item.Id.toString());
+          return <PropItem item={item} href={`?${detailParams.toString()}`} />;
+        }}
       />
     </Card>
   );
