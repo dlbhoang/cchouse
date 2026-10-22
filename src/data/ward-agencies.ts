@@ -9,6 +9,7 @@ export interface AgencyItem {
   address: string;
   oldAddress?: string;
   status?: "active" | "hidden";
+  updatedAt?: string;
 }
 
 export interface AgencyMap {

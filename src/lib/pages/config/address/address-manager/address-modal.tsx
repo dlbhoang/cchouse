@@ -24,14 +24,14 @@ import districtApi from "@/services/api/districtApi";
 import provinceApi from "@/services/api/provinceApi";
 import streetApi from "@/services/api/streetApi";
 import wardApi from "@/services/api/wardApi";
+import mergeWardApi from "@/services/api/mergeWardApi";
 
-type StreetDraft = { key: number; name: string; oldWardId?: number };
 type WardDraft = {
   key: number;
   id?: number;
   name: string;
   oldDistrictId?: number;
-  streets: StreetDraft[];
+  newWardId?: number;
 };
 type DistrictDraft = { key: number; name: string; wards: WardDraft[] };
 
@@ -41,16 +41,19 @@ type Props = {
   open: boolean;
   mode: "new" | "old";
   intent?: "create" | "edit";
-  initialWard?: { id: number; name: string; oldDistrictId?: number };
-  initialStreet?: { id: number; name: string; wardId?: number; oldWardId?: number; districtId: number };
+  initialWard?: { id: number; name: string; oldDistrictId?: number; newWardId?: number };
+  initialStreet?: { id: number; name: string; shortName?: string; wardId?: number; oldWardId?: number; districtId: number };
   initialProvince?: { id: number; name: string };
   initialDistrict?: { id: number; name: string };
   createKind?: "province" | "district" | "ward" | "street";
   selectedWardId?: number;
+  selectedMappedWardId?: number;
   selectedOldDistrictId?: number;
   selectedDistrictId?: number;
   provinceId?: number;
   provinceName?: string;
+  provinceOptions: Opt[];
+  onProvinceChange: (id: number) => void;
   oldDistricts: Opt[];
   onClose: () => void;
   onSaved: () => void;
@@ -58,9 +61,8 @@ type Props = {
 
 let seq = 0;
 const k = () => ++seq;
-const newStreet = (): StreetDraft => ({ key: k(), name: "" });
-const newWard = (): WardDraft => ({ key: k(), name: "", streets: [newStreet()] });
-const newDistrict = (): DistrictDraft => ({ key: k(), name: "", wards: [newWard()] });
+const newWard = (): WardDraft => ({ key: k(), name: "" });
+const newDistrict = (): DistrictDraft => ({ key: k(), name: "", wards: [] });
 
 // Field có label nổi + dấu * đỏ như Figma.
 function Field({
@@ -142,102 +144,51 @@ function SelectField({
   );
 }
 
-const linkBtn = "px-3 py-1.5 text-[13px] font-medium text-[#0588f0] hover:underline";
-
-function StreetRow({
-  street,
-  oldWards,
-  onChange,
-  onRemove,
-}: {
-  street: StreetDraft;
-  oldWards: Opt[];
-  onChange: (s: StreetDraft) => void;
-  onRemove: () => void;
-}) {
-  return (
-    <div className="flex items-center gap-3">
-      <TextField
-        label="Tên đường"
-        value={street.name}
-        onChange={(name) => onChange({ ...street, name })}
-      />
-      <SelectField
-        label="Thuộc Phường/Xã cũ"
-        value={street.oldWardId}
-        options={oldWards}
-        onChange={(oldWardId) => onChange({ ...street, oldWardId })}
-      />
-      <button type="button" aria-label="Xoá đường" onClick={onRemove} className="text-[#dc3e42]">
-        <Trash2 size={20} />
-      </button>
-    </div>
-  );
-}
-
 function WardGroup({
   index,
   ward,
   mode,
   oldDistricts,
+  newWardOptions,
   onChange,
   onRemove,
-  removeLabel = "x Bỏ",
 }: {
   index: number;
   ward: WardDraft;
   mode: "new" | "old";
   oldDistricts: Opt[];
+  newWardOptions: Opt[];
   onChange: (w: WardDraft) => void;
   onRemove: () => void;
-  removeLabel?: string;
 }) {
-  const oldWards = useSWR(
-    ward.oldDistrictId ? ["modal-old-wards", ward.oldDistrictId] : null,
-    () => wardApi.get({ pageIndex: 1, pageSize: 10000, DistrictId: ward.oldDistrictId, IsNew: false })
-  );
-  const oldWardOpts: Opt[] = (oldWards.data?.data ?? []).map((w) => ({ id: w.Id, name: w.Name }));
-
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white px-5 py-2">
       <div className="flex items-center gap-4">
         <p className="flex-1 text-[13px] font-medium text-[#0a0a0a]">
-          Phường/Xã & Tên đường #{index}:
+          Phường/Xã: <span className="text-[#7563d9]">#{index}</span>
         </p>
-        <button type="button" onClick={onRemove} className="px-3 py-1.5 text-[13px] font-medium underline">
-          {removeLabel}
+        <button type="button" aria-label={`Xóa Phường/Xã ${index}`} onClick={onRemove} className="rounded p-1 text-[#737373] hover:bg-[#f5f5f5]">
+          <Trash2 size={16} />
         </button>
       </div>
       <div className="flex gap-3 pt-1">
         <TextField label="Phường/Xã" value={ward.name} onChange={(name) => onChange({ ...ward, name })} />
-        {mode === "old" && <SelectField
-          label="Thuộc Quận/Huyện cũ"
-          value={ward.oldDistrictId}
-          options={oldDistricts}
-          onChange={(oldDistrictId) => onChange({ ...ward, oldDistrictId })}
-        />}
-      </div>
-      <p className="text-[13px] font-medium text-[#0a0a0a]">Danh sách Tên đường:</p>
-      <div className="flex flex-col gap-3 pt-1">
-        {ward.streets.map((s) => (
-          <StreetRow
-            key={s.key}
-            street={s}
-            oldWards={oldWardOpts}
-            onChange={(ns) =>
-              onChange({ ...ward, streets: ward.streets.map((x) => (x.key === s.key ? ns : x)) })
-            }
-            onRemove={() => onChange({ ...ward, streets: ward.streets.filter((x) => x.key !== s.key) })}
+        {mode === "new" ? (
+          <SelectField
+            label="Thuộc Quận/Huyện cũ"
+            value={ward.oldDistrictId}
+            options={oldDistricts}
+            onChange={(oldDistrictId) => onChange({ ...ward, oldDistrictId })}
           />
-        ))}
+        ) : (
+          <SelectField
+            label="Nay thuộc Phường/Xã mới"
+            value={ward.newWardId}
+            options={newWardOptions}
+            onChange={(newWardId) => onChange({ ...ward, newWardId })}
+          />
+        )}
       </div>
-      <button
-        type="button"
-        className={cn(linkBtn, "self-start")}
-        onClick={() => onChange({ ...ward, streets: [...ward.streets, newStreet()] })}
-      >
-        + Thêm đường
-      </button>
     </div>
   );
 }
@@ -265,10 +216,13 @@ export default function AddressModal({
   initialDistrict,
   createKind = "ward",
   selectedWardId,
+  selectedMappedWardId,
   selectedOldDistrictId,
   selectedDistrictId,
   provinceId,
   provinceName,
+  provinceOptions,
+  onProvinceChange,
   oldDistricts,
   onClose,
   onSaved,
@@ -277,11 +231,25 @@ export default function AddressModal({
   const [districts, setDistricts] = useState<DistrictDraft[]>([newDistrict()]);
   const [saving, setSaving] = useState(false);
   const [streetName, setStreetName] = useState("");
+  const [streetShortName, setStreetShortName] = useState("");
   const [entityName, setEntityName] = useState("");
   const [streetOldWardId, setStreetOldWardId] = useState<number>();
+  const [streetWardId, setStreetWardId] = useState<number>();
+  const [streetDistrictId, setStreetDistrictId] = useState<number>();
+  const newWards = useSWR(
+    open && provinceId && (createKind === "street" || mode === "old")
+      ? ["modal-street-new-wards", provinceId]
+      : null,
+    () => wardApi.get({ pageIndex: 1, pageSize: 10000, ProvinceId: provinceId, IsNew: true })
+  );
+  const newWardOpts: Opt[] = (newWards.data?.data ?? []).map((ward) => ({
+    id: ward.Id,
+    name: ward.Name,
+    districtId: ward.DistrictId,
+  }));
   const streetOldWards = useSWR(
-    selectedOldDistrictId ? ["modal-street-old-wards", selectedOldDistrictId] : null,
-    () => wardApi.get({ pageIndex: 1, pageSize: 10000, DistrictId: selectedOldDistrictId, IsNew: false })
+    streetDistrictId ? ["modal-street-old-wards", streetDistrictId] : null,
+    () => wardApi.get({ pageIndex: 1, pageSize: 10000, DistrictId: streetDistrictId, IsNew: false })
   );
   const streetOldWardOpts: Opt[] = (streetOldWards.data?.data ?? []).map((w) => ({
     id: w.Id,
@@ -293,14 +261,19 @@ export default function AddressModal({
     if (!open) return;
     setWards(
       intent === "edit" && initialWard
-        ? [{ ...newWard(), id: initialWard.id, name: initialWard.name, oldDistrictId: initialWard.oldDistrictId }]
-        : []
+        ? [{ ...newWard(), id: initialWard.id, name: initialWard.name, oldDistrictId: initialWard.oldDistrictId, newWardId: initialWard.newWardId }]
+        : mode === "old" && createKind === "ward"
+          ? [newWard()]
+          : []
     );
-    setDistricts([newDistrict()]);
+    setDistricts(mode === "old" && createKind === "district" ? [] : [newDistrict()]);
     setStreetName(initialStreet?.name ?? "");
+    setStreetShortName(initialStreet?.shortName ?? "");
     setStreetOldWardId(initialStreet?.oldWardId ?? (mode === "old" && createKind === "street" ? selectedWardId : undefined));
+    setStreetWardId(initialStreet?.wardId ?? (mode === "new" ? selectedWardId : selectedMappedWardId));
+    setStreetDistrictId(initialStreet?.districtId ?? selectedOldDistrictId ?? selectedDistrictId);
     setEntityName(initialProvince?.name ?? initialDistrict?.name ?? "");
-  }, [open, intent, initialWard?.id, initialWard?.name, initialWard?.oldDistrictId, initialStreet?.id, initialStreet?.name, initialStreet?.oldWardId, initialProvince?.id, initialProvince?.name, initialDistrict?.id, initialDistrict?.name]);
+  }, [open, intent, mode, createKind, selectedWardId, selectedMappedWardId, selectedOldDistrictId, selectedDistrictId, initialWard?.id, initialWard?.name, initialWard?.oldDistrictId, initialWard?.newWardId, initialStreet?.id, initialStreet?.name, initialStreet?.shortName, initialStreet?.oldWardId, initialStreet?.wardId, initialStreet?.districtId, initialProvince?.id, initialProvince?.name, initialDistrict?.id, initialDistrict?.name]);
 
   const reset = () => {
     setWards([]);
@@ -317,9 +290,6 @@ export default function AddressModal({
     if (!provinceId && createKind !== "province" && !initialProvince) return toast.error("Chưa chọn Tỉnh/Thành phố");
     if (mode === "new" && !initialStreet && !initialProvince && !initialDistrict && !["street", "province", "district"].includes(createKind) && !wards.some((ward) => ward.name.trim())) {
       return toast.error("Vui lòng thêm Phường/Xã trước khi lưu");
-    }
-    if (mode === "old" && createKind === "district" && !entityName.trim()) {
-      return toast.error("Vui lòng nhập tên Quận/Huyện");
     }
     const base = (Name: string) => ({
       Id: 0,
@@ -345,108 +315,114 @@ export default function AddressModal({
         const name = entityName.trim();
         if (!name) throw new Error("Vui lòng nhập tên Tỉnh/Thành phố");
         await provinceApi.add(base(name));
-      } else if (!initialStreet && createKind === "district") {
-        const name = entityName.trim();
-        if (!name) throw new Error("Vui lòng nhập tên Quận/Huyện");
-        if (!provinceId) throw new Error("Chưa chọn Tỉnh/Thành phố");
-        await districtApi.add({ ...base(name), ProvinceId: provinceId });
       } else if (!initialWard && !initialStreet && mode === "old" && createKind === "ward") {
-        const name = entityName.trim();
-        if (!name) throw new Error("Vui lòng nhập tên Phường/Xã");
         if (!selectedDistrictId) throw new Error("Vui lòng chọn Quận/Huyện trước khi thêm phường");
-        await wardApi.add({ ...base(name), DistrictId: selectedDistrictId, IsNew: false });
+        const wardsToCreate = wards.filter((ward) => ward.name.trim());
+        if (!wardsToCreate.length) throw new Error("Vui lòng thêm Phường/Xã trước khi lưu");
+        for (const ward of wardsToCreate) {
+          if (!ward.newWardId) throw new Error(`Vui lòng chọn Phường/Xã mới cho "${ward.name.trim()}"`);
+        }
+        for (const ward of wardsToCreate) {
+          const createdWard = await wardApi.add({ ...base(ward.name.trim()), DistrictId: selectedDistrictId, IsNew: false });
+          await mergeWardApi.add({ OldWardId: Number(createdWard.data), NewWardId: ward.newWardId!, Description: "" });
+        }
       } else if (!initialStreet && mode === "old" && createKind === "street") {
         const name = streetName.trim();
         if (!name) throw new Error("Vui lòng nhập tên đường");
-        if (!selectedDistrictId) throw new Error("Vui lòng chọn Quận/Huyện trước khi thêm đường");
-        await streetApi.add({ ...base(name), DistrictId: selectedDistrictId, OldWardId: streetOldWardId ?? selectedWardId ?? null });
+        if (!streetDistrictId) throw new Error("Vui lòng chọn Quận/Huyện trước khi thêm đường");
+        if (!streetOldWardId) throw new Error("Vui lòng chọn Phường/Xã cũ");
+        if (!streetWardId) throw new Error("Vui lòng chọn Phường/Xã mới tương ứng");
+        await streetApi.add({
+          ...base(name),
+          ShortName: streetShortName.trim() || name,
+          DistrictId: streetDistrictId,
+          WardId: streetWardId ?? null,
+          OldWardId: streetOldWardId ?? selectedWardId ?? null,
+        });
       } else if (initialStreet) {
         const name = streetName.trim();
         if (!name) throw new Error("Vui lòng nhập tên đường");
-        const oldDistrictId = streetOldWardOpts.find((w) => w.id === streetOldWardId)?.districtId ?? initialStreet.districtId;
+        const oldDistrictId = streetDistrictId ?? streetOldWardOpts.find((w) => w.id === streetOldWardId)?.districtId ?? initialStreet.districtId;
         await streetApi.update({
           ...base(name),
+          ShortName: streetShortName.trim() || initialStreet.shortName || name,
           Id: initialStreet.id,
           DistrictId: oldDistrictId,
-          WardId: selectedWardId ?? initialStreet.wardId ?? null,
+          WardId: streetWardId ?? selectedWardId ?? initialStreet.wardId ?? null,
           OldWardId: streetOldWardId ?? null,
           UpdateWardLinks: true,
         });
       } else if (mode === "new" && createKind === "street") {
         const name = streetName.trim();
         if (!name) throw new Error("Vui lòng nhập tên đường");
-        if (!selectedWardId) throw new Error("Vui lòng chọn Phường/Xã mới trước khi thêm đường");
-        const districtId = streetOldWardOpts.find((w) => w.id === streetOldWardId)?.districtId ?? selectedOldDistrictId;
+        if (!streetWardId) throw new Error("Vui lòng chọn Phường/Xã mới trước khi thêm đường");
+        if (!streetOldWardId) throw new Error("Vui lòng chọn Phường/Xã cũ");
+        const districtId = streetDistrictId ?? streetOldWardOpts.find((w) => w.id === streetOldWardId)?.districtId ?? selectedOldDistrictId;
         if (!districtId) throw new Error("Không tìm thấy Quận/Huyện cũ của Phường/Xã mới");
         await streetApi.add({
           ...base(name),
+          ShortName: streetShortName.trim() || name,
           DistrictId: districtId,
-          WardId: selectedWardId,
+          WardId: streetWardId ?? selectedWardId,
           OldWardId: streetOldWardId ?? null,
         });
       } else if (initialWard) {
-        const name = wards[0]?.name.trim() || initialWard.name.trim();
-        const oldDistrictId = wards[0]?.oldDistrictId ?? initialWard.oldDistrictId;
-        if (mode === "old" && !oldDistrictId) throw new Error("Vui lòng chọn Quận/Huyện cũ");
-        const streetsToAdd = (wards[0]?.streets ?? [])
-          .filter((item) => item.name.trim())
-          .map((street) => {
-            const oldWard = streetOldWardOpts.find((item) => item.id === street.oldWardId);
-            const districtId = oldWard?.districtId ?? oldDistrictId;
-            if (!districtId) {
-              throw new Error(`Chưa xác định được Quận/Huyện cũ cho đường "${street.name.trim()}"`);
+        const wardsToSave = wards.filter((ward) => ward.name.trim());
+        if (!wardsToSave.length) throw new Error("Vui lòng nhập tên Phường/Xã");
+        const mappings = mode === "old" ? await mergeWardApi.get() : undefined;
+        const mappingsByOldWard = new Map(
+          (mappings?.data ?? []).map((mapping) => [mapping.OldWardId, mapping])
+        );
+        for (const ward of wardsToSave) {
+          const oldDistrictId = ward.oldDistrictId ?? initialWard.oldDistrictId ?? selectedDistrictId;
+          if (mode === "new" && !oldDistrictId) throw new Error(`Vui lòng chọn Quận/Huyện cũ cho "${ward.name.trim()}"`);
+          if (mode === "old" && !ward.newWardId) throw new Error(`Vui lòng chọn Phường/Xã mới cho "${ward.name.trim()}"`);
+          if (mode === "old" && !oldDistrictId) throw new Error("Vui lòng chọn Quận/Huyện cũ");
+          const payload = {
+            ...base(ward.name.trim()),
+            Id: ward.id ?? 0,
+            ...(mode === "old"
+              ? { DistrictId: oldDistrictId }
+              : { ProvinceId: provinceId, DistrictId: oldDistrictId }),
+            IsNew: mode === "new",
+          };
+          const savedWard = ward.id
+            ? await wardApi.update(payload)
+            : await wardApi.add(payload);
+          if (mode === "old" && ward.newWardId) {
+            const oldWardId = ward.id ?? Number(savedWard.data);
+            const existing = mappingsByOldWard.get(oldWardId);
+            if (existing) {
+              await mergeWardApi.update(existing.Id, { NewWardId: ward.newWardId, Description: "" });
+            } else {
+              await mergeWardApi.add({ OldWardId: oldWardId, NewWardId: ward.newWardId, Description: "" });
             }
-            return { street, districtId };
-          });
-        await wardApi.update({
-          ...base(name),
-          Id: initialWard.id,
-          ...(mode === "old" ? { DistrictId: oldDistrictId } : { ProvinceId: provinceId }),
-          IsNew: mode === "new",
-        });
-        for (const { street, districtId } of streetsToAdd) {
-          await streetApi.add({
-            ...base(street.name.trim()),
-            DistrictId: districtId,
-            WardId: mode === "new" ? initialWard.id : null,
-            OldWardId: street.oldWardId ?? null,
-          });
+          }
         }
       } else if (mode === "new") {
         for (const w of wards.filter((x) => x.name.trim())) {
           if (!provinceId) throw new Error("Chưa chọn Tỉnh/Thành phố");
-          const streetsToAdd = w.streets
-            .filter((street) => street.name.trim())
-            .map((street) => {
-              const oldWard = streetOldWardOpts.find((old) => old.id === street.oldWardId);
-              const districtId = oldWard?.districtId ?? w.oldDistrictId;
-              if (!districtId) {
-                throw new Error(`Chưa xác định được Quận/Huyện cũ cho đường "${street.name.trim()}"`);
-              }
-              return { street, districtId };
-            });
+          if (!w.oldDistrictId) throw new Error(`Vui lòng chọn Quận/Huyện cũ cho Phường/Xã "${w.name.trim()}"`);
           const wardPayload = {
             ...base(w.name.trim()),
             Id: w.id ?? 0,
             IsNew: true,
             ProvinceId: provinceId,
+            DistrictId: w.oldDistrictId,
           };
-          const savedWard = w.id
-            ? await wardApi.update(wardPayload)
-            : await wardApi.add(wardPayload);
-          const savedWardId = w.id ?? Number(savedWard.data);
-          for (const { street, districtId } of streetsToAdd) {
-            await streetApi.add({
-              ...base(street.name.trim()),
-              DistrictId: districtId,
-              WardId: savedWardId,
-              OldWardId: street.oldWardId ?? null,
-            });
-          }
+          if (w.id) await wardApi.update(wardPayload);
+          else await wardApi.add(wardPayload);
         }
       } else {
         if (!provinceId) throw new Error("Chưa chọn Tỉnh/Thành phố");
-        for (const d of districts.filter((x) => x.name.trim())) {
+        const districtsToCreate = districts.filter((d) => d.name.trim());
+        if (!districtsToCreate.length) throw new Error("Vui lòng thêm Quận/Huyện trước khi lưu");
+        for (const district of districtsToCreate) {
+          for (const ward of district.wards.filter((item) => item.name.trim())) {
+            if (!ward.newWardId) throw new Error(`Vui lòng chọn Phường/Xã mới cho "${ward.name.trim()}"`);
+          }
+        }
+        for (const d of districtsToCreate) {
           const created = await districtApi.add({
             ...base(d.name.trim()),
             ProvinceId: provinceId,
@@ -459,13 +435,7 @@ export default function AddressModal({
               IsNew: false,
             });
             const oldWardId = Number(createdWard.data);
-            for (const s of w.streets.filter((x) => x.name.trim())) {
-              await streetApi.add({
-                ...base(s.name.trim()),
-                DistrictId: districtId,
-                OldWardId: oldWardId,
-              });
-            }
+            await mergeWardApi.add({ OldWardId: oldWardId, NewWardId: w.newWardId!, Description: "" });
           }
         }
       }
@@ -481,38 +451,98 @@ export default function AddressModal({
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && close()}>
-      <DialogContent className="max-h-[90vh] gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[720px]">
+      <DialogContent className="max-h-[90vh] gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[780px]">
         <div className="border-b border-[#f5f5f5] px-5 py-3.5">
           <DialogTitle className="text-base font-bold text-[#0a0a0a]">
-            {intent === "edit" ? "CHỈNH SỬA ĐỊA GIỚI" : "THÊM MỚI ĐỊA GIỚI"}
+            {intent === "edit"
+              ? createKind === "street" ? "CHỈNH SỬA ĐỊA GIỚI - TÊN ĐƯỜNG" : "CHỈNH SỬA ĐỊA GIỚI"
+              : createKind === "street" ? "THÊM MỚI ĐỊA GIỚI - TÊN ĐƯỜNG" : "THÊM MỚI ĐỊA GIỚI"}
           </DialogTitle>
           <DialogDescription className="sr-only">Thêm mới đơn vị hành chính</DialogDescription>
         </div>
 
         <div className="flex min-h-0 flex-col gap-5 overflow-y-auto px-8 py-5">
           <div className="flex">
-            <Field label="Thuộc Tỉnh/Thành phố" active={Boolean(provinceName)}>
-              <Input
-                disabled
-                value={provinceName ?? ""}
-                className={cn(inputCls, "bg-[#f5f5f5] text-[#a1a1aa] disabled:opacity-100")}
+            {initialProvince || createKind === "province" ? (
+              <Field label="Thuộc Tỉnh/Thành phố" active={Boolean(provinceName)}>
+                <Input
+                  disabled
+                  value={provinceName ?? ""}
+                  className={cn(inputCls, "bg-[#f5f5f5] text-[#a1a1aa] disabled:opacity-100")}
+                />
+              </Field>
+            ) : (
+              <SelectField
+                label="Thuộc Tỉnh/Thành phố"
+                value={provinceId}
+                options={provinceOptions}
+                onChange={onProvinceChange}
               />
-            </Field>
+            )}
           </div>
 
-          {initialProvince || initialDistrict || createKind === "province" || createKind === "district" || (mode === "old" && createKind === "ward" && !initialWard) ? (
-            <TextField label={initialProvince || createKind === "province" ? "Tên Tỉnh/Thành phố" : mode === "old" && createKind === "ward" ? "Tên Phường/Xã" : "Tên Quận/Huyện"} value={entityName} onChange={setEntityName} />
+          {initialProvince || initialDistrict || createKind === "province" ? (
+            <TextField label={initialProvince || createKind === "province" ? "Tên Tỉnh/Thành phố" : "Tên Quận/Huyện"} value={entityName} onChange={setEntityName} />
           ) : initialStreet || createKind === "street" ? (
             <div className="flex flex-col gap-3">
-              <TextField label="Tên đường" value={streetName} onChange={setStreetName} />
-              <SelectField
-                label="Thuộc Phường/Xã cũ"
-                value={streetOldWardId}
-                options={streetOldWardOpts}
-                onChange={setStreetOldWardId}
-              />
+              {mode === "new" ? (
+                <div className="flex gap-3">
+                  <SelectField
+                    label="Thuộc Phường/Xã"
+                    value={streetWardId}
+                    options={newWardOpts}
+                    onChange={setStreetWardId}
+                  />
+                  <SelectField
+                    label="Thuộc Quận/Huyện cũ"
+                    value={streetDistrictId}
+                    options={oldDistricts}
+                    onChange={(id) => {
+                      setStreetDistrictId(id);
+                      setStreetOldWardId(undefined);
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className="flex gap-3">
+                  <SelectField
+                    label="Thuộc Quận/Huyện"
+                    value={streetDistrictId}
+                    options={oldDistricts}
+                    onChange={(id) => {
+                      setStreetDistrictId(id);
+                      setStreetOldWardId(undefined);
+                    }}
+                  />
+                  <SelectField
+                    label="Thuộc Phường/Xã"
+                    value={streetOldWardId}
+                    options={streetOldWardOpts}
+                    onChange={setStreetOldWardId}
+                  />
+                  <SelectField
+                    label="Nay thuộc Phường/Xã mới"
+                    value={streetWardId}
+                    options={newWardOpts}
+                    onChange={setStreetWardId}
+                  />
+                </div>
+              )}
+              <div className="flex gap-3">
+                <TextField label="Tên đường" value={streetName} onChange={setStreetName} />
+                {mode === "new" ? (
+                  <SelectField
+                    label="Thuộc Phường/Xã cũ"
+                    value={streetOldWardId}
+                    options={streetOldWardOpts}
+                    onChange={setStreetOldWardId}
+                  />
+                ) : (
+                  <TextField label="Tên viết tắt" value={streetShortName} onChange={setStreetShortName} />
+                )}
+              </div>
             </div>
-          ) : mode === "new" || initialWard ? (
+          ) : mode === "new" || initialWard || (mode === "old" && createKind === "ward") ? (
             <>
               {wards.map((w, i) => (
                 <WardGroup
@@ -521,32 +551,46 @@ export default function AddressModal({
                   ward={w}
                   mode={mode}
                   oldDistricts={oldDistricts}
+                  newWardOptions={newWardOpts}
                   onChange={(nw) => setWards((l) => patchWard(l, nw))}
                   onRemove={() => setWards((l) => l.filter((x) => x.key !== w.key))}
                 />
               ))}
-              {!initialWard && <DashedAdd
+              <DashedAdd
                 label="Thêm mới Phường/Xã"
                 onClick={() => setWards((l) => [...l, newWard()])}
-              />}
+              />
             </>
           ) : (
             <>
               {districts.map((d, di) => (
                 <div
                   key={d.key}
-                  className="flex flex-col gap-4 rounded-lg border border-[#a1a1aa] px-5 pb-5 pt-2"
+                  className="flex flex-col gap-3 border-b border-[#e5e5e5] pb-4"
                 >
-                  <div className="flex items-center gap-4 border-b border-[#a1a1aa]">
-                    <p className="flex-1 py-2.5 text-sm font-medium text-[#1e3a8a]">
-                      Quận/Huyện #{di + 1}:
+                  <div className="flex items-center gap-2">
+                    <p className="flex-1 py-2 text-[13px] font-medium text-[#0a0a0a]">
+                      Quận/Huyện<span className="text-[#dc3e42]">*</span>: <span className="text-[#7563d9]">#{di + 1}</span>
                     </p>
                     <button
                       type="button"
                       onClick={() => setDistricts((l) => l.filter((x) => x.key !== d.key))}
-                      className="px-3 py-1.5 text-[13px] font-medium text-[#dc3e42]"
+                      aria-label={`Xóa Quận/Huyện ${di + 1}`}
+                      className="rounded p-1 text-[#737373] hover:bg-[#f5f5f5]"
                     >
-                      x Bỏ Quận/Huyện
+                      <Trash2 size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setDistricts((l) => l.map((x) =>
+                          x.key === d.key ? { ...x, wards: [...x.wards, newWard()] } : x
+                        ))
+                      }
+                      className="inline-flex items-center gap-1 rounded-md bg-[#7563d9] px-2.5 py-1 text-[12px] font-medium text-white"
+                    >
+                      <Plus size={14} />
+                      Thêm Phường/Xã
                     </button>
                   </div>
                   <div className="flex pt-1">
@@ -558,42 +602,29 @@ export default function AddressModal({
                       }
                     />
                   </div>
-                  <div className="flex gap-3">
-                    <div className="w-[3px] shrink-0 rounded bg-[#0588f0]" />
-                    <div className="flex min-w-0 flex-1 flex-col gap-3">
-                      {d.wards.map((w, wi) => (
-                        <WardGroup
-                          key={w.key}
-                          index={wi + 1}
-                          ward={w}
-                          mode={mode}
-                          oldDistricts={oldDistricts}
-                          onChange={(nw) =>
-                            setDistricts((l) =>
-                              l.map((x) => (x.key === d.key ? { ...x, wards: patchWard(x.wards, nw) } : x))
-                            )
-                          }
-                          onRemove={() =>
-                            setDistricts((l) =>
-                              l.map((x) =>
-                                x.key === d.key ? { ...x, wards: x.wards.filter((y) => y.key !== w.key) } : x
-                              )
-                            )
-                          }
-                        />
-                      ))}
-                      <button
-                        type="button"
-                        className={cn(linkBtn, "self-start")}
-                        onClick={() =>
+                  <div className="flex min-w-0 flex-col gap-3">
+                    {d.wards.map((w, wi) => (
+                      <WardGroup
+                        key={w.key}
+                        index={wi + 1}
+                        ward={w}
+                        mode={mode}
+                        oldDistricts={oldDistricts}
+                        newWardOptions={newWardOpts}
+                        onChange={(nw) =>
                           setDistricts((l) =>
-                            l.map((x) => (x.key === d.key ? { ...x, wards: [...x.wards, newWard()] } : x))
+                            l.map((x) => (x.key === d.key ? { ...x, wards: patchWard(x.wards, nw) } : x))
                           )
                         }
-                      >
-                        + Thêm Phường/xã thuộc Quận/huyện này
-                      </button>
-                    </div>
+                        onRemove={() =>
+                          setDistricts((l) =>
+                            l.map((x) =>
+                              x.key === d.key ? { ...x, wards: x.wards.filter((y) => y.key !== w.key) } : x
+                            )
+                          )
+                        }
+                      />
+                    ))}
                   </div>
                 </div>
               ))}

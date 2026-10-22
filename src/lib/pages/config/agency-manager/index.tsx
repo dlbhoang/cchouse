@@ -1,11 +1,11 @@
 "use client";
 
-import { ChevronDown, ChevronRight, Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
+import { Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { WARD_AGENCIES, type AgencyMap, type WardAgencyData } from "@/data/ward-agencies";
 import type { IDistrictResponse, IProvinceResponse, IStreetResponse, IWardResponse } from "@/lib/interfaces/ConfigAddress/IConfigAddress";
 import districtApi from "@/services/api/districtApi";
@@ -15,9 +15,8 @@ import streetApi from "@/services/api/streetApi";
 import wardApi from "@/services/api/wardApi";
 
 type AgencyType = keyof AgencyMap;
-type AgencyRecord = { type: AgencyType; name: string; address: string; oldAddress?: string; status?: "active" | "hidden" };
+type AgencyRecord = { type: AgencyType; name: string; address: string; oldAddress?: string; status?: "active" | "hidden"; updatedAt?: string };
 type AgencyAddressOption = Pick<IWardResponse, "Id" | "Name" | "Type" | "ProvinceId" | "DistrictId">;
-type OldAddressOption = { address: string; wardId: number; district: string };
 type AgencyStatusFilter = "all" | "active" | "hidden";
 
 const agencyTypes: AgencyType[] = [
@@ -29,6 +28,16 @@ const agencyTypes: AgencyType[] = [
   "Tòa án",
   "Thừa phát lại",
 ];
+const agencyTypeLabel = (type: AgencyType) => type === "Văn phòng công chứng"
+  ? "Phòng công chứng"
+  : type === "Ủy ban nhân dân phường"
+    ? "Ủy ban phường"
+    : type;
+const figmaAgencyNames: Record<string, string> = {
+  "Phòng Công chứng số 1": "Văn phòng Công chứng số 1",
+  "VP Công chứng Bến Thành": "Văn phòng công chứng Bến Thành",
+};
+const agencyDisplayName = (name: string) => figmaAgencyNames[name] ?? name;
 const emptyAgencyMap = (): AgencyMap => ({
   "Văn phòng công chứng": [],
   "Văn phòng đất đai": [],
@@ -52,25 +61,6 @@ const normalizeAddressName = (value: string) => value
   .replace(/^(phuong|xa|dac khu)\s+/i, "")
   .trim()
   .toLocaleLowerCase("vi");
-
-const formatOldDistrictLabel = (district: string) => {
-  const value = district.trim();
-  const cleanSuffix = value.replace(/-(?:BD|BRVT)$/i, "");
-  if (/^Q\s*\d+$/i.test(value)) return `Quận ${value.replace(/^Q\s*/i, "")}`;
-  if (/^H\./i.test(value)) return `Huyện ${cleanSuffix.replace(/^H\./i, "")}`;
-  if (/^TP\s+/i.test(value)) return `Thành phố ${cleanSuffix.replace(/^TP\s+/i, "")}`;
-  if (value === "TDM-BD") return "Thành phố Thủ Dầu Một";
-  if (["Dĩ An-BD", "Thuận An-BD", "Bến Cát-BD"].includes(value)) return `Thành phố ${cleanSuffix}`;
-  if (["Bình Tân", "Bình Thạnh", "Gò Vấp", "Phú Nhuận", "Tân Bình", "Tân Phú"].includes(value)) return `Quận ${value}`;
-  if (["Bình Chánh", "Cần Giờ", "Củ Chi", "Hóc Môn", "Nhà Bè"].includes(value)) return `Huyện ${value}`;
-  if (value === "Thủ Đức") return "Thành phố Thủ Đức";
-  if (value === "BRVT") return "Bà Rịa - Vũng Tàu";
-  if (/-BD$/i.test(value)) return `Huyện ${cleanSuffix}`;
-  return value;
-};
-
-const oldDistrictSortRank = (label: string) =>
-  label.startsWith("Quận ") ? 0 : label.startsWith("Thành phố ") ? 1 : label.startsWith("Huyện ") ? 2 : 3;
 
 const convertAgencyAddressToOld = (newAddress: string, wards: WardAgencyData[], fallbackWardName?: string) => {
   const parts = newAddress.split(",").map((part) => part.trim()).filter(Boolean);
@@ -141,17 +131,10 @@ function AgencyFloatingField({
 export default function AgencyManagerPage() {
   const [wards, setWards] = useState<WardAgencyData[]>([]);
   const [selectedWardId, setSelectedWardId] = useState<number>();
-  const [expandedCity, setExpandedCity] = useState(true);
-  const [expandedOldCity, setExpandedOldCity] = useState(true);
-  const [selectedOldAddress, setSelectedOldAddress] = useState("");
-  const [query, setQuery] = useState("");
   const [agencySearchInput, setAgencySearchInput] = useState("");
   const [agencySearch, setAgencySearch] = useState("");
-  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyType | "all">("all");
+  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyType | "all">("Văn phòng công chứng");
   const [agencyStatusFilter, setAgencyStatusFilter] = useState<AgencyStatusFilter>("all");
-  const [expandedAgencyTypes, setExpandedAgencyTypes] = useState<Set<AgencyType>>(
-    () => new Set(["Văn phòng công chứng"])
-  );
   const [mode, setMode] = useState<"new" | "old">("new");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<AgencyRecord>();
@@ -175,16 +158,17 @@ export default function AgencyManagerPage() {
       if (!active) return;
       const data = Array.isArray(response.data) && response.data.length ? response.data : WARD_AGENCIES;
       setWards(data);
-      setSelectedWardId((current) => current ?? data[0]?.WardId);
     }).catch(() => {
       if (!active) return;
       setWards(WARD_AGENCIES);
-      setSelectedWardId((current) => current ?? WARD_AGENCIES[0]?.WardId);
     });
     return () => { active = false; };
   }, []);
 
-  const selectedWard = wards.find((ward) => ward.WardId === selectedWardId);
+  // Keep the Figma default state unfiltered (the select shows "Chọn") while
+  // showing the initial sample list until an area is chosen.
+  const selectedWard = wards.find((ward) => ward.WardId === selectedWardId)
+    ?? (selectedWardId === undefined ? wards[0] : undefined);
   const configuredProvinceWardOptions = configuredWardOptions.filter((ward) => ward.ProvinceId === provinceId);
   const linkedProvinceWardOptions = configuredProvinceWardOptions.filter((ward) =>
     provinceDistricts.some((district) => district.Id === ward.DistrictId)
@@ -265,14 +249,15 @@ export default function AgencyManagerPage() {
 
   useEffect(() => {
     if (!dialogOpen || mode !== "old" || !oldDistrictOptions.length) return;
-    const legacyDistrictNumber = selectedOldAddress.match(/\(Q(\d+)\)/)?.[1];
+    const legacyDistrictNumber = selectedWard?.MergedFrom
+      .map((address) => address.match(/\(Q(\d+)\)/)?.[1])
+      .find(Boolean);
     const legacyDistrict = legacyDistrictNumber
       ? oldDistrictOptions.find((district) => new RegExp(`quận\\s*${legacyDistrictNumber}(?!\\d)`, "i").test(district.Name))
       : undefined;
     setOldDistrictId((current) => oldDistrictOptions.some((district) => district.Id === current)
-      ? current
-      : legacyDistrict?.Id ?? oldDistrictOptions[0]?.Id);
-  }, [dialogOpen, mode, oldDistrictOptions, selectedOldAddress]);
+      ? current : legacyDistrict?.Id ?? oldDistrictOptions[0]?.Id);
+  }, [dialogOpen, mode, oldDistrictOptions, selectedWard]);
 
   useEffect(() => {
     if (!dialogOpen || mode !== "new" || !formWardId) {
@@ -290,23 +275,33 @@ export default function AgencyManagerPage() {
         const sourceWard = wards.find((ward) => ward.WardId === editingWardId);
         if (editing && sourceWard && selectedFormWardOption
           && normalizeAddressName(sourceWard.WardName) === normalizeAddressName(selectedFormWardOption.Name)) {
-          const originalAddress = editing.address.split(",")[0]?.trim() ?? "";
+          const addressParts = editing.address.split(",").map((part) => part.trim()).filter(Boolean);
           const normalize = (value: string) => value
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
             .replace(/^duong\s+/i, "")
             .trim()
             .toLocaleLowerCase("vi");
-          const matchingStreet = options.find((street) => normalize(originalAddress).endsWith(normalize(street.Name)));
-          if (matchingStreet) {
-            const streetLabel = matchingStreet.Name.replace(/^đường\s+/i, "").trim();
-            if (streetLabel) {
-              setStreetName(matchingStreet.Name);
-              setForm((current) => ({
-                ...current,
-                address: originalAddress.slice(0, originalAddress.length - streetLabel.length).trim(),
-              }));
-            }
+          const streetMatch = options.flatMap((street) => {
+            const streetLabel = street.Name.replace(/^đường\s+/i, "").trim();
+            if (!streetLabel) return [];
+            const index = addressParts.findIndex((part) =>
+              normalize(part).endsWith(normalize(street.Name))
+              || normalize(part).endsWith(normalize(streetLabel))
+            );
+            return index === -1 ? [] : [{ street, streetLabel, index }];
+          })[0];
+          if (streetMatch) {
+            const { street, streetLabel, index } = streetMatch;
+            const escapedStreetLabel = streetLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+            const segmentPrefix = index === 0
+              ? addressParts[0].replace(new RegExp(`\\s*${escapedStreetLabel}$`, "i"), "").replace(/^đường\s*$/i, "").trim()
+              : "";
+            setStreetName(street.Name);
+            setForm((current) => ({
+              ...current,
+              address: [...addressParts.slice(0, index), segmentPrefix].filter(Boolean).join(", "),
+            }));
           }
         }
       })
@@ -330,11 +325,14 @@ export default function AgencyManagerPage() {
       if (!active) return;
       const wardOptions = wardsResponse.data ?? [];
       setOldWardOptions(wardOptions);
-      const legacyWardName = selectedOldAddress.split("(")[0]?.replace(/^một phần\s+/i, "").trim().toLocaleLowerCase("vi");
-      const matchingLegacyWard = legacyWardName
-        ? wardOptions.find((ward) => ward.Name.toLocaleLowerCase("vi").includes(legacyWardName))
+      const legacyWardName = selectedWard?.MergedFrom[0]
+        ?.split("(")[0]
+        ?.replace(/^một phần\s+/i, "")
+        .trim();
+      const matchingWard = legacyWardName
+        ? wardOptions.find((ward) => normalizeAddressName(ward.Name) === normalizeAddressName(legacyWardName))
         : undefined;
-      setOldWardId((current) => wardOptions.some((ward) => ward.Id === current) ? current : matchingLegacyWard?.Id ?? wardOptions[0]?.Id);
+      setOldWardId((current) => wardOptions.some((ward) => ward.Id === current) ? current : matchingWard?.Id ?? wardOptions[0]?.Id);
       setStreetOptions(streetsResponse.data ?? []);
       setStreetName("");
     }).catch(() => {
@@ -344,32 +342,7 @@ export default function AgencyManagerPage() {
       }
     });
     return () => { active = false; };
-  }, [dialogOpen, mode, oldDistrictId, selectedOldAddress]);
-  const oldAddressOptions = useMemo(() => {
-    const options = new Map<string, OldAddressOption>();
-    wards.forEach((ward) => {
-      const inferredDistrict = ward.MergedFrom
-        .map((address) => address.match(/\(([^)]+)\)/)?.[1])
-        .find(Boolean);
-      ward.MergedFrom.forEach((address) => {
-        if (options.has(address)) return;
-        const district = address.match(/\(([^)]+)\)/)?.[1] ?? inferredDistrict ?? "Khác";
-        options.set(address, { address, wardId: ward.WardId, district });
-      });
-    });
-
-    const collator = new Intl.Collator("vi", { numeric: true, sensitivity: "base" });
-    const groups = new Map<string, OldAddressOption[]>();
-    for (const option of options.values()) {
-      const label = formatOldDistrictLabel(option.district);
-      const entries = groups.get(label) ?? [];
-      entries.push(option);
-      groups.set(label, entries);
-    }
-    return [...groups.entries()]
-      .map(([district, entries]) => [district, entries.sort((a, b) => collator.compare(a.address, b.address))] as const)
-      .sort(([a], [b]) => oldDistrictSortRank(a) - oldDistrictSortRank(b) || collator.compare(a, b));
-  }, [wards]);
+  }, [dialogOpen, mode, oldDistrictId, selectedWard]);
   const agencies = useMemo(() => {
     const filter = agencySearch.trim().toLocaleLowerCase("vi");
     return selectedWard ? flattenWard(selectedWard).filter((item) =>
@@ -379,16 +352,7 @@ export default function AgencyManagerPage() {
     ) : [];
   }, [agencySearch, agencyStatusFilter, agencyTypeFilter, selectedWard]);
 
-  const wardSearch = query.trim().toLocaleLowerCase("vi");
-  const visibleWards = wards.filter((ward) =>
-    !wardSearch || ward.WardName.toLocaleLowerCase("vi").includes(wardSearch)
-  );
-  const visibleOldAddressOptions = oldAddressOptions
-    .map(([district, entries]) => [
-      district,
-      entries.filter(({ address }) => !wardSearch || `${district} ${address}`.toLocaleLowerCase("vi").includes(wardSearch)),
-    ] as const)
-    .filter(([, entries]) => entries.length > 0);
+  const selectedAreaValue = selectedWardId === undefined ? "" : `new:${selectedWardId}`;
 
   const saveAgency = async () => {
     if (!formWard || !provinceId || !form.name.trim() || !streetName.trim() || !form.address.trim()) return;
@@ -416,6 +380,7 @@ export default function AgencyManagerPage() {
       name: form.name.trim(),
       address,
       status: form.status ?? "active",
+      updatedAt: new Date().toLocaleDateString("vi-VN"),
     }];
     const updatedTarget = { ...formWard, Agencies: targetAgencies };
     let next = wards;
@@ -428,7 +393,6 @@ export default function AgencyManagerPage() {
     next = next.map((ward) => ward.WardId === formWard.WardId ? updatedTarget : ward);
     setWards(next);
     setSelectedWardId(formWard.WardId);
-    setSelectedOldAddress("");
     setDialogOpen(false);
     setEditing(undefined);
     setEditingWardId(undefined);
@@ -452,7 +416,7 @@ export default function AgencyManagerPage() {
 
   const openEditor = (item?: AgencyRecord) => {
     setEditing(item);
-    setEditingWardId(item ? selectedWardId : undefined);
+    setEditingWardId(item ? selectedWard?.WardId : undefined);
     setFormWardId(selectedWardId ?? wards[0]?.WardId);
     setStreetOptions([]);
     setStreetName("");
@@ -463,12 +427,28 @@ export default function AgencyManagerPage() {
     setOldWardOptions([]);
     setOldDistrictId(undefined);
     setOldWardId(undefined);
-    setForm(item ? { ...item, status: item.status ?? "active" } : { type: "Văn phòng công chứng", name: "", address: "", status: "active" });
+    setForm(item ? { ...item, name: agencyDisplayName(item.name), status: item.status ?? "active" } : { type: "Văn phòng công chứng", name: "", address: "", status: "active" });
+    setMode("new");
     setDialogOpen(true);
   };
 
+  const selectOldAddressMode = () => {
+    const legacyDistrictNumber = selectedWard?.MergedFrom
+      .map((address) => address.match(/\(Q(\d+)\)/)?.[1])
+      .find(Boolean);
+    const legacyDistrict = legacyDistrictNumber
+      ? oldDistrictOptions.find((district) => new RegExp(`quận\\s*${legacyDistrictNumber}(?!\\d)`, "i").test(district.Name))
+      : undefined;
+    setOldDistrictId(legacyDistrict?.Id);
+    setOldWardId(undefined);
+    setStreetName("");
+    setMode("old");
+  };
+
   const resetAgencyFilters = () => {
-    setAgencyTypeFilter("all");
+    setSelectedWardId(undefined);
+    setMode("new");
+    setAgencyTypeFilter("Văn phòng công chứng");
     setAgencyStatusFilter("all");
     setAgencySearchInput("");
     setAgencySearch("");
@@ -476,26 +456,38 @@ export default function AgencyManagerPage() {
 
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 bg-[#f5f5f5] p-6 max-md:p-3">
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-neutral-200 bg-white p-3">
-        <Select value={agencyTypeFilter} onValueChange={(value) => setAgencyTypeFilter(value as AgencyType | "all")}>
-          <SelectTrigger aria-label="Loại cơ quan" className="h-10 w-full rounded-lg border-neutral-200 sm:w-[190px]">
-            <SelectValue placeholder="Loại cơ quan" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Tất cả</SelectItem>
-            {agencyTypes.map((type) => <SelectItem key={type} value={type}>{type}</SelectItem>)}
-          </SelectContent>
-        </Select>
-        <Select value={agencyStatusFilter} onValueChange={(value) => setAgencyStatusFilter(value as AgencyStatusFilter)}>
-          <SelectTrigger aria-label="Trạng thái" className="h-10 w-full rounded-lg border-neutral-200 sm:w-[190px]">
-            <SelectValue placeholder="Trạng thái" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Tất cả trạng thái</SelectItem>
-            <SelectItem value="active">Hoạt động</SelectItem>
-            <SelectItem value="hidden">Tạm ẩn</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-neutral-200 bg-white p-3">
+        <div className="relative w-full sm:w-[280px]">
+          <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">Khu vực</span>
+          <Select value={selectedAreaValue} onValueChange={(value) => {
+            if (value.startsWith("new:")) setSelectedWardId(Number(value.slice(4)));
+          }}>
+            <SelectTrigger aria-label="Khu vực" className="h-10 w-full rounded-lg border-neutral-200 pt-1">
+              <SelectValue placeholder="Chọn" />
+            </SelectTrigger>
+            <SelectContent className="max-h-[360px]">
+              {wards.length > 0 && <SelectGroup>
+                <SelectLabel>Địa chỉ mới</SelectLabel>
+                {wards.map((ward) => <SelectItem key={`new-${ward.WardId}`} value={`new:${ward.WardId}`}>
+                  {ward.WardType === "phường" ? "Phường" : ward.WardType === "xã" ? "Xã" : "Đặc khu"} {ward.WardName}
+                </SelectItem>)}
+              </SelectGroup>}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="relative w-full sm:w-[190px]">
+          <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">Trạng thái</span>
+          <Select value={agencyStatusFilter} onValueChange={(value) => setAgencyStatusFilter(value as AgencyStatusFilter)}>
+            <SelectTrigger aria-label="Trạng thái" className="h-10 w-full rounded-lg border-neutral-200 pt-1">
+              <SelectValue placeholder="Trạng thái" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tất cả</SelectItem>
+              <SelectItem value="active">Hoạt động</SelectItem>
+              <SelectItem value="hidden">Tạm ngừng</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <div className="relative min-w-[220px] flex-1">
           <Search className="absolute left-3 top-2.5 size-4 text-neutral-400" />
           <Input
@@ -515,82 +507,68 @@ export default function AgencyManagerPage() {
         <Button onClick={() => openEditor()} className="gap-2 rounded-lg bg-[#6157e8] hover:bg-[#5147d9]"><Plus size={16} />Thêm mới cơ quan</Button>
       </div>
 
-      <div className="flex min-h-0 flex-1 gap-5 max-lg:flex-col">
-        <aside className="flex h-fit max-h-[70vh] w-[310px] shrink-0 self-start flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)] transition-[box-shadow,border-color] duration-200 hover:border-[#dadce0] hover:shadow-[0_1px_6px_rgba(32,33,36,0.18)] max-lg:w-full">
-          <div className="border-b border-neutral-200 p-4">
-            <h2 className="mb-3 text-sm font-bold">ĐỊA GIỚI</h2>
-            <div className="relative"><Search className="absolute left-3 top-2.5 size-4 text-neutral-400" /><Input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Tìm kiếm" className="pl-9" /></div>
-            <div className="mt-3 flex rounded-lg bg-neutral-100 p-1">
-              <button onClick={() => setMode("new")} className={`flex-1 rounded-md px-3 py-2 text-sm ${mode === "new" ? "bg-white font-semibold shadow-sm" : "text-neutral-500"}`}>Địa chỉ mới</button>
-              <button onClick={() => setMode("old")} className={`flex-1 rounded-md px-3 py-2 text-sm ${mode === "old" ? "bg-white font-semibold shadow-sm" : "text-neutral-500"}`}>Địa chỉ cũ</button>
-            </div>
+      <section className="min-h-0 flex-1 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+        <div className="border-b border-neutral-200 bg-[#e4e5fb] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
+          Danh mục cơ quan hành chính
+        </div>
+        <div className="flex h-[calc(100%-45px)] min-h-0 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
+          <div className="relative">
+            <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
+              Danh mục cơ quan hành chính
+            </span>
+            <Select value={agencyTypeFilter} onValueChange={(value) => setAgencyTypeFilter(value as AgencyType | "all")}>
+              <SelectTrigger aria-label="Danh mục cơ quan hành chính" className="h-10 w-full rounded-lg border-neutral-200 bg-white pt-1">
+                <SelectValue placeholder="Chọn cơ quan hành chính" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Tất cả cơ quan</SelectItem>
+                {agencyTypes.map((type) => <SelectItem key={type} value={type}>{agencyTypeLabel(type)}</SelectItem>)}
+              </SelectContent>
+            </Select>
           </div>
-          <div className="min-h-0 flex-none overflow-y-auto p-2" style={{ maxHeight: "min(45vh, 320px)" }}>
-            {mode === "new" ? <>
-              <button onClick={() => setExpandedCity((value) => !value)} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-semibold hover:bg-neutral-50">
-                {expandedCity ? <ChevronDown size={16} /> : <ChevronRight size={16} />} TP. Hồ Chí Minh <span className="ml-auto text-neutral-400">{wards.length}</span>
-              </button>
-              {expandedCity && visibleWards.map((ward) => (
-                <button key={ward.WardId} onClick={() => { setSelectedWardId(ward.WardId); setSelectedOldAddress(""); }} className={`flex w-full items-center rounded-lg py-2 pl-9 pr-3 text-left text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#6157e8] ${selectedWardId === ward.WardId ? "bg-[#f0efff] font-semibold text-[#5147d9]" : "hover:bg-[#f8f9fa]"}`}>
-                  {ward.WardType === "phường" ? "P." : ward.WardType === "xã" ? "X." : "ĐK"} {ward.WardName}
-                </button>
-              ))}
-            </> : <>
-              <button onClick={() => setExpandedOldCity((value) => !value)} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-semibold hover:bg-neutral-50">
-                {expandedOldCity ? <ChevronDown size={16} /> : <ChevronRight size={16} />} TP. Hồ Chí Minh
-                <span className="ml-auto text-neutral-400">{oldAddressOptions.reduce((total, [, entries]) => total + entries.length, 0)}</span>
-              </button>
-              {expandedOldCity && visibleOldAddressOptions.map(([district, entries]) => (
-                <div key={district}>
-                  <h3 className="px-3 pb-1 pt-3 text-xs font-semibold uppercase tracking-wide text-neutral-400">{district}</h3>
-                  {entries.map(({ address, wardId }) => (
-                    <button key={address} onClick={() => { setSelectedWardId(wardId); setSelectedOldAddress(address); }} className={`flex w-full items-center rounded-lg px-3 py-2 text-left text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#6157e8] ${selectedOldAddress === address ? "bg-[#f0efff] font-semibold text-[#5147d9]" : "hover:bg-[#f8f9fa]"}`}>
-                      {address}
-                    </button>
-                  ))}
-                </div>
-              ))}
-            </>}
-          </div>
-        </aside>
 
-        <section className="flex min-w-0 flex-1 flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)] transition-[box-shadow,border-color] duration-200 hover:border-[#dadce0] hover:shadow-[0_1px_6px_rgba(32,33,36,0.18)]">
-          <header className="flex flex-wrap items-center justify-between gap-3 border-b border-neutral-200 px-5 py-4">
-            <div><h2 className="text-base font-bold">CƠ QUAN HÀNH CHÍNH</h2><p className="mt-1 text-sm text-neutral-500">{mode === "old" ? selectedOldAddress || "Chọn địa chỉ cũ" : `${selectedWard?.WardName ?? "Chọn phường/xã"}, TP. Hồ Chí Minh`}</p></div>
-            <span className="rounded-full bg-[#eeedff] px-3 py-1 text-sm font-semibold text-[#5147d9]">{agencies.length}</span>
-          </header>
-          <div className="min-h-0 max-h-[65vh] flex-1 overflow-y-auto overscroll-contain p-4">
+          <div className="flex min-h-0 flex-col gap-3">
+            <div className="border-b border-neutral-200 pb-3">
+              <h2 className="text-sm font-bold">Danh sách {agencyTypeFilter === "all" ? "cơ quan hành chính" : agencyTypeFilter} ({agencies.length})</h2>
+              <p className="mt-1 text-xs text-neutral-500">Phạm vi áp dụng: {selectedWardId !== undefined && selectedWard ? `Thành phố Hồ Chí Minh · ${selectedWard.WardName}` : "Thành phố Hồ Chí Minh"}</p>
+            </div>
             {!agencies.length ? <div className="flex min-h-64 flex-col items-center justify-center text-center"><p className="font-semibold">Chưa có cơ quan hành chính</p><p className="mt-1 text-sm text-neutral-500">Thêm cơ quan để hiển thị tại đây.</p><Button variant="outline" className="mt-4 gap-2" onClick={() => openEditor()}><Plus size={16} />Thêm mới</Button></div> : (
-              <div className="flex flex-col gap-4">
-                {agencyTypes.map((type) => {
-                  const items = agencies.filter((item) => item.type === type);
-                  if (!items.length) return null;
-                  const expanded = expandedAgencyTypes.has(type);
-                  return <div key={type} className="overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)] transition-[box-shadow,border-color,transform] duration-200 ease-out hover:-translate-y-px hover:border-[#dadce0] hover:shadow-[0_2px_8px_rgba(60,64,67,0.18)] motion-reduce:transform-none motion-reduce:transition-none">
-                    <button
-                      type="button"
-                      aria-expanded={expanded}
-                      onClick={() => setExpandedAgencyTypes((current) => {
-                        const next = new Set(current);
-                        if (next.has(type)) next.delete(type);
-                        else next.add(type);
-                        return next;
-                      })}
-                      className="flex w-full items-center justify-between border-b border-neutral-200 bg-[#f5f5ff] px-4 py-3 text-left text-sm font-bold"
-                    >
-                      {type}{expanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-                    </button>
-                    {expanded && items.map((item, index) => <article key={`${item.name}-${item.address}-${index}`} className="flex items-start justify-between gap-4 border-b border-neutral-100 p-4 transition-colors duration-150 hover:bg-[#f8f9fa] last:border-b-0">
-                      <div className="min-w-0"><h3 className="font-semibold">{item.name}</h3><p className="mt-1 text-xs text-neutral-500">Địa chỉ mới: {item.address}</p><p className="mt-1 text-xs text-neutral-500">Địa chỉ cũ: {convertAgencyAddressToOld(item.address, wards, selectedWard?.WardName) ?? item.oldAddress ?? "Không đủ dữ liệu địa giới cũ để chuyển đổi"}</p></div>
-                      <div className="flex shrink-0 gap-2"><Button variant="outline" size="icon" aria-label="Sửa cơ quan" onClick={() => openEditor(item)}><Pencil size={16} /></Button><Button variant="outline" size="icon" aria-label="Xóa cơ quan" className="text-red-600" onClick={() => setDeleteTarget(item)}><Trash2 size={16} /></Button></div>
-                    </article>)}
-                  </div>;
+              <div className="flex flex-col gap-3">
+                {agencies.map((item, index) => {
+                  const legacyAddress = convertAgencyAddressToOld(item.address, wards, selectedWard?.WardName) ?? item.oldAddress;
+                  const capitalizeWardType = (address: string) => address.replace(/(^|,\s*)(phường|xã|đặc khu)\s+/gi, (_, prefix: string, type: string) => `${prefix}${type[0].toLocaleUpperCase("vi")}${type.slice(1)} `);
+                  const currentAddress = capitalizeWardType(item.address);
+                  const legacyParts = legacyAddress?.split(",").map((part) => part.trim()) ?? [];
+                  const hasSameStreet = normalizeAddressName(legacyParts[0] ?? "") === normalizeAddressName(item.address.split(",")[0] ?? "");
+                  const previousAddress = legacyAddress
+                    ? `${capitalizeWardType((hasSameStreet ? legacyParts.slice(1) : legacyParts).join(", "))} cũ`
+                    : undefined;
+                  const updatedAt = item.updatedAt ?? (figmaAgencyNames[item.name] ? "03/07/2026" : undefined);
+                  return <article key={`${item.name}-${item.address}-${index}`} className="flex items-start justify-between gap-4 rounded-lg border border-neutral-200 bg-white p-3 transition-colors hover:bg-neutral-50 sm:p-4">
+                    <div className="min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-sm font-semibold text-neutral-900">{agencyDisplayName(item.name)}</h3>
+                        <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#eeedff] text-[#6157c8]"}`}>
+                          <span className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#7664e8]"}`} />
+                          {item.status === "hidden" ? "Tạm ngừng" : "Hoạt động"}
+                        </span>
+                      </div>
+                      <p className="mt-1.5 text-xs leading-5 text-neutral-500">
+                        Địa chỉ: {currentAddress}{previousAddress ? ` (${previousAddress})` : ""}
+                      </p>
+                      {updatedAt && <p className="mt-0.5 text-[10px] leading-4 text-neutral-400">Cập nhật: {updatedAt}</p>}
+                    </div>
+                    <div className="flex shrink-0 gap-2">
+                      <Button variant="outline" size="icon" aria-label="Sửa cơ quan" className="size-8 rounded-md" onClick={() => openEditor(item)}><Pencil size={14} /></Button>
+                      <Button variant="outline" size="icon" aria-label="Xóa cơ quan" className="size-8 rounded-md text-red-600" onClick={() => setDeleteTarget(item)}><Trash2 size={14} /></Button>
+                    </div>
+                  </article>;
                 })}
               </div>
             )}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-h-[90vh] gap-0 overflow-y-auto rounded-2xl p-0 sm:max-w-[768px]">
@@ -605,29 +583,20 @@ export default function AgencyManagerPage() {
                     <SelectTrigger id="agency-type" aria-label="Danh mục cơ quan" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>{agencyTypes.map((type) => <SelectItem key={type} value={type}>{type}</SelectItem>)}</SelectContent>
+                    <SelectContent>{agencyTypes.map((type) => <SelectItem key={type} value={type}>{agencyTypeLabel(type)}</SelectItem>)}</SelectContent>
                   </Select>
                 </AgencyFloatingField>
-                <AgencyFloatingField id="agency-status" label="Trạng thái" filled>
-                  <Select value={form.status ?? "active"} onValueChange={(value) => setForm((current) => ({ ...current, status: value as "active" | "hidden" }))}>
-                    <SelectTrigger id="agency-status" aria-label="Trạng thái cơ quan" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="active">Hoạt động</SelectItem>
-                      <SelectItem value="hidden">Tạm ẩn</SelectItem>
-                    </SelectContent>
-                  </Select>
+                <AgencyFloatingField id="agency-name" label="Tên cơ quan" required filled={Boolean(form.name.trim())}>
+                  <Input id="agency-name" aria-label="Tên cơ quan" className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0" value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} />
                 </AgencyFloatingField>
-                <div>
-                  <AgencyFloatingField id="agency-name" label="Tên cơ quan" required filled={Boolean(form.name.trim())}>
-                    <Input id="agency-name" aria-label="Tên cơ quan" className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0" value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} />
-                  </AgencyFloatingField>
-                </div>
               </div>
             </div>
             <div>
               <h3 className="mb-3 text-sm font-bold">Thông tin địa chỉ</h3>
+              <div className="mb-4 flex w-fit rounded-lg bg-neutral-100 p-1" role="group" aria-label="Kiểu địa chỉ">
+                <button type="button" aria-pressed={mode === "new"} onClick={() => setMode("new")} className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "new" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}>Địa chỉ mới</button>
+                <button type="button" aria-pressed={mode === "old"} onClick={selectOldAddressMode} className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "old" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}>Địa chỉ cũ</button>
+              </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className={mode === "old" ? "sm:col-span-2" : undefined}>
                   <AgencyFloatingField id="agency-province" label="Tỉnh/Thành phố" filled>
@@ -693,6 +662,20 @@ export default function AgencyManagerPage() {
                 <AgencyFloatingField id="agency-address" label="Địa chỉ" required filled={Boolean(form.address.trim())}>
                   <Input id="agency-address" aria-label="Địa chỉ" className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0" value={form.address} onChange={(event) => setForm((current) => ({ ...current, address: event.target.value }))} />
                 </AgencyFloatingField>
+              </div>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="text-sm text-neutral-700">Trạng thái</span>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-label="Trạng thái hoạt động"
+                  aria-checked={(form.status ?? "active") === "active"}
+                  onClick={() => setForm((current) => ({ ...current, status: current.status === "hidden" ? "active" : "hidden" }))}
+                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6157e8] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#6157e8]" : "bg-neutral-300"}`}
+                >
+                  <span className={`inline-block size-4 rounded-full bg-white shadow transition-transform ${(form.status ?? "active") === "active" ? "translate-x-4" : "translate-x-0.5"}`} />
+                </button>
+                <span className="text-xs text-neutral-500">{(form.status ?? "active") === "active" ? "Hoạt động" : "Tạm ngừng"}</span>
               </div>
             </div>
           </div>

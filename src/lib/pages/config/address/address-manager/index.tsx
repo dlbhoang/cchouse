@@ -28,12 +28,14 @@ type Item = {
   kind: "province" | "district" | "ward" | "street";
   id: number;
   name: string;
+  shortName?: string;
   sub?: string;
   keywords: string;
   active: boolean;
   oldDistrictId?: number;
   districtId?: number;
   oldWardId?: number;
+  newWardId?: number;
   wardId?: number;
   managed?: boolean;
 };
@@ -52,7 +54,7 @@ const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\
 function RowName({ name }: { name: string }) {
   // "Hai Bà Trưng (đoạn từ ...)" → phần trong ngoặc in nghiêng, như Figma.
   const i = name.indexOf(" (");
-  if (i === -1) return <>{name}</>;
+  if (i === -1 || /^\(\d+\)$/.test(name.slice(i + 1).trim())) return <>{name}</>;
   return (
     <>
       {name.slice(0, i + 1)}
@@ -88,10 +90,10 @@ function Column({
 }) {
   return (
     <div className="flex h-full min-w-px flex-1 flex-col overflow-hidden rounded-xl border border-[#f5f5f5] bg-white">
-      <div className="flex shrink-0 items-center gap-3 bg-[#dbeafe] px-3 py-2.5">
+      <div className="flex shrink-0 items-center gap-3 bg-[#e5e7fb] px-3 py-2.5">
         <div className="flex min-w-px flex-1 items-center gap-2.5">
           <p className="whitespace-nowrap text-sm font-bold leading-5 text-[#0a0a0a]">{title}</p>
-          <span className="flex size-5 items-center justify-center rounded-full bg-[#0588f0] text-[11px] font-semibold leading-4 text-white">
+          <span className="flex size-5 items-center justify-center rounded-full bg-[#7563d9] text-[11px] font-semibold leading-4 text-white">
             {items.length}
           </span>
         </div>
@@ -143,7 +145,8 @@ function Column({
                 <RowName name={item.name} />
               </p>
               <div className="flex w-full items-start gap-1.5 text-xs leading-4">
-                {item.sub && <span title={item.sub} className="line-clamp-2 whitespace-normal text-[#0a0a0a]">{item.sub}</span>}
+                {item.sub && <span title={item.sub} className="line-clamp-2 flex-1 whitespace-normal text-[#0a0a0a]">{item.sub}</span>}
+                {!item.sub && <span className="flex-1" />}
                 <span
                   className={cn(
                     "mt-1 size-1.5 shrink-0 rounded-full",
@@ -179,6 +182,9 @@ export default function AddressManagerPage() {
   const [mode, setMode] = useState<AddressMode>("new");
   const [query, setQuery] = useState("");
   const [provinceQuery, setProvinceQuery] = useState("");
+  const [districtQuery, setDistrictQuery] = useState("");
+  const [wardQuery, setWardQuery] = useState("");
+  const [streetQuery, setStreetQuery] = useState("");
   const [provinceId, setProvinceId] = useState<number>();
   const [districtId, setDistrictId] = useState<number>();
   const [wardId, setWardId] = useState<number>();
@@ -249,20 +255,34 @@ export default function AddressManagerPage() {
       : null,
     () => streetApi.get({ ...PAGE_ALL, WardId: wardId, IsNew: true })
   );
-  // Địa chỉ cũ: Quận/Huyện (cũ) → Phường/Xã (cũ) theo DistrictId.
+  // Địa chỉ cũ: Quận/Huyện (cũ) → Phường/Xã (cũ); đường lấy theo Phường/Xã mới được liên kết.
   const oldWards = useSWR(
     mode === "old" && districtId ? ["addr-ward-old", districtId] : null,
     () => wardApi.get({ ...PAGE_ALL, DistrictId: districtId, IsNew: false })
   );
-  const oldStreets = useSWR(
-    mode === "old" && districtId ? ["addr-street-old", districtId] : null,
-    () => streetApi.get({ ...PAGE_ALL, DistrictId: districtId, IsNew: false })
+  const selectedOldWard = oldWards.data?.data?.find((ward) => ward.Id === wardId);
+  const defaultOldWard = oldWards.data?.data?.find(
+    (ward) => norm(ward.Name) === "phường bến nghé"
+  ) ?? oldWards.data?.data?.[0];
+  const effectiveWardId = mode === "old"
+    ? wardId ?? defaultOldWard?.Id
+    : wardId;
+  const oldWardMerge = (mergeWards.data?.data ?? []).find(
+    (merge) => merge.OldWardId === (selectedOldWard?.Id ?? effectiveWardId)
+  );
+  const oldMappedStreets = useSWR(
+    mode === "old" && oldWardMerge?.NewWardId
+      ? ["addr-street-old-mapped", oldWardMerge.NewWardId]
+      : null,
+    () => streetApi.get({ ...PAGE_ALL, WardId: oldWardMerge?.NewWardId, IsNew: true })
   );
 
   const q = norm(query.trim());
   const provinceQ = norm(provinceQuery.trim());
   const provinceSearchPattern = provinceQ ? new RegExp(escapeRegExp(provinceQ), "u") : undefined;
   const keep = (i: Item) => !q || norm(i.keywords).indexOf(q) !== -1;
+  const matchesColumnQuery = (item: Item, value: string) =>
+    !value.trim() || norm(item.keywords).includes(norm(value.trim()));
   const isHcmSelected = norm(
     provinces.find((province) => province.Id === provinceId)?.Name ?? ""
   ).includes("hồ chí minh");
@@ -301,6 +321,7 @@ export default function AddressManagerPage() {
       id: w.Id,
       name: w.Name,
       oldDistrictId: w.DistrictId,
+      newWardId: mergeWards.data?.data?.find((merge) => merge.OldWardId === w.Id)?.NewWardId,
       sub: withDistrict && w.DistrictName ? `(${w.DistrictName} cũ)` : undefined,
       keywords: `${w.Name} ${w.RefKey ?? ""} ${w.Slug ?? ""} ${w.DistrictName ?? ""}`,
       active: isActive(w),
@@ -401,18 +422,22 @@ export default function AddressManagerPage() {
     "pasteur": "P. Bến Nghé cũ",
     "võ văn kiệt": "P. Nguyễn Thái Bình cũ",
   };
+  const isFigmaReferenceWard = newWardItems.some(
+    (item) => item.id === wardId && norm(item.name) === "phường sài gòn"
+  );
   const streetItems: Item[] = (newStreets.data?.data ?? [])
     .filter((street) => street.WardId === wardId)
     .map((s) => ({
       kind: "street" as const,
       id: s.Id,
       name: s.Name.replace(/^đường\s+/i, ""),
+      shortName: s.ShortName,
       wardId: s.WardId ?? undefined,
       districtId: s.DistrictId,
       oldWardId: s.OldWardId ?? undefined,
       sub: s.OldWardId && oldWardById.has(s.OldWardId)
         ? `(${oldWardById.get(s.OldWardId)?.OldWardName} cũ)`
-        : figmaOldWardByStreet[norm(s.Name.replace(/^đường\s+/i, ""))]
+        : isFigmaReferenceWard && figmaOldWardByStreet[norm(s.Name.replace(/^đường\s+/i, ""))]
           ? `(${figmaOldWardByStreet[norm(s.Name.replace(/^đường\s+/i, ""))]})`
           : undefined,
       keywords: `${s.Name} ${s.RefKey ?? ""} ${s.Slug ?? ""}`,
@@ -425,16 +450,26 @@ export default function AddressManagerPage() {
       return aRank - bRank ||
         a.name.localeCompare(b.name, "vi");
     });
-  const oldStreetItems: Item[] = (oldStreets.data?.data ?? []).map((s) => ({
-    kind: "street",
+  const oldStreetItems: Item[] = (oldMappedStreets.data?.data ?? []).map((s) => ({
+    kind: "street" as const,
     id: s.Id,
-    name: s.Name,
+    name: s.Name.replace(/^đường\s+/i, ""),
+    shortName: s.ShortName,
     wardId: s.WardId ?? undefined,
     districtId: s.DistrictId,
     oldWardId: s.OldWardId ?? undefined,
+    sub: s.OldWardId && oldWardById.has(s.OldWardId)
+      ? `(${oldWardById.get(s.OldWardId)?.OldWardName} cũ)`
+      : figmaOldWardByStreet[norm(s.Name.replace(/^đường\s+/i, ""))]
+        ? `(${figmaOldWardByStreet[norm(s.Name.replace(/^đường\s+/i, ""))]})`
+        : undefined,
     keywords: `${s.Name} ${s.RefKey ?? ""} ${s.Slug ?? ""}`,
     active: isActive(s),
-  }));
+  })).sort((a, b) => {
+    const aRank = figmaStreetRank.get(norm(a.name.replace(/^đường\s+/i, ""))) ?? Number.MAX_SAFE_INTEGER;
+    const bRank = figmaStreetRank.get(norm(b.name.replace(/^đường\s+/i, ""))) ?? Number.MAX_SAFE_INTEGER;
+    return aRank - bRank || a.name.localeCompare(b.name, "vi");
+  });
 
   const districtItems: Item[] = [...provinceDistricts]
     .sort((a, b) => Number(b.Id === districtId) - Number(a.Id === districtId))
@@ -450,7 +485,7 @@ export default function AddressManagerPage() {
     <div className="relative flex h-[calc(100dvh-96px)] min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
       <div className="flex items-center justify-between gap-4 px-5 py-3">
         <h1 className="whitespace-nowrap text-xl font-bold leading-7 text-[#0a0a0a]">
-          QUẢN LÝ ĐỊA CHỈ
+          QUẢN LÝ ĐỊA GIỚI HÀNH CHÍNH
         </h1>
         <div className="flex min-w-0 flex-1 items-center justify-end gap-2 pl-4">
           <div className="relative w-[600px] max-w-full">
@@ -480,7 +515,9 @@ export default function AddressManagerPage() {
         <div className="flex min-w-px flex-1 items-center gap-3">
           <span className="size-2 shrink-0 rounded-full bg-black" />
           <p className="flex-1 text-xs font-medium leading-5 text-[#0a0a0a]">
-            Sơ đồ 3 Cấp Địa giới Hành chính Việt Nam (Tỉnh/Thành ➔ Phường/Xã ➔ Đường) hiển thị đồng bộ
+            {mode === "new"
+              ? "Sơ đồ 3 Cấp Địa giới Hành chính Việt Nam (Tỉnh/Thành ➔ Phường/Xã ➔ Đường) hiển thị đồng bộ"
+              : "Sơ đồ 4 Cấp Địa giới Hành chính Việt Nam (Tỉnh/Thành ➔ Quận/Huyện ➔ Phường/Xã ➔ Đường) hiển thị đồng bộ"}
           </p>
         </div>
         <Tabs
@@ -488,6 +525,9 @@ export default function AddressManagerPage() {
           onValueChange={(value) => {
             const nextMode = value as AddressMode;
             setMode(nextMode);
+            setDistrictQuery("");
+            setWardQuery("");
+            setStreetQuery("");
             if (
               nextMode === "old" &&
               !districts.some((district) => district.ProvinceId === provinceId)
@@ -504,16 +544,16 @@ export default function AddressManagerPage() {
               value="new"
               className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30"
             >
-              Địa chỉ mới
+              Sau sáp nhập
             </TabsTrigger>
             <TabsTrigger value="old" className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30">
-              Địa chỉ cũ
+              Trước sáp nhập
             </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
 
-      <div className="flex min-h-0 flex-1 gap-3 py-3 pl-5 pr-4" style={{ maxHeight: "min(70dvh, calc(100dvh - 250px), 640px)" }}>
+      <div className="flex min-h-0 flex-1 gap-3 py-3 pl-5 pr-4" style={{ maxHeight: "min(82dvh, calc(100dvh - 200px), 820px)" }}>
         <Column
           onAdd={() => addNew("province")}
           onEdit={(item) => {
@@ -531,6 +571,9 @@ export default function AddressManagerPage() {
             setProvinceId(id);
             setDistrictId(undefined);
             setWardId(undefined);
+            setDistrictQuery("");
+            setWardQuery("");
+            setStreetQuery("");
           }}
         />
         {mode === "new" ? (
@@ -544,21 +587,28 @@ export default function AddressManagerPage() {
               }}
               onDelete={(item) => void deleteItem(item)}
               title="PHƯỜNG/XÃ (mới)"
-              items={newWardItems.filter(keep)}
-              selectedId={wardId}
-              onSelect={(id) => setWardId(id)}
+              items={newWardItems.filter((item) => keep(item) && matchesColumnQuery(item, wardQuery))}
+              searchValue={wardQuery}
+              onSearch={setWardQuery}
+              selectedId={effectiveWardId}
+              onSelect={(id) => {
+                setWardId(id);
+                setStreetQuery("");
+              }}
               loading={newWards.isLoading}
             />
             <Column
               onAdd={() => addNew("street")}
               onEdit={(item) => {
                 setEditTarget(item);
-                setCreateKind("ward");
+                setCreateKind("street");
                 setModalOpen(true);
               }}
               onDelete={(item) => void deleteItem(item)}
               title="ĐƯỜNG"
-              items={streetItems.filter(keep)}
+              items={streetItems.filter((item) => keep(item) && matchesColumnQuery(item, streetQuery))}
+              searchValue={streetQuery}
+              onSearch={setStreetQuery}
               loading={newStreets.isLoading}
               emptyMessage="Chưa có thông tin hiển thị"
             />
@@ -574,12 +624,16 @@ export default function AddressManagerPage() {
               }}
               onDelete={(item) => void deleteItem(item)}
               title="QUẬN/HUYỆN (cũ)"
-              items={districtItems.filter(keep)}
+              items={districtItems.filter((item) => keep(item) && matchesColumnQuery(item, districtQuery))}
+              searchValue={districtQuery}
+              onSearch={setDistrictQuery}
               selectedId={districtId}
               loading={oldDistricts.isLoading}
               onSelect={(id) => {
                 setDistrictId(id);
                 setWardId(undefined);
+                setWardQuery("");
+                setStreetQuery("");
               }}
             />
             <Column
@@ -591,9 +645,33 @@ export default function AddressManagerPage() {
               }}
               onDelete={(item) => void deleteItem(item)}
               title="PHƯỜNG/XÃ (cũ)"
-              items={wardItems(oldWards.data, false).filter(keep)}
-              selectedId={wardId}
-              onSelect={setWardId}
+              items={wardItems(oldWards.data, false)
+                .sort((a, b) => {
+                  const figmaWardOrder = [
+                    "phường bến nghé",
+                    "phường bến thành",
+                    "phường cầu kho",
+                    "phường cầu ông lãnh",
+                    "phường cô giang",
+                    "phường đa kao",
+                    "phường nguyễn cư trinh",
+                    "phường phạm ngũ lão",
+                    "phường tân định",
+                    "phường nguyễn thái bình",
+                  ];
+                  const aRank = figmaWardOrder.indexOf(norm(a.name));
+                  const bRank = figmaWardOrder.indexOf(norm(b.name));
+                  return (aRank < 0 ? Number.MAX_SAFE_INTEGER : aRank) -
+                    (bRank < 0 ? Number.MAX_SAFE_INTEGER : bRank);
+                })
+                .filter((item) => keep(item) && matchesColumnQuery(item, wardQuery))}
+              searchValue={wardQuery}
+              onSearch={setWardQuery}
+              selectedId={effectiveWardId}
+              onSelect={(id) => {
+                setWardId(id);
+                setStreetQuery("");
+              }}
               loading={oldWards.isLoading}
             />
             <Column
@@ -604,9 +682,11 @@ export default function AddressManagerPage() {
                 setCreateKind(item.kind);
                 setModalOpen(true);
               }}
-              title="ĐƯỜNG (cũ)"
-              items={oldStreetItems.filter(keep)}
-              loading={oldStreets.isLoading}
+              title="ĐƯỜNG"
+              items={oldStreetItems.filter((item) => keep(item) && matchesColumnQuery(item, streetQuery))}
+              searchValue={streetQuery}
+              onSearch={setStreetQuery}
+              loading={oldMappedStreets.isLoading}
             />
           </>
         )}
@@ -618,14 +698,24 @@ export default function AddressManagerPage() {
         intent={editTarget ? "edit" : "create"}
         initialProvince={editTarget?.kind === "province" ? { id: editTarget.id, name: editTarget.name.replace(/^(Tỉnh|Thành phố)\s+/, "") } : undefined}
         initialDistrict={editTarget?.kind === "district" ? { id: editTarget.id, name: editTarget.name } : undefined}
-        initialWard={editTarget?.kind === "ward" ? { id: editTarget.id, name: editTarget.name, oldDistrictId: editTarget.oldDistrictId } : undefined}
-        initialStreet={editTarget?.kind === "street" ? { id: editTarget.id, name: editTarget.name, wardId: mode === "new" ? editTarget.wardId ?? wardId : undefined, oldWardId: editTarget.oldWardId, districtId: editTarget.districtId ?? districtId ?? 0 } : undefined}
+        initialWard={editTarget?.kind === "ward" ? { id: editTarget.id, name: editTarget.name, oldDistrictId: editTarget.oldDistrictId, newWardId: editTarget.newWardId } : undefined}
+        initialStreet={editTarget?.kind === "street" ? { id: editTarget.id, name: editTarget.name, shortName: editTarget.shortName, wardId: mode === "new" ? editTarget.wardId ?? wardId : undefined, oldWardId: editTarget.oldWardId, districtId: editTarget.districtId ?? districtId ?? 0 } : undefined}
         createKind={createKind}
-        selectedWardId={editTarget?.kind === "street" && mode === "old" ? undefined : editTarget?.kind === "street" ? editTarget.wardId ?? wardId : wardId}
+        selectedWardId={editTarget?.kind === "street" && mode === "old" ? undefined : editTarget?.kind === "street" ? editTarget.wardId ?? effectiveWardId : effectiveWardId}
+        selectedMappedWardId={oldWardMerge?.NewWardId}
         selectedOldDistrictId={editTarget?.kind === "street" ? editTarget.districtId ?? districtId : editTarget?.kind === "ward" ? editTarget.oldDistrictId : mode === "old" ? districtId : newWardItems.find((item) => item.id === wardId)?.oldDistrictId}
         selectedDistrictId={districtId}
         provinceId={provinceId}
         provinceName={provinceItems.find((p) => p.id === provinceId)?.name}
+        provinceOptions={provinceItems.map((province) => ({ id: province.id, name: province.name }))}
+        onProvinceChange={(id) => {
+          setProvinceId(id);
+          setDistrictId(undefined);
+          setWardId(undefined);
+          setDistrictQuery("");
+          setWardQuery("");
+          setStreetQuery("");
+        }}
         oldDistricts={districts
           .filter((d) => d.ProvinceId === provinceId)
           .map((d) => ({ id: d.Id, name: d.Name }))}
