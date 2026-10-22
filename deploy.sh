@@ -5,7 +5,7 @@ set -Eeuo pipefail
 VPS_USER="root"
 VPS_HOST="187.52.125.5"
 REMOTE_APP_DIR="/var/www/cchouse"
-PM2_APP_NAME="cchouse"   # đổi đúng tên app trong `pm2 status`
+PM2_APP_NAME="map"   # đổi đúng tên app trong `pm2 status`
 HEALTH_CHECK_URL="http://187.52.125.5:3003"
 HEALTH_RETRIES=10
 HEALTH_INTERVAL=3
