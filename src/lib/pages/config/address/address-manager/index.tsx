@@ -145,7 +145,7 @@ function Column({
                 <RowName name={item.name} />
               </p>
               <div className="flex w-full items-start gap-1.5 text-xs leading-4">
-                {item.sub && <span title={item.sub} className="line-clamp-2 flex-1 whitespace-normal text-[#0a0a0a]">{item.sub}</span>}
+                {item.sub && <span title={item.sub} className="line-clamp-2 w-fit max-w-[calc(100%_-_0.75rem)] whitespace-normal text-[#0a0a0a]">{item.sub}</span>}
                 {!item.sub && <span className="flex-1" />}
                 <span
                   className={cn(
