@@ -6,9 +6,13 @@ VPS_USER="root"
 VPS_HOST="187.52.125.5"
 REMOTE_APP_DIR="/var/www/cchouse"
 PM2_APP_NAME="map"   # đổi đúng tên app trong `pm2 status`
-HEALTH_CHECK_URL="http://187.52.125.5:3003"
+HEALTH_CHECK_URL="http://187.52.125.5:3000"
 HEALTH_RETRIES=10
 HEALTH_INTERVAL=3
+
+# Thư mục build sẽ xóa sau khi deploy thành công (tương đối so với REMOTE_APP_DIR)
+# Chỉ xóa cache. KHÔNG đặt thành ".next" vì app đang chạy cần thư mục này.
+CLEAN_BUILD_PATH=".next/cache"
 
 # Thư mục Git local: mặc định là thư mục chứa deploy.sh
 LOCAL_REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -91,12 +95,38 @@ for i in $(seq 1 "$HEALTH_RETRIES"); do
   sleep "$HEALTH_INTERVAL"
 done
 
-if [ "$ok" -eq 1 ]; then
-  echo -e "${GREEN}==> Deploy thành công! Website đang phản hồi.${NC}"
-else
+if [ "$ok" -ne 1 ]; then
   echo -e "${RED}==> Cảnh báo: Website chưa phản hồi tại ${HEALTH_CHECK_URL}${NC}"
   echo "Kiểm tra trên VPS bằng lệnh: pm2 logs ${PM2_APP_NAME} --lines 100"
+  echo "Không xóa build vì deploy chưa xác nhận thành công."
   exit 1
 fi
+
+echo -e "${GREEN}==> Website đang phản hồi.${NC}"
+
+echo -e "${YELLOW}==> BƯỚC 4: Xóa build thừa trên VPS${NC}"
+
+ssh "${VPS_USER}@${VPS_HOST}" \
+  "REMOTE_APP_DIR='${REMOTE_APP_DIR}' CLEAN_BUILD_PATH='${CLEAN_BUILD_PATH}' bash -s" <<'CLEAN_SCRIPT'
+
+set -Eeuo pipefail
+
+# Chặn rm -rf với biến rỗng hoặc đường dẫn nguy hiểm
+if [ -z "${REMOTE_APP_DIR:-}" ] || [ -z "${CLEAN_BUILD_PATH:-}" ] || [ "$CLEAN_BUILD_PATH" = "/" ]; then
+  echo "==> Đường dẫn xóa không hợp lệ, bỏ qua."
+  exit 1
+fi
+
+TARGET="$REMOTE_APP_DIR/$CLEAN_BUILD_PATH"
+
+if [ -e "$TARGET" ]; then
+  du -sh "$TARGET" 2>/dev/null || true
+  rm -rf -- "$TARGET"
+  echo "==> Đã xóa: $TARGET"
+else
+  echo "==> Không có gì để xóa: $TARGET"
+fi
+
+CLEAN_SCRIPT
 
 echo -e "${GREEN}==> HOÀN TẤT DEPLOY.${NC}"

@@ -2,7 +2,7 @@ import type { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
 import { EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
-import { mutate } from "swr";
+import { useState } from "react";
 import NewsConfirmButton from "../confirm";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import type { INewsResponse } from "@/services/api/news/INews";
@@ -234,7 +234,7 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Người duyệt</span>,
     dataIndex: "ApprovedBy",
-    width: 160,
+    width: 112,
     render(value, record) {
       const isPending = record.Status === NEWS_STATUS_PENDING;
       const approvedDate =
@@ -255,24 +255,22 @@ const createColumns = (
   {
     key: "Action",
     title: () => <span className="news-th-label">Chức năng</span>,
-    width: 112,
+    width: 160,
     align: "center",
     render(_, record) {
       return (
         <div className="news-action-cell">
           {record.Status === NEWS_STATUS_SHOW && (
-            <>
-              <NewsConfirmButton
-                onConfirm={async () => {
-                  await newsApi.hidden(record.Id ?? 0);
-                  await newsApi.revalidate();
-                }}
-                label="Ẩn bài viết"
-                title="Ẩn bài viết?"
-                description="Bài viết sẽ không còn hiển thị công khai trên trang tin."
-                icon={<EyeOffIcon className="size-4" />}
-              />
-            </>
+            <NewsConfirmButton
+              onConfirm={async () => {
+                await newsApi.hidden(record.Id ?? 0);
+                await newsApi.revalidate();
+              }}
+              label="Ẩn bài viết"
+              title="Ẩn bài viết?"
+              description="Bài viết sẽ không còn hiển thị công khai trên trang tin."
+              icon={<EyeOffIcon className="size-4" />}
+            />
           )}
 
           {record.Status === NEWS_STATUS_HIDDEN && (

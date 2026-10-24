@@ -84,7 +84,10 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
   const clearSource = () => {
     setSourceLabel(undefined);
     form.setFieldValue("SourceType", undefined);
-    form.submit();
+    // `setFieldValue` and `form.submit()` in the same event can submit the
+    // previous value. Send the cleared value explicitly so the URL/API query
+    // cannot retain a stale SourceType after the chip is cleared.
+    onSubmit({ ...form.getFieldsValue(), SourceType: undefined, pageIndex: 1 });
   };
 
   const sourceField = (
@@ -101,7 +104,13 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
             const chosen = sourceMenuItems.find((item) => item.key === key);
             setSourceLabel(chosen?.label);
             form.setFieldValue("SourceType", key as "write" | "share");
-            form.submit();
+            // Do not submit the Form immediately after setFieldValue: AntD may
+            // still expose the previous field value during this event.
+            onSubmit({
+              ...form.getFieldsValue(),
+              SourceType: key as "write" | "share",
+              pageIndex: 1,
+            });
           },
         }}
         trigger={["click"]}

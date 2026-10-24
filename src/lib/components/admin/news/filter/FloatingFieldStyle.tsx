@@ -637,7 +637,7 @@ const FLOATING_FIELD_CSS = `
     gap: 8px;
     height: 40px;
     padding: 0 16px;
-    border-radius: 10px;
+    border-radius: 8px;
     background: #0588F0 !important;
     color: #fff;
     border: none !important;

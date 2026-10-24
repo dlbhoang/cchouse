@@ -29,19 +29,23 @@ Nguồn: Figma C.C.House, section `2420:136701`.
 - Form thêm/sửa có Xem trước, Từ chối, Gửi duyệt bài; chưa có thao tác Duyệt bài.
 - Chưa thấy hàng/nhãn minh họa riêng cho `Từ chối`, `Đã ẩn`, `Hết hạn`, hoặc thao tác Hiển thị lại.
 
-## Ghi chú cần Phương / mợ Kiều bổ sung bản vẽ
+## Sai lệch và điểm chưa được thiết kế
 
-- Đã mở lại section `2420:136701` ngày 18/10/2026. Bảng mẫu đang thể hiện các hàng `Chờ duyệt` và `Đã duyệt`; cột chức năng trong mẫu có Sửa / Xóa. Section chưa có hàng mẫu riêng cho `Từ chối`, `Đã ẩn` hoặc `Hết hạn`.
+- Đã mở lại section `2420:136701` ngày 24/10/2026. Bảng mẫu đang thể hiện các hàng `Chờ duyệt` và `Đã duyệt`; cột chức năng trong mẫu có Sửa / Xóa. Section chưa có hàng mẫu riêng cho `Từ chối`, `Đã ẩn` hoặc `Hết hạn`.
+- Đối chiếu ảnh danh sách local ngày 24/10: khung bộ lọc, dải loại tin, thứ tự cột, ảnh 48 × 40, chiều cao hàng 100 px, nút Xem tin và phân trang đều gần với frame Figma. Số bài và số đếm loại tin là dữ liệu động nên khác dữ liệu mẫu trong Figma.
+- Sai lệch dễ thấy ở cột Chức năng: frame Figma vẽ Sửa / Xóa; trang local hiển thị Ẩn / Xóa cho bài đã duyệt và Hiển thị lại / Xóa cho bài đã ẩn. Quy tắc nghiệp vụ hiện tại khóa sửa bài đã duyệt, nên chưa thể đổi nút Ẩn thành Sửa mà không thay đổi quyền nghiệp vụ. Cần cập nhật Figma hoặc xác nhận quy tắc mới trước khi sửa điểm này.
+- Tiêu đề trang đã chỉnh thành “QUẢN LÍ TIN TỨC” theo đúng frame; breadcrumb vẫn dùng cách viết “Quản lý tin tức” như thiết kế.
+- Không thấy thao tác `Hết hạn` trong UI local sau khi đối chiếu ngày 24/10; cũng không có thao tác này trong frame Figma. Không bổ sung lại nút này nếu chưa có thiết kế.
 - Luồng cần thiết kế đủ các trạng thái và thao tác theo quy tắc đã chốt:
 
 | Trạng thái / luồng | Hiện có trong Figma | Cần bổ sung hoặc chỉnh |
 | --- | --- | --- |
 | Thêm tin mới | Có màn hình form | Ghi rõ sau khi gửi tin chuyển sang `Chờ duyệt` |
 | Chờ duyệt | Có nhãn trạng thái và mẫu hàng | Bổ sung vị trí thao tác `Duyệt` / `Từ chối`; giữ quyền sửa khi chưa duyệt. Form hiện có Từ chối, code bổ sung xác nhận Duyệt trong form |
-| Đã duyệt / đang hiển thị | Có nhãn trạng thái và mẫu hàng | Mẫu đang có icon Sửa, mâu thuẫn với quy tắc không sửa tin đã duyệt; thay bằng `Ẩn`, `Hết hạn`, `Xóa`. Code khóa Sửa và thêm Hết hạn |
+| Đã duyệt / đang hiển thị | Có nhãn trạng thái và mẫu hàng | Mẫu có icon Sửa nhưng quy tắc nghiệp vụ khóa sửa tin đã duyệt; local hiện dùng `Ẩn` và `Xóa`. Cần thống nhất giữa thiết kế và nghiệp vụ |
 | Từ chối | Chưa thấy mẫu hàng/trạng thái | Bổ sung hiển thị lý do từ chối và luồng sửa rồi gửi duyệt lại |
 | Đã ẩn | Chưa thấy mẫu hàng/trạng thái | Bổ sung trạng thái và thao tác `Hiển thị lại` |
-| Hết hạn | Chưa thấy mẫu hàng/trạng thái hoặc thao tác | Bổ sung trạng thái; trên hàng đang hiển thị cần có thao tác chuyển sang `Hết hạn`. Code đã có thao tác và nhãn trạng thái trung tính theo màu trạng thái mặc định |
+| Hết hạn | Chưa thấy mẫu hàng/trạng thái hoặc thao tác | Chưa có trong frame; local hiện không hiển thị thao tác này |
 | Xóa | Có icon Xóa và modal xác nhận | Đủ cơ sở cho luồng xác nhận xóa trong phần đã xem |
 
 - Cần bổ sung thiết kế trạng thái `Từ chối`, `Đã ẩn`, `Hết hạn`, Duyệt, Hiển thị lại, thao tác Hết hạn và các màn hình mobile để có cơ sở xác nhận đầy đủ.

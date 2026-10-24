@@ -2626,6 +2626,75 @@ button.news-create-btn.ant-btn:active {
 .news-table .ant-table-tbody > tr > td { border-bottom: none !important; box-shadow: inset 0 -1px 0 #e5e5e5; }
 .news-table .ant-table-tbody > tr:last-child > td { box-shadow: none; }
 
+/* News table footer follows the dedicated Figma pagination layout. */
+.news-table .ant-table-footer {
+  padding: 0 12px !important;
+  border-top: 1px solid #e5e5e5;
+  background: #fff;
+}
+.news-table .table-custom-footer {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 8px 0;
+  color: #0a0a0a;
+  font-family: Inter, var(--default-font-family, sans-serif);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+.news-table .table-selected-count {
+  color: #737373;
+  white-space: nowrap;
+}
+.news-table .table-custom-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.news-table .table-custom-pagination .ant-select {
+  min-width: 72px;
+}
+.news-table .table-custom-pagination .ant-select-selector {
+  height: 32px !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+.news-table .table-custom-pagination > button {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: #fff;
+  color: #0a0a0a;
+  cursor: pointer;
+}
+.news-table .table-custom-pagination > button:hover:not(:disabled) {
+  border-color: #aeb4bf;
+}
+.news-table .table-custom-pagination > button:disabled {
+  color: #a1a1aa;
+  cursor: default;
+}
+@media (max-width: 767px) {
+  .news-table .table-custom-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .news-table .table-custom-pagination {
+    flex-wrap: wrap;
+  }
+}
+
 .news-table .news-action-btn .lucide { color: #000000; }
 
 .group[data-collapsible="icon"] .news-sidebar [data-sidebar="group"] { padding-inline: 12px; }

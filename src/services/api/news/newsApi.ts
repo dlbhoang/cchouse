@@ -20,6 +20,9 @@ const newsApi = {
     return useSWR([url, params], async ([route, query]) => {
       return axiosClient.get<any, IListData<INewsResponse>>(route, {
         params: query,
+        // Let SWR settle into its error state if the API is unreachable; an
+        // unbounded request leaves the table skeleton visible indefinitely.
+        timeout: 20000,
       });
     });
   },

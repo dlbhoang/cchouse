@@ -28,6 +28,11 @@ interface IListData<T> {
   expandedRowRender?: (index: number) => JSX.Element;
   onRowClick?: (record: T) => void;
   useCustomPagination?: boolean;
+  customPaginationLabels?: {
+    selectedCount?: (selectedCount: number, total: number) => string;
+    pageSize?: string;
+    pageCount?: (currentPage: number, totalPages: number) => string;
+  };
   scrollY?: number | string;
 }
 
@@ -43,6 +48,7 @@ function TableBase<T>({
   expandedRowRender,
   onRowClick,
   useCustomPagination = false,
+  customPaginationLabels,
   scrollY,
   ...props
 }: IListData<T>) {
@@ -127,10 +133,13 @@ function TableBase<T>({
               return (
                 <div className="table-custom-footer">
                   <span className="table-selected-count">
-                    {selectedCount} trên {total ?? 0} hàng được chọn.
+                    {customPaginationLabels?.selectedCount?.(
+                      selectedCount,
+                      total ?? 0
+                    ) ?? `${selectedCount} trên ${total ?? 0} hàng được chọn.`}
                   </span>
                   <div className="table-custom-pagination">
-                    <span>Hàng trên trang</span>
+                    <span>{customPaginationLabels?.pageSize ?? "Hàng trên trang"}</span>
                     <Select
                       size="small"
                       value={currentPageSize}
@@ -145,7 +154,8 @@ function TableBase<T>({
                       }
                     />
                     <span>
-                      Trang {currentPage} trong {totalPages}
+                      {customPaginationLabels?.pageCount?.(currentPage, totalPages) ??
+                        `Trang ${currentPage} trong ${totalPages}`}
                     </span>
                     <button
                       type="button"

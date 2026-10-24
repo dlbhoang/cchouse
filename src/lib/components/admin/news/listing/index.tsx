@@ -7,7 +7,6 @@ import useSWR, { mutate } from "swr";
 import MyBreadcrumb from "@/lib/components/shared/MyBreadcrumb";
 import TableBase from "@/lib/components/shared/TableBase";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
-import { baseFilter } from "@/lib/core/configs/appConst";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import type { INewsResponse } from "@/services/api/news/INews";
@@ -36,6 +35,15 @@ const NewsEmptyState = () => (
       <path d="m45 44 6 6m0-6-6 6" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
     </svg>
     <span>Không tìm thấy dữ liệu</span>
+  </div>
+);
+
+const NewsErrorState = ({ onRetry }: { onRetry: () => void }) => (
+  <div className="news-empty-state" role="alert">
+    <span>Không tải được danh sách tin tức. Vui lòng thử lại.</span>
+    <Button type="link" onClick={onRetry}>
+      Thử lại
+    </Button>
   </div>
 );
 
@@ -200,7 +208,8 @@ const NewsTypeTabs = ({
 
   const opts = useMemo(() => ({
     pageIndex: 1,
-    pageSize: baseFilter.pageSize,
+    // The Figma news table is designed with 10 rows per page.
+    pageSize: 10,
     ...Object.fromEntries(query?.entries() ?? []),
   } as unknown as INewsOpts), [query]);
 
@@ -218,12 +227,20 @@ const NewsTypeTabs = ({
   // nên không cần tự fetch 10000 bản ghi rồi lọc lại ở client nữa — cách cũ này
   // còn là nguyên nhân khiến việc xoá filter không tự tải lại đúng (SWR key
   // không đổi vì SourceType/fromDate/toDate luôn bị loại khỏi request).
-  const { data, isLoading, isValidating } = newsApi.useGet(opts);
+  const {
+    data,
+    error,
+    isLoading,
+    isValidating,
+    mutate: revalidateNewsList,
+  } = newsApi.useGet(opts);
   const { data: countData } = useSWR(
     [newsApi.mutateKey, "count", opts],
     () => newsApi.count(opts)
   );
   const newsItems = data?.data ?? [];
+  const isEmpty = !isLoading && !isValidating && !error && newsItems.length === 0;
+  const hasLoadError = !isLoading && !isValidating && Boolean(error) && !data;
   const [previewNews, setPreviewNews] = useState<INewsResponse | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
@@ -339,7 +356,7 @@ const NewsTypeTabs = ({
             lineHeight: "var(--Line-height-text-2xl, 32px)",
           }}
         >
-          {AppRoutes.news.name}
+          QUẢN LÍ TIN TỨC
         </Typography.Title>
 
       </div>
@@ -348,15 +365,17 @@ const NewsTypeTabs = ({
       <NewsFilter model={opts} onSubmit={handleFilter} extra={createNewsButton} />
 
       <section
-        className={`news-data-panel${!isLoading && !isValidating && newsItems.length === 0 ? " news-data-panel--empty" : ""}`}
+        className={`news-data-panel${isEmpty || hasLoadError ? " news-data-panel--empty" : ""}`}
         aria-label="Danh sách tin tức"
       >
       <NewsTypeTabs opts={opts} onSubmit={handleFilter} />
 
 
       {/* News Table */}
-      <div className={`news-table${!isLoading && !isValidating && newsItems.length === 0 ? " news-table--empty" : ""}`}>
-        {!isLoading && !isValidating && newsItems.length === 0 ? (
+      <div className={`news-table${isEmpty || hasLoadError ? " news-table--empty" : ""}`}>
+        {hasLoadError ? (
+          <NewsErrorState onRetry={() => void revalidateNewsList()} />
+        ) : isEmpty ? (
           <NewsEmptyState />
         ) : (
           <TableBase
@@ -366,6 +385,14 @@ const NewsTypeTabs = ({
             data={newsItems}
             cols={newsColumns}
             onPageIndexChange={handlePageIndexChange}
+            useCustomPagination
+            customPaginationLabels={{
+              selectedCount: (selectedCount, total) =>
+                `${selectedCount} of ${total} dòng đã chọn.`,
+              pageSize: "Dòng trên trang",
+              pageCount: (currentPage, totalPages) =>
+                `${currentPage} của ${totalPages} Trang`,
+            }}
           />
         )}
       </div>
