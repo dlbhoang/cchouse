@@ -1,8 +1,7 @@
-import { Button, Card, List, Segmented, Tag, Typography } from "antd";
+import { Button, Card, List, Tag, Typography } from "antd";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
@@ -11,9 +10,21 @@ import propertyApi from "@/services/api/property/propertyApi";
 
 const { Text } = Typography;
 
-const PropItem = ({ item, href }: { item: IPropResponse; href: string }) => {
+const PropItem = ({
+  item,
+  href,
+  selected = false,
+}: {
+  item: IPropResponse;
+  href: string;
+  selected?: boolean;
+}) => {
   return (
-    <List.Item key={item.Id}>
+    <List.Item
+      key={item.Id}
+      className={selected ? "is-selected" : undefined}
+      aria-current={selected ? "location" : undefined}
+    >
       <div className="map-property-item">
         <div className="map-property-item-heading">
           <Tag className="map-property-item-id">Mã: {item.Id}</Tag>
@@ -60,15 +71,6 @@ export const PropListMap = ({ opts }: Props) => {
     );
   };
 
-  const handleTransTypeChange = (val: ETransType) => {
-    router.push(
-      `${pathname}?${objToQueryString({
-        ...opts,
-        TransType: val,
-      })}`
-    );
-  };
-
   return (
     <Card
       className="map-property-list-card"
@@ -83,20 +85,17 @@ export const PropListMap = ({ opts }: Props) => {
                 Thử lại
               </Button>
             </div>
-          ) : undefined,
+          ) : (
+            <div className="map-property-list-empty" role="status">
+              <span>Không tìm thấy bất động sản phù hợp.</span>
+            </div>
+          ),
         }}
         header={
           <div className="map-property-list-heading">
-            <Segmented
-              options={[
-                { value: ETransType.sell, label: "Mua bán" },
-                { value: ETransType.rent, label: "Cho thuê" },
-              ]}
-              block
-              value={opts.TransType ?? ETransType.sell}
-              onChange={(val) => handleTransTypeChange(val as ETransType)}
-            />
-            <Text>Hiển thị {data?.totalRow ?? 0} kết quả</Text>
+            <Text>
+              Hiển thị {(data?.totalRow ?? 0).toLocaleString("vi-VN")} kết quả
+            </Text>
           </div>
         }
         itemLayout="vertical"
@@ -113,7 +112,13 @@ export const PropListMap = ({ opts }: Props) => {
         renderItem={(item) => {
           const detailParams = new URLSearchParams(searchParams?.toString() ?? "");
           detailParams.set("PropertyId", item.Id.toString());
-          return <PropItem item={item} href={`?${detailParams.toString()}`} />;
+          return (
+            <PropItem
+              item={item}
+              href={`?${detailParams.toString()}`}
+              selected={searchParams?.get("PropertyId") === item.Id.toString()}
+            />
+          );
         }}
       />
     </Card>

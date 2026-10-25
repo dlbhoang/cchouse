@@ -42,7 +42,7 @@ type Props = {
   polygon?: any;
 };
 
-const hcmPosition = { lat: 10.823099, lng: 106.629662 };
+const hcmPosition = { lat: 10.845, lng: 106.675 };
 
 function MyComponent({
   data,
@@ -191,7 +191,7 @@ const Leaflet = ({ data, polygon }: Props) => {
   return (
     <MapContainer
       center={hcmPosition}
-      zoom={12}
+      zoom={14}
       maxZoom={19}
       style={{ height: "100%", width: "100%" }}
       zoomControl={false}

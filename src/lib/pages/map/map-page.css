@@ -43,7 +43,7 @@
 
 .admin-map-filters .property-filter-card {
   display: grid !important;
-  grid-template-columns: minmax(220px, 2fr) minmax(145px, 1.15fr) repeat(4, minmax(120px, 1fr)) 128px 40px;
+  grid-template-columns: 156px minmax(260px, 3fr) minmax(180px, 1.6fr) minmax(170px, 1.5fr) 128px 40px;
   justify-content: stretch;
   align-items: center;
   gap: 8px !important;
@@ -67,14 +67,69 @@
   display: none !important;
 }
 
-.admin-map-filters .property-search-combo { grid-column: 1; }
-.admin-map-filters .property-region-field { grid-column: 2; }
-.admin-map-filters .property-location-item { grid-column: 3; }
-.admin-map-filters .property-price-item { grid-column: 4; }
-.admin-map-filters .property-area-item { grid-column: 5; }
-.admin-map-filters .property-proptype-item { grid-column: 6; }
-.admin-map-filters .property-filter-more-btn { grid-column: 7; }
-.admin-map-filters .property-filter-reset-btn { grid-column: 8; }
+.admin-map-filters .property-trans-type-form-item {
+  display: block !important;
+  grid-column: 1;
+}
+.admin-map-filters .property-search-combo { grid-column: 2; }
+.admin-map-filters .property-region-field { grid-column: 3; }
+.admin-map-filters .property-location-item { grid-column: 4; }
+.admin-map-filters .property-price-item,
+.admin-map-filters .property-area-item,
+.admin-map-filters .property-proptype-item { display: none !important; }
+.admin-map-filters .property-filter-more-btn { grid-column: 5; }
+.admin-map-filters .property-filter-reset-btn { grid-column: 6; }
+
+.admin-map-filters .property-trans-type-map-segmented {
+  width: max-content;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.admin-map-filters .property-trans-type-map-segmented .ant-segmented-group {
+  gap: 10px;
+}
+
+.admin-map-filters .property-trans-type-map-segmented .ant-segmented-item {
+  height: 28px;
+  border-radius: 8px;
+  color: #0a0a0a;
+  background: transparent;
+}
+
+.admin-map-filters .property-trans-type-map-segmented .ant-segmented-item-selected {
+  color: #fff;
+  background: transparent;
+}
+
+.admin-map-filters .property-trans-type-map-segmented .ant-segmented-thumb {
+  border-radius: 8px;
+  background: #0588f0;
+  box-shadow: none;
+}
+
+.admin-map-filters .property-trans-type-map-segmented .ant-segmented-item-label {
+  min-height: 28px;
+  padding: 4px 8px;
+  line-height: 20px;
+}
+
+.property-filter-map-primary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 12px;
+}
+
+.property-filter-map-primary > .ant-form-item,
+.property-filter-map-primary .ant-form-item {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 0;
+}
 
 .admin-map-filters .property-search-combo,
 .admin-map-filters .property-region-field,
@@ -815,29 +870,6 @@
   font-size: 13px;
 }
 
-.map-property-list-heading .ant-segmented {
-  width: 100%;
-  border: 0;
-  border-radius: 0;
-  background: #fff;
-}
-
-.map-property-list-heading .ant-segmented-item-selected {
-  color: #14181d;
-  background: #fff !important;
-  box-shadow: inset 0 -2px #14181d;
-}
-
-.map-property-list-heading .ant-segmented-item-selected .ant-segmented-item-label {
-  color: #14181d;
-  font-weight: 600;
-}
-
-.map-property-list-heading .ant-segmented-item-label {
-  min-height: 36px;
-  line-height: 36px;
-}
-
 .admin-map-results .ant-list-header {
   padding: 14px 18px 8px !important;
   border-bottom: 0 !important;
@@ -861,6 +893,25 @@
 .admin-map-results .ant-list-item:hover {
   border-color: #0588f0 !important;
   box-shadow: 0 2px 8px rgba(5, 136, 240, 0.12);
+}
+
+.admin-map-results .ant-list-item.is-selected {
+  border-color: #0588f0 !important;
+  background: #f8fbff;
+  box-shadow: 0 0 0 1px rgba(5, 136, 240, 0.12);
+}
+
+.admin-map-results .ant-list-item.is-selected:hover {
+  border-color: #0475cf !important;
+  box-shadow: 0 2px 8px rgba(5, 136, 240, 0.14);
+}
+
+.map-property-list-empty {
+  padding: 28px 12px;
+  color: #737b86;
+  font-size: 13px;
+  line-height: 20px;
+  text-align: center;
 }
 
 .admin-map-results .ant-list-item-meta {
@@ -1283,8 +1334,8 @@
   border: 2px solid #fff;
   border-radius: 7px;
   color: #fff;
-  background: #1879e8;
-  box-shadow: 0 1px 5px rgba(20, 50, 85, 0.28);
+  background: #0588f0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   font-size: 10px;
   font-weight: 700;
   line-height: 1;
@@ -1301,7 +1352,7 @@
   transform: translateX(-50%) rotate(45deg);
   border-right: 2px solid #fff;
   border-bottom: 2px solid #fff;
-  background: #1879e8;
+  background: #0588f0;
   content: "";
 }
 
@@ -1418,10 +1469,10 @@
 .admin-map-page .marker-cluster-small,
 .admin-map-page .marker-cluster-medium,
 .admin-map-page .marker-cluster-large {
-  border: 3px solid rgba(255, 255, 255, 0.92);
+  border: 5px solid #fff;
   border-radius: 50%;
-  background: #0788ed;
-  box-shadow: 0 2px 6px rgba(25, 61, 96, 0.28);
+  background: #0588f0;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .admin-map-page .marker-cluster-small div,

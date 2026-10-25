@@ -6,8 +6,8 @@ import {
   FormInstance,
   Input,
   Modal,
+  Segmented,
   Select,
-  Typography,
 } from "antd";
 import {
   FilterOutlined,
@@ -41,8 +41,6 @@ import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import { HIDDEN_FIELDS } from "./config";
 import "./property-filter.css";
 
-const { Text } = Typography;
-
 type DesktopViewProps = {
   form: FormInstance<IPropAdminOpts>;
   model: IPropAdminOpts;
@@ -70,15 +68,30 @@ export const DesktopView = ({
       {/* Hàng 1: tìm kiếm + khu vực + trạng thái + actions */}
       <div className="property-filter-search-row">
         <Form.Item name="TransType" className="property-trans-type-form-item">
-          <Select
-            className="property-trans-type-select"
-            popupClassName="property-trans-type-dropdown"
-            options={[
-              { label: "Mua bán", value: ETransType.sell },
-              { label: "Cho thuê", value: ETransType.rent },
-            ]}
-            onChange={() => form.submit()}
-          />
+          {mapMode ? (
+            <Segmented
+              className="property-trans-type-map-segmented"
+              value={transTypeValue}
+              options={[
+                { label: "Outline", value: ETransType.sell },
+                { label: "Cho thuê", value: ETransType.rent },
+              ]}
+              onChange={(value) => {
+                form.setFieldValue("TransType", value);
+                form.submit();
+              }}
+            />
+          ) : (
+            <Select
+              className="property-trans-type-select"
+              popupClassName="property-trans-type-dropdown"
+              options={[
+                { label: "Mua bán", value: ETransType.sell },
+                { label: "Cho thuê", value: ETransType.rent },
+              ]}
+              onChange={() => form.submit()}
+            />
+          )}
         </Form.Item>
 
         <div className="property-search-combo">
@@ -233,6 +246,21 @@ export const DesktopView = ({
         }}
       >
         <Flex vertical gap={16} className="property-filter-more-body">
+          {mapMode && (
+            <div className="property-filter-drawer-section property-filter-map-primary">
+              <FloatingField label="Khoảng giá">
+                <PriceFilter form={form} />
+              </FloatingField>
+              <FloatingField label="Diện tích">
+                <AreaFilter form={form} mapMode />
+              </FloatingField>
+              <FloatingField label="Loại BĐS">
+                <Form.Item name="PropTypeIds" noStyle>
+                  <PropTypeSelect mode="multiple" placeholder="Chọn" />
+                </Form.Item>
+              </FloatingField>
+            </div>
+          )}
           <div className="property-filter-drawer-toggle">
             <button
               type="button"
