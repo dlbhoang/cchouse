@@ -45,12 +45,13 @@ type Props = {
   form: FormInstance;
   mapMode?: boolean;
   adminMode?: boolean;
+  placeholder?: string;
 };
 const colStyle = {
   xs: 24,
   lg: 12,
 };
-export const AreaFilter = ({ form, mapMode = false, adminMode = false }: Props) => {
+export const AreaFilter = ({ form, mapMode = false, adminMode = false, placeholder = "Diện tích" }: Props) => {
   const areaFrm = Form.useWatch("AreaFrm", form);
   const areaTo = Form.useWatch("AreaTo", form);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -80,10 +81,9 @@ export const AreaFilter = ({ form, mapMode = false, adminMode = false }: Props) 
       style={{ width: "100%" }}
       open={isDropdownOpen}
       dropdownMatchSelectWidth={false}
-      onClick={() => setIsDropdownOpen(true)}
       onChange={handleDropdownChange}
       onDropdownVisibleChange={setIsDropdownOpen}
-      placeholder="Diện tích"
+      placeholder={placeholder}
       value={selectValue}
       // eslint-disable-next-line react/no-unstable-nested-components
       popupClassName={

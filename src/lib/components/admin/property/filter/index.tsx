@@ -14,7 +14,7 @@ type Props = {
 
 const PropertyFilter = ({ model, onSubmit, mapMode = false }: Props) => {
   const { smallScreen } = useAdminContext();
-  const { form, handleRefresh } = usePropertyFilter(model, onSubmit);
+  const { form, handleRefresh } = usePropertyFilter(model, onSubmit, mapMode);
 
   return (
     <Form
@@ -28,7 +28,7 @@ const PropertyFilter = ({ model, onSubmit, mapMode = false }: Props) => {
       }}
     >
       {smallScreen ? (
-        <MobileView form={form} model={model} handleRefresh={handleRefresh} />
+        <MobileView form={form} model={model} handleRefresh={handleRefresh} mapMode={mapMode} />
       ) : (
         <DesktopView
           form={form}

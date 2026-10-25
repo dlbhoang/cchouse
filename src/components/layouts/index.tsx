@@ -49,7 +49,7 @@ const getPageLayout = (pathname: string | null) => {
     return {
       isNewsPage: false,
       sidebarStyle: { "--sidebar-width-icon": "68px" } as CSSProperties,
-      headerClass: "h-[68px] border-b border-gray-100 bg-white",
+      headerClass: "map-admin-header h-16 border-b border-gray-100 bg-white",
       contentClass: "min-w-0 gap-2 bg-white",
     };
   }
@@ -187,7 +187,7 @@ const RootLayout = ({ children, session }: LayoutProps) => {
             />
           )}
           {!hideMobileMenu && (
-            <div className="fixed bottom-[5%] px-6 md:hidden flex justify-between items-center w-full">
+            <div className={`fixed bottom-[5%] px-6 md:hidden flex justify-between items-center w-full ${pathname === AppRoutes.map.url ? "z-50" : ""}`}>
               <MenuTabs />
               <SidebarTrigger
                 className="size-8 sm:size-10"

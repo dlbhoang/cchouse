@@ -33,8 +33,10 @@ const crud = {
 		return useSWR([`${url}/GetCoordinates`, params] as const, async ([route, options]) => {
 			return axiosClient.get<any, IListData<IPropAdminMap>>(route, {
 				params: { ...options, Status: options.Status?.toString() ?? 1 },
-			});
-		});
+				timeout: 30000,
+				suppressErrorNotification: true,
+			} as any);
+		}, { shouldRetryOnError: false });
 	},
 
 	mutateKey: (key: unknown) =>

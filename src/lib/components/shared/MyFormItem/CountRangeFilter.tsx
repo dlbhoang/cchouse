@@ -25,6 +25,13 @@ export const CountRangeFilter = ({
     const f = from == null ? undefined : Number(from);
     const t = to == null ? undefined : Number(to);
 
+    if (value === max) {
+      const clear = f === max && t == null;
+      form.setFieldValue(nameFrm, clear ? undefined : f ?? max);
+      form.setFieldValue(nameTo, undefined);
+      return;
+    }
+
     if (f == null || t == null) {
       form.setFieldValue(nameFrm, value);
       form.setFieldValue(nameTo, value);
@@ -48,8 +55,8 @@ export const CountRangeFilter = ({
   };
 
   const isActive = (value: number) => {
-    if (from == null || to == null) return false;
-    return value >= Number(from) && value <= Number(to);
+    if (from == null) return false;
+    return value >= Number(from) && (to == null || value <= Number(to));
   };
 
   return (

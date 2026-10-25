@@ -1,4 +1,12 @@
-import { Checkbox, Drawer, Flex, Form, FormInstance, Input, Segmented } from "antd";
+import {
+  Checkbox,
+  Drawer,
+  Flex,
+  Form,
+  FormInstance,
+  Input,
+  Segmented,
+} from "antd";
 import { ListFilterPlus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -6,16 +14,21 @@ import { Button } from "@/components/ui/button";
 
 import {
   AdvPropSearch,
+  AreaFilter,
   AuctionCheckbox,
   CountRangeFilter,
   DateFilter,
   FloatingField,
+  PriceFilter,
 } from "@/lib/components/shared/MyFormItem";
 import {
+  AddressSelectCustom,
   CustomerTypeSelect,
   DirectionSelect,
   FurnitureSelect,
   LawSelect,
+  LocationSelectCustom,
+  PropTypeSelect,
   UserAdminSelect,
 } from "@/lib/components/shared/MySelect";
 import { ETransType } from "@/lib/core/enum";
@@ -27,9 +40,15 @@ type MobileViewProps = {
   form: FormInstance<IPropAdminOpts>;
   model: IPropAdminOpts;
   handleRefresh: () => void;
+  mapMode?: boolean;
 };
 
-export const MobileView = ({ form, model, handleRefresh }: MobileViewProps) => {
+export const MobileView = ({
+  form,
+  model,
+  handleRefresh,
+  mapMode = false,
+}: MobileViewProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const searchParams = useSearchParams();
 
@@ -58,7 +77,10 @@ export const MobileView = ({ form, model, handleRefresh }: MobileViewProps) => {
         <div className="flex-1">
           <AdvPropSearch
             form={form}
-            placeholder="Tìm mã, tên, địa chỉ..."
+            placeholder={
+              mapMode ? "Tìm kiếm bất động sản" : "Tìm mã, tên, địa chỉ..."
+            }
+            showVoice={!mapMode}
             handleRefresh={handleRefreshWithClose}
           />
         </div>
@@ -68,6 +90,7 @@ export const MobileView = ({ form, model, handleRefresh }: MobileViewProps) => {
           type="button"
           variant={"outline"}
           className="w-8 h-8"
+          aria-label="Lọc thêm"
         >
           <ListFilterPlus />
         </Button>
@@ -75,22 +98,27 @@ export const MobileView = ({ form, model, handleRefresh }: MobileViewProps) => {
 
       <Drawer
         title="Bộ lọc"
+        forceRender={mapMode}
         placement="bottom"
         onClose={handleDrawerClose}
         open={isDrawerOpen}
         height="90vh"
-        className="property-filter-mobile-drawer"
+        className={`property-filter-mobile-drawer ${mapMode ? "property-filter-map-mobile-drawer" : ""}`}
         footer={
           <Flex gap={12}>
             <Button
               type="button"
               variant="outline"
-              className="w-full"
+              className={mapMode ? "min-w-0 flex-1" : "w-full"}
               onClick={handleRefreshWithClose}
             >
               Đặt lại
             </Button>
-            <Button type="button" className="w-full" onClick={handleApply}>
+            <Button
+              type="button"
+              className={mapMode ? "min-w-0 flex-1" : "w-full"}
+              onClick={handleApply}
+            >
               Áp dụng
             </Button>
           </Flex>
@@ -116,6 +144,35 @@ export const MobileView = ({ form, model, handleRefresh }: MobileViewProps) => {
             />
           </Form.Item>
 
+          {mapMode && (
+            <div className="property-filter-map-mobile">
+              <AddressSelectCustom
+                form={form}
+                nameProvince="ProvinceId"
+                nameDistrict="DistrictId"
+                nameWard="WardId"
+                nameStreet="StreetId"
+                nameAddressNumber="AddressNumber"
+                mapMode
+              />
+              <LocationSelectCustom
+                form={form}
+                locationName="Location"
+                locationFeatureName="LocationFeature"
+                mapMode
+              />
+              <PriceFilter form={form} />
+              <FloatingField label="Diện tích">
+                <AreaFilter form={form} mapMode placeholder="Chọn" />
+              </FloatingField>
+              <FloatingField label="Loại BĐS">
+                <Form.Item name="PropTypeIds" noStyle>
+                  <PropTypeSelect mode="multiple" placeholder="Chọn" />
+                </Form.Item>
+              </FloatingField>
+            </div>
+          )}
+
           <CountRangeFilter
             form={form}
             label="Số tầng"
@@ -135,36 +192,46 @@ export const MobileView = ({ form, model, handleRefresh }: MobileViewProps) => {
             nameTo="BathroomTo"
           />
 
-          <Form.Item name="Direction" className="property-field-item">
+          <div className="property-field-item">
             <FloatingField label="Hướng nhà" required>
-              <DirectionSelect mode="multiple" placeholder="Chọn" />
+              <Form.Item name="Direction" noStyle>
+                <DirectionSelect mode="multiple" placeholder="Chọn" />
+              </Form.Item>
             </FloatingField>
-          </Form.Item>
+          </div>
 
-          <Form.Item name="Legal" className="property-field-item">
+          <div className="property-field-item">
             <FloatingField label="Pháp lý">
-              <LawSelect placeholder="Chọn" allowClear />
+              <Form.Item name="Legal" noStyle>
+                <LawSelect placeholder="Chọn" allowClear />
+              </Form.Item>
             </FloatingField>
-          </Form.Item>
+          </div>
 
-          <Form.Item name="FurnitureIds" className="property-field-item">
+          <div className="property-field-item">
             <FloatingField label="Nội thất">
-              <FurnitureSelect mode="multiple" placeholder="Chọn" />
+              <Form.Item name="FurnitureIds" noStyle>
+                <FurnitureSelect mode="multiple" placeholder="Chọn" />
+              </Form.Item>
             </FloatingField>
-          </Form.Item>
+          </div>
 
-          <Form.Item name="CustomerType" className="property-field-item">
+          <div className="property-field-item">
             <FloatingField label="Nhận diện khách hàng" required>
-              <CustomerTypeSelect placeholder="Chọn" />
+              <Form.Item name="CustomerType" noStyle>
+                <CustomerTypeSelect placeholder="Chọn" />
+              </Form.Item>
             </FloatingField>
-          </Form.Item>
+          </div>
 
           <Flex gap={12}>
-            <Form.Item name="UserAdminId" className="property-field-item" style={{ flex: 1 }}>
+            <div className="property-field-item" style={{ flex: 1 }}>
               <FloatingField label="Nhân viên" required>
-                <UserAdminSelect placeholder="Chọn" />
+                <Form.Item name="UserAdminId" noStyle>
+                  <UserAdminSelect placeholder="Chọn" />
+                </Form.Item>
               </FloatingField>
-            </Form.Item>
+            </div>
             <div style={{ flex: 1 }}>
               <FloatingField label="Thời gian" required>
                 <DateFilter form={form} />

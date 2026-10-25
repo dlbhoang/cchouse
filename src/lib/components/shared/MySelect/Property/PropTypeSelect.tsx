@@ -6,6 +6,7 @@ export const PropTypeSelect = ({
   mode,
   value,
   onChange,
+  placeholder = "Loại BĐS",
   ...props
 }: SelectType) => {
   const { propType } = useAdminContext();
@@ -13,7 +14,7 @@ export const PropTypeSelect = ({
     <SelectBase
       {...props}
       mode={mode}
-      placeholder="Loại BĐS"
+      placeholder={placeholder}
       allowClear
       options={propType.map((e) => ({
         label: e.Name,

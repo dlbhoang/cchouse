@@ -98,7 +98,9 @@ export const DesktopView = ({
           <div className="property-search-input-wrap">
             <AdvPropSearch
               form={form}
-              placeholder={mapMode ? "Tìm kiếm bất động sản" : "Tìm kiếm bất động sản..."}
+              placeholder={
+                mapMode ? "Tìm kiếm bất động sản" : "Tìm kiếm bất động sản..."
+              }
               handleRefresh={handleRefresh}
               showVoice={!mapMode}
             />
@@ -133,7 +135,11 @@ export const DesktopView = ({
           htmlType="submit"
           icon={<SearchOutlined />}
           className="property-filter-search-btn"
-          style={{ backgroundColor: "#0588f0", borderColor: "#0588f0", color: "#fff" }}
+          style={{
+            backgroundColor: "#0588f0",
+            borderColor: "#0588f0",
+            color: "#fff",
+          }}
         >
           Tìm kiếm
         </Button>
@@ -142,7 +148,11 @@ export const DesktopView = ({
           htmlType="button"
           icon={mapMode ? <RotateCcw size={16} /> : <ReloadOutlined />}
           className="property-filter-reset-btn"
-          style={{ backgroundColor: "#fff", borderColor: "#0588f0", color: "#0588f0" }}
+          style={{
+            backgroundColor: "#fff",
+            borderColor: "#0588f0",
+            color: "#0588f0",
+          }}
           onClick={handleRefresh}
           aria-label="Làm mới bộ lọc"
         />
@@ -159,43 +169,44 @@ export const DesktopView = ({
           />
         </Form.Item>
 
-        <Form.Item className="property-field-item property-price-item">
-  <PriceFilter form={form} />
-</Form.Item>
-
-        <Form.Item className="property-field-item property-area-item">
-          {mapMode ? (
-            <AreaFilter form={form} mapMode />
-          ) : (
-          <FloatingField label="Diện tích">
-              <AreaFilter form={form} adminMode />
-          </FloatingField>
-          )}
-        </Form.Item>
-
         {!mapMode && (
-          <Form.Item name="Direction" className="property-field-item property-direction-item">
-            <DirectionSelect mode="multiple" placeholder="Hướng" />
-          </Form.Item>
-        )}
-
-        <div className="property-field-item property-proptype-item">
-          <FloatingField label="Loại BĐS">
-            <Form.Item name="PropTypeIds" noStyle>
-              <PropTypeSelect
-                mode="multiple"
-                placeholder="Loại BĐS"
-                onChange={mapMode ? () => form.submit() : undefined}
-              />
+          <>
+            <Form.Item className="property-field-item property-price-item">
+              <PriceFilter form={form} />
             </Form.Item>
-          </FloatingField>
-        </div>
+
+            <Form.Item className="property-field-item property-area-item">
+              <FloatingField label="Diện tích">
+                <AreaFilter form={form} adminMode />
+              </FloatingField>
+            </Form.Item>
+
+            <Form.Item
+              name="Direction"
+              className="property-field-item property-direction-item"
+            >
+              <DirectionSelect mode="multiple" placeholder="Hướng" />
+            </Form.Item>
+
+            <div className="property-field-item property-proptype-item">
+              <FloatingField label="Loại BĐS">
+                <Form.Item name="PropTypeIds" noStyle>
+                  <PropTypeSelect mode="multiple" placeholder="Loại BĐS" />
+                </Form.Item>
+              </FloatingField>
+            </div>
+          </>
+        )}
 
         <Button
           htmlType="button"
           icon={mapMode ? <ListFilterPlus size={16} /> : <FilterOutlined />}
           className="property-filter-more-btn"
-          style={{ backgroundColor: "#fff", borderColor: "#0588f0", color: "#0588f0" }}
+          style={{
+            backgroundColor: "#fff",
+            borderColor: "#0588f0",
+            color: "#0588f0",
+          }}
           onClick={() => setMoreOpen(true)}
         >
           Lọc thêm
@@ -204,12 +215,17 @@ export const DesktopView = ({
 
       <Modal
         title="Bộ lọc"
+        forceRender={mapMode}
         open={moreOpen}
         onCancel={() => setMoreOpen(false)}
         centered
         width={384}
         className="property-filter-more-modal"
-        closeIcon={<span style={{ color: "#0B172A", fontSize: 20, lineHeight: 1 }}>×</span>}
+        closeIcon={
+          <span style={{ color: "#0B172A", fontSize: 20, lineHeight: 1 }}>
+            ×
+          </span>
+        }
         footer={
           <div className="property-filter-drawer-footer">
             <Button
@@ -239,26 +255,38 @@ export const DesktopView = ({
           </div>
         }
         styles={{
-          header: { borderBottom: "1px solid #EEF2F6", padding: "18px 20px 14px", background: "#fff" },
+          header: {
+            borderBottom: "1px solid #EEF2F6",
+            padding: "18px 20px 14px",
+            background: "#fff",
+          },
           body: { background: "#fff", padding: "12px 16px" },
-          footer: { borderTop: "1px solid #EEF2F6", padding: "12px 16px 16px", background: "#fff" },
+          footer: {
+            borderTop: "1px solid #EEF2F6",
+            padding: "12px 16px 16px",
+            background: "#fff",
+          },
           content: { borderRadius: "16px", overflow: "hidden" },
         }}
       >
         <Flex vertical gap={16} className="property-filter-more-body">
           {mapMode && (
             <div className="property-filter-drawer-section property-filter-map-primary">
-              <FloatingField label="Khoảng giá">
+              <div className="property-drawer-form-item">
                 <PriceFilter form={form} />
-              </FloatingField>
-              <FloatingField label="Diện tích">
-                <AreaFilter form={form} mapMode />
-              </FloatingField>
-              <FloatingField label="Loại BĐS">
-                <Form.Item name="PropTypeIds" noStyle>
-                  <PropTypeSelect mode="multiple" placeholder="Chọn" />
-                </Form.Item>
-              </FloatingField>
+              </div>
+              <div className="property-drawer-form-item">
+                <FloatingField label="Diện tích">
+                  <AreaFilter form={form} mapMode placeholder="Chọn" />
+                </FloatingField>
+              </div>
+              <div className="property-drawer-form-item">
+                <FloatingField label="Loại BĐS">
+                  <Form.Item name="PropTypeIds" noStyle>
+                    <PropTypeSelect mode="multiple" placeholder="Chọn" />
+                  </Form.Item>
+                </FloatingField>
+              </div>
             </div>
           )}
           <div className="property-filter-drawer-toggle">
@@ -342,7 +370,9 @@ export const DesktopView = ({
               </div>
 
               <div className="property-filter-more-date">
-                <span className="property-filter-more-date-label">Thời gian <i>*</i></span>
+                <span className="property-filter-more-date-label">
+                  Thời gian <i>*</i>
+                </span>
                 <DateFilter form={form} placeholderText="Chọn" />
               </div>
             </div>
@@ -350,7 +380,11 @@ export const DesktopView = ({
 
           <div className="property-filter-drawer-section property-filter-drawer-checklist">
             <AuctionCheckbox form={form} />
-            <Form.Item name="IsMonopoly" valuePropName="checked" className="property-drawer-form-item property-drawer-checkbox-item">
+            <Form.Item
+              name="IsMonopoly"
+              valuePropName="checked"
+              className="property-drawer-form-item property-drawer-checkbox-item"
+            >
               <Checkbox>Độc quyền</Checkbox>
             </Form.Item>
           </div>

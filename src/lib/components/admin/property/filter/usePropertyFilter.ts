@@ -6,7 +6,8 @@ import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
 
 export const usePropertyFilter = (
   model: IPropAdminOpts,
-  onSubmit: (values: IPropAdminOpts) => void
+  onSubmit: (values: IPropAdminOpts) => void,
+  resetFromModel = false
 ) => {
   const [form] = Form.useForm<IPropAdminOpts>();
 
@@ -21,6 +22,7 @@ export const usePropertyFilter = (
 
   useEffect(() => {
     if (model) {
+      if (resetFromModel) form.resetFields();
       form.setFieldsValue({
         ...model,
         search: model.search,
@@ -55,7 +57,7 @@ export const usePropertyFilter = (
         WidthTo: convertToNumber(model.WidthTo),
       });
     }
-  }, [form, model]);
+  }, [form, model, resetFromModel]);
 
   return {
     form,

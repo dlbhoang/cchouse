@@ -4,17 +4,17 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   MapContainer,
   Marker,
   Polygon,
   Popup,
   useMap,
-  useMapEvents,
 } from "react-leaflet";
 
 import { IPropAdminMap } from "@/lib/interfaces/Property/IProp";
+import { hasMapCoordinates } from "@/lib/core/utils/map-coordinates";
 
 const propertyPin = (label?: string) => {
   const safeLabel = String(label ?? "BĐS")
@@ -26,16 +26,11 @@ const propertyPin = (label?: string) => {
 
   return L.divIcon({
     className: "admin-map-property-pin-wrapper",
-    html: `<span class="admin-map-property-pin">${safeLabel}</span>`,
+    html: `<span class="admin-map-property-pin" title="${safeLabel}">${safeLabel}</span>`,
     iconSize: [72, 28],
     iconAnchor: [36, 28],
   });
 };
-
-const curPosition = new L.Icon({
-  iconUrl: "/my_location.png",
-  iconSize: [40, 40],
-});
 
 type Props = {
   data: IPropAdminMap[];
@@ -70,14 +65,21 @@ function MyComponent({
   }, [map]);
 
   useEffect(() => {
-    const address = properties[0]?.PropAddress;
-    if (properties.length === 1 && address?.Lat && address?.Lng) {
-      map.setView({ lat: address.Lat, lng: address.Lng });
-    }
+    const positions = properties.flatMap(({ PropAddress }) =>
+      hasMapCoordinates(PropAddress) ? [L.latLng(PropAddress.Lat, PropAddress.Lng)] : []
+    );
+    if (!positions.length) return;
+    const size = map.getSize();
+    const desktop = size.x > 768;
+    map.fitBounds(L.latLngBounds(positions), {
+      paddingTopLeft: [desktop ? 380 : 24, 24],
+      paddingBottomRight: [24, desktop ? 24 : Math.round(size.y * 0.5)],
+      maxZoom: 14,
+    });
   }, [properties, map]);
 
   const markers = properties
-    .filter((x) => (x?.PropAddress?.Lat ?? 0) > 0 && (x?.PropAddress?.Lng ?? 0) > 0)
+    .filter((x) => hasMapCoordinates(x?.PropAddress))
     .map((e) => (
       <Marker
         icon={propertyPin(e.DisplayPrice)}
@@ -148,30 +150,18 @@ function MyComponent({
         }}
       />
       {markers.length > 0 && (
-        <MarkerClusterGroup>{...markers}</MarkerClusterGroup>
+        <MarkerClusterGroup
+          showCoverageOnHover={false}
+          iconCreateFunction={(cluster: { getChildCount: () => number }) => L.divIcon({
+            className: "marker-cluster marker-cluster-small",
+            html: `<div><span>${cluster.getChildCount()}</span></div>`,
+            iconSize: [36, 36],
+          })}
+        >{markers}</MarkerClusterGroup>
       )}
     </>
   );
 }
-
-const LocationMarker = () => {
-  const [position, setPosition] = useState<L.LatLng>();
-  const map = useMapEvents({
-    click() {
-      map.locate();
-    },
-    locationfound(e) {
-      setPosition(e.latlng);
-      map.flyTo(e.latlng, map.getZoom());
-    },
-  });
-
-  return !position || position === null ? null : (
-    <Marker position={position} icon={curPosition}>
-      <Popup>Bạn đang ở đây</Popup>
-    </Marker>
-  );
-};
 
 const MapSizeObserver = () => {
   const map = useMap();
@@ -198,7 +188,6 @@ const Leaflet = ({ data, polygon }: Props) => {
     >
       <MapSizeObserver />
       <MyComponent data={data} polygon={polygon} />
-      {/* <LocationMarker /> */}
     </MapContainer>
   );
 };

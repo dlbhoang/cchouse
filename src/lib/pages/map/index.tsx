@@ -1,12 +1,14 @@
 "use client";
 
+import { Alert, Button, ConfigProvider } from "antd";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PropertyFilter from "@/lib/components/admin/property/filter";
 import { PropListMap } from "@/lib/components/admin/property/propListMap";
 import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
+import { hasMapCoordinates } from "@/lib/core/utils/map-coordinates";
 import type { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import type { IPropResponse } from "@/lib/interfaces/Property/IProp";
 import { useAdminContext } from "@/lib/stored";
@@ -25,37 +27,52 @@ const MapPage = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [detail, setDetail] = useState<IPropResponse>();
+  const [detailError, setDetailError] = useState(false);
   const [polygon, setPolygon] = useState<any[]>([]);
 
   const propertyId = searchParams?.get("PropertyId");
-  const transType = searchParams?.get("TransType") || ETransType.sell;
-  const searchOptions = {
-    ...Object.fromEntries(searchParams?.entries() ?? []),
-    TransType: transType,
-    ProvinceId: 1,
-  } as any as IPropAdminOpts;
+  const filterParams = new URLSearchParams(searchParams?.toString() ?? "");
+  filterParams.delete("PropertyId");
+  const filtersQuery = filterParams.toString();
+  const searchOptions = useMemo(() => {
+    const params = new URLSearchParams(filtersQuery);
+    return {
+      ...Object.fromEntries(params),
+      TransType:
+        Number(params.get("TransType")) === ETransType.rent
+          ? ETransType.rent
+          : ETransType.sell,
+      ProvinceId: Number(params.get("ProvinceId")) || 1,
+    } as unknown as IPropAdminOpts;
+  }, [filtersQuery]);
 
-  const { data: points, mutate: mutatePoints } = propertyApi.useGetCoordinates({
+  const {
+    data: points,
+    error: pointsError,
+    mutate: mutatePoints,
+  } = propertyApi.useGetCoordinates({
     ...searchOptions,
     pageIndex: 1,
     pageSize: 10000,
   });
 
   useEffect(() => {
-    mutatePoints();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
-
-  useEffect(() => {
     let active = true;
     const fetchDetail = async () => {
+      setDetail(undefined);
+      setDetailError(false);
       if (!propertyId) {
-        setDetail(undefined);
         return;
       }
-      const response = await propertyApi.getById(Number(propertyId));
-      if (active) {
-        setDetail(response.data);
+      try {
+        const id = Number(propertyId);
+        if (!Number.isSafeInteger(id) || id <= 0)
+          throw new Error("Invalid property ID");
+        const response = await propertyApi.getById(id);
+        if (!response.data?.Id) throw new Error("Property not found");
+        if (active) setDetail(response.data);
+      } catch {
+        if (active) setDetailError(true);
       }
     };
     fetchDetail();
@@ -68,16 +85,27 @@ const MapPage = () => {
     let active = true;
     const fetchPolygon = async () => {
       const { ProvinceId, DistrictId } = Object.fromEntries(
-        searchParams?.entries() ?? []
+        searchParams?.entries() ?? [],
       );
       if (!ProvinceId || !DistrictId) {
         setPolygon([]);
         return;
       }
-      const refProvince = provinces.find((item) => item.Id.toString() === ProvinceId)?.RefKey;
-      const refDistrict = districts.find((item) => item.Id.toString() === DistrictId)?.RefKey;
-      const data = await MapServices.getPolygon(refProvince ?? "", refDistrict ?? "");
-      if (active) setPolygon((data?.[0] as any)?.coordinates?.[0] ?? []);
+      const refProvince = provinces.find(
+        (item) => item.Id.toString() === ProvinceId,
+      )?.RefKey;
+      const refDistrict = districts.find(
+        (item) => item.Id.toString() === DistrictId,
+      )?.RefKey;
+      try {
+        const data = await MapServices.getPolygon(
+          refProvince ?? "",
+          refDistrict ?? "",
+        );
+        if (active) setPolygon((data?.[0] as any)?.coordinates?.[0] ?? []);
+      } catch {
+        if (active) setPolygon([]);
+      }
     };
     fetchPolygon();
     return () => {
@@ -86,7 +114,9 @@ const MapPage = () => {
   }, [districts, provinces, searchParams]);
 
   const handleFilter = (values: IPropAdminOpts) => {
-    const nextOptions = { ...values } as IPropAdminOpts & { PropertyId?: number };
+    const nextOptions = { ...values } as IPropAdminOpts & {
+      PropertyId?: number;
+    };
     delete nextOptions.PropertyId;
     router.push(`${pathname}?${objToQueryString(nextOptions)}`);
   };
@@ -97,33 +127,74 @@ const MapPage = () => {
     router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false });
   };
 
+  const mapPoints = Array.isArray(points?.data) ? points.data : [];
+  const hasCoordinates = mapPoints.some(({ PropAddress }) =>
+    hasMapCoordinates(PropAddress),
+  );
+
   return (
-    <main className="admin-map-page">
-      <header className="admin-map-heading">
-        <div>
-          <div className="admin-map-breadcrumb">Bản đồ&nbsp; / &nbsp;Bản đồ nhà đất</div>
-          <h1>BẢN ĐỒ NHÀ ĐẤT</h1>
-        </div>
-      </header>
+    <ConfigProvider
+      theme={{
+        token: { colorPrimary: "#0588f0", fontFamily: "Inter, sans-serif" },
+        components: {
+          Drawer: { colorText: "#0a0a0a" },
+          Segmented: { itemSelectedBg: "#0588f0", itemSelectedColor: "#fff" },
+        },
+      }}
+    >
+      <main className="admin-map-page">
+        <header className="admin-map-heading">
+          <div>
+            <div className="admin-map-breadcrumb">
+              Bản đồ&nbsp; / &nbsp;Bản đồ nhà đất
+            </div>
+            <h1>BẢN ĐỒ NHÀ ĐẤT</h1>
+          </div>
+        </header>
 
-      <div className="admin-map-filters">
-        <PropertyFilter onSubmit={handleFilter} model={searchOptions} mapMode />
-      </div>
-
-      <section className="admin-map-workspace has-panel">
-        <aside className={`admin-map-results ${smallScreen ? "mobile-results" : ""}`}>
-          <PropListMap opts={searchOptions} />
-        </aside>
-
-        <div className="admin-map-canvas">
-          <MyLeaflet
-            data={Array.isArray(points?.data) ? points.data : []}
-            polygon={polygon}
+        <div className="admin-map-filters">
+          <PropertyFilter
+            onSubmit={handleFilter}
+            model={searchOptions}
+            mapMode
           />
         </div>
-      </section>
-      {detail && <PropMapDetail data={detail} onClose={closeDetail} />}
-    </main>
+        {detailError && (
+          <Alert
+            type="error"
+            showIcon
+            message="Không tải được chi tiết bất động sản. Vui lòng thử lại."
+            closable
+            onClose={closeDetail}
+          />
+        )}
+
+        <section className="admin-map-workspace has-panel">
+          <aside
+            className={`admin-map-results ${smallScreen ? "mobile-results" : ""}`}
+          >
+            <PropListMap opts={searchOptions} />
+          </aside>
+
+          <div className="admin-map-canvas">
+            <MyLeaflet data={mapPoints} polygon={polygon} />
+            {pointsError ? (
+              <div className="admin-map-notice" role="status">
+                Không tải được vị trí bất động sản.
+                <Button type="link" onClick={() => mutatePoints()}>
+                  Thử lại
+                </Button>
+              </div>
+            ) : mapPoints.length > 0 && !hasCoordinates ? (
+              <div className="admin-map-notice" role="status">
+                Các bất động sản này chưa có tọa độ trên bản đồ.
+              </div>
+            ) : null}
+          </div>
+        </section>
+        {detail && <PropMapDetail data={detail} onClose={closeDetail} />}
+      </main>
+    </ConfigProvider>
   );
 };
 

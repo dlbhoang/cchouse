@@ -75,6 +75,7 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
     [1, 2].includes(session?.user.RoleId ?? 0) ||
     session?.user.Id === data.UserAdminId ||
     !data.IsHidePhone;
+  const phones = data.CustomerPhone?.toString().split(",").filter(Boolean) ?? [];
 
   useEffect(() => {
     let active = true;
@@ -82,7 +83,7 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
       const result = await imagesApi.get({
         ContentId: Number(data.Id),
         TableName: ETableName.Property,
-      });
+      }).catch(() => ({ data: [] }));
       if (!active) return;
       const propertyImages = fileServices.mapFromFileUpload(result.data ?? []);
       const inlineImages = (data.Images ?? []).flatMap((image, index) => {
@@ -244,7 +245,7 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
             <div className="admin-map-detail-media">
               <DetailSection title="Hình ảnh / tài liệu">
                 <div className="admin-map-detail-media-content">
-                  <ImagesPreview images={images} imgWidth={120} />
+                  {images.length ? <ImagesPreview images={images} imgWidth={120} /> : <p>Chưa có hình ảnh</p>}
                 </div>
               </DetailSection>
               <DetailSection title="Video">
@@ -257,7 +258,7 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
             <DetailSection title="Thông tin liên hệ">
               <div className="admin-map-detail-phone">
                 {canViewPhone ? (
-                  <RenderPhone phones={data.CustomerPhone?.toString().split(",") ?? []} />
+                  phones.length ? <RenderPhone phones={phones} /> : <span>Chưa có số điện thoại</span>
                 ) : (
                   <span>SĐT đang bị ẩn, vui lòng liên hệ quản lý</span>
                 )}

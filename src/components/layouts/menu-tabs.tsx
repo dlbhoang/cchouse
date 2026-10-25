@@ -49,9 +49,9 @@ const MenuTabs = () => {
         tabsData.find((tab) => isPathActive(currentPath, tab.value))?.value
       }
       onValueChange={handleTabChange}
-      className="w-full "
+      className="w-full min-w-0"
     >
-      <TabsList className="h-10 w-full rounded-full">
+      <TabsList className={cn("h-10 w-full rounded-full", isPathActive(currentPath, AppRoutes.map.url) && "map-mobile-tabs")}>
         {tabsData.map((tab) => {
           const Icon = tab.icon;
           const isActive = isPathActive(currentPath, tab.value);

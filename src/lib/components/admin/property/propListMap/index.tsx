@@ -59,7 +59,11 @@ export const PropListMap = ({ opts }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { data, error, isValidating, mutate } = propertyApi.useGetMapResults(opts);
+  const { data, error, isValidating, mutate } = propertyApi.useGetMapResults({
+    ...opts,
+    pageIndex: Number(opts.pageIndex) || 1,
+    pageSize: 20,
+  });
 
   const handlePageIndexChange = (pageIndex: number, pageSize: number) => {
     router.push(
@@ -74,7 +78,7 @@ export const PropListMap = ({ opts }: Props) => {
   return (
     <Card
       className="map-property-list-card"
-      bodyStyle={{ padding: 0, height: "100%" }}
+      styles={{ body: { padding: 0, height: "100%" } }}
     >
       <List
         locale={{
@@ -100,6 +104,7 @@ export const PropListMap = ({ opts }: Props) => {
         }
         itemLayout="vertical"
         pagination={{
+          current: Number(opts.pageIndex) || 1,
           onChange: (page) => {
             handlePageIndexChange(page, 20);
           },
