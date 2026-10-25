@@ -1,5 +1,4 @@
 import { Button, Card, List, Tag, Typography } from "antd";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { objToQueryString } from "@/lib/core/utils/app-func";
@@ -12,11 +11,11 @@ const { Text } = Typography;
 
 const PropItem = ({
   item,
-  href,
+  onSelect,
   selected = false,
 }: {
   item: IPropResponse;
-  href: string;
+  onSelect: () => void;
   selected?: boolean;
 }) => {
   return (
@@ -25,12 +24,19 @@ const PropItem = ({
       className={selected ? "is-selected" : undefined}
       aria-current={selected ? "location" : undefined}
     >
-      <div className="map-property-item">
+      <button
+        type="button"
+        className="map-property-item"
+        onClick={onSelect}
+        aria-pressed={selected}
+        title={selected ? "Bấm lại để xem chi tiết" : "Xem vị trí trên bản đồ"}
+        aria-label={`Bất động sản ${item.Id}: ${CombineAddress(item.PropAddress)}`}
+      >
         <div className="map-property-item-heading">
           <Tag className="map-property-item-id">Mã: {item.Id}</Tag>
-          <Link href={href} className="map-property-item-address">
+          <span className="map-property-item-address">
             {CombineAddress({ ...item.PropAddress })}
-          </Link>
+          </span>
         </div>
         <div className="map-property-item-line">
           <span>Kết cấu:</span> {item.CustomDisplayStructures || "—"}
@@ -41,21 +47,27 @@ const PropItem = ({
         <div className="map-property-item-footer">
           <span>
             <span>DTTT:</span> {item.Area?.toLocaleString("vi-VN")}m²
-            {item.Length && item.Width ? ` (${item.Width}×${item.Length}m)` : ""}
+            {item.Length && item.Width
+              ? ` (${item.Width}×${item.Length}m)`
+              : ""}
           </span>
           <span className="map-property-item-price">
             <span>Giá:</span> <strong>{item.DisplayPrice || "—"}</strong>
-            {item.PricePerSquareMeter && <small>{item.PricePerSquareMeter}</small>}
+            {item.PricePerSquareMeter && (
+              <small>{item.PricePerSquareMeter}</small>
+            )}
           </span>
         </div>
-      </div>
+      </button>
     </List.Item>
   );
 };
 type Props = {
   opts: IPropAdminOpts;
+  selectedId?: number;
+  onSelect: (item: IPropResponse) => void;
 };
-export const PropListMap = ({ opts }: Props) => {
+export const PropListMap = ({ opts, selectedId, onSelect }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -71,7 +83,7 @@ export const PropListMap = ({ opts }: Props) => {
         ...opts,
         pageIndex,
         pageSize,
-      })}`
+      })}`,
     );
   };
 
@@ -115,13 +127,14 @@ export const PropListMap = ({ opts }: Props) => {
         loading={isValidating && !error}
         dataSource={Array.isArray(data?.data) ? data.data : []}
         renderItem={(item) => {
-          const detailParams = new URLSearchParams(searchParams?.toString() ?? "");
-          detailParams.set("PropertyId", item.Id.toString());
           return (
             <PropItem
               item={item}
-              href={`?${detailParams.toString()}`}
-              selected={searchParams?.get("PropertyId") === item.Id.toString()}
+              onSelect={() => onSelect(item)}
+              selected={
+                selectedId === item.Id ||
+                searchParams?.get("PropertyId") === item.Id.toString()
+              }
             />
           );
         }}

@@ -5,18 +5,12 @@ import "leaflet/dist/leaflet.css";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import {
-  MapContainer,
-  Marker,
-  Polygon,
-  Popup,
-  useMap,
-} from "react-leaflet";
+import { MapContainer, Marker, Polygon, Popup, useMap } from "react-leaflet";
 
 import { IPropAdminMap } from "@/lib/interfaces/Property/IProp";
 import { hasMapCoordinates } from "@/lib/core/utils/map-coordinates";
 
-const propertyPin = (label?: string) => {
+const propertyPin = (label?: string, selected = false) => {
   const safeLabel = String(label ?? "BĐS")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -25,7 +19,7 @@ const propertyPin = (label?: string) => {
     .replace(/'/g, "&#39;");
 
   return L.divIcon({
-    className: "admin-map-property-pin-wrapper",
+    className: `admin-map-property-pin-wrapper${selected ? " is-selected" : ""}`,
     html: `<span class="admin-map-property-pin" title="${safeLabel}">${safeLabel}</span>`,
     iconSize: [72, 28],
     iconAnchor: [36, 28],
@@ -35,14 +29,12 @@ const propertyPin = (label?: string) => {
 type Props = {
   data: IPropAdminMap[];
   polygon?: any;
+  focusedProperty?: IPropAdminMap;
 };
 
 const hcmPosition = { lat: 10.845, lng: 106.675 };
 
-function MyComponent({
-  data,
-  polygon,
-}: Props) {
+function MyComponent({ data, polygon, focusedProperty }: Props) {
   const map = useMap();
   const searchParams = useSearchParams();
   const properties = Array.isArray(data) ? data : [];
@@ -55,7 +47,7 @@ function MyComponent({
         maxZoom: 19,
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }
+      },
     );
     osm.addTo(map);
     map.invalidateSize();
@@ -66,7 +58,9 @@ function MyComponent({
 
   useEffect(() => {
     const positions = properties.flatMap(({ PropAddress }) =>
-      hasMapCoordinates(PropAddress) ? [L.latLng(PropAddress.Lat, PropAddress.Lng)] : []
+      hasMapCoordinates(PropAddress)
+        ? [L.latLng(PropAddress.Lat, PropAddress.Lng)]
+        : [],
     );
     if (!positions.length) return;
     const size = map.getSize();
@@ -78,11 +72,32 @@ function MyComponent({
     });
   }, [properties, map]);
 
-  const markers = properties
+  useEffect(() => {
+    if (!hasMapCoordinates(focusedProperty?.PropAddress)) return;
+    const { Lat, Lng } = focusedProperty.PropAddress;
+    const zoom = 17;
+    const size = map.getSize();
+    const offset = size.x > 768 ? L.point(-190, 0) : L.point(0, size.y * 0.22);
+    const center = map.unproject(
+      map.project([Lat, Lng], zoom).add(offset),
+      zoom,
+    );
+    map.flyTo(center, zoom, { duration: 0.45 });
+  }, [focusedProperty, map]);
+
+  const markerProperties =
+    focusedProperty && hasMapCoordinates(focusedProperty.PropAddress)
+      ? [
+          ...properties.filter((item) => item.Id !== focusedProperty.Id),
+          focusedProperty,
+        ]
+      : properties;
+  const markers = markerProperties
     .filter((x) => hasMapCoordinates(x?.PropAddress))
     .map((e) => (
       <Marker
-        icon={propertyPin(e.DisplayPrice)}
+        icon={propertyPin(e.DisplayPrice, focusedProperty?.Id === e.Id)}
+        zIndexOffset={focusedProperty?.Id === e.Id ? 1000 : 0}
         key={e.Id}
         position={[e.PropAddress.Lat ?? 0, e.PropAddress.Lng ?? 0]}
       >
@@ -96,7 +111,9 @@ function MyComponent({
           <Link
             className="admin-map-property-card"
             href={`?${(() => {
-              const params = new URLSearchParams(searchParams?.toString() ?? "");
+              const params = new URLSearchParams(
+                searchParams?.toString() ?? "",
+              );
               params.set("PropertyId", e.Id.toString());
               return params.toString();
             })()}`}
@@ -152,13 +169,20 @@ function MyComponent({
       {markers.length > 0 && (
         <MarkerClusterGroup
           showCoverageOnHover={false}
-          iconCreateFunction={(cluster: { getChildCount: () => number }) => L.divIcon({
-            className: "marker-cluster marker-cluster-small",
-            html: `<div><span>${cluster.getChildCount()}</span></div>`,
-            iconSize: [36, 36],
-          })}
-        >{markers}</MarkerClusterGroup>
+          iconCreateFunction={(cluster: { getChildCount: () => number }) =>
+            L.divIcon({
+              className: "marker-cluster marker-cluster-small",
+              html: `<div><span>${cluster.getChildCount()}</span></div>`,
+              iconSize: [36, 36],
+            })
+          }
+        >
+          {markers.filter(
+            (marker) => marker.key !== focusedProperty?.Id.toString(),
+          )}
+        </MarkerClusterGroup>
       )}
+      {markers.find((marker) => marker.key === focusedProperty?.Id.toString())}
     </>
   );
 }
@@ -177,7 +201,7 @@ const MapSizeObserver = () => {
   return null;
 };
 
-const Leaflet = ({ data, polygon }: Props) => {
+const Leaflet = ({ data, polygon, focusedProperty }: Props) => {
   return (
     <MapContainer
       center={hcmPosition}
@@ -187,7 +211,11 @@ const Leaflet = ({ data, polygon }: Props) => {
       zoomControl={false}
     >
       <MapSizeObserver />
-      <MyComponent data={data} polygon={polygon} />
+      <MyComponent
+        data={data}
+        polygon={polygon}
+        focusedProperty={focusedProperty}
+      />
     </MapContainer>
   );
 };

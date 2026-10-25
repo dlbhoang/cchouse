@@ -1029,12 +1029,23 @@
 }
 
 .map-property-item {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 8px;
   color: #151a20;
   font-size: 12px;
   line-height: 16px;
+}
+
+.map-property-item:focus-visible {
+  outline: 2px solid #0588f0;
+  outline-offset: 4px;
 }
 
 .map-property-item-heading {
@@ -1449,6 +1460,11 @@
   justify-content: center;
   border: 0;
   background: transparent;
+}
+
+.admin-map-property-pin-wrapper.is-selected .admin-map-property-pin,
+.admin-map-property-pin-wrapper.is-selected .admin-map-property-pin::after {
+  background: #046abb;
 }
 
 .admin-map-property-pin {

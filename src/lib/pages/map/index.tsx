@@ -29,6 +29,7 @@ const MapPage = () => {
   const [detail, setDetail] = useState<IPropResponse>();
   const [detailError, setDetailError] = useState(false);
   const [polygon, setPolygon] = useState<any[]>([]);
+  const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
 
   const propertyId = searchParams?.get("PropertyId");
   const filterParams = new URLSearchParams(searchParams?.toString() ?? "");
@@ -114,6 +115,7 @@ const MapPage = () => {
   }, [districts, provinces, searchParams]);
 
   const handleFilter = (values: IPropAdminOpts) => {
+    setSelectedProperty(undefined);
     const nextOptions = { ...values } as IPropAdminOpts & {
       PropertyId?: number;
     };
@@ -131,6 +133,23 @@ const MapPage = () => {
   const hasCoordinates = mapPoints.some(({ PropAddress }) =>
     hasMapCoordinates(PropAddress),
   );
+
+  const selectProperty = (item: IPropResponse) => {
+    if (selectedProperty?.Id === item.Id) {
+      const params = new URLSearchParams(searchParams?.toString() ?? "");
+      params.set("PropertyId", item.Id.toString());
+      router.push(`${pathname}?${params.toString()}`, { scroll: false });
+      return;
+    }
+    setSelectedProperty(item);
+  };
+  const focusedProperty = selectedProperty
+    ? (mapPoints.find(
+        (item) =>
+          item.Id === selectedProperty.Id &&
+          hasMapCoordinates(item.PropAddress),
+      ) ?? selectedProperty)
+    : undefined;
 
   return (
     <ConfigProvider
@@ -173,17 +192,31 @@ const MapPage = () => {
           <aside
             className={`admin-map-results ${smallScreen ? "mobile-results" : ""}`}
           >
-            <PropListMap opts={searchOptions} />
+            <PropListMap
+              opts={searchOptions}
+              selectedId={selectedProperty?.Id}
+              onSelect={selectProperty}
+            />
           </aside>
 
           <div className="admin-map-canvas">
-            <MyLeaflet data={mapPoints} polygon={polygon} />
+            <MyLeaflet
+              data={mapPoints}
+              polygon={polygon}
+              focusedProperty={focusedProperty}
+            />
             {pointsError ? (
               <div className="admin-map-notice" role="status">
                 Không tải được vị trí bất động sản.
                 <Button type="link" onClick={() => mutatePoints()}>
                   Thử lại
                 </Button>
+              </div>
+            ) : selectedProperty &&
+              !hasMapCoordinates(focusedProperty?.PropAddress) ? (
+              <div className="admin-map-notice" role="status">
+                Bất động sản {selectedProperty.Id} chưa có tọa độ nên chưa thể
+                di chuyển đến vị trí này. Bấm lại thẻ để xem chi tiết.
               </div>
             ) : mapPoints.length > 0 && !hasCoordinates ? (
               <div className="admin-map-notice" role="status">
