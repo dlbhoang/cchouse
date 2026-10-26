@@ -17,7 +17,7 @@ export function reportClientError(input: ClientErrorInput) {
     path: cleanErrorPath(window.location.pathname),
     source: cleanErrorPath(input.source ?? ""),
   };
-  const key = `${data.kind}:${data.message}:${data.path}`;
+  const key = `${data.message}:${data.path}`;
   if (sent >= 20 || now - (recent.get(key) ?? 0) < 30000) return;
   recent.set(key, now);
   sent++;

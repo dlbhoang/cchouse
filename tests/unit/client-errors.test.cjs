@@ -40,6 +40,18 @@ test("redacts secrets, email addresses and query strings", () => {
     "?token",
   ])
     assert.ok(!output.includes(secret));
+  const consoleSummary = types.summarizeConsoleError([
+    "Save failed",
+    {
+      message: "Request failed",
+      config: { headers: { authorization: "private" } },
+    },
+    new Error("token=secret user@example.com"),
+  ]);
+  assert.match(consoleSummary.message, /Save failed Request failed Error:/);
+  assert.ok(!consoleSummary.message.includes("authorization"));
+  assert.ok(!types.cleanErrorText(consoleSummary.message).includes("secret"));
+  assert.ok(consoleSummary.stack.includes("Error: token=secret"));
 });
 test("authenticated ingestion, validation, manager-only listing, pagination and persistence", async () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "cchouse-errors-"));

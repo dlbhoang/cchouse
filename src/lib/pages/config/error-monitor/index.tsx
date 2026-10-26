@@ -15,6 +15,7 @@ const labels = {
   react: "React",
   api: "API",
   resource: "Tài nguyên",
+  console: "Lỗi được ghi lại",
 };
 export default function ErrorMonitor() {
   const [day, setDay] = useState(() => new Date().toISOString().slice(0, 10));

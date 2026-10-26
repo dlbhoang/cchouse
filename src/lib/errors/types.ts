@@ -4,6 +4,7 @@ export const errorKinds = [
   "react",
   "api",
   "resource",
+  "console",
 ] as const;
 export type ErrorKind = (typeof errorKinds)[number];
 export type ClientErrorInput = {
@@ -41,4 +42,34 @@ export function cleanErrorPath(value: unknown): string {
   } catch {
     return "/";
   }
+}
+
+export function summarizeConsoleError(args: unknown[]) {
+  let stack: string | undefined;
+  const messages = args
+    .map((value) => {
+      if (value instanceof Error) {
+        stack ??= value.stack;
+        return `${value.name || "Error"}: ${value.message}`;
+      }
+      if (typeof value === "string") return value;
+      if (value && typeof value === "object") {
+        const record = value as {
+          name?: unknown;
+          message?: unknown;
+          stack?: unknown;
+        };
+        if (typeof record.message === "string") {
+          if (!stack && typeof record.stack === "string") stack = record.stack;
+          return `${typeof record.name === "string" ? `${record.name}: ` : ""}${record.message}`;
+        }
+        return "[object]";
+      }
+      return String(value ?? "");
+    })
+    .filter(Boolean);
+  return {
+    message: messages.join(" ").slice(0, 2000) || "console.error called",
+    stack,
+  };
 }
