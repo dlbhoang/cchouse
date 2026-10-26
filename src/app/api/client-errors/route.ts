@@ -12,12 +12,31 @@ import { readClientErrors, saveClientError } from "@/lib/errors/store";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const rates = new Map<string, { start: number; count: number }>();
+function isRequestOrigin(request: NextRequest, origin: string) {
+  try {
+    const submitted = new URL(origin);
+    const requestHost = request.headers.get("host")?.trim().toLowerCase();
+    const forwardedProtocol = request.headers
+      .get("x-forwarded-proto")
+      ?.split(",")[0]
+      ?.trim();
+    const requestProtocol =
+      forwardedProtocol || request.nextUrl.protocol.replace(/:$/, "");
+    return (
+      Boolean(requestHost) &&
+      submitted.host.toLowerCase() === requestHost &&
+      submitted.protocol === `${requestProtocol}:`
+    );
+  } catch {
+    return false;
+  }
+}
 export async function POST(request: NextRequest) {
   const session = await auth();
   if (!session?.user)
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   const origin = request.headers.get("origin");
-  if (origin && origin !== request.nextUrl.origin)
+  if (origin && !isRequestOrigin(request, origin))
     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
   const userId = String(session.user.Id);
   const now = Date.now();
