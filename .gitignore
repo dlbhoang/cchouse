@@ -49,3 +49,6 @@ sitemap*.xml
 .bun.lock
 .package-lock.jsonbuild_error.log
 deploy.tar.gz
+
+# Persistent application error logs
+.runtime/

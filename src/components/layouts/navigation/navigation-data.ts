@@ -214,6 +214,11 @@ export const navigationData: NavigationItem[] = [
     acceptedRoles: MANAGER_ROLES,
     items: [
       {
+        title: "Theo dõi lỗi",
+        url: "/admin/config/error-monitor",
+        description: "Theo dõi lỗi khi người dùng sử dụng",
+      },
+      {
         title: "Loại bất động sản",
         url: AppRoutes.propType.url,
         description: "Cấu hình loại bất động sản",
@@ -227,7 +232,7 @@ export const navigationData: NavigationItem[] = [
         title: AppRoutes.agencyManager.name,
         url: AppRoutes.agencyManager.url,
         description: "Quản lý cơ quan hành chính",
-      }
+      },
     ],
   },
   {

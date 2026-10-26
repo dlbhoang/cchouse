@@ -3,7 +3,7 @@
 import { Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Modal } from "antd";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { WARD_AGENCIES, type AgencyMap, type WardAgencyData } from "@/data/ward-agencies";
@@ -570,8 +570,7 @@ export default function AgencyManagerPage() {
         </div>
       </section>
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-h-[90vh] gap-0 overflow-y-auto rounded-2xl p-0 sm:max-w-[768px]">
+      <Modal open={dialogOpen} onCancel={() => setDialogOpen(false)} footer={null} width={768} centered styles={{ content: { padding: 0, borderRadius: 16 }, body: { maxHeight: "90vh", overflowY: "auto" } }}>
           <div className="border-b border-neutral-200 px-6 py-5"><h2 className="text-lg font-bold">{editing ? "SỬA CƠ QUAN HÀNH CHÍNH" : "THÊM MỚI CƠ QUAN HÀNH CHÍNH"}</h2></div>
           <div className="flex flex-col gap-5 px-6 py-5">
             <div>
@@ -583,7 +582,7 @@ export default function AgencyManagerPage() {
                     <SelectTrigger id="agency-type" aria-label="Danh mục cơ quan" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>{agencyTypes.map((type) => <SelectItem key={type} value={type}>{agencyTypeLabel(type)}</SelectItem>)}</SelectContent>
+                    <SelectContent className="z-[1100]">{agencyTypes.map((type) => <SelectItem key={type} value={type}>{agencyTypeLabel(type)}</SelectItem>)}</SelectContent>
                   </Select>
                 </AgencyFloatingField>
                 <AgencyFloatingField id="agency-name" label="Tên cơ quan" required filled={Boolean(form.name.trim())}>
@@ -604,7 +603,7 @@ export default function AgencyManagerPage() {
                       <SelectTrigger id="agency-province" aria-label="Tỉnh/Thành phố" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
                         <SelectValue placeholder="Chọn tỉnh/thành phố" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="z-[1100]">
                         {provinceOptions.map((province) => <SelectItem key={province.Id} value={String(province.Id)}>{withAddressType(province.Type, province.Name)}</SelectItem>)}
                       </SelectContent>
                     </Select>
@@ -616,7 +615,7 @@ export default function AgencyManagerPage() {
                       <SelectTrigger id="agency-district" aria-label="Quận/Huyện" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
                         <SelectValue placeholder="Chọn quận/huyện" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="z-[1100]">
                         {oldDistrictOptions.map((district) => <SelectItem key={district.Id} value={String(district.Id)}>{withAddressType(district.Type, district.Name)}</SelectItem>)}
                       </SelectContent>
                     </Select>
@@ -626,7 +625,7 @@ export default function AgencyManagerPage() {
                       <SelectTrigger id="agency-old-ward" aria-label="Phường/Xã" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
                         <SelectValue placeholder="Chọn phường/xã" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="z-[1100]">
                         {oldWardOptions.map((ward) => <SelectItem key={ward.Id} value={String(ward.Id)}>{withAddressType(ward.Type, ward.Name)}</SelectItem>)}
                       </SelectContent>
                     </Select>
@@ -642,7 +641,7 @@ export default function AgencyManagerPage() {
                     <SelectTrigger id="agency-ward" aria-label="Phường/Xã" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
                       <SelectValue placeholder="Chọn phường/xã" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-[1100]">
                       {provinceWardOptions.map((ward) => <SelectItem key={ward.Id} value={String(ward.Id)}>{withAddressType(ward.Type, ward.Name)}</SelectItem>)}
                     </SelectContent>
                   </Select>
@@ -652,7 +651,7 @@ export default function AgencyManagerPage() {
                     <SelectTrigger id="agency-street" aria-label="Tên đường" className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="z-[1100]">
                       {streetOptions.length
                         ? streetOptions.map((street) => <SelectItem key={street.Id} value={street.Name}>{street.Name}</SelectItem>)
                         : <SelectItem value="__no-configured-streets" disabled>Chưa có tên đường được cấu hình</SelectItem>}
@@ -680,15 +679,12 @@ export default function AgencyManagerPage() {
             </div>
           </div>
           <footer className="flex justify-end gap-3 border-t border-neutral-200 px-6 py-4"><Button variant="outline" onClick={() => setDialogOpen(false)}>Đóng</Button><Button onClick={saveAgency} disabled={!formWard || !provinceId || !form.name.trim() || !streetName.trim() || !form.address.trim() || (mode === "old" && (!oldDistrictId || !oldWardId))} className="bg-[#6157e8] hover:bg-[#5147d9]">Lưu</Button></footer>
-        </DialogContent>
-      </Dialog>
+      </Modal>
 
-      <Dialog open={Boolean(deleteTarget)} onOpenChange={(open) => { if (!open) setDeleteTarget(undefined); }}>
-        <DialogContent className="gap-0 rounded-2xl p-0 sm:max-w-[440px]">
+      <Modal open={Boolean(deleteTarget)} onCancel={() => setDeleteTarget(undefined)} footer={null} width={440} centered styles={{ content: { padding: 0, borderRadius: 16 } }}>
           <div className="p-6"><h2 className="text-lg font-bold">Xóa cơ quan hành chính?</h2><p className="mt-3 text-sm text-neutral-600">Bạn có chắc muốn xóa “{deleteTarget?.name}”? Thao tác này không thể hoàn tác.</p></div>
           <footer className="flex justify-end gap-3 border-t border-neutral-200 px-6 py-4"><Button variant="outline" onClick={() => setDeleteTarget(undefined)}>Hủy</Button><Button variant="destructive" onClick={removeAgency}>Xóa</Button></footer>
-        </DialogContent>
-      </Dialog>
+      </Modal>
     </div>
   );
 }

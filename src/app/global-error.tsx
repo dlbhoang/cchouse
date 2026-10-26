@@ -1,6 +1,6 @@
 "use client";
-import { Result } from "antd";
-
+import { useEffect } from "react";
+import { reportClientError } from "@/lib/errors/report";
 export default function GlobalError({
   error,
   reset,
@@ -8,13 +8,29 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  useEffect(() => {
+    reportClientError({
+      kind: "react",
+      message: error.message,
+      stack: error.stack,
+    });
+  }, [error]);
   return (
-    <Result
-      style={{ minHeight: "100vh" }}
-      status="500"
-      title="Lỗi hệ thống"
-      subTitle="Hệ thống đang bảo trì, vui lòng quay lại sau!"
-      // extra={<Button type="primary">Back Home</Button>}
-    />
+    <html lang="vi">
+      <body>
+        <main
+          style={{ padding: 48, fontFamily: "sans-serif", textAlign: "center" }}
+        >
+          <h1>Đã xảy ra lỗi hệ thống</h1>
+          <p>Vui lòng thử lại hoặc quay về trang chủ.</p>
+          <button type="button" onClick={reset}>
+            Thử lại
+          </button>
+          <p>
+            <a href="/admin/property?TransType=1">Về trang chủ</a>
+          </p>
+        </main>
+      </body>
+    </html>
   );
 }

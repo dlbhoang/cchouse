@@ -7,6 +7,8 @@ import AuthProvider from "@/components/layouts/providers/auth-provider";
 import { auth } from "@/services/auth/auth";
 import ChunkErrorHandler from "@/components/chunk-error-handler";
 
+import ClientErrorReporter from "@/components/client-error-reporter";
+
 const APP_NAME = "cchouse";
 
 export const metadata: Metadata = {
@@ -61,6 +63,7 @@ export default async function RootLayout({
         />
       </head>
       <body>
+        <ClientErrorReporter />
         <ChunkErrorHandler />
 
         <Script

@@ -56,6 +56,8 @@ ssh -o StrictHostKeyChecking=accept-new \
 set -Eeuo pipefail
 
 export PATH="$HOME/.bun/bin:/usr/local/bin:$PATH"
+# Keep runtime logs outside .next so rebuilding does not erase them.
+export CLIENT_ERROR_LOG_DIR="$REMOTE_APP_DIR/.runtime/client-errors"
 
 cd "$REMOTE_APP_DIR"
 

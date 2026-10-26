@@ -135,12 +135,18 @@ export const LocationSelectCustom = ({
   return (
     <Dropdown
       trigger={["click"]}
+      transitionName={mapMode ? "map-filter-popup" : undefined}
       dropdownRender={dropdownRender}
       overlayClassName={mapMode ? "map-location-dropdown" : undefined}
       open={open}
       onOpenChange={setOpen}
     >
-      <div
+      <button
+        type="button"
+        style={{ textAlign: "left" }}
+        aria-label="Vị trí"
+        aria-expanded={open}
+        aria-haspopup="dialog"
         className={`property-custom-dropdown-trigger property-location-trigger ${
           open ? "is-open" : ""
         } ${location || feature ? "has-value" : ""}`}
@@ -152,7 +158,7 @@ export const LocationSelectCustom = ({
           {location && feature ? `${location}, ${feature}` : location || feature || ""}
         </Typography.Text>
         <DownOutlined className="property-custom-dropdown-arrow" />
-      </div>
+      </button>
     </Dropdown>
   );
 };

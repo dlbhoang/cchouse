@@ -1,10 +1,9 @@
-import axios, {
-  AxiosInstance,
-  AxiosResponse,
-} from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { getSession, signOut } from "next-auth/react";
 
 import { NotiBase } from "@/lib/components/shared/NotiBase";
+
+import { reportClientError } from "@/lib/errors/report";
 
 const FORCE_CHANGE_PASSWORD_KEY = "cchouse-force-change-password";
 
@@ -20,7 +19,7 @@ axiosClient.interceptors.request.use(
   (error) => {
     console.log("error in request", error);
     return Promise.reject(error.message);
-  }
+  },
 );
 
 axiosClient.interceptors.response.use(
@@ -37,6 +36,12 @@ axiosClient.interceptors.response.use(
     return response.data;
   },
   async (error) => {
+    reportClientError({
+      kind: "api",
+      message: `${String(error?.config?.method ?? "GET").toUpperCase()} ${error?.response?.status ?? "network"}: Yêu cầu API thất bại`,
+      source: error?.config?.url,
+      status: error?.response?.status ?? 0,
+    });
     const message = error?.response?.data?.message ?? error?.message ?? "";
     if ((error?.config as any)?.suppressErrorNotification) {
       return Promise.reject(error);
@@ -46,7 +51,7 @@ axiosClient.interceptors.response.use(
     if (isPermissionError) {
       const session = await getSession();
       const shouldForcePasswordChange = Boolean(
-        session?.user?.MustChangePassword
+        session?.user?.MustChangePassword,
       );
 
       if (shouldForcePasswordChange) {
@@ -68,5 +73,5 @@ axiosClient.interceptors.response.use(
       NotiBase("error", message);
     } else NotiBase("error", message);
     return Promise.reject(error.response);
-  }
+  },
 );

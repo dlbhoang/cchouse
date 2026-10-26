@@ -33,6 +33,7 @@ import {
 } from "@/lib/components/shared/MySelect";
 import { ETransType } from "@/lib/core/enum";
 import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
+import { hasAdvancedFilters } from "./activeFilters";
 import { HIDDEN_FIELDS } from "./config";
 import "./property-filter.css";
 
@@ -89,7 +90,9 @@ export const MobileView = ({
           onClick={handleOpenDrawer}
           type="button"
           variant={"outline"}
-          className="w-8 h-8"
+          className={`w-8 h-8 ${mapMode ? "map-mobile-filter-trigger" : ""} ${mapMode && hasAdvancedFilters(model) ? "is-active" : ""}`}
+          aria-expanded={isDrawerOpen}
+          aria-haspopup="dialog"
           aria-label="Lọc thêm"
         >
           <ListFilterPlus />

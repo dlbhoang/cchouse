@@ -304,26 +304,28 @@ export const AddressSelectCustom = ({
   return (
     <Dropdown
       trigger={["click"]}
+      transitionName={mapMode ? "map-filter-popup" : undefined}
       dropdownRender={dropdownRender}
       overlayClassName={mapMode ? "map-address-dropdown" : "property-admin-address-dropdown"}
       open={open}
       onOpenChange={setOpen}
     >
-      <div
+      <button
+        type="button"
+        style={{ textAlign: "left" }}
+        aria-label="Khu vực"
+        aria-expanded={open}
+        aria-haspopup="dialog"
         className={`property-custom-dropdown-trigger ${mapMode ? "property-map-region-trigger" : ""} ${open ? "is-open" : ""} ${
           addressLabel ? "has-value" : ""
         }`}
       >
-        {!mapMode && (
-          <span className="property-custom-dropdown-label">
-            Khu vực
-          </span>
-        )}
+        <span className="property-custom-dropdown-label">Khu vực</span>
         <Typography.Text ellipsis className="property-custom-dropdown-value">
           {addressLabel || (mapMode ? "Chọn khu vực" : "")}
         </Typography.Text>
         <DownOutlined className="property-custom-dropdown-arrow" />
-      </div>
+      </button>
     </Dropdown>
   );
 };

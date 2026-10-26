@@ -38,6 +38,7 @@ import {
 } from "@/lib/components/shared/MySelect";
 import { ETransType } from "@/lib/core/enum";
 import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
+import { hasAdvancedFilters } from "./activeFilters";
 import { HIDDEN_FIELDS } from "./config";
 import "./property-filter.css";
 
@@ -201,7 +202,9 @@ export const DesktopView = ({
         <Button
           htmlType="button"
           icon={mapMode ? <ListFilterPlus size={16} /> : <FilterOutlined />}
-          className="property-filter-more-btn"
+          className={`property-filter-more-btn ${mapMode && hasAdvancedFilters(model) ? "is-active" : ""} ${moreOpen ? "is-open" : ""}`}
+          aria-expanded={moreOpen}
+          aria-haspopup="dialog"
           style={{
             backgroundColor: "#fff",
             borderColor: "#0588f0",
@@ -220,7 +223,8 @@ export const DesktopView = ({
         onCancel={() => setMoreOpen(false)}
         centered
         width={384}
-        className="property-filter-more-modal"
+        className={`property-filter-more-modal ${mapMode ? "map-filter-more-modal" : ""}`}
+        transitionName={mapMode ? "map-filter-modal" : undefined}
         closeIcon={
           <span style={{ color: "#0B172A", fontSize: 20, lineHeight: 1 }}>
             ×
