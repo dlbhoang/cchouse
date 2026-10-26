@@ -13,13 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 import { cn } from "@/lib/utils";
 import districtApi from "@/services/api/districtApi";
 import provinceApi from "@/services/api/provinceApi";
@@ -129,18 +123,17 @@ function SelectField({
 }) {
   return (
     <Field label={label} active={Boolean(value)}>
-      <Select value={value ? String(value) : ""} onValueChange={(v) => onChange(Number(v))}>
-        <SelectTrigger className={cn(inputCls, "w-full")}>
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {options.map((o) => (
-            <SelectItem key={o.id} value={String(o.id)}>
-              {o.name}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <SearchableSelect
+        value={value ? String(value) : ""}
+        onValueChange={(v) => onChange(Number(v))}
+        placeholder={`Chọn ${label.toLocaleLowerCase("vi")}`}
+        searchPlaceholder={`Tìm ${label.toLocaleLowerCase("vi")}...`}
+        options={options.map((option) => ({
+          value: String(option.id),
+          label: option.name,
+        }))}
+        className={cn(inputCls, "h-9 w-full justify-between text-[13px]")}
+      />
     </Field>
   );
 }
@@ -166,7 +159,7 @@ function WardGroup({
     <div className="flex flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white px-5 py-2">
       <div className="flex items-center gap-4">
         <p className="flex-1 text-[13px] font-medium text-[#0a0a0a]">
-          Phường/Xã: <span className="text-[#7563d9]">#{index}</span>
+          Phường/Xã: <span className="text-[#0588f0]">#{index}</span>
         </p>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -469,7 +462,7 @@ export default function AddressModal({
 
         <div className="flex min-h-0 flex-col gap-5 overflow-y-auto px-8 py-5">
           <div className="flex">
-            {initialProvince || createKind === "province" ? (
+            {initialProvince ? (
               <Field label="Thuộc Tỉnh/Thành phố" active={Boolean(provinceName)}>
                 <Input
                   disabled
@@ -576,7 +569,7 @@ export default function AddressModal({
                 >
                   <div className="flex items-center gap-2">
                     <p className="flex-1 py-2 text-[13px] font-medium text-[#0a0a0a]">
-                      Quận/Huyện<span className="text-[#dc3e42]">*</span>: <span className="text-[#7563d9]">#{di + 1}</span>
+                      Quận/Huyện<span className="text-[#dc3e42]">*</span>: <span className="text-[#0588f0]">#{di + 1}</span>
                     </p>
                     <button
                       type="button"
@@ -594,7 +587,7 @@ export default function AddressModal({
                           x.key === d.key ? { ...x, wards: [...x.wards, newWard()] } : x
                         ))
                       }
-                      className="inline-flex items-center gap-1 rounded-md bg-[#7563d9] px-2.5 py-1 text-[12px] font-medium text-white"
+                      className="inline-flex items-center gap-1 rounded-md bg-[#0588f0] px-2.5 py-1 text-[12px] font-medium text-white"
                     >
                       <Plus size={14} />
                       Thêm Phường/Xã

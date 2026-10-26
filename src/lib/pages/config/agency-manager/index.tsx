@@ -5,15 +5,7 @@ import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Modal } from "antd";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/searchable-select";
 import {
   WARD_AGENCIES,
   type AgencyMap,
@@ -190,9 +182,7 @@ export default function AgencyManagerPage() {
   const [selectedWardId, setSelectedWardId] = useState<number>();
   const [agencySearchInput, setAgencySearchInput] = useState("");
   const [agencySearch, setAgencySearch] = useState("");
-  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyType | "all">(
-    "Văn phòng công chứng",
-  );
+  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyType | "all">("all");
   const [agencyStatusFilter, setAgencyStatusFilter] =
     useState<AgencyStatusFilter>("all");
   const [mode, setMode] = useState<"new" | "old">("new");
@@ -714,7 +704,7 @@ export default function AgencyManagerPage() {
   const resetAgencyFilters = () => {
     setSelectedWardId(undefined);
     setMode("new");
-    setAgencyTypeFilter("Văn phòng công chứng");
+    setAgencyTypeFilter("all");
     setAgencyStatusFilter("all");
     setAgencySearchInput("");
     setAgencySearch("");
@@ -727,63 +717,40 @@ export default function AgencyManagerPage() {
           <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
             Khu vực
           </span>
-          <Select
+          <SearchableSelect
             value={selectedAreaValue}
+            placeholder="Chọn khu vực"
+            searchPlaceholder="Tìm phường/xã..."
+            aria-label="Khu vực"
+            options={wards.map((ward) => ({
+              value: `new:${ward.WardId}`,
+              label: `${ward.WardType === "phường" ? "Phường" : ward.WardType === "xã" ? "Xã" : "Đặc khu"} ${ward.WardName}`,
+              keywords: ward.MergedFrom.join(" "),
+            }))}
             onValueChange={(value) => {
               if (value.startsWith("new:"))
                 setSelectedWardId(Number(value.slice(4)));
             }}
-          >
-            <SelectTrigger
-              aria-label="Khu vực"
-              className="h-10 w-full rounded-lg border-neutral-200 pt-1"
-            >
-              <SelectValue placeholder="Chọn" />
-            </SelectTrigger>
-            <SelectContent className="max-h-[360px]">
-              {wards.length > 0 && (
-                <SelectGroup>
-                  <SelectLabel>Địa chỉ mới</SelectLabel>
-                  {wards.map((ward) => (
-                    <SelectItem
-                      key={`new-${ward.WardId}`}
-                      value={`new:${ward.WardId}`}
-                    >
-                      {ward.WardType === "phường"
-                        ? "Phường"
-                        : ward.WardType === "xã"
-                          ? "Xã"
-                          : "Đặc khu"}{" "}
-                      {ward.WardName}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              )}
-            </SelectContent>
-          </Select>
+            className="h-10 rounded-lg pt-1"
+          />
         </div>
         <div className="relative w-full sm:w-[190px]">
           <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
             Trạng thái
           </span>
-          <Select
+          <SearchableSelect
             value={agencyStatusFilter}
+            aria-label="Trạng thái"
+            options={[
+              { value: "all", label: "Tất cả" },
+              { value: "active", label: "Hoạt động" },
+              { value: "hidden", label: "Tạm ngừng" },
+            ]}
             onValueChange={(value) =>
               setAgencyStatusFilter(value as AgencyStatusFilter)
             }
-          >
-            <SelectTrigger
-              aria-label="Trạng thái"
-              className="h-10 w-full rounded-lg border-neutral-200 pt-1"
-            >
-              <SelectValue placeholder="Trạng thái" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tất cả</SelectItem>
-              <SelectItem value="active">Hoạt động</SelectItem>
-              <SelectItem value="hidden">Tạm ngừng</SelectItem>
-            </SelectContent>
-          </Select>
+            className="h-10 rounded-lg pt-1"
+          />
         </div>
         <div className="relative min-w-[220px] flex-1">
           <Search className="absolute left-3 top-2.5 size-4 text-neutral-400" />
@@ -800,7 +767,7 @@ export default function AgencyManagerPage() {
         </div>
         <Button
           onClick={() => setAgencySearch(agencySearchInput)}
-          className="h-10 gap-2 rounded-lg bg-[#6157e8] hover:bg-[#5147d9]"
+          className="h-10 gap-2 rounded-lg bg-[#0588f0] hover:bg-[#0477d1]"
         >
           <Search size={16} />
           Tìm kiếm
@@ -820,7 +787,7 @@ export default function AgencyManagerPage() {
         </h1>
         <Button
           onClick={() => openEditor()}
-          className="gap-2 rounded-lg bg-[#6157e8] hover:bg-[#5147d9]"
+          className="gap-2 rounded-lg bg-[#0588f0] hover:bg-[#0477d1]"
         >
           <Plus size={16} />
           Thêm mới cơ quan
@@ -828,7 +795,7 @@ export default function AgencyManagerPage() {
       </div>
 
       <section className="min-h-0 flex-1 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
-        <div className="border-b border-neutral-200 bg-[#e4e5fb] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
+        <div className="border-b border-neutral-200 bg-[#eff6ff] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
           Danh mục cơ quan hành chính
         </div>
         <div className="flex h-[calc(100%-45px)] min-h-0 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
@@ -836,27 +803,23 @@ export default function AgencyManagerPage() {
             <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
               Danh mục cơ quan hành chính
             </span>
-            <Select
+            <SearchableSelect
               value={agencyTypeFilter}
+              placeholder="Chọn cơ quan hành chính"
+              searchPlaceholder="Tìm danh mục cơ quan..."
+              aria-label="Danh mục cơ quan hành chính"
+              options={[
+                { value: "all", label: "Tất cả cơ quan" },
+                ...agencyTypes.map((type) => ({
+                  value: type,
+                  label: agencyTypeLabel(type),
+                })),
+              ]}
               onValueChange={(value) =>
                 setAgencyTypeFilter(value as AgencyType | "all")
               }
-            >
-              <SelectTrigger
-                aria-label="Danh mục cơ quan hành chính"
-                className="h-10 w-full rounded-lg border-neutral-200 bg-white pt-1"
-              >
-                <SelectValue placeholder="Chọn cơ quan hành chính" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tất cả cơ quan</SelectItem>
-                {agencyTypes.map((type) => (
-                  <SelectItem key={type} value={type}>
-                    {agencyTypeLabel(type)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              className="h-10 rounded-lg bg-white pt-1"
+            />
           </div>
 
           <div className="flex min-h-0 flex-col gap-3">
@@ -928,10 +891,10 @@ export default function AgencyManagerPage() {
                             {agencyDisplayName(item.name)}
                           </h3>
                           <span
-                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#eeedff] text-[#6157c8]"}`}
+                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#eff6ff] text-[#0574c9]"}`}
                           >
                             <span
-                              className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#7664e8]"}`}
+                              className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#0588f0]"}`}
                             />
                             {item.status === "hidden"
                               ? "Tạm ngừng"
@@ -993,44 +956,36 @@ export default function AgencyManagerPage() {
             {editing ? "SỬA CƠ QUAN HÀNH CHÍNH" : "THÊM MỚI CƠ QUAN HÀNH CHÍNH"}
           </h2>
         </div>
-        <div className="flex flex-col gap-5 px-6 py-5">
+        <div className="flex flex-col gap-6 px-6 py-6">
           <div>
             <h3 className="mb-3 text-sm font-bold">Thông tin cơ quan</h3>
             <p className="mb-3 text-xs text-neutral-500">
               Chọn đúng đơn vị hành chính để địa chỉ xuất hiện trong danh sách
               tương ứng.
             </p>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2">
               <AgencyFloatingField
                 id="agency-type"
                 label="Danh mục cơ quan"
                 required
                 filled
               >
-                <Select
+                <SearchableSelect
                   value={form.type}
+                  aria-label="Danh mục cơ quan"
+                  searchPlaceholder="Tìm danh mục cơ quan..."
+                  options={agencyTypes.map((type) => ({
+                    value: type,
+                    label: agencyTypeLabel(type),
+                  }))}
                   onValueChange={(value) =>
                     setForm((current) => ({
                       ...current,
                       type: value as AgencyType,
                     }))
                   }
-                >
-                  <SelectTrigger
-                    id="agency-type"
-                    aria-label="Danh mục cơ quan"
-                    className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="z-[1100]">
-                    {agencyTypes.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {agencyTypeLabel(type)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  className="h-10 rounded-md"
+                />
               </AgencyFloatingField>
               <AgencyFloatingField
                 id="agency-name"
@@ -1054,38 +1009,47 @@ export default function AgencyManagerPage() {
             </div>
           </div>
           <div>
-            <h3 className="mb-3 text-sm font-bold">Thông tin địa chỉ</h3>
-            <div
-              className="mb-4 flex w-fit rounded-lg bg-neutral-100 p-1"
-              role="group"
-              aria-label="Kiểu địa chỉ"
-            >
-              <button
-                type="button"
-                aria-pressed={mode === "new"}
-                onClick={() => setMode("new")}
-                className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "new" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}
+            <div className="mb-4 flex items-center justify-between gap-4">
+              <h3 className="text-sm font-bold">Thông tin địa chỉ</h3>
+              <div
+                className="flex w-fit rounded-lg bg-neutral-100 p-1"
+                role="group"
+                aria-label="Kiểu địa chỉ"
               >
-                Địa chỉ mới
-              </button>
-              <button
-                type="button"
-                aria-pressed={mode === "old"}
-                onClick={selectOldAddressMode}
-                className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "old" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}
-              >
-                Địa chỉ cũ
-              </button>
+                <button
+                  type="button"
+                  aria-pressed={mode === "new"}
+                  onClick={() => setMode("new")}
+                  className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "new" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}
+                >
+                  Địa chỉ mới
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={mode === "old"}
+                  onClick={selectOldAddressMode}
+                  className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "old" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}
+                >
+                  Địa chỉ cũ
+                </button>
+              </div>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-6 sm:grid-cols-2">
               <div className={mode === "old" ? "sm:col-span-2" : undefined}>
                 <AgencyFloatingField
                   id="agency-province"
                   label="Tỉnh/Thành phố"
                   filled
                 >
-                  <Select
+                  <SearchableSelect
                     value={String(provinceId ?? "")}
+                    aria-label="Tỉnh/Thành phố"
+                    placeholder="Chọn tỉnh/thành phố"
+                    searchPlaceholder="Tìm tỉnh/thành phố..."
+                    options={provinceOptions.map((province) => ({
+                      value: String(province.Id),
+                      label: withAddressType(province?.Type, province?.Name),
+                    }))}
                     onValueChange={(value) => {
                       setProvinceId(Number(value));
                       setFormWardId(undefined);
@@ -1093,25 +1057,8 @@ export default function AgencyManagerPage() {
                       setOldWardId(undefined);
                       setStreetName("");
                     }}
-                  >
-                    <SelectTrigger
-                      id="agency-province"
-                      aria-label="Tỉnh/Thành phố"
-                      className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
-                    >
-                      <SelectValue placeholder="Chọn tỉnh/thành phố" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[1100]">
-                      {provinceOptions.map((province) => (
-                        <SelectItem
-                          key={province.Id}
-                          value={String(province.Id)}
-                        >
-                          {withAddressType(province?.Type, province?.Name)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    className="h-10 rounded-md"
+                  />
                 </AgencyFloatingField>
               </div>
               {mode === "old" ? (
@@ -1121,60 +1068,43 @@ export default function AgencyManagerPage() {
                     label="Quận/Huyện"
                     filled={Boolean(oldDistrictId)}
                   >
-                    <Select
+                    <SearchableSelect
                       value={String(oldDistrictId ?? "")}
+                      aria-label="Quận/Huyện"
+                      placeholder="Chọn quận/huyện"
+                      searchPlaceholder="Tìm quận/huyện..."
+                      options={oldDistrictOptions.map((district) => ({
+                        value: String(district.Id),
+                        label: withAddressType(district?.Type, district?.Name),
+                      }))}
                       onValueChange={(value) => {
                         setOldDistrictId(Number(value));
                         setOldWardId(undefined);
                         setStreetName("");
                       }}
-                    >
-                      <SelectTrigger
-                        id="agency-district"
-                        aria-label="Quận/Huyện"
-                        className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
-                      >
-                        <SelectValue placeholder="Chọn quận/huyện" />
-                      </SelectTrigger>
-                      <SelectContent className="z-[1100]">
-                        {oldDistrictOptions.map((district) => (
-                          <SelectItem
-                            key={district.Id}
-                            value={String(district.Id)}
-                          >
-                            {withAddressType(district?.Type, district?.Name)}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      className="h-10 rounded-md"
+                    />
                   </AgencyFloatingField>
                   <AgencyFloatingField
                     id="agency-old-ward"
                     label="Phường/Xã"
                     filled={Boolean(oldWardId)}
                   >
-                    <Select
+                    <SearchableSelect
                       value={String(oldWardId ?? "")}
+                      aria-label="Phường/Xã cũ"
+                      placeholder="Chọn phường/xã"
+                      searchPlaceholder="Tìm phường/xã..."
+                      options={oldWardOptions.map((ward) => ({
+                        value: String(ward.Id),
+                        label: withAddressType(ward?.Type, ward?.Name),
+                      }))}
                       onValueChange={(value) => {
                         setOldWardId(Number(value));
                         setStreetName("");
                       }}
-                    >
-                      <SelectTrigger
-                        id="agency-old-ward"
-                        aria-label="Phường/Xã"
-                        className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
-                      >
-                        <SelectValue placeholder="Chọn phường/xã" />
-                      </SelectTrigger>
-                      <SelectContent className="z-[1100]">
-                        {oldWardOptions.map((ward) => (
-                          <SelectItem key={ward.Id} value={String(ward.Id)}>
-                            {withAddressType(ward?.Type, ward?.Name)}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      className="h-10 rounded-md"
+                    />
                   </AgencyFloatingField>
                 </>
               ) : (
@@ -1183,28 +1113,21 @@ export default function AgencyManagerPage() {
                   label="Phường/Xã"
                   filled={Boolean(formWard?.WardName)}
                 >
-                  <Select
+                  <SearchableSelect
                     value={String(formWardId ?? "")}
+                    aria-label="Phường/Xã"
+                    placeholder="Chọn phường/xã"
+                    searchPlaceholder="Tìm phường/xã..."
+                    options={provinceWardOptions.map((ward) => ({
+                      value: String(ward.Id),
+                      label: withAddressType(ward?.Type, ward?.Name),
+                    }))}
                     onValueChange={(value) => {
                       setFormWardId(Number(value));
                       setStreetName("");
                     }}
-                  >
-                    <SelectTrigger
-                      id="agency-ward"
-                      aria-label="Phường/Xã"
-                      className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
-                    >
-                      <SelectValue placeholder="Chọn phường/xã" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[1100]">
-                      {provinceWardOptions.map((ward) => (
-                        <SelectItem key={ward.Id} value={String(ward.Id)}>
-                          {withAddressType(ward?.Type, ward?.Name)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    className="h-10 rounded-md"
+                  />
                 </AgencyFloatingField>
               )}
               <AgencyFloatingField
@@ -1213,28 +1136,19 @@ export default function AgencyManagerPage() {
                 required
                 filled={Boolean(streetName)}
               >
-                <Select value={streetName} onValueChange={setStreetName}>
-                  <SelectTrigger
-                    id="agency-street"
-                    aria-label="Tên đường"
-                    className="h-10 w-full rounded-md border-neutral-200 bg-white px-3 text-sm focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="z-[1100]">
-                    {streetOptions.length ? (
-                      streetOptions.map((street) => (
-                        <SelectItem key={street.Id} value={street.Name}>
-                          {street.Name}
-                        </SelectItem>
-                      ))
-                    ) : (
-                      <SelectItem value="__no-configured-streets" disabled>
-                        Chưa có tên đường được cấu hình
-                      </SelectItem>
-                    )}
-                  </SelectContent>
-                </Select>
+                <SearchableSelect
+                  value={streetName}
+                  onValueChange={setStreetName}
+                  aria-label="Tên đường"
+                  placeholder="Chọn tên đường"
+                  searchPlaceholder="Tìm tên đường..."
+                  emptyMessage="Chưa có tên đường được cấu hình"
+                  options={streetOptions.map((street) => ({
+                    value: street.Name,
+                    label: street.Name,
+                  }))}
+                  className="h-10 rounded-md"
+                />
               </AgencyFloatingField>
               <AgencyFloatingField
                 id="agency-address"
@@ -1269,7 +1183,7 @@ export default function AgencyManagerPage() {
                     status: current.status === "hidden" ? "active" : "hidden",
                   }))
                 }
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6157e8] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#6157e8]" : "bg-neutral-300"}`}
+                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#0588f0]" : "bg-neutral-300"}`}
               >
                 <span
                   className={`inline-block size-4 rounded-full bg-white shadow transition-transform ${(form.status ?? "active") === "active" ? "translate-x-4" : "translate-x-0.5"}`}
@@ -1297,7 +1211,7 @@ export default function AgencyManagerPage() {
               !form.address.trim() ||
               (mode === "old" && (!oldDistrictId || !oldWardId))
             }
-            className="bg-[#6157e8] hover:bg-[#5147d9]"
+            className="bg-[#0588f0] hover:bg-[#0477d1]"
           >
             Lưu
           </Button>
@@ -1315,7 +1229,7 @@ export default function AgencyManagerPage() {
         <div className="p-6">
           <h2 className="text-lg font-bold">Xóa cơ quan hành chính?</h2>
           <p className="mt-3 text-sm text-neutral-600">
-            Bạn có chắc muốn xóa “{deleteTarget?.name}”? Thao tác này không thể
+            Bạn có chắc chắn muốn xóa “{deleteTarget?.name}”? Thao tác này không thể
             hoàn tác.
           </p>
         </div>

@@ -91,10 +91,10 @@ function Column({
 }) {
   return (
     <div className="flex h-full min-w-px flex-1 flex-col overflow-hidden rounded-xl border border-[#f5f5f5] bg-white">
-      <div className="flex shrink-0 items-center gap-3 bg-[#e5e7fb] px-3 py-2.5">
+      <div className="flex shrink-0 items-center gap-3 bg-[#eff6ff] px-3 py-2.5">
         <div className="flex min-w-px flex-1 items-center gap-2.5">
           <p className="whitespace-nowrap text-sm font-bold leading-5 text-[#0a0a0a]">{title}</p>
-          <span className="flex size-5 items-center justify-center rounded-full bg-[#7563d9] text-[11px] font-semibold leading-4 text-white">
+          <span className="flex size-5 items-center justify-center rounded-full bg-[#0588f0] text-[11px] font-semibold leading-4 text-white">
             {items.length}
           </span>
         </div>
@@ -122,7 +122,7 @@ function Column({
         {loading && <p className="p-3 text-xs text-[#737373]">Đang tải...</p>}
         {!loading && items.length === 0 && (
           <div className="flex min-h-40 flex-1 flex-col items-center justify-center gap-2 text-center text-[#737373]">
-            <span className="flex size-10 items-center justify-center rounded-full bg-[#f0edff] text-[#7563d9]">
+            <span className="flex size-10 items-center justify-center rounded-full bg-[#eff6ff] text-[#0588f0]">
               <CircleX size={18} />
             </span>
             <span className="text-xs">{emptyMessage ?? "Chưa có thông tin hiển thị"}</span>
@@ -133,7 +133,7 @@ function Column({
             key={item.id}
             className={cn(
               "group flex shrink-0 items-center border-b border-[#f5f5f5] border-l-2 border-l-transparent px-3 text-left",
-              item.id === selectedId ? "bg-[#f5f5f5]" : "bg-white hover:bg-[#fafafa]",
+              item.id === selectedId ? "border-l-[#0588f0] bg-[#eff6ff]" : "bg-white hover:bg-[#fafafa]",
               !onSelect && "cursor-default"
             )}
           >
@@ -142,7 +142,7 @@ function Column({
               onClick={() => onSelect?.(item.id)}
               className="flex min-w-0 flex-1 flex-col gap-0.5 py-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0588f0]"
             >
-              <p className="w-full truncate text-sm font-semibold leading-5 text-[#0a0a0a]">
+              <p title={item.name} className="w-full truncate text-sm font-semibold leading-5 text-[#0a0a0a]">
                 <RowName name={item.name} />
               </p>
               <div className="flex w-full items-start gap-1.5 text-xs leading-4">
@@ -192,6 +192,7 @@ export default function AddressManagerPage() {
   const { provinces, districts, init } = useAdminContext();
   const [mode, setMode] = useState<AddressMode>("new");
   const [query, setQuery] = useState("");
+  const [searchSuggestionsOpen, setSearchSuggestionsOpen] = useState(false);
   const [provinceQuery, setProvinceQuery] = useState("");
   const [districtQuery, setDistrictQuery] = useState("");
   const [wardQuery, setWardQuery] = useState("");
@@ -310,6 +311,17 @@ export default function AddressManagerPage() {
     "lâm đồng": "LD",
     "huế": "HUE",
   };
+  const provinceAbbreviation = (name: string, shortName?: string) => {
+    const known = provinceCodes[norm(name)];
+    if (known) return known;
+    if (shortName?.trim() && norm(shortName) !== norm(name)) return shortName.trim();
+    return name
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join("")
+      .toLocaleUpperCase("vi");
+  };
   const provinceItems: Item[] = [...provinces]
     .sort((a, b) => {
       const aRank = provinceRank.get(norm(a.Name)) ?? Number.MAX_SAFE_INTEGER;
@@ -321,7 +333,7 @@ export default function AddressManagerPage() {
       kind: "province",
       id: p.Id,
       name: norm(p.Name) === "hồ chí minh" ? `${p.Type ?? ""} ${p.Name}`.trim() : p.Name,
-      sub: `(${provinceCodes[norm(p.Name)] ?? p.ShortName ?? p.Name})`,
+      sub: `(${provinceAbbreviation(p.Name, p.ShortName)})`,
       keywords: `${p.Name} ${p.ShortName ?? ""} ${p.RefKey ?? ""} ${p.Slug ?? ""}`,
       active: isActive(p),
     }));
@@ -381,9 +393,12 @@ export default function AddressManagerPage() {
     id: ward.Id,
     name: ward.Name,
     oldDistrictId: ward.DistrictId,
-    sub: oldDistrictsByNewWard.has(ward.Id)
-      ? `(${oldDistrictsByNewWard.get(ward.Id)} cũ)`
-      : undefined,
+    sub: (() => {
+      const districtName = oldDistrictsByNewWard.get(ward.Id) ??
+        districts.find((district) => district.Id === ward.DistrictId)?.Name ??
+        ward.DistrictName;
+      return districtName ? `(${districtName} cũ)` : undefined;
+    })(),
     keywords: `${ward.Name} ${ward.RefKey ?? ""} ${ward.Slug ?? ""}`,
     active: isActive(ward),
   })).sort((a, b) => {
@@ -432,6 +447,9 @@ export default function AddressManagerPage() {
     "mạc đĩnh chi": "P. Bến Nghé & Đa Kao cũ",
     "pasteur": "P. Bến Nghé cũ",
     "võ văn kiệt": "P. Nguyễn Thái Bình cũ",
+    "alexander de rhodes": "P. Bến Nghé cũ",
+    "cao bá quát": "P. Bến Nghé cũ",
+    "chu mạnh trinh": "P. Bến Nghé cũ",
   };
   const isFigmaReferenceWard = newWardItems.some(
     (item) => item.id === wardId && norm(item.name) === "phường sài gòn"
@@ -491,6 +509,25 @@ export default function AddressManagerPage() {
       keywords: `${d.Name} ${d.RefKey ?? ""} ${d.Slug ?? ""}`,
       active: isActive(d),
     }));
+  const provinceNameById = new Map(provinceItems.map((province) => [province.id, province.name]));
+  const wardNameById = new Map(newWardItems.map((ward) => [ward.id, ward.name]));
+  const oldDistrictNameById = new Map(provinceDistricts.map((district) => [district.Id, district.Name]));
+  const addressSuggestions = (mode === "new" ? streetItems : oldStreetItems)
+    .filter((item) => q && norm(item.keywords).includes(q))
+    .slice(0, 8)
+    .map((item) => {
+      const wardName = mode === "new"
+        ? wardNameById.get(effectiveWardId ?? -1)
+        : selectedOldWard?.Name;
+      const districtName = mode === "old"
+        ? oldDistrictNameById.get(districtId ?? -1)
+        : undefined;
+      const provinceName = provinceNameById.get(provinceId ?? -1);
+      return {
+        ...item,
+        address: [item.name, wardName, districtName, provinceName].filter(Boolean).join(", "),
+      };
+    });
 
   return (
     <div className="relative flex h-[calc(100dvh-96px)] min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
@@ -506,10 +543,43 @@ export default function AddressManagerPage() {
             />
             <Input
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setSearchSuggestionsOpen(true);
+              }}
+              onFocus={() => setSearchSuggestionsOpen(true)}
+              onKeyDown={(event) => {
+                if (event.key === "Escape") setSearchSuggestionsOpen(false);
+              }}
               placeholder="Tìm kiếm địa chỉ"
               className="h-9 rounded-[8px] border-[#e5e5e5] bg-white pl-9 pr-3 text-xs font-medium placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20"
             />
+            {searchSuggestionsOpen && query.trim() && (
+              <div className="absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden rounded-lg border border-[#e5e5e5] bg-white shadow-lg">
+                {addressSuggestions.length ? (
+                  <ul className="max-h-72 overflow-y-auto p-1">
+                    {addressSuggestions.map((item) => (
+                      <li key={`${item.id}-${item.address}`}>
+                        <button
+                          type="button"
+                          onMouseDown={(event) => event.preventDefault()}
+                          onClick={() => {
+                            setQuery(item.name);
+                            setSearchSuggestionsOpen(false);
+                          }}
+                          className="flex w-full flex-col gap-0.5 rounded-md px-3 py-2 text-left hover:bg-[#eff6ff] focus-visible:bg-[#eff6ff] focus-visible:outline-none"
+                        >
+                          <span className="text-sm font-semibold text-[#171717]">{item.address}</span>
+                          <span className="text-xs text-[#737373]">{item.name}</span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="px-3 py-3 text-sm text-[#737373]">Không tìm thấy địa chỉ phù hợp</p>
+                )}
+              </div>
+            )}
           </div>
           <button
             type="button"
