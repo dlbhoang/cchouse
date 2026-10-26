@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Select,
   SelectContent,
@@ -167,9 +168,14 @@ function WardGroup({
         <p className="flex-1 text-[13px] font-medium text-[#0a0a0a]">
           Phường/Xã: <span className="text-[#7563d9]">#{index}</span>
         </p>
-        <button type="button" aria-label={`Xóa Phường/Xã ${index}`} onClick={onRemove} className="rounded p-1 text-[#737373] hover:bg-[#f5f5f5]">
-          <Trash2 size={16} />
-        </button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button type="button" aria-label={`Xóa Phường/Xã ${index}`} onClick={onRemove} className="rounded p-1 text-[#dc3e42] hover:bg-[#fff1f0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
+              <Trash2 size={16} aria-hidden="true" />
+            </button>
+          </TooltipTrigger>
+          <TooltipContent side="top">Xóa Phường/Xã</TooltipContent>
+        </Tooltip>
       </div>
       <div className="flex gap-3 pt-1">
         <TextField label="Phường/Xã" value={ward.name} onChange={(name) => onChange({ ...ward, name })} />
@@ -576,9 +582,10 @@ export default function AddressModal({
                       type="button"
                       onClick={() => setDistricts((l) => l.filter((x) => x.key !== d.key))}
                       aria-label={`Xóa Quận/Huyện ${di + 1}`}
-                      className="rounded p-1 text-[#737373] hover:bg-[#f5f5f5]"
+                      title="Xóa Quận/Huyện"
+                      className="rounded p-1 text-[#dc3e42] hover:bg-[#fff1f0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30"
                     >
-                      <Trash2 size={16} />
+                      <Trash2 size={16} aria-hidden="true" />
                     </button>
                     <button
                       type="button"

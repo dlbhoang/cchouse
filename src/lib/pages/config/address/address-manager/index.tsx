@@ -7,6 +7,7 @@ import useSWR, { useSWRConfig } from "swr";
 
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   Dialog,
   DialogContent,
@@ -159,14 +160,24 @@ function Column({
             {(onEdit || onDelete) && item.managed !== false && (
               <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
                 {onEdit && (
-                  <button type="button" aria-label={`Chỉnh sửa ${item.name}`} onClick={() => onEdit(item)} className="rounded p-1 text-[#525252] hover:bg-white">
-                    <Pencil size={14} />
-                  </button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button type="button" aria-label={`Chỉnh sửa ${item.name}`} onClick={() => onEdit(item)} className="rounded p-1 text-[#525252] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0]/40">
+                        <Pencil size={14} aria-hidden="true" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">Chỉnh sửa</TooltipContent>
+                  </Tooltip>
                 )}
                 {onDelete && (
-                  <button type="button" aria-label={`Xóa ${item.name}`} onClick={() => onDelete(item)} className="rounded p-1 text-[#dc3e42] hover:bg-white">
-                    <Trash2 size={14} />
-                  </button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button type="button" aria-label={`Xóa ${item.name}`} onClick={() => onDelete(item)} className="rounded p-1 text-[#dc3e42] hover:bg-[#fff1f0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
+                        <Trash2 size={14} aria-hidden="true" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">Xóa</TooltipContent>
+                  </Tooltip>
                 )}
               </div>
             )}
