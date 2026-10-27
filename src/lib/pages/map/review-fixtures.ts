@@ -13,7 +13,7 @@ const makeProperty = (
     PriceVnd: 8_700_000_000,
     PaymentMethod: 1,
     Images: [],
-    Note: "Dữ liệu mô phỏng để kiểm tra giao diện bản đồ.",
+    Note: "—",
     Commission: "",
     RootId: 0,
     NoBroker: false,
