@@ -149,20 +149,41 @@ function MyComponent({ data, polygon, focusedProperty }: Props) {
       </Marker>
     ));
 
-  const swappedCoordsArray =
-    polygon?.[0]?.map((coords: number[]) => [coords?.[1], coords?.[0]]) ?? [];
+  // GIS files may contain either Polygon ([ring]) or MultiPolygon
+  // ([polygon [ring]]) coordinates. Leaflet expects one or more lat/lng rings.
+  const firstBoundary = Array.isArray(polygon?.[0]?.[0]?.[0])
+    ? polygon.flatMap((part: number[][][]) => part)
+    : Array.isArray(polygon?.[0]?.[0])
+      ? polygon
+      : [polygon];
+  const boundaryPositions = firstBoundary
+    .filter((ring: unknown) => Array.isArray(ring))
+    .map((ring: number[][]) =>
+      ring
+        .filter(
+          (coords) =>
+            Array.isArray(coords) &&
+            Number.isFinite(coords[0]) &&
+            Number.isFinite(coords[1]),
+        )
+        .map(([lng, lat]) => [lat, lng]),
+    );
 
   return (
     <>
       <Polygon
         pathOptions={{
-          color: "lime",
-          dashArray: [5, 5],
+          color: "#13b7c5",
+          weight: 2,
+          opacity: 0.95,
+          fillColor: "#13b7c5",
+          fillOpacity: 0.06,
+          lineJoin: "round",
         }}
-        positions={swappedCoordsArray}
+        positions={boundaryPositions}
         eventHandlers={{
           click: () => {
-            map.fitBounds(swappedCoordsArray);
+            if (boundaryPositions.length) map.fitBounds(boundaryPositions);
           },
         }}
       />

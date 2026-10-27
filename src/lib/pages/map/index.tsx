@@ -10,11 +10,12 @@ import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import { hasMapCoordinates } from "@/lib/core/utils/map-coordinates";
 import type { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import type { IPropResponse } from "@/lib/interfaces/Property/IProp";
+import type { IPropAdminMap, IPropResponse } from "@/lib/interfaces/Property/IProp";
 import { useAdminContext } from "@/lib/stored";
 import propertyApi from "@/services/api/property/propertyApi";
 import { MapServices } from "@/services/api/services/mapServices";
 import PropMapDetail from "./propDetail";
+import { mapReviewFixtures, mapReviewPolygon } from "./review-fixtures";
 import "./map-page.css";
 
 const MyLeaflet = dynamic(() => import("@/lib/components/leaflet"), {
@@ -32,6 +33,8 @@ const MapPage = () => {
   const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
 
   const propertyId = searchParams?.get("PropertyId");
+  const isMockMode =
+    process.env.NODE_ENV !== "production" && searchParams?.get("mapMock") === "1";
   const filterParams = new URLSearchParams(searchParams?.toString() ?? "");
   filterParams.delete("PropertyId");
   const filtersQuery = filterParams.toString();
@@ -56,6 +59,20 @@ const MapPage = () => {
     pageIndex: 1,
     pageSize: 10000,
   });
+  const mockProperties = useMemo(
+    () =>
+      isMockMode
+        ? mapReviewFixtures.filter(
+            (item) => item.TransType === Number(searchOptions.TransType),
+          )
+        : undefined,
+    [isMockMode, searchOptions.TransType],
+  );
+  const mapPoints: IPropAdminMap[] =
+    mockProperties ?? (Array.isArray(points?.data) ? points.data : []);
+  const mockDetail = isMockMode
+    ? mapReviewFixtures.find((item) => item.Id === Number(propertyId))
+    : undefined;
 
   useEffect(() => {
     let active = true;
@@ -63,6 +80,11 @@ const MapPage = () => {
       setDetail(undefined);
       setDetailError(false);
       if (!propertyId) {
+        return;
+      }
+      if (isMockMode) {
+        if (mockDetail) setDetail(mockDetail);
+        else setDetailError(true);
         return;
       }
       try {
@@ -80,7 +102,7 @@ const MapPage = () => {
     return () => {
       active = false;
     };
-  }, [propertyId]);
+  }, [isMockMode, mockDetail, propertyId]);
 
   useEffect(() => {
     let active = true;
@@ -89,7 +111,11 @@ const MapPage = () => {
         searchParams?.entries() ?? [],
       );
       if (!ProvinceId || !DistrictId) {
-        setPolygon([]);
+        setPolygon(isMockMode ? mapReviewPolygon : []);
+        return;
+      }
+      if (isMockMode) {
+        setPolygon(mapReviewPolygon);
         return;
       }
       const refProvince = provinces.find(
@@ -103,7 +129,7 @@ const MapPage = () => {
           refProvince ?? "",
           refDistrict ?? "",
         );
-        if (active) setPolygon((data?.[0] as any)?.coordinates?.[0] ?? []);
+        if (active) setPolygon((data?.[0] as any)?.coordinates ?? []);
       } catch {
         if (active) setPolygon([]);
       }
@@ -112,7 +138,7 @@ const MapPage = () => {
     return () => {
       active = false;
     };
-  }, [districts, provinces, searchParams]);
+  }, [districts, isMockMode, provinces, searchParams]);
 
   const handleFilter = (values: IPropAdminOpts) => {
     setSelectedProperty(undefined);
@@ -120,7 +146,9 @@ const MapPage = () => {
       PropertyId?: number;
     };
     delete nextOptions.PropertyId;
-    router.push(`${pathname}?${objToQueryString(nextOptions)}`);
+    const query = new URLSearchParams(objToQueryString(nextOptions));
+    if (isMockMode) query.set("mapMock", "1");
+    router.push(`${pathname}?${query.toString()}`);
   };
 
   const closeDetail = () => {
@@ -129,19 +157,17 @@ const MapPage = () => {
     router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false });
   };
 
-  const mapPoints = Array.isArray(points?.data) ? points.data : [];
   const hasCoordinates = mapPoints.some(({ PropAddress }) =>
     hasMapCoordinates(PropAddress),
   );
 
   const selectProperty = (item: IPropResponse) => {
-    if (selectedProperty?.Id === item.Id) {
-      const params = new URLSearchParams(searchParams?.toString() ?? "");
-      params.set("PropertyId", item.Id.toString());
-      router.push(`${pathname}?${params.toString()}`, { scroll: false });
-      return;
-    }
     setSelectedProperty(item);
+  };
+  const openPropertyDetail = (item: IPropResponse) => {
+    const params = new URLSearchParams(searchParams?.toString() ?? "");
+    params.set("PropertyId", item.Id.toString());
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
   const focusedProperty = selectedProperty
     ? (mapPoints.find(
@@ -194,8 +220,10 @@ const MapPage = () => {
           >
             <PropListMap
               opts={searchOptions}
+              mockData={mockProperties}
               selectedId={selectedProperty?.Id}
               onSelect={selectProperty}
+              onOpenDetail={openPropertyDetail}
             />
           </aside>
 
@@ -205,7 +233,7 @@ const MapPage = () => {
               polygon={polygon}
               focusedProperty={focusedProperty}
             />
-            {pointsError ? (
+            {pointsError && !isMockMode ? (
               <div className="admin-map-notice" role="status">
                 Không tải được vị trí bất động sản.
                 <Button type="link" onClick={() => mutatePoints()}>
@@ -216,7 +244,7 @@ const MapPage = () => {
               !hasMapCoordinates(focusedProperty?.PropAddress) ? (
               <div className="admin-map-notice" role="status">
                 Bất động sản {selectedProperty.Id} chưa có tọa độ nên chưa thể
-                di chuyển đến vị trí này. Bấm lại thẻ để xem chi tiết.
+                di chuyển đến vị trí này. Bấm đúp vào thẻ để xem chi tiết.
               </div>
             ) : mapPoints.length > 0 && !hasCoordinates ? (
               <div className="admin-map-notice" role="status">

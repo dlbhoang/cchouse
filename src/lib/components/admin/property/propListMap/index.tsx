@@ -12,10 +12,12 @@ const { Text } = Typography;
 const PropItem = ({
   item,
   onSelect,
+  onOpenDetail,
   selected = false,
 }: {
   item: IPropResponse;
   onSelect: () => void;
+  onOpenDetail: () => void;
   selected?: boolean;
 }) => {
   return (
@@ -28,9 +30,10 @@ const PropItem = ({
         type="button"
         className="map-property-item"
         onClick={onSelect}
+        onDoubleClick={onOpenDetail}
         aria-pressed={selected}
-        title={selected ? "Bấm lại để xem chi tiết" : "Xem vị trí trên bản đồ"}
-        aria-label={`Bất động sản ${item.Id}: ${CombineAddress(item.PropAddress)}`}
+        title="Bấm một lần để đến vị trí; bấm đúp để xem chi tiết"
+        aria-label={`Bất động sản ${item.Id}: ${CombineAddress(item.PropAddress)}. Bấm một lần để xem vị trí, bấm đúp để xem chi tiết.`}
       >
         <div className="map-property-item-heading">
           <Tag className="map-property-item-id">Mã: {item.Id}</Tag>
@@ -66,8 +69,16 @@ type Props = {
   opts: IPropAdminOpts;
   selectedId?: number;
   onSelect: (item: IPropResponse) => void;
+  onOpenDetail: (item: IPropResponse) => void;
+  mockData?: IPropResponse[];
 };
-export const PropListMap = ({ opts, selectedId, onSelect }: Props) => {
+export const PropListMap = ({
+  opts,
+  selectedId,
+  onSelect,
+  onOpenDetail,
+  mockData,
+}: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -76,6 +87,8 @@ export const PropListMap = ({ opts, selectedId, onSelect }: Props) => {
     pageIndex: Number(opts.pageIndex) || 1,
     pageSize: 20,
   });
+  const results = mockData ?? (Array.isArray(data?.data) ? data.data : []);
+  const totalRows = mockData?.length ?? data?.totalRow ?? 0;
 
   const handlePageIndexChange = (pageIndex: number, pageSize: number) => {
     router.push(
@@ -110,7 +123,7 @@ export const PropListMap = ({ opts, selectedId, onSelect }: Props) => {
         header={
           <div className="map-property-list-heading">
             <Text>
-              Hiển thị {(data?.totalRow ?? 0).toLocaleString("vi-VN")} kết quả
+              Hiển thị {totalRows.toLocaleString("vi-VN")} kết quả
             </Text>
           </div>
         }
@@ -121,16 +134,17 @@ export const PropListMap = ({ opts, selectedId, onSelect }: Props) => {
             handlePageIndexChange(page, 20);
           },
           pageSize: 20,
-          total: data?.totalRow ?? 0,
+          total: totalRows,
           showSizeChanger: false,
         }}
-        loading={isValidating && !error}
-        dataSource={Array.isArray(data?.data) ? data.data : []}
+        loading={!mockData && isValidating && !error}
+        dataSource={results}
         renderItem={(item) => {
           return (
             <PropItem
               item={item}
               onSelect={() => onSelect(item)}
+              onOpenDetail={() => onOpenDetail(item)}
               selected={
                 selectedId === item.Id ||
                 searchParams?.get("PropertyId") === item.Id.toString()
