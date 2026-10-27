@@ -1965,6 +1965,10 @@
   margin-bottom: 4px;
 }
 
+.property-location-dropdown .property-location-feature-group .ant-checkbox-wrapper {
+  white-space: nowrap;
+}
+
 /* Legacy single-choice location filters use square radio indicators. */
 .property-location-dropdown .property-location-feature-group .ant-radio-inner {
   border-radius: 3px !important;

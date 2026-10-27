@@ -54,7 +54,7 @@ export const LocationSelectCustom = ({
     backgroundColor: token.colorBgElevated,
     borderRadius: token.borderRadiusLG,
     boxShadow: token.boxShadowSecondary,
-    width: 320,
+    width: 304,
     padding: 16,
   };
 
