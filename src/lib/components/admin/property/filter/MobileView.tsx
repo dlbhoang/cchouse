@@ -139,8 +139,14 @@ export const MobileView = ({
               block
               className="property-transtype-segmented"
               options={[
-                { label: "Tìm mua", value: ETransType.sell },
-                { label: "Tìm thuê", value: ETransType.rent },
+                {
+                  label: mapMode ? "Mua bán" : "Tìm mua",
+                  value: ETransType.sell,
+                },
+                {
+                  label: mapMode ? "Cho thuê" : "Tìm thuê",
+                  value: ETransType.rent,
+                },
               ]}
               value={model?.TransType || ETransType.sell}
               onChange={(val) => form.setFieldValue("TransType", val)}
