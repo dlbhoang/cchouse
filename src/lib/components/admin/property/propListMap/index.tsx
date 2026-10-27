@@ -86,7 +86,7 @@ export const PropListMap = ({
     ...opts,
     pageIndex: Number(opts.pageIndex) || 1,
     pageSize: 20,
-  });
+  }, !mockData);
   const results = mockData ?? (Array.isArray(data?.data) ? data.data : []);
   const totalRows = mockData?.length ?? data?.totalRow ?? 0;
 

@@ -29,8 +29,8 @@ const crud = {
 		);
 	},
 
-	useGetCoordinates(params: IPropAdminOpts) {
-		return useSWR([`${url}/GetCoordinates`, params] as const, async ([route, options]) => {
+	useGetCoordinates(params: IPropAdminOpts, enabled = true) {
+		return useSWR(enabled ? [`${url}/GetCoordinates`, params] as const : null, async ([route, options]) => {
 			return axiosClient.get<any, IListData<IPropAdminMap>>(route, {
 				params: { ...options, Status: options.Status?.toString() ?? 1 },
 				timeout: 30000,
@@ -49,8 +49,8 @@ const crud = {
 			});
 		});
 	},
-	useGetMapResults(params: IPropAdminOpts) {
-		return useSWR([`${url}/MapResults`, params] as const, async ([, options]) => {
+	useGetMapResults(params: IPropAdminOpts, enabled = true) {
+		return useSWR(enabled ? [`${url}/MapResults`, params] as const : null, async ([, options]) => {
 			return axiosClient.get<any, IListData<IPropResponse>>(url, {
 				params: { ...options, Status: options.Status?.toString() ?? 1 },
 				// This query includes permission filtering and a total count; allow

@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, ConfigProvider } from "antd";
+import { Alert, Button, ConfigProvider, Tag } from "antd";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -33,10 +33,10 @@ const MapPage = () => {
   const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
 
   const propertyId = searchParams?.get("PropertyId");
-  const isMockMode =
-    process.env.NODE_ENV !== "production" && searchParams?.get("mapMock") === "1";
+  const isMockMode = searchParams?.get("mapMock") === "1";
   const filterParams = new URLSearchParams(searchParams?.toString() ?? "");
   filterParams.delete("PropertyId");
+  filterParams.delete("mapMock");
   const filtersQuery = filterParams.toString();
   const searchOptions = useMemo(() => {
     const params = new URLSearchParams(filtersQuery);
@@ -58,7 +58,7 @@ const MapPage = () => {
     ...searchOptions,
     pageIndex: 1,
     pageSize: 10000,
-  });
+  }, !isMockMode);
   const mockProperties = useMemo(
     () =>
       isMockMode
@@ -195,6 +195,11 @@ const MapPage = () => {
             </div>
             <h1>BẢN ĐỒ NHÀ ĐẤT</h1>
           </div>
+          {isMockMode && (
+            <Tag color="gold" aria-label="Chế độ dữ liệu mô phỏng">
+              DỮ LIỆU MÔ PHỎNG
+            </Tag>
+          )}
         </header>
 
         <div className="admin-map-filters">
