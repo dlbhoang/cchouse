@@ -900,7 +900,14 @@
 @media (max-width: 640px) {
   .property-page-content { padding: 0; }
   .property-page-header { align-items: stretch; flex-direction: column; }
-  .property-add-button { width: 100%; }
+}
+
+@media (max-width: 767px) {
+  .property-add-button { display: none; }
+}
+
+@media (min-width: 768px) {
+  .mobile-only-add-float-button { display: none !important; }
 }
 
 

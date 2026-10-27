@@ -8,9 +8,15 @@ type Props = {
   href?: string;
   onClick?: () => void;
   showAddButton?: boolean;
+  mobileOnlyAddButton?: boolean;
 };
 
-const FloatBtn = ({ href, onClick, showAddButton = true }: Props) => {
+const FloatBtn = ({
+  href,
+  onClick,
+  showAddButton = true,
+  mobileOnlyAddButton = false,
+}: Props) => {
   const router = useRouter();
   const { smallScreen } = useAdminContext();
 
@@ -21,6 +27,7 @@ const FloatBtn = ({ href, onClick, showAddButton = true }: Props) => {
           shape="circle"
           type="primary"
           tooltip="Thêm mới"
+          className={mobileOnlyAddButton ? "mobile-only-add-float-button" : undefined}
           style={{ bottom: 60 }}
           icon={<PlusIcon className="size-4" />}
           onClick={() => (onClick ? onClick() : router.push(href!))}
