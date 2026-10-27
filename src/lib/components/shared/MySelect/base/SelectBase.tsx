@@ -10,6 +10,7 @@ type SelectBaseProps = Omit<SelectProps, "options" | "onChange" | "mode"> & {
   loading?: boolean;
   mode?: "multiple" | "single" | "tags";
   allowClear?: SelectProps["allowClear"];
+  showAllOption?: boolean;
   placeholder?: SelectProps["placeholder"];
   options?: SelectProps["options"];
   onChange?: (val: any, opts: any) => void;
