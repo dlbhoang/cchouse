@@ -198,10 +198,10 @@ const RootLayout = ({ children, session }: LayoutProps) => {
             />
           )}
           {!hideMobileMenu && (
-            <div className={`fixed bottom-[5%] px-6 md:hidden flex justify-between items-center w-full ${pathname === AppRoutes.map.url ? "z-50" : ""}`}>
+            <div className={`fixed inset-x-0 bottom-0 z-40 flex items-center gap-2 border-t border-gray-200 bg-white/95 px-3 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-[0_-4px_16px_rgba(15,23,42,0.08)] backdrop-blur md:hidden ${pathname === AppRoutes.map.url ? "!z-50" : ""}`}>
               <MenuTabs />
               <SidebarTrigger
-                className="size-8 sm:size-10"
+                className="size-9 shrink-0"
                 variant={"outline"}
               />
             </div>

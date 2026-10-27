@@ -49,9 +49,9 @@ const MenuTabs = () => {
         tabsData.find((tab) => isPathActive(currentPath, tab.value))?.value
       }
       onValueChange={handleTabChange}
-      className="w-full min-w-0"
+      className="min-w-0 flex-1"
     >
-      <TabsList className={cn("h-10 w-full rounded-full", isPathActive(currentPath, AppRoutes.map.url) && "map-mobile-tabs")}>
+      <TabsList className={cn("h-10 w-full min-w-0 rounded-full", isPathActive(currentPath, AppRoutes.map.url) && "map-mobile-tabs")}>
         {tabsData.map((tab) => {
           const Icon = tab.icon;
           const isActive = isPathActive(currentPath, tab.value);
@@ -60,7 +60,7 @@ const MenuTabs = () => {
               key={tab.value}
               value={tab.value}
               className={cn(
-                'h-8 flex-1 px-2',
+                'h-8 min-w-0 flex-1 gap-1 px-1',
                 'data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground',
                 'transition-all duration-200 ease-in-out rounded-full',
                 'data-[state=active]:shadow-sm',
@@ -68,7 +68,7 @@ const MenuTabs = () => {
               )}
             >
               <Icon className="w-4 h-4 shrink-0" />
-              <span className="font-medium whitespace-nowrap text-sm">
+              <span className="truncate font-medium whitespace-nowrap text-xs sm:text-sm">
                 {tab.label}
               </span>
             </TabsTrigger>
