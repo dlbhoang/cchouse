@@ -175,7 +175,7 @@ export const mapReviewFixtures: IPropResponse[] = [
     Width: 5,
     Status: 1,
     TransType: 1,
-    PropAddress: address(90007, "Tọa độ không hợp lệ (0, 0)", 0, 0),
+    PropAddress: address(90007, "Tọa độ không hợp lệ (0/0)", 0, 0),
   }),
   makeProperty({
     Id: 90008,
