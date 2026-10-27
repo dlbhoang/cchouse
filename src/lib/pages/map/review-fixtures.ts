@@ -63,7 +63,9 @@ const address = (
     SubAddressName: "",
     StreetName: firstLine.slice(houseNumber.length).trim(),
     ProvinceName: "Thành phố Hồ Chí Minh",
-    DistrictName: addressParts.find((part) => /Quận|Tân Bình/.test(part)) ?? "Quận 3",
+    DistrictName:
+      addressParts.find((part) => /Quận|Tân Bình|Bình Thạnh|Thủ Đức/.test(part)) ??
+      "Quận 3",
     WardName: addressParts.find((part) => part.startsWith("Phường")) ?? "",
     PropTypeName: propTypeName,
     StatusUsageName: "Đất ở đô thị",
