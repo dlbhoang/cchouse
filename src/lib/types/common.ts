@@ -23,6 +23,7 @@ export type SelectType = {
   placeholder?: string;
   label?: string;
   required?: boolean;
+  showAllOption?: boolean;
   className?: string;
   suffixIcon?: ReactNode;
   options?: OptionType[];

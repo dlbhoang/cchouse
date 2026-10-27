@@ -70,6 +70,7 @@ const SelectBase = ({
   mode,
   placeholder,
   allowClear = true,
+  showAllOption = true,
   options,
   showSearch = true,
   onChange,
@@ -114,7 +115,7 @@ const SelectBase = ({
       }}
       maxTagCount="responsive"
       options={
-        mode === "multiple"
+        mode === "multiple" && showAllOption
           ? [
               {
                 label: "Tất cả",

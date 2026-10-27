@@ -341,6 +341,7 @@ export const DesktopView = ({
                     mode="multiple"
                     placeholder="Chọn"
                     options={mapMode ? directionOptions : undefined}
+                    showAllOption={!mapMode}
                   />
                 </Form.Item>
               </FloatingField>
