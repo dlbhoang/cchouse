@@ -1,6 +1,6 @@
 "use client";
 
-import { Alert, Button, ConfigProvider, Tag } from "antd";
+import { Alert, Button, ConfigProvider } from "antd";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -190,7 +190,7 @@ const MapPage = () => {
         token: { colorPrimary: "#0588f0", fontFamily: "Inter, sans-serif" },
         components: {
           Drawer: { colorText: "#0a0a0a" },
-          Segmented: { itemSelectedBg: "#13b7c5", itemSelectedColor: "#fff" },
+          Segmented: { itemSelectedBg: "#0588f0", itemSelectedColor: "#fff" },
         },
       }}
     >
@@ -202,11 +202,6 @@ const MapPage = () => {
             </div>
             <h1>BẢN ĐỒ NHÀ ĐẤT</h1>
           </div>
-          {isMockMode && (
-            <Tag color="gold" aria-label="Chế độ dữ liệu mô phỏng">
-              DỮ LIỆU MÔ PHỎNG
-            </Tag>
-          )}
         </header>
 
         <div className="admin-map-filters">

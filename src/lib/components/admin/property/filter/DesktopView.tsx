@@ -74,7 +74,7 @@ export const DesktopView = ({
               className="property-trans-type-map-segmented"
               value={transTypeValue}
               options={[
-                { label: "Outline", value: ETransType.sell },
+                { label: "Mua bán", value: ETransType.sell },
                 { label: "Cho thuê", value: ETransType.rent },
               ]}
               onChange={(value) => {

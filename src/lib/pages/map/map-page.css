@@ -109,14 +109,14 @@
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-item-selected {
   color: #fff !important;
-  border-color: #13b7c5 !important;
-  background: #13b7c5 !important;
+  border-color: #0588f0 !important;
+  background: #0588f0 !important;
   box-shadow: none !important;
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-thumb {
   border-radius: 8px;
-  background: #13b7c5 !important;
+  background: #0588f0 !important;
   box-shadow: none !important;
 }
 
