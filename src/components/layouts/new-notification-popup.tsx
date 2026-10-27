@@ -37,6 +37,12 @@ export default function NewNotificationPopup({ userId }: Props) {
     void loadNewNotification();
   }, [userId]);
 
+  useEffect(() => {
+    if (!notification) return;
+    const timeout = window.setTimeout(() => setNotification(undefined), 5000);
+    return () => window.clearTimeout(timeout);
+  }, [notification]);
+
   if (!notification) return null;
 
   const item = notification.Notification;
