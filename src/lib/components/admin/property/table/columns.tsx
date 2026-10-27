@@ -82,7 +82,7 @@ Props): ColumnsType<IPropResponse> => {
       title: "Mã",
       dataIndex: "Id",
       align: "center",
-      width: 58,
+      width: 72,
       render(value, record) {
         return (
           <Space direction="vertical" align="center">

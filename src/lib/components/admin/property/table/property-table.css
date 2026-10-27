@@ -71,6 +71,10 @@
   overflow-wrap: anywhere;
 }
 
+.property-table-shell .ant-table-tbody > tr > td:first-child .ant-typography {
+  white-space: nowrap;
+}
+
 .property-table-shell .ant-table-tbody > tr > td:nth-child(3) .ant-typography,
 .property-table-shell .ant-table-tbody > tr > td:nth-child(4) .ant-typography {
   display: -webkit-box;
