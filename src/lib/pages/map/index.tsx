@@ -2,6 +2,7 @@
 
 import { Alert, Button, ConfigProvider } from "antd";
 import dynamic from "next/dynamic";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import PropertyFilter from "@/lib/components/admin/property/filter";
@@ -31,6 +32,7 @@ const MapPage = () => {
   const [detailError, setDetailError] = useState(false);
   const [polygon, setPolygon] = useState<any[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
+  const [isResultsOpen, setIsResultsOpen] = useState(false);
 
   const propertyId = searchParams?.get("PropertyId");
   const isMockMode = searchParams?.get("mapMock") === "1";
@@ -221,8 +223,12 @@ const MapPage = () => {
           />
         )}
 
-        <section className="admin-map-workspace has-panel">
+        <section
+          className={`admin-map-workspace ${isResultsOpen ? "is-results-open" : "is-results-closed"}`}
+        >
           <aside
+            id="admin-map-results"
+            hidden={!isResultsOpen}
             className={`admin-map-results ${smallScreen ? "mobile-results" : ""}`}
           >
             <PropListMap
@@ -259,6 +265,16 @@ const MapPage = () => {
               </div>
             ) : null}
           </div>
+          <button
+            type="button"
+            className={`admin-map-results-toggle ${isResultsOpen ? "is-open" : ""}`}
+            aria-label={isResultsOpen ? "Ẩn danh sách bất động sản" : "Hiện danh sách bất động sản"}
+            aria-expanded={isResultsOpen}
+            aria-controls="admin-map-results"
+            onClick={() => setIsResultsOpen((open) => !open)}
+          >
+            {isResultsOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+          </button>
         </section>
         {detail && <PropMapDetail data={detail} onClose={closeDetail} />}
       </main>

@@ -910,6 +910,45 @@
   box-shadow: 0 2px 8px rgba(20, 33, 48, 0.08);
 }
 
+.admin-map-results[hidden] {
+  display: none !important;
+}
+
+.admin-map-results-toggle {
+  position: absolute;
+  z-index: 460;
+  top: 50%;
+  left: 16px;
+  display: inline-flex;
+  width: 32px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 8px;
+  transform: translateY(-50%);
+  border: 0;
+  border-radius: 8px;
+  background: #ffa500;
+  color: #fff;
+  opacity: 0.9;
+  cursor: pointer;
+  transition: left 180ms ease, opacity 180ms ease;
+}
+
+.admin-map-results-toggle:hover,
+.admin-map-results-toggle:focus-visible {
+  opacity: 1;
+}
+
+.admin-map-results-toggle:focus-visible {
+  outline: 2px solid #0588f0;
+  outline-offset: 2px;
+}
+
+.admin-map-workspace.is-results-open .admin-map-results-toggle {
+  left: 356px;
+}
+
 .admin-map-results > .ant-card {
   width: 100%;
   max-width: none !important;
