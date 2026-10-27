@@ -78,6 +78,7 @@ export interface IPropAdminOpts extends AddressOpts {
   DistrictIds?: string;
   Location?: number;
   LocationFeature?: number;
+  LocationFeatures?: number[] | string;
   PriceFrm?: number;
   PriceTo?: number;
   AreaFrm?: number;

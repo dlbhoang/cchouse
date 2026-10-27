@@ -41,6 +41,14 @@ export const usePropertyFilter = (
         CustomerType: convertToNumber(model.CustomerType),
         Location: convertToNumber(model.Location),
         LocationFeature: convertToNumber(model.LocationFeature),
+        LocationFeatures:
+          model.LocationFeatures?.toString()
+            .split(',')
+            .map((value) => Number(value))
+            .filter((value) => Number.isFinite(value)) ??
+          (model.LocationFeature != null
+            ? [Number(model.LocationFeature)]
+            : undefined),
         ProvinceId: convertToNumber(model.ProvinceId),
         DistrictId: convertToNumber(model.DistrictId),
         WardId: convertToNumber(model.WardId),

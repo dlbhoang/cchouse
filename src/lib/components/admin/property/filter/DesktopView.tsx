@@ -102,6 +102,11 @@ export const DesktopView = ({
           <Input />
         </Form.Item>
       ))}
+      {!mapMode && (
+        <Form.Item name="LocationFeatures" hidden>
+          <Checkbox.Group options={[]} />
+        </Form.Item>
+      )}
 
       {/* Hàng 1: tìm kiếm + khu vực + trạng thái + actions */}
       <div className="property-filter-search-row">
@@ -202,7 +207,8 @@ export const DesktopView = ({
           <LocationSelectCustom
             form={form}
             locationName="Location"
-            locationFeatureName="LocationFeature"
+            locationFeatureName={mapMode ? "LocationFeature" : "LocationFeatures"}
+            multipleFeatures={!mapMode}
             mapMode={mapMode}
           />
         </Form.Item>

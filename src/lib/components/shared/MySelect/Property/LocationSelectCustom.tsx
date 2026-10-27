@@ -2,6 +2,7 @@ import { DownOutlined } from "@ant-design/icons";
 import {
   Button,
   Col,
+  Checkbox,
   Dropdown,
   Form,
   FormInstance,
@@ -20,18 +21,20 @@ type Props = {
   form: FormInstance;
   locationName: string;
   locationFeatureName: string;
+  multipleFeatures?: boolean;
   mapMode?: boolean;
 };
 export const LocationSelectCustom = ({
   form,
   locationName,
   locationFeatureName,
+  multipleFeatures = false,
   mapMode = false,
 }: Props) => {
   const { enumList } = useAdminContext();
 
   const locationWatch = Form.useWatch("Location", form);
-  const locationFeatureWatch = Form.useWatch("LocationFeature", form);
+  const locationFeatureWatch = Form.useWatch(locationFeatureName, form);
 
   const [location, setLocation] = useState<string>();
   const [feature, setFeature] = useState<string>();
@@ -72,15 +75,30 @@ export const LocationSelectCustom = ({
       </Form.Item>
       <Typography.Text strong>Đặc điểm</Typography.Text>
       <Form.Item name={locationFeatureName} className={mapMode ? "map-location-radio-item map-location-feature-item" : undefined}>
-        <Radio.Group
-          className={
-            mapMode
-              ? "map-location-feature-group"
-              : "property-location-feature-group"
-          }
-          onChange={mapMode ? handleApply : undefined}
-        >
-          {mapMode ? (
+        {multipleFeatures ? (
+          <Checkbox.Group
+            className="property-location-feature-group"
+            value={Array.isArray(locationFeatureWatch) ? locationFeatureWatch : []}
+            onChange={(values) => form.setFieldValue(locationFeatureName, values)}
+          >
+            <Row>
+              {enumList.LocationFeature.map((e) => (
+                <Col key={e.Value} xs={12}>
+                  <Checkbox value={e.Value}>{e.Name}</Checkbox>
+                </Col>
+              ))}
+            </Row>
+          </Checkbox.Group>
+        ) : (
+          <Radio.Group
+            className={
+              mapMode
+                ? "map-location-feature-group"
+                : "property-location-feature-group"
+            }
+            onChange={mapMode ? handleApply : undefined}
+          >
+            {mapMode ? (
             enumList.LocationFeature.map((e) => (
               <Radio key={e.Value} value={e.Value}>{e.Name}</Radio>
             ))
@@ -93,7 +111,8 @@ export const LocationSelectCustom = ({
               ))}
             </Row>
           )}
-        </Radio.Group>
+          </Radio.Group>
+        )}
       </Form.Item>
       {!mapMode && (
         <Row gutter={[12, 12]}>
@@ -133,13 +152,19 @@ export const LocationSelectCustom = ({
   }, [locationWatch]);
 
   useEffect(() => {
-    if (locationFeatureWatch) {
-      setFeature(
-        enumList.LocationFeature.find(
-          (x) => x.Value === Number(locationFeatureWatch)
-        )?.Name
-      );
-    } else setFeature(undefined);
+    const values = Array.isArray(locationFeatureWatch)
+      ? locationFeatureWatch
+      : locationFeatureWatch == null || locationFeatureWatch === ""
+        ? []
+        : [locationFeatureWatch];
+    setFeature(
+      values
+        .map((value) =>
+          enumList.LocationFeature.find((x) => x.Value === Number(value))?.Name
+        )
+        .filter(Boolean)
+        .join(", ") || undefined
+    );
   }, [enumList.LocationFeature, locationFeatureWatch]);
 
   return (
