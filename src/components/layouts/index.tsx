@@ -166,7 +166,10 @@ const RootLayout = ({ children, session }: LayoutProps) => {
             </div>
           </header>
           {session?.user?.Id && !mustChangePassword && (
-            <NewNotificationPopup userId={session.user.Id} />
+            <NewNotificationPopup
+              userId={session.user.Id}
+              roleId={Number(session.user.RoleId)}
+            />
           )}
           <div
             className={`flex flex-1 flex-col p-4 ${pageLayout.contentClass}`}

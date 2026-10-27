@@ -5,11 +5,35 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import type { INotiUserResponse } from "@/services/api/notifications/INoti";
+import notiApi from "@/services/api/notifications/notiApi";
 import userAdminApi from "@/services/api/userAdmin/userAdminApi";
+import dayjs from "dayjs";
 
-type Props = { userId: number | string };
+type Props = { userId: number | string; roleId?: number };
 
-export default function NewNotificationPopup({ userId }: Props) {
+const birthdayRunKey = "cchouse-birthday-notifications-last-run";
+
+function birthdayDateForYear(value: string | undefined, year: number) {
+  if (!value) return undefined;
+  const birthDate = dayjs(value);
+  if (!birthDate.isValid()) return undefined;
+
+  // In non-leap years, observe a February 29 birthday on February 28.
+  if (
+    birthDate.month() === 1 &&
+    birthDate.date() === 29 &&
+    !isLeapYear(year)
+  ) {
+    return `${year}-02-28`;
+  }
+  return `${year}-${birthDate.format("MM-DD")}`;
+}
+
+function isLeapYear(year: number) {
+  return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+}
+
+export default function NewNotificationPopup({ userId, roleId }: Props) {
   const [notification, setNotification] = useState<INotiUserResponse>();
   const checkedRef = useRef(false);
 
@@ -19,6 +43,79 @@ export default function NewNotificationPopup({ userId }: Props) {
 
     const loadNewNotification = async () => {
       try {
+        // The frontend has no server-side scheduler. An admin session runs the
+        // daily birthday check when the app is opened, then targets all active staff.
+        if ([1, 2].includes(Number(roleId))) {
+          const today = dayjs();
+          const runKey = `${birthdayRunKey}:${today.format("YYYY-MM-DD")}`;
+          if (window.localStorage.getItem(birthdayRunKey) !== runKey) {
+            const pageSize = 500;
+            const employeesResponse = await userAdminApi.get({
+              Status: 1,
+              pageIndex: 1,
+              pageSize,
+            });
+            const employees = [...(employeesResponse.data ?? [])];
+            const totalPages = Math.ceil(
+              (employeesResponse.totalRow ?? employees.length) / pageSize,
+            );
+            const remainingPages = await Promise.all(
+              Array.from({ length: Math.max(totalPages - 1, 0) }, (_, index) =>
+                userAdminApi.get({
+                  Status: 1,
+                  pageIndex: index + 2,
+                  pageSize,
+                }),
+              ),
+            );
+            for (const page of remainingPages) {
+              employees.push(...(page.data ?? []));
+            }
+            const recipients = employees
+              .map((employee) => Number(employee.Id))
+              .filter((id) => Number.isFinite(id) && id > 0);
+            const tomorrow = today.add(1, "day");
+            const notifications = employees.flatMap((employee) => {
+              const id = Number(employee.Id);
+              if (!id || !employee.DateOfBirth) return [];
+
+              const isToday =
+                birthdayDateForYear(employee.DateOfBirth?.toString(), today.year()) ===
+                today.format("YYYY-MM-DD");
+              const isTomorrow =
+                birthdayDateForYear(employee.DateOfBirth?.toString(), tomorrow.year()) ===
+                tomorrow.format("YYYY-MM-DD");
+              if (!isToday && !isTomorrow) return [];
+
+              const employeeLabel = [
+                employee.Name,
+                employee.RoleName,
+                employee.BranchName,
+              ].filter(Boolean).join(" - ");
+              const title = isToday
+                ? "🎉 Chúc mừng sinh nhật!!!"
+                : "🎂 Ngày mai là sinh nhật nhân viên";
+              const description = isToday
+                ? `Chúc mừng sinh nhật ${employeeLabel}!\n\nHôm nay là một ngày đặc biệt. Công ty xin gửi đến bạn những lời chúc tốt đẹp nhất. Chúc bạn luôn mạnh khỏe, hạnh phúc, thành công và có thật nhiều niềm vui trong cuộc sống!`
+                : `Ngày mai là sinh nhật ${employeeLabel}. Hãy cùng chuẩn bị lời chúc tốt đẹp gửi đến đồng nghiệp nhé!`;
+
+              return [{
+                Id: 0,
+                Title: title,
+                Summary: isToday ? `Sinh nhật hôm nay: ${employee.Name}` : `Sinh nhật ngày mai: ${employee.Name}`,
+                Description: description,
+                Thumbnail: "",
+                ReferenceId: `birthday-${today.format("YYYY-MM-DD")}-${id}-${isToday ? "today" : "tomorrow"}`,
+                ReferenceType: 2,
+                SendToUsers: recipients,
+              }];
+            });
+
+            await Promise.all(notifications.map((notification) => notiApi.add(notification)));
+            window.localStorage.setItem(birthdayRunKey, runKey);
+          }
+        }
+
         const response = await userAdminApi.getNotifications({
           Status: 0,
           pageIndex: 1,
@@ -35,7 +132,7 @@ export default function NewNotificationPopup({ userId }: Props) {
     };
 
     void loadNewNotification();
-  }, [userId]);
+  }, [roleId, userId]);
 
   useEffect(() => {
     if (!notification) return;
