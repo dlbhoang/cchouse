@@ -200,6 +200,7 @@ export default function AddressManagerPage() {
   const [provinceId, setProvinceId] = useState<number>();
   const [districtId, setDistrictId] = useState<number>();
   const [wardId, setWardId] = useState<number>();
+  const [pendingSearchWardId, setPendingSearchWardId] = useState<number>();
   const [modalOpen, setModalOpen] = useState(false);
   const [editTarget, setEditTarget] = useState<Item>();
   const [deleteTarget, setDeleteTarget] = useState<Item>();
@@ -426,12 +427,19 @@ export default function AddressManagerPage() {
       mode === "new" &&
       !newWardItems.some((item) => item.id === wardId)
     ) {
+      if (pendingSearchWardId !== undefined) {
+        if (newWardItems.some((item) => item.id === pendingSearchWardId)) {
+          setWardId(pendingSearchWardId);
+          setPendingSearchWardId(undefined);
+        }
+        return;
+      }
       const preferredWard = isHcmSelected
         ? newWardItems.find((item) => norm(item.name) === "phường sài gòn")
         : undefined;
       setWardId((preferredWard ?? newWardItems[0])?.id);
     }
-  }, [mode, provinceId, newWardItems, isHcmSelected, wardId]);
+  }, [mode, provinceId, newWardItems, isHcmSelected, wardId, pendingSearchWardId]);
 
   const figmaStreetOrder = [
     "lê duẩn",
@@ -524,15 +532,14 @@ export default function AddressManagerPage() {
       const ward = searchableWardById.get(street.WardId ?? -1);
       const provinceName = provinceNameById.get(ward?.ProvinceId ?? -1);
       const wardName = ward?.Name;
-      const districtName = ward?.DistrictName;
       const streetName = street.Name.replace(/^đường\s+/i, "");
       return {
         id: street.Id,
         name: streetName,
         wardId: street.WardId,
         provinceId: ward?.ProvinceId,
-        address: [streetName, wardName, districtName, provinceName].filter(Boolean).join(", "),
-        keywords: `${street.Name} ${street.RefKey ?? ""} ${street.Slug ?? ""} ${wardName ?? ""} ${districtName ?? ""} ${provinceName ?? ""}`,
+        address: [streetName, wardName, provinceName].filter(Boolean).join(", "),
+        keywords: `${street.Name} ${street.RefKey ?? ""} ${street.Slug ?? ""} ${wardName ?? ""} ${provinceName ?? ""}`,
       };
     })
     .filter((item) => q && norm(item.keywords).includes(q))
@@ -575,9 +582,9 @@ export default function AddressManagerPage() {
                           onClick={() => {
                             const targetWard = searchableWardById.get(item.wardId ?? -1);
                             if (targetWard?.ProvinceId) setProvinceId(targetWard.ProvinceId);
-                            if (item.wardId) setWardId(item.wardId);
+                            if (item.wardId) setPendingSearchWardId(item.wardId);
                             setMode("new");
-                            setQuery(item.name);
+                            setQuery("");
                             setSearchSuggestionsOpen(false);
                           }}
                           className="flex w-full flex-col gap-0.5 rounded-md px-3 py-2 text-left hover:bg-[#eff6ff] focus-visible:bg-[#eff6ff] focus-visible:outline-none"
