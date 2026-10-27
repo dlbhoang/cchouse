@@ -14,7 +14,7 @@ import {
   ReloadOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { ListFilterPlus, RotateCcw } from "lucide-react";
+import { ListFilterPlus, RotateCcw, X } from "lucide-react";
 import { useState } from "react";
 import {
   AdvPropSearch,
@@ -226,8 +226,8 @@ export const DesktopView = ({
         className={`property-filter-more-modal ${mapMode ? "map-filter-more-modal" : ""}`}
         transitionName={mapMode ? "map-filter-modal" : undefined}
         closeIcon={
-          <span style={{ color: "#0B172A", fontSize: 20, lineHeight: 1 }}>
-            ×
+          <span style={{ color: "#0B172A", display: "flex", lineHeight: 1 }}>
+            <X size={20} strokeWidth={2} />
           </span>
         }
         footer={
@@ -270,29 +270,14 @@ export const DesktopView = ({
             padding: "12px 16px 16px",
             background: "#fff",
           },
-          content: { borderRadius: "16px", overflow: "hidden" },
+          content: {
+            borderRadius: "16px",
+            overflow: "hidden",
+            padding: mapMode ? 0 : undefined,
+          },
         }}
       >
         <Flex vertical gap={16} className="property-filter-more-body">
-          {mapMode && (
-            <div className="property-filter-drawer-section property-filter-map-primary">
-              <div className="property-drawer-form-item">
-                <PriceFilter form={form} />
-              </div>
-              <div className="property-drawer-form-item">
-                <FloatingField label="Diện tích">
-                  <AreaFilter form={form} mapMode placeholder="Chọn" />
-                </FloatingField>
-              </div>
-              <div className="property-drawer-form-item">
-                <FloatingField label="Loại BĐS">
-                  <Form.Item name="PropTypeIds" noStyle>
-                    <PropTypeSelect mode="multiple" placeholder="Chọn" />
-                  </Form.Item>
-                </FloatingField>
-              </div>
-            </div>
-          )}
           <div className="property-filter-drawer-toggle">
             <button
               type="button"

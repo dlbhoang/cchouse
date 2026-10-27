@@ -130,21 +130,6 @@
   line-height: 20px;
 }
 
-.property-filter-map-primary {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: end;
-  gap: 12px;
-}
-
-.property-filter-map-primary > .ant-form-item,
-.property-filter-map-primary .ant-form-item {
-  width: 100%;
-  min-width: 0;
-  margin-bottom: 0;
-}
-
-.property-filter-more-modal .property-filter-map-primary .property-price-trigger,
 .property-filter-map-mobile .property-price-trigger {
   width: 100% !important;
   min-height: 40px !important;
