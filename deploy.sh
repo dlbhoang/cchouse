@@ -6,7 +6,7 @@ VPS_HOST="187.52.125.5"
 REMOTE_APP_DIR="/var/www/cchouse"
 PM2_APP_NAME="map"
 BRANCH="main"
-HEALTH_RETRIES=12
+HEALTH_RETRIES=30
 HEALTH_INTERVAL=2
 LOCAL_REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -94,7 +94,7 @@ test -f "$RELEASE_DIR/.next/standalone/server.js"
 SMOKE_LOG="/tmp/cchouse-smoke-$DEPLOY_ID.log"
 (
   cd "$RELEASE_DIR/.next/standalone"
-  CLIENT_ERROR_LOG_DIR="$CLIENT_ERROR_LOG_DIR" PORT=3101 HOSTNAME=127.0.0.1 node server.js
+  exec env CLIENT_ERROR_LOG_DIR="$CLIENT_ERROR_LOG_DIR" PORT=3101 HOSTNAME=127.0.0.1 node server.js
 ) >"$SMOKE_LOG" 2>&1 &
 SMOKE_PID=$!
 SMOKE_OK=0
@@ -155,7 +155,7 @@ trap - ERR
 PM2_TOUCHED=0
 pm2 save
 echo "==> Release $DEPLOY_ID đang chạy; PM2:"
-pm2 status "$PM2_APP_NAME"
+pm2 describe "$PM2_APP_NAME" | sed -n '1,18p'
 
 # Giữ release hiện tại và release trước để rollback, dọn phần còn lại.
 CURRENT_TARGET="$(readlink -f "$ACTIVE_STANDALONE")"
