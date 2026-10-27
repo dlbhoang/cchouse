@@ -71,6 +71,9 @@ export const AreaFilter = ({ form, mapMode = false, adminMode = false, placehold
     const item = presetData.find((x) => x.id.toString() === value.toString());
     form.setFieldValue("AreaFrm", item?.areaFrom);
     form.setFieldValue("AreaTo", item?.areaTo);
+    // The admin Figma panel keeps its presets, manual ranges and Apply action
+    // visible together after selecting a preset.
+    if (adminMode) setIsDropdownOpen(true);
   };
 
   useEffect(() => {
