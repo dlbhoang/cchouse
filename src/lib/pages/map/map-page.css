@@ -88,11 +88,11 @@
 
 .admin-map-filters .property-trans-type-map-segmented {
   width: max-content;
-  height: 28px;
-  padding: 0;
+  height: 36px;
+  padding: 3px;
   border: 0;
-  border-radius: 0;
-  background: transparent;
+  border-radius: 10px;
+  background: #e5e5e5;
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-group {
