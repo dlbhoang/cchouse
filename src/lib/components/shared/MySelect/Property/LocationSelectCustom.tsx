@@ -51,8 +51,8 @@ export const LocationSelectCustom = ({
     backgroundColor: token.colorBgElevated,
     borderRadius: token.borderRadiusLG,
     boxShadow: token.boxShadowSecondary,
-    padding: 20,
-    maxWidth: 250,
+    width: 320,
+    padding: 16,
   };
 
   const dropdownRender = () => (
@@ -106,7 +106,13 @@ export const LocationSelectCustom = ({
             </Button>
           </Col>
           <Col {...colStyle}>
-            <Button block type="primary" htmlType="button" onClick={handleApply}>
+            <Button
+              block
+              type="primary"
+              htmlType="button"
+              className="property-location-apply-btn"
+              onClick={handleApply}
+            >
               Áp dụng
             </Button>
           </Col>

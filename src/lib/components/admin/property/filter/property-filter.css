@@ -1942,3 +1942,19 @@
   border-color: #4096ff !important;
   box-shadow: 0 0 0 2px rgba(64, 150, 255, 0.1) !important;
 }
+
+/* Match the Figma location popover: two-column options fit without wrapping,
+   and its primary action uses the same blue as the filter controls. */
+.property-location-apply-btn.ant-btn.ant-btn-primary {
+  border-color: #0588f0 !important;
+  background: #0588f0 !important;
+  background-color: #0588f0 !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+
+.property-location-apply-btn.ant-btn.ant-btn-primary:hover {
+  border-color: #087bd6 !important;
+  background: #087bd6 !important;
+  background-color: #087bd6 !important;
+}
