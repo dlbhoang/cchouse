@@ -2,6 +2,7 @@ import { ColumnsType } from "antd/lib/table";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { mutate } from "swr";
 import ImagesPreview from "@/lib/components/shared/ImagesPreview";
 import { openVideoModal } from "@/lib/components/shared/MyModal/Video";
 import TableBase from "@/lib/components/shared/TableBase";
@@ -17,6 +18,7 @@ import userAdminApi from "@/services/api/userAdmin/userAdminApi";
 import ContactModal from "../modal/contactModal";
 import HistoryModel from "../modal/historyModal";
 import columns from "./columns";
+import MobilePropertyList from "./mobile-property-list";
 import "./property-table.css";
 
 type Props = {
@@ -110,8 +112,44 @@ export const PropertyTable = ({
 
   return (
     <>
-      <div className="property-table-shell">
-        {isPropCart ? (
+      <div
+        className={`property-table-shell ${isMobile && !isPropCart ? "is-mobile-list" : ""}`}
+      >
+        {isMobile && !isPropCart ? (
+          <MobilePropertyList
+            data={Array.isArray(data?.data) ? data.data : []}
+            loading={isLoading || isValidating}
+            total={data?.totalRow || 0}
+            searchOptions={searchOptions}
+            user={session?.user}
+            listCompare={listCompare}
+            onPageChange={onPageIndexChange}
+            onOpenDetail={onOpenDetail}
+            onOpenContact={(id) => {
+              setOpenContact(true);
+              setSeletedData(data?.data?.find((item) => item.Id === id));
+            }}
+            onOpenHistory={(id) => {
+              setOpenHistory(true);
+              setSeletedData(data?.data?.find((item) => item.Id === id));
+            }}
+            onOpenImages={async (id) => {
+              const result = await imagesApi.get({
+                ContentId: id,
+                TableName: ETableName.Property,
+              });
+              setImages(fileServices.mapFromFileUpload(result.data));
+              setOpenImages(true);
+            }}
+            onOpenVideo={(video) => openVideoModal(true, video)}
+            onToggleSaved={async (id) => {
+              await userAdminApi.toggleSaveProp(id);
+              mutate(propertyApi.mutateKey);
+              mutate(userAdminApi.mutateSavePropsKey);
+            }}
+            onCompare={toggleCompare}
+          />
+        ) : isPropCart ? (
           <TableBase
             loading={isLoading || isValidating}
             total={Array.isArray(data?.data) ? data.data.length : 0}

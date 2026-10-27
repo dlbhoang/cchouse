@@ -205,4 +205,210 @@
   .property-table-shell .table-custom-pagination {
     flex-wrap: wrap;
   }
+
+  .property-table-shell.is-mobile-list {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .mobile-property-list {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .mobile-property-cards,
+  .mobile-property-skeleton-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .mobile-property-card,
+  .mobile-property-skeleton-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e6eaf0;
+    border-radius: 14px;
+    background: #fff;
+    padding: 14px;
+    box-shadow: 0 2px 8px rgba(16, 24, 40, 0.045);
+  }
+
+  .mobile-property-card-heading,
+  .mobile-property-price-row,
+  .mobile-property-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .mobile-property-id {
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .mobile-property-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  .mobile-property-tags .ant-tag {
+    margin-inline-end: 0;
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 20px;
+  }
+
+  .mobile-property-price-row {
+    align-items: baseline;
+    margin-top: 10px;
+  }
+
+  .mobile-property-price-row strong {
+    color: #0878d1;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .mobile-property-price-row > span {
+    color: #7b8491;
+    font-size: 12px;
+    text-align: right;
+  }
+
+  .mobile-property-address {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #111827;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.45;
+    text-align: left;
+  }
+
+  .mobile-property-address svg {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    color: #64748b;
+  }
+
+  .mobile-property-place {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin: 6px 0 0;
+    color: #687385;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .mobile-property-place svg {
+    flex: 0 0 auto;
+    margin-top: 1px;
+    color: #0588f0;
+  }
+
+  .mobile-property-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 11px;
+  }
+
+  .mobile-property-facts > span {
+    max-width: 100%;
+    border-radius: 7px;
+    background: #f4f7fb;
+    padding: 5px 8px;
+    color: #3f4a5a;
+    font-size: 12px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .mobile-property-actions {
+    min-height: 44px;
+    margin-top: 12px;
+    border-top: 1px solid #edf0f4;
+    padding-top: 10px;
+  }
+
+  .mobile-property-contact {
+    display: flex;
+    min-width: 40px;
+    align-items: center;
+  }
+
+  .mobile-property-contact .ant-btn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0 10px;
+  }
+
+  .mobile-property-action-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+  }
+
+  .mobile-property-action {
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #475569;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .mobile-property-action:active,
+  .mobile-property-action.is-active {
+    background: #eaf4ff;
+    color: #0878d1;
+  }
+
+  .mobile-property-pagination {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    border: 1px solid #e6eaf0;
+    border-radius: 12px;
+    background: #fff;
+    padding: 12px 8px;
+    color: #687385;
+    font-size: 12px;
+  }
+
+  .mobile-property-pagination .ant-pagination {
+    display: flex;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .mobile-property-empty {
+    border: 1px solid #e6eaf0;
+    border-radius: 14px;
+    background: #fff;
+    padding: 28px 12px;
+  }
 }
