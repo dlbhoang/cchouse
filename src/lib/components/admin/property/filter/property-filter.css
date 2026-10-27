@@ -1862,6 +1862,7 @@
 
 .map-filter-more-modal .property-filter-more-body {
   flex: 1 0 0;
+  height: 100%;
   justify-content: flex-start !important;
   align-items: flex-start;
   gap: 24px !important;
