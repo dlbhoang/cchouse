@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import type { INotiUserResponse } from "@/services/api/notifications/INoti";
+import { BIRTHDAY_NOTIFICATION_PREFIX, isBirthdayNotification } from "@/services/api/notifications/notification-types";
 import notiApi from "@/services/api/notifications/notiApi";
 import userAdminApi from "@/services/api/userAdmin/userAdminApi";
 import dayjs from "dayjs";
@@ -104,8 +105,8 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
                 Title: title,
                 Summary: isToday ? `Sinh nhật hôm nay: ${employee.Name}` : `Sinh nhật ngày mai: ${employee.Name}`,
                 Description: description,
-                Thumbnail: "",
-                ReferenceId: `birthday-${today.format("YYYY-MM-DD")}-${id}-${isToday ? "today" : "tomorrow"}`,
+                Thumbnail: typeof employee.Avatar === "string" ? employee.Avatar : "",
+                ReferenceId: `${BIRTHDAY_NOTIFICATION_PREFIX}${today.format("YYYY-MM-DD")}:${id}:${isToday ? "today" : "tomorrow"}`,
                 ReferenceType: 2,
                 SendToUsers: recipients,
               }];
@@ -122,7 +123,9 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
           pageSize: 20,
         });
         const unread = response.data ?? [];
-        const sorted = [...unread].sort(
+        const sorted = [...unread].filter(
+          (item) => !isBirthdayNotification(item.Notification),
+        ).sort(
           (a, b) => b.Notification.Id - a.Notification.Id,
         );
         if (sorted[0]) setNotification(sorted[0]);
