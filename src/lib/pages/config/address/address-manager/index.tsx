@@ -133,7 +133,7 @@ function Column({
             key={item.id}
             className={cn(
               "group flex shrink-0 items-center border-b border-[#f5f5f5] border-l-2 border-l-transparent px-3 text-left",
-              item.id === selectedId ? "border-l-[#0588f0] bg-[#eff6ff]" : "bg-white hover:bg-[#fafafa]",
+              item.id === selectedId ? "border-l-[#0588f0] bg-[#f5f5f5]" : "bg-white hover:bg-[#fafafa]",
               !onSelect && "cursor-default"
             )}
           >
@@ -241,6 +241,12 @@ export default function AddressManagerPage() {
     () => districtApi.get({ ...PAGE_ALL, ProvinceId: provinceId })
   );
   const mergeWards = useSWR("addr-merge-wards", () => mergeWardApi.get());
+  const searchableWards = useSWR("addr-search-wards", () =>
+    wardApi.get({ ...PAGE_ALL, IsNew: true }),
+  );
+  const searchableStreets = useSWR("addr-search-streets", () =>
+    streetApi.get({ ...PAGE_ALL, IsNew: true }),
+  );
   const provinceDistricts = useMemo(
     () => mode === "old"
       ? oldDistricts.data?.data ?? []
@@ -447,7 +453,9 @@ export default function AddressManagerPage() {
     "mạc đĩnh chi": "P. Bến Nghé & Đa Kao cũ",
     "pasteur": "P. Bến Nghé cũ",
     "võ văn kiệt": "P. Nguyễn Thái Bình cũ",
-    "alexander de rhodes": "P. Bến Nghé cũ",
+    "alexandre de rhodes": "P. Bến Nghé cũ",
+    "đinh tiên hoàng": "P. Đa Kao cũ",
+    "đông du": "P. Bến Nghé cũ",
     "cao bá quát": "P. Bến Nghé cũ",
     "chu mạnh trinh": "P. Bến Nghé cũ",
   };
@@ -509,25 +517,26 @@ export default function AddressManagerPage() {
       keywords: `${d.Name} ${d.RefKey ?? ""} ${d.Slug ?? ""}`,
       active: isActive(d),
     }));
-  const provinceNameById = new Map(provinceItems.map((province) => [province.id, province.name]));
-  const wardNameById = new Map(newWardItems.map((ward) => [ward.id, ward.name]));
-  const oldDistrictNameById = new Map(provinceDistricts.map((district) => [district.Id, district.Name]));
-  const addressSuggestions = (mode === "new" ? streetItems : oldStreetItems)
-    .filter((item) => q && norm(item.keywords).includes(q))
-    .slice(0, 8)
-    .map((item) => {
-      const wardName = mode === "new"
-        ? wardNameById.get(effectiveWardId ?? -1)
-        : selectedOldWard?.Name;
-      const districtName = mode === "old"
-        ? oldDistrictNameById.get(districtId ?? -1)
-        : undefined;
-      const provinceName = provinceNameById.get(provinceId ?? -1);
+  const provinceNameById = new Map(provinces.map((province) => [province.Id, `${province.Type ?? ""} ${province.Name}`.trim()]));
+  const searchableWardById = new Map((searchableWards.data?.data ?? []).map((ward) => [ward.Id, ward]));
+  const addressSuggestions = (searchableStreets.data?.data ?? [])
+    .map((street) => {
+      const ward = searchableWardById.get(street.WardId ?? -1);
+      const provinceName = provinceNameById.get(ward?.ProvinceId ?? -1);
+      const wardName = ward?.Name;
+      const districtName = ward?.DistrictName;
+      const streetName = street.Name.replace(/^đường\s+/i, "");
       return {
-        ...item,
-        address: [item.name, wardName, districtName, provinceName].filter(Boolean).join(", "),
+        id: street.Id,
+        name: streetName,
+        wardId: street.WardId,
+        provinceId: ward?.ProvinceId,
+        address: [streetName, wardName, districtName, provinceName].filter(Boolean).join(", "),
+        keywords: `${street.Name} ${street.RefKey ?? ""} ${street.Slug ?? ""} ${wardName ?? ""} ${districtName ?? ""} ${provinceName ?? ""}`,
       };
-    });
+    })
+    .filter((item) => q && norm(item.keywords).includes(q))
+    .slice(0, 8);
 
   return (
     <div className="relative flex h-[calc(100dvh-96px)] min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
@@ -564,6 +573,10 @@ export default function AddressManagerPage() {
                           type="button"
                           onMouseDown={(event) => event.preventDefault()}
                           onClick={() => {
+                            const targetWard = searchableWardById.get(item.wardId ?? -1);
+                            if (targetWard?.ProvinceId) setProvinceId(targetWard.ProvinceId);
+                            if (item.wardId) setWardId(item.wardId);
+                            setMode("new");
                             setQuery(item.name);
                             setSearchSuggestionsOpen(false);
                           }}

@@ -720,12 +720,12 @@ export default function AgencyManagerPage() {
           <SearchableSelect
             value={selectedAreaValue}
             placeholder="Chọn khu vực"
-            searchPlaceholder="Tìm phường/xã..."
+            searchPlaceholder="Tìm tỉnh/thành phố, phường/xã..."
             aria-label="Khu vực"
             options={wards.map((ward) => ({
               value: `new:${ward.WardId}`,
-              label: `${ward.WardType === "phường" ? "Phường" : ward.WardType === "xã" ? "Xã" : "Đặc khu"} ${ward.WardName}`,
-              keywords: ward.MergedFrom.join(" "),
+              label: `${provinceOptions.find((province) => province.Id === configuredWardOptions.find((item) => item.Id === ward.WardId)?.ProvinceId)?.Name ?? "TP. Hồ Chí Minh"} · ${ward.WardType === "phường" ? "Phường" : ward.WardType === "xã" ? "Xã" : "Đặc khu"} ${ward.WardName}`,
+              keywords: `${ward.WardName} ${ward.MergedFrom.join(" ")} ${provinceOptions.find((province) => province.Id === configuredWardOptions.find((item) => item.Id === ward.WardId)?.ProvinceId)?.Name ?? "TP. Hồ Chí Minh"}`,
             }))}
             onValueChange={(value) => {
               if (value.startsWith("new:"))
@@ -1009,7 +1009,7 @@ export default function AgencyManagerPage() {
             </div>
           </div>
           <div>
-            <div className="mb-4 flex items-center justify-between gap-4">
+            <div className="mb-4 flex flex-col items-start gap-3">
               <h3 className="text-sm font-bold">Thông tin địa chỉ</h3>
               <div
                 className="flex w-fit rounded-lg bg-neutral-100 p-1"

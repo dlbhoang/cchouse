@@ -461,24 +461,26 @@ export default function AddressModal({
         </div>
 
         <div className="flex min-h-0 flex-col gap-5 overflow-y-auto px-8 py-5">
-          <div className="flex">
-            {initialProvince ? (
-              <Field label="Thuộc Tỉnh/Thành phố" active={Boolean(provinceName)}>
-                <Input
-                  disabled
-                  value={provinceName ?? ""}
-                  className={cn(inputCls, "bg-[#f5f5f5] text-[#a1a1aa] disabled:opacity-100")}
+          {createKind !== "province" && (
+            <div className="flex">
+              {initialProvince ? (
+                <Field label="Thuộc Tỉnh/Thành phố" active={Boolean(provinceName)}>
+                  <Input
+                    disabled
+                    value={provinceName ?? ""}
+                    className={cn(inputCls, "bg-[#f5f5f5] text-[#a1a1aa] disabled:opacity-100")}
+                  />
+                </Field>
+              ) : (
+                <SelectField
+                  label="Thuộc Tỉnh/Thành phố"
+                  value={provinceId}
+                  options={provinceOptions}
+                  onChange={onProvinceChange}
                 />
-              </Field>
-            ) : (
-              <SelectField
-                label="Thuộc Tỉnh/Thành phố"
-                value={provinceId}
-                options={provinceOptions}
-                onChange={onProvinceChange}
-              />
-            )}
-          </div>
+              )}
+            </div>
+          )}
 
           {initialProvince || initialDistrict || createKind === "province" ? (
             <TextField label={initialProvince || createKind === "province" ? "Tên Tỉnh/Thành phố" : "Tên Quận/Huyện"} value={entityName} onChange={setEntityName} />
