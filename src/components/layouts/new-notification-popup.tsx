@@ -45,27 +45,27 @@ export default function NewNotificationPopup({ userId }: Props) {
   return (
     <aside
       aria-label="Thông báo mới"
-      className="fixed bottom-6 right-6 z-[100] w-[min(420px,calc(100vw-2rem))] overflow-hidden rounded-xl border border-[#6b542d] bg-[#49391f] text-white shadow-2xl max-sm:bottom-20 max-sm:right-4"
+      className="fixed bottom-6 right-6 z-[100] w-[min(420px,calc(100vw-2rem))] overflow-hidden rounded-xl border border-sky-200 bg-white text-neutral-900 shadow-2xl max-sm:bottom-20 max-sm:right-4"
       role="status"
     >
-      <div className="flex items-start gap-3 border-l-4 border-amber-400 p-4">
-        <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-amber-400/15 text-amber-400">
+      <div className="flex items-start gap-3 border-l-4 border-[#0588f0] p-4">
+        <span className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-sky-50 text-[#0588f0]">
           <BellRing size={19} aria-hidden="true" />
         </span>
         <div className="min-w-0 flex-1">
           <div className="mb-1 flex items-center gap-2 pr-5">
-            <p className="text-sm font-bold text-[#f3d98f]">{item.Title}</p>
-            <span className="shrink-0 rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-semibold text-white">
+            <p className="text-sm font-bold text-neutral-900">{item.Title}</p>
+            <span className="shrink-0 rounded-full bg-[#0588f0] px-2 py-0.5 text-[10px] font-semibold text-white">
               Mới
             </span>
           </div>
-          <p className="line-clamp-3 whitespace-pre-wrap text-sm leading-5 text-neutral-100">
+          <p className="line-clamp-3 whitespace-pre-wrap text-sm leading-5 text-neutral-600">
             {item.Description}
           </p>
           <Link
             href={`${AppRoutes.notifications.url}/${item.Id}`}
             onClick={close}
-            className="mt-2 inline-flex text-sm font-semibold text-red-300 underline underline-offset-2 hover:text-red-200"
+            className="mt-2 inline-flex text-sm font-semibold text-[#0574c9] hover:underline"
           >
             Xem thông báo
           </Link>
@@ -74,7 +74,7 @@ export default function NewNotificationPopup({ userId }: Props) {
           type="button"
           aria-label="Đóng thông báo mới"
           onClick={close}
-          className="absolute right-2 top-2 rounded-md p-1 text-white/70 hover:bg-white/10 hover:text-white"
+          className="absolute right-2 top-2 rounded-md p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900"
         >
           <X size={16} aria-hidden="true" />
         </button>
