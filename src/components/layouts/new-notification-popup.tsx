@@ -9,9 +9,6 @@ import userAdminApi from "@/services/api/userAdmin/userAdminApi";
 
 type Props = { userId: number | string };
 
-const cursorKey = (userId: number | string) =>
-  `cchouse-notification-popup-cursor:${userId}`;
-
 export default function NewNotificationPopup({ userId }: Props) {
   const [notification, setNotification] = useState<INotiUserResponse>();
   const checkedRef = useRef(false);
@@ -22,9 +19,6 @@ export default function NewNotificationPopup({ userId }: Props) {
 
     const loadNewNotification = async () => {
       try {
-        const key = cursorKey(userId);
-        const savedCursor = window.localStorage.getItem(key);
-        const cursor = savedCursor ? Number(savedCursor) : undefined;
         const response = await userAdminApi.getNotifications({
           Status: 0,
           pageIndex: 1,
@@ -34,17 +28,7 @@ export default function NewNotificationPopup({ userId }: Props) {
         const sorted = [...unread].sort(
           (a, b) => b.Notification.Id - a.Notification.Id,
         );
-        const latestId = sorted[0]?.Notification.Id;
-        if (latestId === undefined) return;
-
-        // On first use, surface the latest unread item. Later entries only
-        // surface notifications created after this user's saved ID cursor.
-        const newest = cursor === undefined
-          ? sorted[0]
-          : sorted.find((item) => item.Notification.Id > cursor);
-
-        window.localStorage.setItem(key, String(Math.max(cursor ?? 0, latestId)));
-        if (newest) setNotification(newest);
+        if (sorted[0]) setNotification(sorted[0]);
       } catch {
         // The regular notification bell remains available if this request fails.
       }
