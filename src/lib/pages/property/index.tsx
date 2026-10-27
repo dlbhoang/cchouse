@@ -197,7 +197,18 @@ const PropertyPage = ({ transType }: Props) => {
 
               <div className="property-page-header">
                 <div>
-                  <h1>{title}</h1>
+                  <div className="property-page-title-row">
+                    <h1>{title}</h1>
+                    <button
+                      type="button"
+                      onClick={() => handleOpenAdd()}
+                      className="property-add-icon-button"
+                      aria-label="Thêm mới bất động sản"
+                      title="Thêm mới"
+                    >
+                      <PlusOutlined />
+                    </button>
+                  </div>
                   <p>
                     Hiện có <b>{resultsTotal}</b> bất động sản được tìm kiếm theo: {filterSummary}
                   </p>

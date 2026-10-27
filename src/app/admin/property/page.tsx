@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: Props) {
     <>
       <FloatBtn
         href={`?action=add&TransType=${transType}`}
-        mobileOnlyAddButton
+        showAddButton={false}
       />
       <PropertyPage transType={transType} />
     </>
