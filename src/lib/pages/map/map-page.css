@@ -49,7 +49,7 @@
 
 .admin-map-filters .property-filter-card {
   display: grid !important;
-  grid-template-columns: 184px minmax(0, 1fr) 200px 200px 128px 40px;
+  grid-template-columns: 220px minmax(0, 1fr) 200px 200px 128px 40px;
   justify-content: stretch;
   align-items: center;
   gap: 8px !important;
@@ -77,6 +77,7 @@
   display: block !important;
   grid-column: 1;
   min-width: 0;
+  overflow: hidden;
 }
 .admin-map-filters .property-search-combo { grid-column: 2; }
 .admin-map-filters .property-region-field { grid-column: 3; }
@@ -88,7 +89,7 @@
 .admin-map-filters .property-filter-reset-btn { grid-column: 6; }
 
 .admin-map-filters .property-trans-type-map-segmented {
-  width: max-content;
+  width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   justify-self: start;
@@ -101,9 +102,12 @@
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-group {
   gap: 0;
+  min-width: 0;
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-item {
+  flex: 1 1 0;
+  min-width: 0;
   height: 28px;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -1693,7 +1697,7 @@
 
   .admin-map-filters .property-filter-card {
     display: grid !important;
-    grid-template-columns: 184px minmax(0, 1fr) minmax(0, 1fr) 128px 40px;
+    grid-template-columns: 220px minmax(0, 1fr) minmax(0, 1fr) 128px 40px;
     align-items: center;
     min-height: 0;
     padding: 12px !important;
