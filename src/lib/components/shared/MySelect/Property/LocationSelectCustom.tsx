@@ -73,7 +73,11 @@ export const LocationSelectCustom = ({
       <Typography.Text strong>Đặc điểm</Typography.Text>
       <Form.Item name={locationFeatureName} className={mapMode ? "map-location-radio-item map-location-feature-item" : undefined}>
         <Radio.Group
-          className={mapMode ? "map-location-feature-group" : undefined}
+          className={
+            mapMode
+              ? "map-location-feature-group"
+              : "property-location-feature-group"
+          }
           onChange={mapMode ? handleApply : undefined}
         >
           {mapMode ? (
@@ -143,7 +147,9 @@ export const LocationSelectCustom = ({
       trigger={["click"]}
       transitionName={mapMode ? "map-filter-popup" : undefined}
       dropdownRender={dropdownRender}
-      overlayClassName={mapMode ? "map-location-dropdown" : undefined}
+      overlayClassName={
+        mapMode ? "map-location-dropdown" : "property-location-dropdown"
+      }
       open={open}
       onOpenChange={setOpen}
     >
