@@ -1841,6 +1841,7 @@
   min-height: 52px;
   padding: 16px 24px !important;
   border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 0 !important;
 }
 
 .map-filter-more-modal .ant-modal-title {
@@ -1848,16 +1849,21 @@
 }
 
 .map-filter-more-modal .ant-modal-body {
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
   padding: 24px 16px !important;
 }
 
 .map-filter-more-modal .ant-modal-footer {
   padding: 16px 24px !important;
+  margin-top: 0 !important;
 }
 
 .map-filter-more-modal .property-filter-more-body {
-  justify-content: center !important;
-  align-items: center;
+  flex: 1 0 0;
+  justify-content: flex-start !important;
+  align-items: flex-start;
   gap: 24px !important;
 }
 
@@ -1867,6 +1873,19 @@
 
 .map-filter-more-modal .property-filter-drawer-section:not(.property-filter-drawer-checklist) {
   gap: 24px;
+}
+
+.map-filter-more-modal .property-filter-more-body > .property-filter-drawer-section:not(.property-filter-drawer-checklist) > .property-drawer-form-item {
+  flex: 0 0 40px;
+}
+
+.map-filter-more-modal .property-filter-drawer-checklist .property-drawer-checkbox-item {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.map-filter-more-modal .property-filter-drawer-checklist .property-drawer-checkbox-item .ant-form-item-control-input {
+  min-height: 20px;
 }
 
 .property-address-field-select {
