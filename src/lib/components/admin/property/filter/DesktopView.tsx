@@ -16,6 +16,7 @@ import {
 } from "@ant-design/icons";
 import { ListFilterPlus, RotateCcw, X } from "lucide-react";
 import { useState } from "react";
+import { useAdminContext } from "@/lib/stored";
 import {
   AdvPropSearch,
   AreaFilter,
@@ -57,6 +58,22 @@ export const DesktopView = ({
 }: DesktopViewProps) => {
   const [moreOpen, setMoreOpen] = useState(false);
   const transTypeValue = Form.useWatch("TransType", form) ?? ETransType.sell;
+  const directionOptions = useAdminContext((state) => state.enumList.Direction)
+    .filter((item) => item.Name.trim().toLocaleLowerCase("vi") !== "tất cả")
+    .sort((a, b) => {
+      const directionOrder = [
+        "Bắc",
+        "Đông Bắc",
+        "Đông",
+        "Đông Nam",
+        "Nam",
+        "Tây Nam",
+        "Tây",
+        "Tây Bắc",
+      ];
+      return directionOrder.indexOf(a.Name) - directionOrder.indexOf(b.Name);
+    })
+    .map((item) => ({ label: item.Name, value: item.Value }));
 
   return (
     <Flex vertical gap={16} className="property-filter-card">
@@ -320,7 +337,11 @@ export const DesktopView = ({
             <div className="property-drawer-form-item">
               <FloatingField label="Hướng nhà" required>
                 <Form.Item name="Direction" noStyle>
-                  <DirectionSelect mode="multiple" placeholder="Chọn" />
+                  <DirectionSelect
+                    mode="multiple"
+                    placeholder="Chọn"
+                    options={mapMode ? directionOptions : undefined}
+                  />
                 </Form.Item>
               </FloatingField>
             </div>
