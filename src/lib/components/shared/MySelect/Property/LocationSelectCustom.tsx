@@ -73,23 +73,43 @@ export const LocationSelectCustom = ({
           <Radio value={2}>Hẻm</Radio>
         </Radio.Group>
       </Form.Item>
-      <Typography.Text strong>Đặc điểm</Typography.Text>
-      <Form.Item name={locationFeatureName} className={mapMode ? "map-location-radio-item map-location-feature-item" : undefined}>
-        {multipleFeatures ? (
+      {multipleFeatures ? (
+        <>
+          <Typography.Text strong className="property-location-feature-heading">
+            Đặc điểm vị trí
+          </Typography.Text>
           <Checkbox.Group
             className="property-location-feature-group"
             value={Array.isArray(locationFeatureWatch) ? locationFeatureWatch : []}
             onChange={(values) => form.setFieldValue(locationFeatureName, values)}
           >
             <Row>
-              {enumList.LocationFeature.map((e) => (
+              {enumList.LocationFeature.filter((e) => e.Value <= 4).map((e) => (
                 <Col key={e.Value} xs={12}>
                   <Checkbox value={e.Value}>{e.Name}</Checkbox>
                 </Col>
               ))}
             </Row>
           </Checkbox.Group>
-        ) : (
+          <Typography.Text strong className="property-location-feature-heading">
+            Đặc điểm nội thất
+          </Typography.Text>
+          <Checkbox.Group
+            className="property-location-feature-group"
+            value={Array.isArray(locationFeatureWatch) ? locationFeatureWatch : []}
+            onChange={(values) => form.setFieldValue(locationFeatureName, values)}
+          >
+            <Row>
+              {enumList.LocationFeature.filter((e) => e.Value > 4).map((e) => (
+                <Col key={e.Value} xs={12}>
+                  <Checkbox value={e.Value}>{e.Name}</Checkbox>
+                </Col>
+              ))}
+            </Row>
+          </Checkbox.Group>
+        </>
+      ) : (
+        <Form.Item name={locationFeatureName} className={mapMode ? "map-location-radio-item map-location-feature-item" : undefined}>
           <Radio.Group
             className={
               mapMode
@@ -99,12 +119,12 @@ export const LocationSelectCustom = ({
             onChange={mapMode ? handleApply : undefined}
           >
             {mapMode ? (
-            enumList.LocationFeature.map((e) => (
+            enumList.LocationFeature.filter((e) => e.Value <= 4).map((e) => (
               <Radio key={e.Value} value={e.Value}>{e.Name}</Radio>
             ))
           ) : (
             <Row>
-              {enumList.LocationFeature.map((e) => (
+              {enumList.LocationFeature.filter((e) => e.Value <= 4).map((e) => (
                 <Col key={e.Value} xs={12}>
                   <Radio value={e.Value}>{e.Name}</Radio>
                 </Col>
@@ -112,8 +132,8 @@ export const LocationSelectCustom = ({
             </Row>
           )}
           </Radio.Group>
-        )}
-      </Form.Item>
+        </Form.Item>
+      )}
       {!mapMode && (
         <Row gutter={[12, 12]}>
           <Col {...colStyle}>

@@ -1959,8 +1959,13 @@
   background-color: #087bd6 !important;
 }
 
-/* The Figma location feature options use checkbox-shaped controls. Keep the
-   current single-value API field while matching that visual treatment. */
+/* Keep labels above their grouped feature checkbox rows, as in the Figma popup. */
+.property-location-dropdown .property-location-feature-heading {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Legacy single-choice location filters use square radio indicators. */
 .property-location-dropdown .property-location-feature-group .ant-radio-inner {
   border-radius: 3px !important;
 }
