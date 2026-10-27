@@ -41,6 +41,15 @@ const areaData = [
     areaTo: 400,
   },
 ];
+// Admin property-list presets follow Figma's 50/100/200/300/500 m² bands.
+const adminAreaData = [
+  { id: 1, text: "Dưới 50", areaFrom: 0, areaTo: 50 },
+  { id: 2, text: "Từ 50 - 100", areaFrom: 50, areaTo: 100 },
+  { id: 3, text: "Từ 100 - 200", areaFrom: 100, areaTo: 200 },
+  { id: 4, text: "Từ 200 - 300", areaFrom: 200, areaTo: 300 },
+  { id: 5, text: "Từ 300 - 500", areaFrom: 300, areaTo: 500 },
+  { id: 6, text: "Trên 500", areaFrom: 500, areaTo: undefined },
+];
 type Props = {
   form: FormInstance;
   mapMode?: boolean;
@@ -52,13 +61,14 @@ const colStyle = {
   lg: 12,
 };
 export const AreaFilter = ({ form, mapMode = false, adminMode = false, placeholder = "Diện tích" }: Props) => {
+  const presetData = adminMode ? adminAreaData : areaData;
   const areaFrm = Form.useWatch("AreaFrm", form);
   const areaTo = Form.useWatch("AreaTo", form);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectValue, setSelectValue] = useState<string>();
 
   const handleDropdownChange = (value: string) => {
-    const item = areaData.find((x) => x.id.toString() === value.toString());
+    const item = presetData.find((x) => x.id.toString() === value.toString());
     form.setFieldValue("AreaFrm", item?.areaFrom);
     form.setFieldValue("AreaTo", item?.areaTo);
   };
@@ -230,7 +240,7 @@ export const AreaFilter = ({ form, mapMode = false, adminMode = false, placehold
         </Space>
       )}
     >
-      {areaData.map((e) => (
+      {presetData.map((e) => (
         <Option key={e.id} value={e.id}>
           {e.text} m<sup>2</sup>
         </Option>

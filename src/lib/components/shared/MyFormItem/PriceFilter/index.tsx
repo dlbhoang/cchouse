@@ -71,8 +71,12 @@ export const PriceFilter = ({ form }: Props) => {
     setToValue(item.priceTo !== undefined ? item.priceTo.toString() : "");
     form.setFieldValue("PriceFrm", item.priceFrom);
     form.setFieldValue("PriceTo", item.priceTo);
-    form.submit();
-    setOpen(false);
+    // In the property-list Figma flow a preset fills the range first; the
+    // user confirms the filter with the explicit Apply button.
+    if (isMapPage) {
+      form.submit();
+      setOpen(false);
+    }
   };
 
   const handleReset = () => {
