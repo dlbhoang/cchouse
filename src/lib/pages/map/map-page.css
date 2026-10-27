@@ -1920,15 +1920,3 @@
   border-color: #0588f0 !important;
   box-shadow: 0 0 0 1px #0588f0 !important;
 }
-.map-filter-more-modal .property-floating-field .property-floating-label {
-  top: 50% !important;
-  font-size: 14px !important;
-  transition: top 180ms cubic-bezier(.2, 0, 0, 1), font-size 180ms ease, color 180ms ease;
-}
-.map-filter-more-modal .property-floating-field .ant-select-selection-placeholder { opacity: 0 !important; }
-.map-filter-more-modal .property-floating-field:focus-within .property-floating-label,
-.map-filter-more-modal .property-floating-field:has(.ant-select-selection-item) .property-floating-label,
-.map-filter-more-modal .property-floating-field:has(.ant-select-selection-overflow-item:not(.ant-select-selection-overflow-item-suffix):not([aria-hidden="true"])) .property-floating-label {
-  top: 0 !important;
-  font-size: 12px !important;
-}
