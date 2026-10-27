@@ -9,7 +9,9 @@ export const CustomerTypeSelect = ({
   placeholder = "Nhận diện khách hàng",
   popupClassName,
   placement,
+  builtinPlacements,
   listHeight,
+  options,
 }: SelectType) => {
   const { enumList } = useAdminContext();
   return (
@@ -18,9 +20,10 @@ export const CustomerTypeSelect = ({
       placeholder={placeholder}
       popupClassName={popupClassName}
       placement={placement}
+      builtinPlacements={builtinPlacements}
       listHeight={listHeight}
       allowClear
-      options={enumList.CustomerType.map((e) => ({
+      options={options ?? enumList.CustomerType.map((e) => ({
         label: e.Name,
         value: e.Value,
       }))}

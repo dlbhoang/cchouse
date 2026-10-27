@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { SelectProps } from "antd";
 export type Direction = 'vertical' | 'horizontal';
 
 export type OptionType = {
@@ -27,6 +28,7 @@ export type SelectType = {
   className?: string;
   popupClassName?: string;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+  builtinPlacements?: SelectProps["builtinPlacements"];
   listHeight?: number;
   suffixIcon?: ReactNode;
   options?: OptionType[];

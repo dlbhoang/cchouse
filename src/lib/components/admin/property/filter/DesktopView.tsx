@@ -8,6 +8,7 @@ import {
   Modal,
   Segmented,
   Select,
+  type SelectProps,
 } from "antd";
 import {
   FilterOutlined,
@@ -74,6 +75,18 @@ export const DesktopView = ({
       return directionOrder.indexOf(a.Name) - directionOrder.indexOf(b.Name);
     })
     .map((item) => ({ label: item.Name, value: item.Value }));
+  const customerTypeOptions = useAdminContext((state) => state.enumList.CustomerType)
+    .filter((item) => item.Name.trim().toLocaleLowerCase("vi") !== "tìm chủ")
+    .map((item) => ({ label: item.Name, value: item.Value }));
+  const customerDropdownPlacements: SelectProps["builtinPlacements"] = {
+    bottomLeft: {
+      points: ["tl", "bl"],
+      offset: [0, 4],
+      overflow: { adjustX: true, adjustY: false, shiftY: false },
+      htmlRegion: "visible",
+      dynamicInset: false,
+    },
+  };
 
   return (
     <Flex vertical gap={16} className="property-filter-card">
@@ -371,6 +384,8 @@ export const DesktopView = ({
                     placement={mapMode ? "bottomLeft" : undefined}
                     listHeight={mapMode ? 240 : undefined}
                     popupClassName={mapMode ? "map-filter-customer-dropdown" : undefined}
+                    builtinPlacements={mapMode ? customerDropdownPlacements : undefined}
+                    options={mapMode ? customerTypeOptions : undefined}
                   />
                 </Form.Item>
               </FloatingField>
