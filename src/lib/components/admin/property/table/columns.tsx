@@ -82,6 +82,7 @@ Props): ColumnsType<IPropResponse> => {
       title: "Mã",
       dataIndex: "Id",
       align: "center",
+      width: 58,
       render(value, record) {
         return (
           <Space direction="vertical" align="center">
@@ -106,6 +107,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Giá",
       dataIndex: "DisplayPrice",
+      width: 104,
       render(value, record) {
         return (
           <Space direction="vertical">
@@ -127,6 +129,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Số nhà, tên đường",
       dataIndex: ["PropAddress", "AddressNumber"],
+      width: 150,
       render(value, record) {
         const { LandNumber, MapNumber } = record.PropAddress;
         return (
@@ -195,6 +198,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Xã phường quận",
       dataIndex: ["PropAddress", "WardName"],
+      width: 210,
       render: (value, record) => {
         const oldParts = [
           record.PropAddress.OldWardName,
@@ -212,14 +216,6 @@ Props): ColumnsType<IPropResponse> => {
                 .filter(Boolean)
                 .join(", ")}
             </Text>
-            {record.PropAddress.ProvinceName && (
-              <>
-                <br />
-                <Text type="secondary" style={{ whiteSpace: "nowrap" }}>
-                  {record.PropAddress.ProvinceName}
-                </Text>
-              </>
-            )}
             {oldParts.length > 0 && (
               <>
                 <br />
@@ -245,6 +241,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Loại BĐS",
       dataIndex: ["PropAddress", "PropTypeName"],
+      width: 92,
       render: (value, record) =>
         detailLink(
           record.Id,
@@ -259,6 +256,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Kết cấu",
       dataIndex: "CustomDisplayStructures",
+      width: 145,
       render(value, record) {
         return (
           <Space direction="vertical">
@@ -296,6 +294,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Diện tích",
       dataIndex: "Area",
+      width: 135,
       render(value, record) {
         return (
           <Space direction="vertical">
@@ -326,6 +325,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Vị trí",
       dataIndex: ["PropAddress", "LocationName"],
+      width: 132,
       render(value, record) {
         return detailLink(
           record.Id,
@@ -352,10 +352,12 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Hướng",
       dataIndex: ["PropAddress", "DirectionName"],
+      width: 84,
     },
     {
       title: "SĐT",
       align: "center",
+      width: 86,
       render: (value, record) => {
         const logo = record.CustomerLogo ? (
           <Avatar src={record.CustomerLogo?.toString()} size={"small"} />
@@ -383,6 +385,7 @@ Props): ColumnsType<IPropResponse> => {
       key: "Action",
       title: "Hành động",
       dataIndex: "CreatedDate",
+      width: 112,
       render: (value, record) => (
         <Space direction="vertical">
           {record.StatusName === "Chờ xoá" ? (

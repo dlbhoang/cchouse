@@ -121,6 +121,7 @@ export const PropertyTable = ({
             )}
             cols={cols}
             useCustomPagination
+            scrollY={!isPropCart ? "min(440px, calc(100vh - 435px))" : undefined}
             onPageIndexChange={onPageIndexChange}
           />
         ) : (
@@ -131,6 +132,7 @@ export const PropertyTable = ({
             data={data?.data || []}
             cols={cols}
             useCustomPagination
+            scrollY={!isPropCart ? "min(440px, calc(100vh - 435px))" : undefined}
             onPageIndexChange={onPageIndexChange}
           />
         )}

@@ -63,8 +63,24 @@
 /* Đường kẻ dọc giữa các cột (header + body), đậm hơn hairline mặc định 1 chút */
 .property-table-shell .ant-table-thead > tr > th:not(:last-child),
 .property-table-shell .ant-table-tbody > tr > td:not(:last-child) {
-  border-right: 0 !important;
-  border-inline-end: 0 !important;
+  border-right: 1px solid #f0f1f3 !important;
+  border-inline-end: 1px solid #f0f1f3 !important;
+}
+
+.property-table-shell .ant-table-cell {
+  overflow-wrap: anywhere;
+}
+
+.property-table-shell .ant-table-tbody > tr > td:nth-child(3) .ant-typography,
+.property-table-shell .ant-table-tbody > tr > td:nth-child(4) .ant-typography {
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: top;
+  white-space: normal !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .property-table-shell .ant-table-bordered .ant-table-container {
