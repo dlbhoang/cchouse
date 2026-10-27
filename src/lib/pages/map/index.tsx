@@ -37,6 +37,7 @@ const MapPage = () => {
   const filterParams = new URLSearchParams(searchParams?.toString() ?? "");
   filterParams.delete("PropertyId");
   filterParams.delete("mapMock");
+  filterParams.delete("mapBoundary");
   const filtersQuery = filterParams.toString();
   const searchOptions = useMemo(() => {
     const params = new URLSearchParams(filtersQuery);
@@ -111,11 +112,17 @@ const MapPage = () => {
         searchParams?.entries() ?? [],
       );
       if (!ProvinceId || !DistrictId) {
-        setPolygon(isMockMode ? mapReviewPolygon : []);
+        setPolygon(
+          isMockMode && searchParams?.get("mapBoundary") === "1"
+            ? mapReviewPolygon
+            : [],
+        );
         return;
       }
       if (isMockMode) {
-        setPolygon(mapReviewPolygon);
+        setPolygon(
+          searchParams?.get("mapBoundary") === "1" ? mapReviewPolygon : [],
+        );
         return;
       }
       const refProvince = provinces.find(
@@ -183,7 +190,7 @@ const MapPage = () => {
         token: { colorPrimary: "#0588f0", fontFamily: "Inter, sans-serif" },
         components: {
           Drawer: { colorText: "#0a0a0a" },
-          Segmented: { itemSelectedBg: "#0588f0", itemSelectedColor: "#fff" },
+          Segmented: { itemSelectedBg: "#13b7c5", itemSelectedColor: "#fff" },
         },
       }}
     >

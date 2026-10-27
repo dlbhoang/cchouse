@@ -91,7 +91,7 @@ const address = (
     } as IPropResponse["PropAddress"];
   })();
 
-/** Local-only sample cases. Open /admin/map?mapMock=1 in development. */
+/** Safe, read-only sample cases. Open /admin/map?mapMock=1 to try them. */
 export const mapReviewFixtures: IPropResponse[] = [
   makeProperty({
     Id: 90001,
@@ -115,7 +115,7 @@ export const mapReviewFixtures: IPropResponse[] = [
     Width: 5,
     Status: 1,
     TransType: 1,
-    PropAddress: address(90002, "392 Vườn Chuối, Phường Võ Thị Sáu, Quận 3", 10.7827, 106.6895, "Biệt thự"),
+    PropAddress: address(90002, "52 Pasteur, Quận 1", 10.7769, 106.7009, "Biệt thự"),
   }),
   makeProperty({
     Id: 90003,
@@ -139,7 +139,7 @@ export const mapReviewFixtures: IPropResponse[] = [
     Width: 10,
     Status: 1,
     TransType: 1,
-    PropAddress: address(90004, "Đường Nguyễn Thị Minh Khai, Quận 3", 10.7815, 106.688),
+    PropAddress: address(90004, "Đường Điện Biên Phủ, Bình Thạnh", 10.803, 106.710),
   }),
   makeProperty({
     Id: 90005,
@@ -151,7 +151,7 @@ export const mapReviewFixtures: IPropResponse[] = [
     Width: 5,
     Status: 2,
     TransType: 1,
-    PropAddress: address(90005, "15 Nguyễn Đình Chiểu, Quận 3", 10.7831, 106.6903),
+    PropAddress: address(90005, "15 Võ Văn Ngân, Thủ Đức", 10.850, 106.753),
   }),
   makeProperty({
     Id: 90006,
@@ -163,7 +163,7 @@ export const mapReviewFixtures: IPropResponse[] = [
     Width: 6,
     Status: 1,
     TransType: 1,
-    PropAddress: address(90006, "Chưa ghim tọa độ, Quận 3"),
+    PropAddress: address(90006, "Chưa ghim tọa độ, Quận 7"),
   }),
   makeProperty({
     Id: 90007,

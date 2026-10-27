@@ -108,16 +108,16 @@
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-item-selected {
-  color: #fff;
-  border-color: #13b7c5;
-  background: #13b7c5;
-  box-shadow: none;
+  color: #fff !important;
+  border-color: #13b7c5 !important;
+  background: #13b7c5 !important;
+  box-shadow: none !important;
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-thumb {
   border-radius: 8px;
-  background: #13b7c5;
-  box-shadow: none;
+  background: #13b7c5 !important;
+  box-shadow: none !important;
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-item-label {
