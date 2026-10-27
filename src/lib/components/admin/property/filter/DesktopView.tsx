@@ -390,6 +390,7 @@ export const DesktopView = ({
                   <FurnitureSelect
                     mode="multiple"
                     placeholder="Chọn"
+                    showAllOption={!mapMode}
                     options={mapMode ? mapFurnitureOptions : undefined}
                   />
                 </Form.Item>

@@ -352,6 +352,20 @@
   background: transparent !important;
 }
 
+.map-filter-legal-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled),
+.map-filter-legal-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background: #f1f1f1 !important;
+}
+
+.map-filter-legal-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled) .ant-select-item-option-content {
+  color: #0a0a0a !important;
+  font-weight: 600;
+}
+
+.map-filter-legal-dropdown .ant-select-item-option-state {
+  color: #404040 !important;
+}
+
 .map-location-dropdown .map-location-dropdown-content {
   width: 196px;
   box-sizing: border-box;
