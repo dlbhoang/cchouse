@@ -96,7 +96,10 @@ export const AddressSelectCustom = ({
   const wardParentVal = isNewAddressWatch ? provinceWatch : districtWatch;
   const streetParentVal = isNewAddressWatch ? provinceWatch : districtWatch;
 
-  const handleApply = () => form.submit();
+  const handleApply = () => {
+    form.submit();
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (!wardWatch) return setWardName(undefined);
