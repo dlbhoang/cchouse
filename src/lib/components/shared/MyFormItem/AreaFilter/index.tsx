@@ -71,9 +71,10 @@ export const AreaFilter = ({ form, mapMode = false, adminMode = false, placehold
     const item = presetData.find((x) => x.id.toString() === value.toString());
     form.setFieldValue("AreaFrm", item?.areaFrom);
     form.setFieldValue("AreaTo", item?.areaTo);
-    // The admin Figma panel keeps its presets, manual ranges and Apply action
-    // visible together after selecting a preset.
-    if (adminMode) setIsDropdownOpen(true);
+    // Ant Select closes after choosing an option; reopen after its internal
+    // close event so the admin Figma panel keeps the manual fields and Apply
+    // action visible with the selected preset.
+    if (adminMode) window.requestAnimationFrame(() => setIsDropdownOpen(true));
   };
 
   useEffect(() => {
