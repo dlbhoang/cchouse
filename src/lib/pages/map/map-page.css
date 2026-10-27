@@ -49,7 +49,7 @@
 
 .admin-map-filters .property-filter-card {
   display: grid !important;
-  grid-template-columns: 144px minmax(0, 1fr) 200px 200px 128px 40px;
+  grid-template-columns: 160px minmax(0, 1fr) 200px 200px 128px 40px;
   justify-content: stretch;
   align-items: center;
   gap: 8px !important;
@@ -96,7 +96,7 @@
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-group {
-  gap: 10px;
+  gap: 0;
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-item {
@@ -1704,7 +1704,7 @@
 
   .admin-map-filters .property-filter-card {
     display: grid !important;
-    grid-template-columns: 144px minmax(0, 1fr) minmax(0, 1fr) 128px 40px;
+    grid-template-columns: 160px minmax(0, 1fr) minmax(0, 1fr) 128px 40px;
     align-items: center;
     min-height: 0;
     padding: 12px !important;
