@@ -366,7 +366,12 @@ export const DesktopView = ({
             <div className="property-drawer-form-item">
               <FloatingField label="Nhận diện khách hàng" required>
                 <Form.Item name="CustomerType" noStyle>
-                  <CustomerTypeSelect placeholder="Chọn" />
+                  <CustomerTypeSelect
+                    placeholder="Chọn"
+                    placement={mapMode ? "bottomLeft" : undefined}
+                    listHeight={mapMode ? 240 : undefined}
+                    popupClassName={mapMode ? "map-filter-customer-dropdown" : undefined}
+                  />
                 </Form.Item>
               </FloatingField>
             </div>

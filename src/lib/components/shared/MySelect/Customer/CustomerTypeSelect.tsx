@@ -7,12 +7,18 @@ export const CustomerTypeSelect = ({
   value,
   onChange,
   placeholder = "Nhận diện khách hàng",
+  popupClassName,
+  placement,
+  listHeight,
 }: SelectType) => {
   const { enumList } = useAdminContext();
   return (
     <SelectBase
       mode={mode}
       placeholder={placeholder}
+      popupClassName={popupClassName}
+      placement={placement}
+      listHeight={listHeight}
       allowClear
       options={enumList.CustomerType.map((e) => ({
         label: e.Name,

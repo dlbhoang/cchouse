@@ -25,6 +25,9 @@ export type SelectType = {
   required?: boolean;
   showAllOption?: boolean;
   className?: string;
+  popupClassName?: string;
+  placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
+  listHeight?: number;
   suffixIcon?: ReactNode;
   options?: OptionType[];
   onChange?: (
