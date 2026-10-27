@@ -28,7 +28,7 @@ git push origin "$BRANCH"
 
 echo -e "${YELLOW}==> Build release riêng trên VPS; bản đang chạy tiếp tục phục vụ${NC}"
 ssh -o StrictHostKeyChecking=accept-new "${VPS_USER}@${VPS_HOST}" \
-  "REMOTE_APP_DIR='${REMOTE_APP_DIR}' PM2_APP_NAME='${PM2_APP_NAME}' BRANCH='${BRANCH}' bash -s" <<'REMOTE_SCRIPT'
+  "REMOTE_APP_DIR='${REMOTE_APP_DIR}' PM2_APP_NAME='${PM2_APP_NAME}' BRANCH='${BRANCH}' HEALTH_RETRIES='${HEALTH_RETRIES}' HEALTH_INTERVAL='${HEALTH_INTERVAL}' bash -s" <<'REMOTE_SCRIPT'
 set -Eeuo pipefail
 export PATH="$HOME/.bun/bin:/usr/local/bin:$PATH"
 
