@@ -26,6 +26,7 @@ import { NavUser } from "./nav-user";
 import { PropCarts } from "./prop-carts";
 import { TopNavigation } from "./top-navigation";
 import TopNotification from "./top-notification";
+import NewNotificationPopup from "./new-notification-popup";
 import ServerConfigModal from "@/lib/pages/config/server";
 import { Server } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -164,6 +165,9 @@ const RootLayout = ({ children, session }: LayoutProps) => {
               )}
             </div>
           </header>
+          {session?.user?.Id && !mustChangePassword && (
+            <NewNotificationPopup userId={session.user.Id} />
+          )}
           <div
             className={`flex flex-1 flex-col p-4 ${pageLayout.contentClass}`}
           >

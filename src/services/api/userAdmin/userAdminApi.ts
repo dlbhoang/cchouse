@@ -10,7 +10,7 @@ import {
 import { FormatDateSubmit } from "../../../lib/core/utils/myFormat";
 import { axiosClient } from "../api_config";
 
-import { INotiUserResponse } from "../notifications/INoti";
+import { INotiOpts, INotiUserResponse } from "../notifications/INoti";
 import {
   IUserAdminPublic,
   IUserAdminQU,
@@ -74,6 +74,12 @@ const normalizeUserAdminPayload = <T>(payload: T): T => {
 };
 
 const notiRoutes = {
+  getNotifications(params: INotiOpts) {
+    return axiosClient.get<any, IListData<INotiUserResponse>>(
+      `${meUrl}/Notifications`,
+      { params },
+    );
+  },
   useGetNotifications(params: ISearchOptions) {
     const key = params
       ? `${meUrl}/Notifications?${new URLSearchParams(
