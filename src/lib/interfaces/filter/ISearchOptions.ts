@@ -99,8 +99,8 @@ export interface IPropAdminOpts extends AddressOpts {
   BedroomTo?: number;
   BathroomFrm?: number;
   BathroomTo?: number;
-  Legal?: number;
-  FurnitureIds?: number[];
+  Legal?: number | number[];
+  FurnitureIds?: (number | string)[];
 }
 export interface IParcelLandAdminOpts extends AddressOpts {
   Status?: number;

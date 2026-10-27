@@ -78,6 +78,13 @@ export const DesktopView = ({
   const customerTypeOptions = useAdminContext((state) => state.enumList.CustomerType)
     .filter((item) => item.Name.trim().toLocaleLowerCase("vi") !== "tìm chủ")
     .map((item) => ({ label: item.Name, value: item.Value }));
+  const mapFurnitureOptions = [
+    "Đang ở",
+    "Nội thất cơ bản",
+    "Nội thất cao cấp",
+    "Không nội thất",
+    "Bàn giao thô",
+  ].map((label) => ({ label, value: label }));
   const customerDropdownPlacements: SelectProps["builtinPlacements"] = {
     bottomLeft: {
       points: ["tl", "bl"],
@@ -361,17 +368,30 @@ export const DesktopView = ({
             </div>
 
             <div className="property-drawer-form-item">
-              <FloatingField label="Pháp lý">
+              <FloatingField label="Pháp lý" required={mapMode}>
                 <Form.Item name="Legal" noStyle>
-                  <LawSelect placeholder="Chọn" allowClear />
+                  <LawSelect
+                    mode={mapMode ? "multiple" : "single"}
+                    placeholder="Chọn"
+                    allowClear
+                    showAllOption={mapMode}
+                    placement={mapMode ? "bottomLeft" : undefined}
+                    listHeight={mapMode ? 384 : undefined}
+                    popupClassName={mapMode ? "map-filter-legal-dropdown" : undefined}
+                    builtinPlacements={mapMode ? customerDropdownPlacements : undefined}
+                  />
                 </Form.Item>
               </FloatingField>
             </div>
 
             <div className="property-drawer-form-item">
-              <FloatingField label="Nội thất">
+              <FloatingField label="Nội thất" required={mapMode}>
                 <Form.Item name="FurnitureIds" noStyle>
-                  <FurnitureSelect mode="multiple" placeholder="Chọn" />
+                  <FurnitureSelect
+                    mode="multiple"
+                    placeholder="Chọn"
+                    options={mapMode ? mapFurnitureOptions : undefined}
+                  />
                 </Form.Item>
               </FloatingField>
             </div>

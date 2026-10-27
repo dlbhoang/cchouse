@@ -13,6 +13,7 @@ export const FurnitureSelect = ({
   value,
   mode,
   onChange,
+  options,
   ...props
 }: SelectType) => {
   return (
@@ -20,7 +21,7 @@ export const FurnitureSelect = ({
       mode={mode}
       placeholder="Nội thất"
       allowClear
-      options={items.map((e) => ({ label: e, value: e }))}
+      options={options ?? items.map((e) => ({ label: e, value: e }))}
       onChange={onChange}
       value={value}
       {...props}
