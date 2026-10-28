@@ -320,27 +320,6 @@ export default function AddressManagerPage() {
 
   const provinceOrder = ["hồ chí minh", "hà nội", "đà nẵng", "đồng nai", "khánh hòa", "cần thơ", "lâm đồng", "huế"];
   const provinceRank = new Map(provinceOrder.map((name, index) => [name, index]));
-  const provinceCodes: Record<string, string> = {
-    "hồ chí minh": "TP. HCM",
-    "hà nội": "HN",
-    "đà nẵng": "DN",
-    "đồng nai": "DNA",
-    "khánh hòa": "KH",
-    "cần thơ": "CT",
-    "lâm đồng": "LD",
-    "huế": "HUE",
-  };
-  const provinceAbbreviation = (name: string, shortName?: string) => {
-    const known = provinceCodes[norm(name)];
-    if (known) return known;
-    if (shortName?.trim() && norm(shortName) !== norm(name)) return shortName.trim();
-    return name
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((part) => part[0])
-      .join("")
-      .toLocaleUpperCase("vi");
-  };
   const provinceItems: Item[] = [...provinces]
     .sort((a, b) => {
       const aRank = provinceRank.get(norm(a.Name)) ?? Number.MAX_SAFE_INTEGER;
@@ -348,14 +327,23 @@ export default function AddressManagerPage() {
       return aRank - bRank ||
         a.Name.localeCompare(b.Name, "vi");
     })
-    .map((p) => ({
-      kind: "province",
-      id: p.Id,
-      name: norm(p.Name) === "hồ chí minh" ? `${p.Type ?? ""} ${p.Name}`.trim() : p.Name,
-      sub: `(${provinceAbbreviation(p.Name, p.ShortName)})`,
-      keywords: `${p.Name} ${p.ShortName ?? ""} ${p.RefKey ?? ""} ${p.Slug ?? ""}`,
-      active: isActive(p),
-    }));
+    .map((p) => {
+      const type = p.Type?.trim() ?? "";
+      const fullName = type && !norm(p.Name).startsWith(norm(type))
+        ? `${type} ${p.Name}`
+        : p.Name;
+      const shortName = p.ShortName?.trim();
+      return {
+        kind: "province" as const,
+        id: p.Id,
+        name: fullName,
+        sub: shortName && norm(shortName) !== norm(p.Name)
+          ? `(${shortName})`
+          : undefined,
+        keywords: `${fullName} ${p.Name} ${shortName ?? ""} ${p.RefKey ?? ""} ${p.Slug ?? ""}`,
+        active: isActive(p),
+      };
+    });
 
   const wardItems = (rows: typeof newWards.data, withDistrict: boolean): Item[] =>
     (rows?.data ?? []).map((w) => ({
