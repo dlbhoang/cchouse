@@ -1992,6 +1992,11 @@
   background-color: #0588f0 !important;
 }
 
+.property-location-dropdown .ant-radio::after,
+.property-location-dropdown .ant-checkbox::after {
+  border-color: #0588f0 !important;
+}
+
 .property-location-dropdown .ant-radio-wrapper:hover .ant-radio-inner,
 .property-location-dropdown .ant-checkbox-wrapper:hover .ant-checkbox-inner {
   border-color: #0588f0 !important;
