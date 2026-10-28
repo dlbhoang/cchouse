@@ -28,6 +28,7 @@ import streetApi from "@/services/api/streetApi";
 import wardApi from "@/services/api/wardApi";
 
 type AgencyType = keyof AgencyMap;
+type AgencyTypeFilter = AgencyType | "all";
 type AgencyRecord = {
   type: AgencyType;
   name: string;
@@ -214,7 +215,7 @@ export default function AgencyManagerPage() {
   const [selectedWardId, setSelectedWardId] = useState<number>();
   const [agencySearchInput, setAgencySearchInput] = useState("");
   const [agencySearch, setAgencySearch] = useState("");
-  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyType>("Văn phòng công chứng");
+  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyTypeFilter>("Văn phòng công chứng");
   const [agencyStatusFilter, setAgencyStatusFilter] =
     useState<AgencyStatusFilter>("all");
   const [mode, setMode] = useState<"new" | "old">("new");
@@ -645,7 +646,7 @@ export default function AgencyManagerPage() {
       .flatMap(flattenWard)
       .filter(
         (item) =>
-          item.type === agencyTypeFilter &&
+          (agencyTypeFilter === "all" || item.type === agencyTypeFilter) &&
           (agencyStatusFilter === "all" ||
             (item.status ?? "active") === agencyStatusFilter) &&
           (!agencyAreaFilter.streetName ||
@@ -988,13 +989,14 @@ export default function AgencyManagerPage() {
               placeholder="Chọn cơ quan hành chính"
               searchPlaceholder="Tìm danh mục cơ quan..."
               aria-label="Danh mục cơ quan hành chính"
-              options={agencyTypes.map((type) => ({
+              options={[
+                { value: "all", label: "Tất cả cơ quan" },
+                ...agencyTypes.map((type) => ({
                   value: type,
                   label: agencyTypeLabel(type),
-                }))}
-              onValueChange={(value) =>
-                setAgencyTypeFilter(value as AgencyType)
-              }
+                })),
+              ]}
+              onValueChange={(value) => setAgencyTypeFilter(value as AgencyTypeFilter)}
               className="h-10 rounded-lg bg-white pt-1"
             />
           </div>
@@ -1003,7 +1005,9 @@ export default function AgencyManagerPage() {
             <div className="border-b border-neutral-200 pb-3">
               <h2 className="text-sm font-bold">
                 Danh sách{" "}
-                {agencyTypeFilter}{" "}
+                {agencyTypeFilter === "all"
+                  ? "tất cả cơ quan"
+                  : agencyTypeFilter}{" "}
                 ({agencyCount})
               </h2>
               <p className="mt-1 text-xs text-neutral-500">

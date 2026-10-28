@@ -66,11 +66,15 @@ export const columns = ({
     title: 'Mã nhân viên',
     dataIndex: 'Code',
     width: 110,
+    ellipsis: { showTitle: false },
     sorter: true,
     render(value, record) {
+      const code = safeDisplayValue(value);
       return (
         <UserAdminCellLink record={record} onReview={onReview}>
-          <Text strong>{safeDisplayValue(value)}</Text>
+          <Tooltip title={code}>
+            <Text strong>{code}</Text>
+          </Tooltip>
         </UserAdminCellLink>
       );
     },
@@ -188,15 +192,14 @@ export const columns = ({
   },
   {
     title: 'Ngày làm việc',
-    dataIndex: 'WorkStartDate',
+    dataIndex: ['UserAccess', 'DateStart'],
     width: 110,
     render(_value, record) {
-      const workStartDate = (record as IUserAdminResponse & { WorkStartDate?: string })
-        .WorkStartDate;
+      const workStartDate = record.UserAccess?.DateStart;
       return (
         <UserAdminCellLink record={record} onReview={onReview}>
           <Text type="secondary">
-            {workStartDate ? FormatDate(workStartDate) : 'Chưa cập nhật'}
+            {workStartDate ? FormatDate(workStartDate.toString()) : '—'}
           </Text>
         </UserAdminCellLink>
       );
