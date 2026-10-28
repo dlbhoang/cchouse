@@ -2005,7 +2005,7 @@
 .property-location-dropdown-content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 14px;
   box-sizing: border-box;
 }
 
