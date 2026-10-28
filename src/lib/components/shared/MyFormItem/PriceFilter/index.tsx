@@ -28,9 +28,10 @@ const mapPriceData = priceData
 
 type Props = {
   form: FormInstance;
+  showPresets?: boolean;
 };
 
-export const PriceFilter = ({ form }: Props) => {
+export const PriceFilter = ({ form, showPresets = true }: Props) => {
   const pathname = usePathname();
   const isMapPage = pathname?.startsWith('/admin/map');
   const options = isMapPage ? mapPriceData : priceData;
@@ -154,25 +155,27 @@ export const PriceFilter = ({ form }: Props) => {
         )}
         {!isMapPage && <div className="property-price-dropdown-divider" />}
 
-        <ul className="property-price-dropdown-list">
-          {options.map((item) => (
-            <li key={item.id}>
-              <button
-                type="button"
-                onClick={() => handleSelectPreset(item)}
-                className={cn(
-                  'property-price-dropdown-item',
-                  isPresetActive(item) && 'is-active'
-                )}
-              >
-                {item.text} {methodName.toLowerCase()}
-                {isMapPage && isPresetActive(item) && (
-                  <Check className="property-price-dropdown-item-check" />
-                )}
-              </button>
-            </li>
-          ))}
-        </ul>
+        {showPresets && (
+          <ul className="property-price-dropdown-list">
+            {options.map((item) => (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  onClick={() => handleSelectPreset(item)}
+                  className={cn(
+                    'property-price-dropdown-item',
+                    isPresetActive(item) && 'is-active'
+                  )}
+                >
+                  {item.text} {methodName.toLowerCase()}
+                  {isMapPage && isPresetActive(item) && (
+                    <Check className="property-price-dropdown-item-check" />
+                  )}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <p className="property-price-dropdown-section-title">
           {isMapPage
