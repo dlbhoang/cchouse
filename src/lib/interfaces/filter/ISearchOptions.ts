@@ -120,6 +120,7 @@ export interface IParcelLandAdminOpts extends AddressOpts {
 export interface ICustomerOpts extends ISearchOptions {
   Type?: number;
   TransType?: number;
+  WardIds?: string;
   PriceFrm?: number;
   PriceTo?: number;
   AreaFrm?: number;

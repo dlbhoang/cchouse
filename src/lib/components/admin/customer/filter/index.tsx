@@ -1,4 +1,4 @@
-import { Button, Col, Form, Input, Row, Select, Tabs, Tooltip } from 'antd';
+import { Button, Col, Form, Input, Row, Tabs, Tooltip } from 'antd';
 import { Plus, RotateCcw } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -12,6 +12,7 @@ import {
   CustomerTypeSelect,
   UserAdminSelect,
 } from '@/lib/components/shared/MySelect';
+import SelectBase from '@/lib/components/shared/MySelect/base/SelectBase';
 import { baseFilter } from '@/lib/core/configs/appConst';
 import { AppRoutes } from '@/lib/core/configs/appRoutes';
 import { ETransType } from '@/lib/core/enum';
@@ -20,7 +21,9 @@ import { globalHandleFailed } from '@/lib/core/utils/ant-func';
 import { convertToNumber } from '@/lib/core/utils/myFormat';
 import { ICountItem } from '@/lib/interfaces/base/ICountStatus';
 import { ICustomerOpts } from '@/lib/interfaces/filter/ISearchOptions';
+import { IWardResponse } from '@/lib/interfaces/ConfigAddress/IConfigAddress';
 import customerApi from '@/services/api/customer/customerApi';
+import wardApi from '@/services/api/wardApi';
 
 type Props = {
   model?: ICustomerOpts;
@@ -42,7 +45,11 @@ const CustomerFilter = ({
   const priceFrm = Form.useWatch('PriceFrm', form);
   const priceTo = Form.useWatch('PriceTo', form);
   const createdBy = Form.useWatch('CreatedBy', form);
+  const wardIds = Form.useWatch('WardIds', form);
+  const wardFilterKey = Array.isArray(wardIds) ? wardIds.join(',') : (wardIds ?? '');
   const lastCreatedBy = useRef(createdBy);
+  const lastWardIds = useRef(wardFilterKey);
+  const [wards, setWards] = useState<IWardResponse[]>([]);
 
   const handleRefresh = () => {
     form.resetFields();
@@ -77,6 +84,25 @@ const CustomerFilter = ({
     }
   }, [createdBy, form]);
 
+  useEffect(() => {
+    if (lastWardIds.current !== wardFilterKey) {
+      lastWardIds.current = wardFilterKey;
+      form.submit();
+    }
+  }, [wardFilterKey, form]);
+
+  useEffect(() => {
+    let cancelled = false;
+    wardApi.get({ pageIndex: 1, pageSize: 10000, IsNew: true })
+      .then((res) => {
+        if (!cancelled) setWards(res.data ?? []);
+      })
+      .catch(() => {
+        if (!cancelled) setWards([]);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
   return (
     <Form
       name="basic"
@@ -91,14 +117,8 @@ const CustomerFilter = ({
     >
       <Row gutter={[12, 12]}>
         <Col xs={24} md={8} xl={3}>
-          <Form.Item name="CreatedBy" noStyle>
-            <UserAdminSelect
-              valueAsName
-              allowClear
-              placeholder="Khách hàng"
-              aria-label="Lọc theo nhân sự chăm sóc"
-              className="w-full"
-            />
+          <Form.Item name="Type" noStyle>
+            <CustomerTypeSelect className="w-full" placeholder="Khách hàng" />
           </Form.Item>
         </Col>
         <Col xs={24} md={8} xl={4}>
@@ -115,46 +135,30 @@ const CustomerFilter = ({
         </Col>
 
         <Col xs={24} md={8} xl={5}>
-          <Form.Item name="Type" noStyle>
-            <CustomerTypeSelect className="w-full" />
+          <Form.Item name="CreatedBy" noStyle>
+            <UserAdminSelect
+              valueAsName
+              allowClear
+              placeholder="Nhân viên chăm sóc"
+              aria-label="Lọc theo nhân sự chăm sóc"
+              className="w-full"
+            />
           </Form.Item>
         </Col>
-        <Col xs={24} md={8} xl={4}>
-          <Select
-            allowClear
-            placeholder="Giá (tỷ)"
-            aria-label="Lọc nhanh theo giá"
-            className="h-9 w-full"
-            value={(() => {
-              const from = Number(priceFrm ?? 0);
-              const to = Number(priceTo ?? 0);
-              if (from === 0 && to === 10) return '0-10';
-              if (from === 10 && to === 20) return '10-20';
-              if (from === 20 && to === 30) return '20-30';
-              if (from === 30 && to === 40) return '30-40';
-              return undefined;
-            })()}
-            options={[
-              { value: '0-10', label: 'Dưới 10 tỷ' },
-              { value: '10-20', label: 'Từ 10 - 20 tỷ' },
-              { value: '20-30', label: 'Từ 20 - 30 tỷ' },
-              { value: '30-40', label: 'Từ 30 - 40 tỷ' },
-            ]}
-            onChange={(value: string | undefined) => {
-              const ranges: Record<string, [number, number]> = {
-                '0-10': [0, 10],
-                '10-20': [10, 20],
-                '20-30': [20, 30],
-                '30-40': [30, 40],
-              };
-              const range = value ? ranges[value] : undefined;
-              form.setFieldsValue({
-                PriceFrm: range?.[0],
-                PriceTo: range?.[1],
-              });
-              form.submit();
-            }}
-          />
+        <Col xs={24} md={8} xl={5}>
+          <Form.Item name="WardIds" noStyle>
+            <SelectBase
+              mode="multiple"
+              allowClear
+              placeholder="Khu vực"
+              aria-label="Lọc theo khu vực"
+              className="w-full"
+              options={wards.map((ward) => ({
+                value: ward.Id,
+                label: `${ward.Name}${ward.ProvinceName ? ` · ${ward.ProvinceName}` : ''}`,
+              }))}
+            />
+          </Form.Item>
         </Col>
         <Col xs={24} md={8} xl={5}>
           <PriceFilter form={form} showPresets={false} />
