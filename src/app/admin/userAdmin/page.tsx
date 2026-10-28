@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <>
       <UserAdminPage />
-      <FloatBtn href={`${AppRoutes.userAdmin.url}/add`} />
+      <FloatBtn href={`${AppRoutes.userAdmin.url}/add`} showAddButton={false} />
     </>
   );
 }

@@ -11,7 +11,7 @@ import userAdminApi from "@/services/api/userAdmin/userAdminApi";
 const UserAdminPage = () => {
   const [searchOptions, setSearchOptions] = useState<IUserAdminOpts>({
     ...baseFilter,
-    Status: 3,
+    Status: 1,
   });
 
   const { data, isValidating, mutate } = userAdminApi.useGet(searchOptions);
@@ -41,7 +41,7 @@ const UserAdminPage = () => {
   const handleRejected = () => {
     setSearchOptions({
       ...searchOptions,
-      Status: 0,
+      Status: 4,
       pageIndex: 1,
     });
   };

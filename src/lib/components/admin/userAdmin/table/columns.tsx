@@ -1,7 +1,7 @@
 import { Avatar, Image, Space, Tooltip, Typography } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import dayjs from 'dayjs';
-import { CheckCircleIcon, EllipsisVerticalIcon } from 'lucide-react';
+import { CheckCircleIcon, EllipsisVerticalIcon, PhoneIcon } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AppRoutes } from '@/lib/core/configs/appRoutes';
@@ -186,6 +186,22 @@ export const columns = ({
       );
     },
   },
+  {
+    title: 'Ngày làm việc',
+    dataIndex: 'WorkStartDate',
+    width: 140,
+    render(_value, record) {
+      const workStartDate = (record as IUserAdminResponse & { WorkStartDate?: string })
+        .WorkStartDate;
+      return (
+        <UserAdminCellLink record={record} onReview={onReview}>
+          <Text type="secondary">
+            {workStartDate ? FormatDate(workStartDate) : 'Chưa cập nhật'}
+          </Text>
+        </UserAdminCellLink>
+      );
+    },
+  },
   ...(status === 4
     ? [
         {
@@ -214,30 +230,43 @@ export const columns = ({
         {
           title: 'Thao tác',
           dataIndex: 'Id',
-          width: 72,
+          width: 112,
           render: (_value: number | undefined, record: IUserAdminResponse) => {
-            if (record.Status === 3) {
-              return (
-                <a
-                  href="#review"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    onReview(record);
-                  }}
-                >
-                  Kích hoạt
-                </a>
-              );
-            }
             return (
-              <Button
-                size="icon-sm"
-                variant="ghost"
-                onClick={() => onEdit(record)}
-                aria-label={`Thao tác với ${record.Name}`}
-              >
-                <EllipsisVerticalIcon />
-              </Button>
+              <Space size={4}>
+                {record.Phone ? (
+                  <Tooltip title={`Gọi ${record.Phone}`}>
+                    <Button
+                      size="icon-sm"
+                      variant="ghost"
+                      aria-label={`Gọi ${record.Name}`}
+                      onClick={() => window.open(`tel:${record.Phone}`, '_self')}
+                    >
+                      <PhoneIcon />
+                    </Button>
+                  </Tooltip>
+                ) : null}
+                {record.Status === 3 ? (
+                  <a
+                    href="#review"
+                    onClick={(event) => {
+                      event.preventDefault();
+                      onReview(record);
+                    }}
+                  >
+                    Kích hoạt
+                  </a>
+                ) : (
+                  <Button
+                    size="icon-sm"
+                    variant="ghost"
+                    onClick={() => onEdit(record)}
+                    aria-label={`Thao tác với ${record.Name}`}
+                  >
+                    <EllipsisVerticalIcon />
+                  </Button>
+                )}
+              </Space>
             );
           },
         },
