@@ -7,8 +7,9 @@ type Props = {
   placeholder: string;
   handleRefresh: () => void;
   hideRefresh?: boolean;
+  searchButtonLabel?: string;
 };
-export const SearchInput = ({ form, placeholder, handleRefresh, hideRefresh = false }: Props) => {
+export const SearchInput = ({ form, placeholder, handleRefresh, hideRefresh = false, searchButtonLabel }: Props) => {
   return (
     <Form.Item name="Search">
       <Space.Compact direction="horizontal" style={{ width: '100%' }}>
@@ -22,7 +23,9 @@ export const SearchInput = ({ form, placeholder, handleRefresh, hideRefresh = fa
               type="primary"
               style={{ backgroundColor: '#0788f5', borderColor: '#0788f5' }}
               icon={<SearchIcon className="size-4" />}
-            />
+            >
+              {searchButtonLabel}
+            </Button>
           }
         />
         {!hideRefresh && (

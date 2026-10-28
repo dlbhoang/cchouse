@@ -107,9 +107,10 @@ const CustomerFilter = ({
         <Col xs={24} xl={17}>
           <SearchInput
             form={form}
-            placeholder="Tìm tên, số điện thoại,..."
+            placeholder="Tìm theo tên, số điện thoại"
             handleRefresh={handleRefresh}
             hideRefresh
+            searchButtonLabel="Tìm kiếm"
           />
         </Col>
 
