@@ -1,6 +1,6 @@
 import { Button, Col, Form, Input, Row, Select, Tabs, Tooltip } from 'antd';
 import { Plus, RotateCcw } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   AreaFilter,
@@ -41,6 +41,8 @@ const CustomerFilter = ({
   const [counts, setCounts] = useState<ICountItem[]>([]);
   const priceFrm = Form.useWatch('PriceFrm', form);
   const priceTo = Form.useWatch('PriceTo', form);
+  const createdBy = Form.useWatch('CreatedBy', form);
+  const lastCreatedBy = useRef(createdBy);
 
   const handleRefresh = () => {
     form.resetFields();
@@ -67,6 +69,13 @@ const CustomerFilter = ({
       });
     }
   }, [form, model]);
+
+  useEffect(() => {
+    if (lastCreatedBy.current !== createdBy) {
+      lastCreatedBy.current = createdBy;
+      form.submit();
+    }
+  }, [createdBy, form]);
 
   return (
     <Form
