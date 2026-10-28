@@ -42,6 +42,16 @@ type Item = {
 };
 
 const PAGE_ALL = { pageIndex: 1, pageSize: 10000 };
+const figmaProvinceShortNames: Record<string, string> = {
+  "hồ chí minh": "TP. HCM",
+  "hà nội": "HN",
+  "đà nẵng": "ĐN",
+  "đồng nai": "ĐNA",
+  "khánh hòa": "KH",
+  "cần thơ": "CT",
+  "lâm đồng": "LĐ",
+  "huế": "HUẾ",
+};
 
 // Backend chưa trả field Status trong IConfigAddress: thiếu = "Hoạt động".
 const isActive = (x: object) => {
@@ -99,7 +109,7 @@ function Column({
 }) {
   return (
     <div className="flex h-full min-w-px flex-1 flex-col overflow-hidden rounded-xl border border-[#f5f5f5] bg-white">
-      <div className="flex shrink-0 items-center gap-3 bg-[#eae8ff] px-3 py-2.5">
+      <div className="flex shrink-0 items-center gap-3 bg-[#eff6ff] px-3 py-2.5">
         <div className="flex min-w-px flex-1 items-center gap-2.5">
           <p className="whitespace-nowrap text-sm font-bold leading-5 text-[#0a0a0a]">{title}</p>
           <span className="flex size-5 items-center justify-center rounded-full bg-[#6858d6] text-[11px] font-semibold leading-4 text-white">
@@ -333,12 +343,15 @@ export default function AddressManagerPage() {
         ? `${type} ${p.Name}`
         : p.Name;
       const shortName = p.ShortName?.trim();
+      const displayShortName = shortName && norm(shortName) !== norm(p.Name)
+        ? shortName
+        : figmaProvinceShortNames[norm(p.Name)];
       return {
         kind: "province" as const,
         id: p.Id,
         name: fullName,
-        sub: shortName && norm(shortName) !== norm(p.Name)
-          ? `(${shortName})`
+        sub: displayShortName
+          ? `(${displayShortName})`
           : undefined,
         keywords: `${fullName} ${p.Name} ${shortName ?? ""} ${p.RefKey ?? ""} ${p.Slug ?? ""}`,
         active: isActive(p),
@@ -558,6 +571,42 @@ export default function AddressManagerPage() {
   const matchedSearchWardIds = new Set(
     addressSuggestions.flatMap((item) => item.wardId ? [item.wardId] : [])
   );
+  const matchedSearchWardItems: Item[] = [...matchedSearchWardIds].flatMap((id) => {
+    const ward = searchableWardById.get(id);
+    if (!ward) return [];
+    const oldDistrictName = oldDistrictsByNewWard.get(id);
+    return [{
+      kind: "ward" as const,
+      id,
+      name: ward.Name,
+      oldDistrictId: ward.DistrictId,
+      sub: oldDistrictName ? `(${oldDistrictName} cũ)` : undefined,
+      keywords: `${ward.Name} ${ward.RefKey ?? ""} ${ward.Slug ?? ""} ${oldDistrictName ?? ""}`,
+      active: isActive(ward),
+    }];
+  });
+  const searchableStreetById = new Map(
+    (searchableStreets.data?.data ?? []).map((street) => [street.Id, street]),
+  );
+  const matchedSearchStreetItems: Item[] = addressSuggestions.flatMap((suggestion) => {
+    const street = searchableStreetById.get(suggestion.id);
+    if (!street) return [];
+    const oldWard = street.OldWardId ? oldWardById.get(street.OldWardId) : undefined;
+    return [{
+      kind: "street" as const,
+      id: street.Id,
+      name: street.Name.replace(/^đường\s+/i, ""),
+      shortName: street.ShortName,
+      wardId: street.WardId ?? undefined,
+      districtId: street.DistrictId,
+      oldWardId: street.OldWardId ?? undefined,
+      sub: oldWard ? `(${oldWard.OldWardName} cũ)` : undefined,
+      keywords: `${suggestion.address} ${street.RefKey ?? ""} ${street.Slug ?? ""}`,
+      active: isActive(street),
+    }];
+  });
+  const displayedNewWardItems = q ? matchedSearchWardItems : newWardItems;
+  const displayedStreetItems = q ? matchedSearchStreetItems : streetItems;
 
   return (
     <div className="relative flex h-[calc(100dvh-96px)] min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
@@ -702,10 +751,10 @@ export default function AddressManagerPage() {
               }}
               onDelete={(item) => void deleteItem(item)}
               title="PHƯỜNG/XÃ (mới)"
-              items={newWardItems.filter((item) => keep(item) && matchesColumnQuery(item, wardQuery))}
+              items={displayedNewWardItems.filter((item) => keep(item) && matchesColumnQuery(item, wardQuery))}
               searchValue={wardQuery}
               onSearch={setWardQuery}
-              selectedId={effectiveWardId}
+              selectedId={q ? undefined : effectiveWardId}
               onSelect={(id) => {
                 setWardId(id);
                 setStreetQuery("");
@@ -721,7 +770,7 @@ export default function AddressManagerPage() {
               }}
               onDelete={(item) => void deleteItem(item)}
               title="ĐƯỜNG"
-              items={streetItems.filter((item) => keep(item) && matchesColumnQuery(item, streetQuery))}
+              items={displayedStreetItems.filter((item) => keep(item) && matchesColumnQuery(item, streetQuery))}
               searchValue={streetQuery}
               onSearch={setStreetQuery}
               loading={newStreets.isLoading}
