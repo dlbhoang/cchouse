@@ -1982,6 +1982,26 @@
   margin-bottom: 4px;
 }
 
+/* Keep selected location controls on the Figma Brand/Main color instead of
+   inheriting the application's legacy green Ant Design primary token. */
+.property-location-dropdown .ant-radio-checked .ant-radio-inner {
+  border-color: #0588f0 !important;
+}
+
+.property-location-dropdown .ant-radio-checked .ant-radio-inner::after {
+  background-color: #0588f0 !important;
+}
+
+.property-location-dropdown .ant-radio-wrapper:hover .ant-radio-inner,
+.property-location-dropdown .ant-checkbox-wrapper:hover .ant-checkbox-inner {
+  border-color: #0588f0 !important;
+}
+
+.property-location-dropdown .ant-checkbox-checked .ant-checkbox-inner {
+  border-color: #0588f0 !important;
+  background-color: #0588f0 !important;
+}
+
 .property-location-dropdown-content {
   display: flex;
   flex-direction: column;
