@@ -1,8 +1,9 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Select as LucideSelect } from "@/lib/components/antd-lucide";
 import {Plus } from "lucide-react";
 
 import {
-  Avatar, Checkbox, Col, ColProps, Form, FormInstance, Input, InputNumber, Row, Space, Tooltip, Typography} from "antd";
+  Avatar, Checkbox, Col, ColProps, Form, FormInstance, Input, Row, Space, Tooltip, Typography} from "antd";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -174,7 +175,7 @@ const ContactZone = ({ model, form, isFull }: Props) => {
           name="Price"
           rules={[{ required: true }]}
         >
-          <InputNumber
+          <LucideInputNumber
             addonAfter={
               <Form.Item
                 name="PaymentMethod"
@@ -225,7 +226,7 @@ const ContactZone = ({ model, form, isFull }: Props) => {
                 label="Giá thuê"
                 name={["PropAddress", "PriceForRent"]}
               >
-                <InputNumber />
+                <LucideInputNumber />
               </Form.Item>
               <Form.Item
                 name={["PropAddress", "PriceForRentMethod"]}
@@ -240,7 +241,7 @@ const ContactZone = ({ model, form, isFull }: Props) => {
           </Col>
           <Col {...colSizes}>
             <Form.Item label="Thời hạn" name={["PropAddress", "EndTimeRent"]}>
-              <InputNumber
+              <LucideInputNumber
                 addonAfter={
                   <Form.Item noStyle name={["PropAddress", "EndTimeRentUnit"]}>
                     <LucideSelect>

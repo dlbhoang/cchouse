@@ -1,6 +1,7 @@
+import { Collapse as LucideCollapse } from "@/lib/components/antd-lucide";
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 
-import {Button, Col, Collapse, Descriptions, Row, Space, Tag, Typography} from "antd";
+import {Button, Col, Descriptions, Row, Space, Tag, Typography} from "antd";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -17,7 +18,7 @@ import PropertySubTable from "../../table/subTable";
 import { MapIcon } from "lucide-react";
 
 const { Link } = Typography;
-const { Panel } = Collapse;
+const { Panel } = LucideCollapse;
 
 type Props = {
   isModalOpen: boolean;
@@ -218,7 +219,7 @@ const ContactModal = ({
             </Descriptions>
           </Col>
           <Col span={24}>
-            <Collapse ghost size="small">
+            <LucideCollapse ghost size="small">
               {items.map((item) => (
                 <Panel
                   header={
@@ -240,7 +241,7 @@ const ContactModal = ({
                   {item.children}
                 </Panel>
               ))}
-            </Collapse>
+            </LucideCollapse>
           </Col>
         </Row>
       </LucideModal>

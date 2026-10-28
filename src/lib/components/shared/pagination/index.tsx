@@ -1,3 +1,4 @@
+import { Pagination as LucidePagination } from "@/lib/components/antd-lucide";
 import { Pagination } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { baseFilter } from "@/lib/core/configs/appConst";
@@ -20,7 +21,7 @@ const AppPagination = ({ total }: { total: number }) => {
   if (total === 0) return null;
 
   return (
-    <Pagination
+    <LucidePagination
       defaultCurrent={1}
       total={total}
       pageSizeOptions={["10", "20", "30", "40", "50"]}

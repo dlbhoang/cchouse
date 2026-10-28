@@ -1,4 +1,5 @@
-import { AutoComplete, type AutoCompleteProps } from "antd";
+import { AutoComplete as LucideAutoComplete } from "@/lib/components/antd-lucide";
+import { type AutoCompleteProps } from "antd";
 import type { DefaultOptionType } from "antd/es/select";
 import { useState } from "react";
 import apartmentApi from "@/services/api/apartment/apartmentApi";
@@ -29,7 +30,7 @@ const ApartmentAutoComplete = (props: AutoCompleteProps) => {
     } else setOptions([]);
   };
   return (
-    <AutoComplete
+    <LucideAutoComplete
       {...props}
       options={options}
       placeholder="Nhập tên chung cư"

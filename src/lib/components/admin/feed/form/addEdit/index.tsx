@@ -1,8 +1,9 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Alert as LucideAlert } from "@/lib/components/antd-lucide";
 import {Select as LucideSelect, DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
 
-import {Alert, Button, Card, Checkbox, Col, Divider, Form, Image, Input, InputNumber, Radio, Row, Segmented, Space, Tag, Typography, UploadFile} from "antd";
+import {Alert, Button, Card, Checkbox, Col, Divider, Form, Image, Input, Radio, Row, Segmented, Space, Tag, Typography, UploadFile} from "antd";
 import dayjs from "dayjs";
 import { ImageIcon, Eye } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -578,13 +579,13 @@ const AddEditForm = ({ model }: Props) => {
               </Col>
               <Col xs={12}>
                 <Form.Item label="Số lần đăng lại" name="AutoRenew">
-                  <InputNumber style={{ width: "100%" }} />
+                  <LucideInputNumber style={{ width: "100%" }} />
                 </Form.Item>
               </Col>
 
               <Col xs={24}>
                 <Form.Item label="Tổng tiền" name="TotalPrice">
-                  <InputNumber
+                  <LucideInputNumber
                     bordered={false}
                     readOnly
                     formatter={FormatNumber}

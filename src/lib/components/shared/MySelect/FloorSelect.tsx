@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Select as LucideSelect } from "@/lib/components/antd-lucide";
-import {Button, Divider, InputNumber, Space} from 'antd';
+import {Button, Divider, Space} from 'antd';
 import { useRef, useState } from 'react';
 
 type Props = {
@@ -44,7 +45,7 @@ export const FloorSelect = ({ value, onChange }: Props) => {
           {menu}
           <Divider style={{ margin: '8px 0' }} />
           <Space style={{ padding: '0 8px 4px' }}>
-            <InputNumber
+            <LucideInputNumber
               ref={inputRef}
               value={name}
               onChange={(val) => val && setName(val)}

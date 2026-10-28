@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { DatePicker as LucideDatePicker, TimePicker as LucideTimePicker } from "@/lib/components/antd-lucide";
-import {Col, Form, FormInstance, Input, InputNumber, Row, Space} from "antd";
+import {Col, Form, FormInstance, Input, Row, Space} from "antd";
 
 import {
   DistrictSelect,
@@ -87,7 +88,7 @@ const UserAccessForm = ({ form }: Props) => {
           rules={[{ required: true, message: "Vui lòng nhập hoa hồng" }]}
         >
           <CommissionSelect />
-          {/* <InputNumber style={{ width: '100%' }} /> */}
+          {/* <LucideInputNumber style={{ width: '100%' }} /> */}
         </Form.Item>
       </Col>
       <Col {...colResponsive} xs={12}>
@@ -170,7 +171,7 @@ const UserAccessForm = ({ form }: Props) => {
                     { required: true, message: "Vui lòng nhập giá bán (từ)" },
                   ]}
                 >
-                  <InputNumber />
+                  <LucideInputNumber />
                 </Form.Item>
                 <Form.Item
                   name={["UserAccess", "PriceTo"]}
@@ -178,7 +179,7 @@ const UserAccessForm = ({ form }: Props) => {
                     { required: true, message: "Vui lòng nhập giá bán (đến)" },
                   ]}
                 >
-                  <InputNumber />
+                  <LucideInputNumber />
                 </Form.Item>
               </Space>
             </Form.Item>
@@ -210,7 +211,7 @@ const UserAccessForm = ({ form }: Props) => {
                     { required: true, message: "Vui lòng nhập giá thuê (từ)" },
                   ]}
                 >
-                  <InputNumber />
+                  <LucideInputNumber />
                 </Form.Item>
                 <Form.Item
                   name={["UserAccess", "PriceRentTo"]}
@@ -218,7 +219,7 @@ const UserAccessForm = ({ form }: Props) => {
                     { required: true, message: "Vui lòng nhập giá thuê (đến)" },
                   ]}
                 >
-                  <InputNumber />
+                  <LucideInputNumber />
                 </Form.Item>
               </Space>
             </Form.Item>

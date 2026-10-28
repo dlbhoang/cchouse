@@ -1,10 +1,11 @@
-import { AutoComplete, AutoCompleteProps } from 'antd';
+import { AutoComplete as LucideAutoComplete } from "@/lib/components/antd-lucide";
+import { AutoCompleteProps } from 'antd';
 
 const options = Array.from({ length: 11 }, (_, index) => ({
   value: index === 0 ? 'trệt' : index.toString(),
 }));
 const FloorAutoComplete = (props: AutoCompleteProps) => (
-  <AutoComplete
+  <LucideAutoComplete
     {...props}
     options={options}
     placeholder="Nhập số lầu"

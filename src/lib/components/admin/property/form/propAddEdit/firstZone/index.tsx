@@ -1,10 +1,10 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import {
   Checkbox,
   Col,
   Form,
   FormInstance,
   Input,
-  InputNumber,
   Row,
   Typography,
 } from "antd";
@@ -170,14 +170,14 @@ const FirstZone = ({ model, form, isFull }: Props) => {
               label="Cách mặt tiền (m)"
               name={["PropAddress", "DistanceToFont"]}
             >
-              <InputNumber />
+              <LucideInputNumber />
             </Form.Item>
           ) : (
             <Form.Item
               label="Độ rộng đường(m)"
               name={["PropAddress", "StreetWidth"]}
             >
-              <InputNumber />
+              <LucideInputNumber />
             </Form.Item>
           )}
         </Col>
@@ -186,7 +186,7 @@ const FirstZone = ({ model, form, isFull }: Props) => {
           <>
             <Col xs={12} lg={8} xl={6}>
               <Form.Item label="Số lần rẽ" name={["PropAddress", "AlleyTurns"]}>
-                <InputNumber max={5} onChange={setAlleyTurns} />
+                <LucideInputNumber max={5} onChange={setAlleyTurns} />
               </Form.Item>
             </Col>
             {alleyTurns && alleyTurns > 0 && (
@@ -204,7 +204,7 @@ const FirstZone = ({ model, form, isFull }: Props) => {
                           ]}
                           label={`Lần rẽ ${index + 1} (m)`}
                         >
-                          <InputNumber />
+                          <LucideInputNumber />
                         </Form.Item>
                       </Col>
                     ))}
@@ -311,7 +311,7 @@ const FirstZone = ({ model, form, isFull }: Props) => {
         <>
           <Col xs={12} lg={8} xl={6}>
             <Form.Item label="Số lần rẽ" name={["PropAddress", "AlleyTurns"]}>
-              <InputNumber max={5} onChange={setAlleyTurns} />
+              <LucideInputNumber max={5} onChange={setAlleyTurns} />
             </Form.Item>
           </Col>
           {alleyTurns && alleyTurns > 0 && (
@@ -329,7 +329,7 @@ const FirstZone = ({ model, form, isFull }: Props) => {
                         ]}
                         label={`Lần rẽ ${index + 1} (m)`}
                       >
-                        <InputNumber />
+                        <LucideInputNumber />
                       </Form.Item>
                     </Col>
                   ))}

@@ -1,4 +1,5 @@
 "use client";
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import {
   Button,
   Card,
@@ -6,7 +7,6 @@ import {
   Col,
   Form,
   Input,
-  InputNumber,
   Radio,
   Row,
   Space,
@@ -434,12 +434,12 @@ const PropAddEdit = ({
                 <Row gutter={12}>
                   <Col lg={12} xl={8} xs={12}>
                     <Form.Item label="Số phòng" name="Bedroom">
-                      <InputNumber />
+                      <LucideInputNumber />
                     </Form.Item>
                   </Col>
                   <Col lg={12} xl={8} xs={12}>
                     <Form.Item label="Số toilet" name="Bathroom">
-                      <InputNumber />
+                      <LucideInputNumber />
                     </Form.Item>
                   </Col>
                   <Col lg={12} xl={8} xs={24}>

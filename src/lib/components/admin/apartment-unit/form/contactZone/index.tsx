@@ -1,10 +1,10 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import {
   Checkbox,
   Col,
   Form,
   FormInstance,
   Input,
-  InputNumber,
   Row,
   Space,
   Typography,
@@ -121,7 +121,7 @@ const ContactZone = ({ model, form }: Props) => {
             name={[contact, "Price"]}
             rules={[{ required: true }]}
           >
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
           <Form.Item
             name={[contact, "PaymentMethod"]}
@@ -154,7 +154,7 @@ const ContactZone = ({ model, form }: Props) => {
           <Col {...colRes}>
             <Space.Compact direction="horizontal" style={{ width: "100%" }}>
               <Form.Item label="Giá thuê" name={"PriceForRent"}>
-                <InputNumber />
+                <LucideInputNumber />
               </Form.Item>
               <Form.Item
                 name={"PriceForRentMethod"}

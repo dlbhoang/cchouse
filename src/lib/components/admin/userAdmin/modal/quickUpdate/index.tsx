@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
-import {Button, Col, Form, Input, InputNumber, Radio, Row, Space, Typography} from "antd";
+import {Button, Col, Form, Input, Radio, Row, Space, Typography} from "antd";
 import { useEffect, useState } from "react";
 import { UserAdminStatusSelect } from "@/lib/components/shared/MySelect";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -110,7 +111,7 @@ const QuickUpdateModal = ({
           </Col>
           <Col xs={24} lg={8}>
             <Form.Item name="Rank" label="Xếp hạng">
-              <InputNumber style={{ width: "100%" }} />
+              <LucideInputNumber style={{ width: "100%" }} />
             </Form.Item>
           </Col>
           <Col xs={24} lg={8}>

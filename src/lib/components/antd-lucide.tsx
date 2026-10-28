@@ -2,6 +2,10 @@
 
 import type {
   AlertProps,
+  AutoCompleteProps,
+  CollapseProps,
+  InputNumberProps,
+  PaginationProps,
   DatePickerProps,
   DrawerProps,
   ModalProps,
@@ -12,16 +16,20 @@ import type {
 } from 'antd';
 import {
   Alert as AntAlert,
+  AutoComplete as AntAutoComplete,
+  Collapse as AntCollapse,
+  InputNumber as AntInputNumber,
   DatePicker as AntDatePicker,
   Popconfirm as AntPopconfirm,
   Drawer as AntDrawer,
   Modal as AntModal,
+  Pagination as AntPagination,
   Result as AntResult,
   Select as AntSelect,
   TimePicker as AntTimePicker,
 } from 'antd';
 import type { RefSelectProps } from 'antd/es/select';
-import { CalendarDays, CheckCircle2, ChevronDown, CircleAlert, CircleHelp, CircleX, Clock3, Info, TriangleAlert, X } from 'lucide-react';
+import { CalendarDays, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, CircleAlert, CircleHelp, CircleX, Clock3, Info, TriangleAlert, X } from 'lucide-react';
 import { forwardRef } from 'react';
 
 const SelectWithLucideIcon = forwardRef<RefSelectProps, SelectProps<any, any>>(
@@ -123,6 +131,56 @@ const Drawer = ((props: DrawerProps) => (
   />
 )) as typeof AntDrawer;
 
+const AutoComplete = ((props: AutoCompleteProps) => (
+  <AntAutoComplete
+    {...props}
+    suffixIcon={
+      props.suffixIcon ?? <ChevronDown size={16} strokeWidth={1.8} />
+    }
+  />
+)) as typeof AntAutoComplete;
+
+const InputNumber = ((props: InputNumberProps) => (
+  <AntInputNumber
+    {...props}
+    upHandler={props.upHandler ?? <ChevronUp size={10} strokeWidth={1.8} />}
+    downHandler={props.downHandler ?? <ChevronDown size={10} strokeWidth={1.8} />}
+  />
+)) as typeof AntInputNumber;
+
+const Collapse = Object.assign(
+  (props: CollapseProps) => (
+    <AntCollapse
+      {...props}
+      expandIcon={
+        props.expandIcon ??
+        (({ isActive }) => (
+          <ChevronRight
+            size={16}
+            strokeWidth={1.8}
+            className={isActive ? "rotate-90 transition-transform" : "transition-transform"}
+          />
+        ))
+      }
+    />
+  ),
+  { Panel: AntCollapse.Panel }
+) as typeof AntCollapse;
+
+const Pagination = ((props: PaginationProps) => (
+  <AntPagination
+    {...props}
+    itemRender={
+      props.itemRender ??
+      ((_page, type, originalElement) => {
+        if (type === "prev") return <ChevronLeft size={16} strokeWidth={1.8} />;
+        if (type === "next") return <ChevronRight size={16} strokeWidth={1.8} />;
+        return originalElement;
+      })
+    }
+  />
+)) as typeof AntPagination;
+
 const Alert = ((props: AlertProps) => {
   const iconByType = {
     success: <CheckCircle2 size={16} strokeWidth={1.8} />,
@@ -153,4 +211,4 @@ const Result = ((props: ResultProps) => {
   return <AntResult {...props} icon={props.icon ?? iconByStatus[props.status ?? 'info']} />;
 }) as typeof AntResult;
 
-export { Alert, DatePicker, Drawer, Modal, Popconfirm, Result, Select, TimePicker };
+export { Alert, AutoComplete, Collapse, DatePicker, Drawer, InputNumber, Modal, Pagination, Popconfirm, Result, Select, TimePicker };

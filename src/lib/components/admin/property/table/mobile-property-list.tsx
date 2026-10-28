@@ -1,4 +1,5 @@
-import { Empty, Pagination, Skeleton, Tag, Tooltip } from "antd";
+import { Pagination as LucidePagination } from "@/lib/components/antd-lucide";
+import { Empty, Skeleton, Tag, Tooltip } from "antd";
 import {
   ArrowUpRight,
   Copy,
@@ -231,7 +232,7 @@ const MobilePropertyList = ({
 
           <div className="mobile-property-pagination">
             <span>{total} bất động sản</span>
-            <Pagination
+            <LucidePagination
               current={currentPage}
               pageSize={pageSize}
               total={total}

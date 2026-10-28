@@ -1,10 +1,9 @@
+import { InputNumber as LucideInputNumber, AutoComplete as LucideAutoComplete } from "@/lib/components/antd-lucide";
 import {
-  AutoComplete,
   Button,
   Col,
   Form,
   Input,
-  InputNumber,
   Row,
   Space,
   Switch,
@@ -72,7 +71,7 @@ const MainForm = () => {
           label="Vị trí tuyển dụng"
           rules={[{ required: true }]}
         >
-          <AutoComplete
+          <LucideAutoComplete
             filterOption={(inputValue, option) =>
               option!.label?.toUpperCase().indexOf(inputValue.toUpperCase()) !==
               -1
@@ -88,7 +87,7 @@ const MainForm = () => {
           label="Số lượng"
           rules={[{ required: true }]}
         >
-          <InputNumber min={1} />
+          <LucideInputNumber min={1} />
         </Form.Item>
       </Col>
       <Col {...colSizes}>
@@ -124,7 +123,7 @@ const MainForm = () => {
       </Col>
       <Col {...colSizes}>
         <Form.Item label="Tuổi" name={"Age"}>
-          <AutoComplete
+          <LucideAutoComplete
             filterOption={(inputValue, option) =>
               option!.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
               -1

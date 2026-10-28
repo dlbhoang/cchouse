@@ -1,11 +1,11 @@
 "use client";
+import { Collapse as LucideCollapse } from "@/lib/components/antd-lucide";
 
 import { Pencil } from "lucide-react";
 import {
   Button,
   Card,
   Col,
-  Collapse,
   CollapseProps,
   Empty,
   Row,
@@ -106,7 +106,7 @@ const AddressPage = () => {
     <>
       <Row gutter={16}>
         <Col xs={24} md={24} lg={12} xl={10}>
-          <Collapse items={items} defaultActiveKey="2" />
+          <LucideCollapse items={items} defaultActiveKey="2" />
         </Col>
         <Col xs={24} md={24} lg={12} xl={14}>
           <Card>

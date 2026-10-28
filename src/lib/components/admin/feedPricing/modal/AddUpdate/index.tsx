@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
-import {Col, Form, Input, InputNumber, Row} from "antd";
+import {Col, Form, Input, Row} from "antd";
 import { useEffect, useState } from "react";
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -106,7 +107,7 @@ const AddUpdateFeedPricingModal = ({
                   { required: true, message: "Vui lòng nhập phí ra tin" },
                 ]}
               >
-                <InputNumber
+                <LucideInputNumber
                   min={0}
                   formatter={FormatNumber}
                   style={{ width: "100%" }}

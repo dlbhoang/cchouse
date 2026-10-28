@@ -1,5 +1,6 @@
+import { Pagination as LucidePagination } from "@/lib/components/antd-lucide";
 import { Select as LucideSelect } from "@/lib/components/antd-lucide";
-import {ConfigProvider, Pagination, Table} from "antd";
+import {ConfigProvider, Table} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TableRowSelection } from "antd/es/table/interface";
 import {
@@ -219,7 +220,7 @@ function TableBase<T>({
                   )}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "32px", flex: "0 1 auto" }}>
-                  <Pagination
+                  <LucidePagination
                     defaultCurrent={1}
                     total={total}
                     defaultPageSize={baseFilter.pageSize}

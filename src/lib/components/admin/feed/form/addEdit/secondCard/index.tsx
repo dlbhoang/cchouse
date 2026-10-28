@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Select as LucideSelect } from "@/lib/components/antd-lucide";
-import {Checkbox, Col, Form, FormInstance, InputNumber, Row, Typography} from "antd";
+import {Checkbox, Col, Form, FormInstance, Row, Typography} from "antd";
 import { useEffect, useState } from "react";
 
 import MyCard from "@/lib/components/shared/MyCard";
@@ -42,12 +43,12 @@ const SecondCard = ({ form }: Props) => {
       <Row gutter={12}>
         <Col xs={12} lg={8} xl={6}>
           <Form.Item label="Chiều rộng (m)" name={["Property", "Width"]}>
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
         </Col>
         <Col xs={12} lg={8} xl={6}>
           <Form.Item label="Chiều dài (m)" name={["Property", "Length"]}>
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
         </Col>
         <Col xs={12} lg={8} xl={6}>
@@ -65,7 +66,7 @@ const SecondCard = ({ form }: Props) => {
               },
             ]}
           >
-            <InputNumber formatter={FormatNumber} />
+            <LucideInputNumber formatter={FormatNumber} />
           </Form.Item>
         </Col>
         <Col xs={12} lg={8} xl={6}>
@@ -77,17 +78,17 @@ const SecondCard = ({ form }: Props) => {
             }
             name={["Property", "FloorArea"]}
           >
-            <InputNumber formatter={FormatNumber} />
+            <LucideInputNumber formatter={FormatNumber} />
           </Form.Item>
         </Col>
         <Col xs={12} lg={8} xl={6}>
           <Form.Item label="Số phòng" name={["Property", "Bedroom"]}>
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
         </Col>
         <Col xs={12} lg={8} xl={6}>
           <Form.Item label="Số toilet" name={["Property", "Bathroom"]}>
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
         </Col>
 

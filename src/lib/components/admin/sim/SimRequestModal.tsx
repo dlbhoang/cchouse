@@ -1,6 +1,7 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
-import {Col, Form, Input, InputNumber, Radio, Row} from "antd";
+import {Col, Form, Input, Radio, Row} from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
@@ -123,7 +124,7 @@ const SimRequestModal = ({
               name="MoneySupport"
               rules={[{ required: true }]}
             >
-              <InputNumber formatter={FormatNumber} style={{ width: "100%" }} />
+              <LucideInputNumber formatter={FormatNumber} style={{ width: "100%" }} />
             </Form.Item>
           </Col>
           <Col xs={24} lg={8} xl={8}>

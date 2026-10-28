@@ -1,4 +1,5 @@
 "use client";
+import { Collapse as LucideCollapse } from "@/lib/components/antd-lucide";
 
 import { Collapse } from "antd";
 import Link from "next/link";
@@ -40,7 +41,7 @@ const WarehouseSection = ({ data }: Props) => {
   }, [data.CustomerPhone, data.TransType]);
 
   return (
-    <Collapse
+    <LucideCollapse
       ghost
       size="small"
       className="pd-warehouse"

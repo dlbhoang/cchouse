@@ -1,4 +1,5 @@
-import { Col, Form, FormInstance, Input, InputNumber, Row } from "antd";
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
+import { Col, Form, FormInstance, Input, Row } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 import FloorAutoComplete from "@/lib/components/shared/components/FloorAutoComplete";
@@ -91,7 +92,7 @@ const SecondZone = ({ model, form }: Props) => {
           name="Area"
           rules={[{ required: true }]}
         >
-          <InputNumber
+          <LucideInputNumber
             suffix={
               <span>
                 m<sup>2</sup>
@@ -103,12 +104,12 @@ const SecondZone = ({ model, form }: Props) => {
       </Col>
       <Col {...colRes}>
         <Form.Item label="Số phòng" name="Bedroom">
-          <InputNumber />
+          <LucideInputNumber />
         </Form.Item>
       </Col>
       <Col {...colRes}>
         <Form.Item label="Số toilet" name="Bathroom">
-          <InputNumber />
+          <LucideInputNumber />
         </Form.Item>
       </Col>
       <Col {...colRes}>

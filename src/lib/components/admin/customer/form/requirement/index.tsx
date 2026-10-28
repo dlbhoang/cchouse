@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Select as LucideSelect } from "@/lib/components/antd-lucide";
-import {Col, Form, FormInstance, Input, InputNumber, Row, Space} from "antd";
+import {Col, Form, FormInstance, Input, Row, Space} from "antd";
 import { Rule } from "antd/es/form";
 
 import MyCard from "@/lib/components/shared/MyCard";
@@ -176,7 +177,7 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
                     : undefined
                 }
               >
-                <InputNumber placeholder="Từ" />
+                <LucideInputNumber placeholder="Từ" />
               </Form.Item>
               <Form.Item
                 name={[itemName, "PriceTo"]}
@@ -186,7 +187,7 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
                     : undefined
                 }
               >
-                <InputNumber placeholder="Đến" />
+                <LucideInputNumber placeholder="Đến" />
               </Form.Item>
             </Space>
           </Form.Item>
@@ -223,17 +224,17 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
         </Col>
         <Col xs={12} lg={12} xl={8}>
           <Form.Item label="Chiều rộng (m)" name={[itemName, "Width"]}>
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
         </Col>
         <Col xs={12} md={12} xl={8}>
           <Form.Item label="Chiều dài (m)" name={[itemName, "Length"]}>
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
         </Col>
         <Col xs={12} md={12} xl={8}>
           <Form.Item label="Tổng diện tích (m2)" name={[itemName, "Area"]}>
-            <InputNumber />
+            <LucideInputNumber />
           </Form.Item>
         </Col>
         <Col xs={24}>

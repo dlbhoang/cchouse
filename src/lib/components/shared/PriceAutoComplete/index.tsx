@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import type { MenuProps } from "antd";
-import { Dropdown, InputNumber } from "antd";
+import { Dropdown } from "antd";
 import { ReactNode, useState } from "react";
 
 import { FormatNumber } from "@/lib/core/utils/myFormat";
@@ -56,7 +57,7 @@ const PriceAutoComplete = ({
       disabled={disabled}
       onOpenChange={setOpenDropdown}
     >
-      <InputNumber
+      <LucideInputNumber
         style={{ width: "100%" }}
         value={Number(value)}
         onChange={handleInputChange}

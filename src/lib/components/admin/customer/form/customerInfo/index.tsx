@@ -1,10 +1,10 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import {
   Checkbox,
   Col,
   Form,
   FormInstance,
   Input,
-  InputNumber,
   Row,
   Tabs,
   TabsProps,
@@ -88,7 +88,7 @@ const CustomerInfo = ({ form, model }: Props) => {
   return (
     <Row gutter={[12, 12]}>
       <Form.Item name="Id" hidden>
-        <InputNumber />
+        <LucideInputNumber />
       </Form.Item>
       <Col xs={12} xl={12}>
         <Form.Item

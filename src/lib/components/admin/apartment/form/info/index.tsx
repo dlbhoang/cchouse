@@ -1,9 +1,9 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import {
   Col,
   Form,
   FormInstance,
   Input,
-  InputNumber,
   Row,
   Typography,
 } from "antd";
@@ -42,7 +42,7 @@ const ApartmentInfoForm = ({
           name="Area"
           rules={[{ required: true, message: "Tổng diện tích không để trống" }]}
         >
-          <InputNumber />
+          <LucideInputNumber />
         </Form.Item>
       </Col>
       <Col lg={12} xl={8} xs={24}>

@@ -1,11 +1,11 @@
 "use client";
+import { Collapse as LucideCollapse } from "@/lib/components/antd-lucide";
 
 import { ChevronRight, Send } from "lucide-react";
 import {
   Button,
   Card,
   Col,
-  Collapse,
   Input,
   Row,
   Space,
@@ -55,7 +55,7 @@ const NotiPage = () => {
   );
 
   const items = (
-    <Collapse
+    <LucideCollapse
       // eslint-disable-next-line react/no-unstable-nested-components
       expandIcon={({ isActive }) => (
         <ChevronRight

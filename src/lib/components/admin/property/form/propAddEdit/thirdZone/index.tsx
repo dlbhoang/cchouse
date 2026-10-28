@@ -1,9 +1,9 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import {
   Col,
   Form,
   FormInstance,
   Input,
-  InputNumber,
   Row,
   Typography,
 } from "antd";
@@ -40,7 +40,7 @@ const AREA_SUFFIX = (
 const DimensionField = ({ label, name }: DimensionFieldProps) => (
   <Col lg={12} xl={6} xs={12}>
     <Form.Item label={label} name={name}>
-      <InputNumber style={{ width: "100%" }} suffix={DIMENSION_SUFFIX} />
+      <LucideInputNumber style={{ width: "100%" }} suffix={DIMENSION_SUFFIX} />
     </Form.Item>
   </Col>
 );
@@ -48,7 +48,7 @@ const DimensionField = ({ label, name }: DimensionFieldProps) => (
 const AreaField = ({ label, name }: DimensionFieldProps) => (
   <Col lg={12} xl={6} xs={12}>
     <Form.Item label={<Typography.Text>{label}</Typography.Text>} name={name}>
-      <InputNumber style={{ width: "100%" }} suffix={AREA_SUFFIX} />
+      <LucideInputNumber style={{ width: "100%" }} suffix={AREA_SUFFIX} />
     </Form.Item>
   </Col>
 );

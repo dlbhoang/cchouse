@@ -1,5 +1,6 @@
+import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
-import {Button, Col, Form, FormInstance, InputNumber, Row, Typography} from "antd";
+import {Button, Col, Form, FormInstance, Row, Typography} from "antd";
 import { useState } from "react";
 
 import { CombineStructures } from "@/lib/core/utils/myFormat";
@@ -67,7 +68,7 @@ export const AdvStructures = ({ form, namePath = defaultItems }: Props) => {
               labelCol={labelCol}
               name={namePath.BasementItem}
             >
-              <InputNumber />
+              <LucideInputNumber />
             </Form.Item>
           </Col>
           <Col xs={24} md={12}>
