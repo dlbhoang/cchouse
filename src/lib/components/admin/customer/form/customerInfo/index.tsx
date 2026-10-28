@@ -119,6 +119,9 @@ const CustomerInfo = ({ form, model }: Props) => {
             allowClear={false}
             onChange={(val) => {
               form.resetFields([["BuyingRequirement", "Districts"]]);
+              form.resetFields([["BuyingRequirement", "Wards"]]);
+              form.resetFields([["RentingRequirement", "Districts"]]);
+              form.resetFields([["RentingRequirement", "Wards"]]);
             }}
           />
         </Form.Item>

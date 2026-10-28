@@ -90,7 +90,7 @@ const columns = ({
     ),
   },
   {
-    title: "Loại BĐS & Quận",
+    title: "Loại BĐS & Phường",
     dataIndex: [reqType, "PropTypeName"],
     width: 300,
     render: (value, r) => (
@@ -99,7 +99,9 @@ const columns = ({
           Loại: {value?.join(", ")}
         </Typography.Text>
         <Typography.Text onClick={() => handlSelect(r.Id)}>
-          Quận: {r[reqType]?.DistrictName?.join(", ")}
+          {(r[reqType]?.WardName?.length ?? 0) > 0
+            ? `Phường: ${r[reqType]?.WardName?.join(", ")}`
+            : `Khu vực: ${r[reqType]?.DistrictName?.join(", ") ?? "Chưa chọn"}`}
         </Typography.Text>
         {r[reqType]?.Note && (
           <NoteModal

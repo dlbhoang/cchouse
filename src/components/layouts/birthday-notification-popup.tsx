@@ -65,22 +65,23 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
   const avatar = item.Thumbnail?.trim();
 
   return (
-    <div
-      aria-label="Thông báo sinh nhật"
-      className="fixed inset-0 z-[110] flex items-center justify-center bg-[#161b2b]/60 p-4"
-      role="status"
-    >
-      <section className="relative w-full max-w-[768px] overflow-hidden rounded-2xl border border-[#f6d46b] bg-[#082b66] shadow-[0_24px_80px_rgba(0,0,0,.42)]">
+    <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/55 p-4">
+      <dialog
+        open
+        aria-label="Thông báo sinh nhật"
+        aria-modal="true"
+        className="static m-0 w-full max-w-[768px] overflow-hidden rounded-2xl border border-[#f6d46b] bg-[#21185f] p-0 text-white shadow-[0_24px_80px_rgba(0,0,0,.42)]"
+      >
         <button
           type="button"
           aria-label="Đóng thông báo sinh nhật"
           onClick={() => setNotification(undefined)}
-          className="absolute right-3 top-3 z-20 rounded-full bg-[#071b40]/55 p-2 text-white transition hover:bg-[#071b40]/80"
+          className="absolute right-3 top-3 z-20 rounded-full bg-[#21185f]/60 p-2 text-white transition hover:bg-[#21185f]/90"
         >
           <X size={18} aria-hidden="true" />
         </button>
 
-        <div className="relative isolate grid min-h-[429px] grid-cols-[0.88fr_1.4fr] items-center gap-7 overflow-hidden bg-[radial-gradient(circle_at_50%_45%,rgba(255,222,114,.2),transparent_27%),radial-gradient(circle_at_85%_16%,rgba(255,255,255,.2),transparent_18%),linear-gradient(125deg,#0758a9_0%,#0b3d82_56%,#052c67_100%)] px-12 py-10 text-center text-white max-md:min-h-0 max-md:grid-cols-[minmax(88px,0.8fr)_1.6fr] max-md:gap-4 max-md:px-5 max-md:py-8 max-sm:gap-3 max-sm:px-4 max-sm:py-12">
+        <div className="relative isolate grid min-h-[429px] grid-cols-[0.88fr_1.4fr] items-center gap-7 overflow-hidden bg-[radial-gradient(circle_at_50%_45%,rgba(255,222,114,.24),transparent_27%),radial-gradient(circle_at_85%_16%,rgba(255,255,255,.22),transparent_18%),linear-gradient(125deg,#6556cf_0%,#40328f_56%,#241a67_100%)] px-12 py-10 text-center text-white max-md:min-h-0 max-md:grid-cols-[minmax(88px,0.8fr)_1.6fr] max-md:gap-4 max-md:px-5 max-md:py-8 max-sm:gap-3 max-sm:px-4 max-sm:py-12">
           <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
             <div className="absolute -left-8 -top-12 size-28 rounded-full bg-[radial-gradient(circle_at_35%_30%,#fff9d8,#f6d978_38%,#d59d2d_78%)] opacity-90 shadow-[inset_-10px_-12px_20px_rgba(137,82,0,.22)] max-sm:size-16" />
             <div className="absolute left-[18%] -top-10 size-20 rounded-full bg-[radial-gradient(circle_at_35%_30%,#fff,#dbeeff_45%,#6a9bc4)] opacity-90 max-sm:size-12" />
@@ -130,7 +131,7 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
             Xem thông báo
           </Link>
         </div>
-      </section>
+      </dialog>
     </div>
   );
 }

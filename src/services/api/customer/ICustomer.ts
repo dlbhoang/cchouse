@@ -1,7 +1,8 @@
 import { IPropBaseDto } from '../base';
 
 interface IPropRequirementRequest extends IPropBaseDto {
-  Districts: number[];
+  Districts?: number[];
+  Wards?: number[];
   PropTypes: number[];
 
   Direction?: number[];
@@ -18,7 +19,8 @@ export type IPropRentingRequirementRequest = IPropRequirementRequest;
 
 export interface IPropRequirementResponse extends IPropRequirementRequest {
   Id: number;
-  DistrictName: string[];
+  DistrictName?: string[];
+  WardName?: string[];
   PropTypeName: string[];
 
   DirectionName: string[];

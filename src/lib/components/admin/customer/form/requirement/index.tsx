@@ -11,6 +11,7 @@ import {
   LocationFeatureSelect,
   LocationSelect,
   PropTypeSelect,
+  WardSelect,
 } from "@/lib/components/shared/MySelect";
 import { ICustomerRequest } from "@/services/api/customer/ICustomer";
 
@@ -25,10 +26,12 @@ const labelCheckbox = "Chi tiết";
 const RequirementCard = ({ title, form, itemName }: Props) => {
   const provinceIdWatch = Form.useWatch("ProvinceId", form);
   const id = form.getFieldValue("Id");
-  const dataWatch = Form.useWatch([itemName, "Districts"], form);
+  const districtsWatch = Form.useWatch([itemName, "Districts"], form);
+  const wardsWatch = Form.useWatch([itemName, "Wards"], form);
+  const hasArea = (districtsWatch?.length ?? 0) > 0 || (wardsWatch?.length ?? 0) > 0;
 
   const rules: Rule[] | undefined =
-    dataWatch?.length > 0 ? [{ required: true }] : undefined;
+    hasArea ? [{ required: true }] : undefined;
 
   const switchValueToBoolean = (val?: number) => {
     return { checked: val !== undefined && val !== 2 };
@@ -114,9 +117,18 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
         )}
         <Col xs={24} md={12} xl={8}>
           <Form.Item
-            label="Quận / Huyện"
-            name={[itemName, "Districts"]}
+            label="Phường / Xã"
+            name={[itemName, "Wards"]}
             rules={rules}
+          >
+            <WardSelect parentVal={provinceIdWatch} isNew mode="multiple" />
+          </Form.Item>
+        </Col>
+        <Col xs={24} md={12} xl={8}>
+          <Form.Item
+            label="Quận / Huyện (dữ liệu cũ)"
+            name={[itemName, "Districts"]}
+            rules={districtsWatch?.length ? rules : undefined}
             // rules={
             //   rules
             //     ? [
@@ -166,13 +178,13 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
           <Form.Item
             label="Khoảng giá"
             style={{ marginBottom: 0 }}
-            required={dataWatch?.length > 0}
+            required={hasArea}
           >
             <Space>
               <Form.Item
                 name={[itemName, "PriceFrm"]}
                 rules={
-                  dataWatch?.length > 0
+                  hasArea
                     ? [{ required: true, message: "Không để trống!" }]
                     : undefined
                 }
@@ -182,7 +194,7 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
               <Form.Item
                 name={[itemName, "PriceTo"]}
                 rules={
-                  dataWatch?.length > 0
+                  hasArea
                     ? [{ required: true, message: "Không để trống!" }]
                     : undefined
                 }

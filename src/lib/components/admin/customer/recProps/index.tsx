@@ -33,7 +33,7 @@ const RecProps = ({ isModalOpen, handleCancel, model, transType }: Props) => {
         pageSize: 100,
         TransType: transType,
         PropTypeIds: requirement?.PropTypes.toString(),
-        DistrictIds: requirement?.Districts.toString(),
+        DistrictIds: requirement?.Districts?.toString(),
         PriceFrm: requirement?.PriceFrm,
         PriceTo: requirement?.PriceTo,
         WidthFrm: requirement?.Width,
