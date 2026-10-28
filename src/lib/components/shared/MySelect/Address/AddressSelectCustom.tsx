@@ -1,4 +1,3 @@
-import { DownOutlined } from "@ant-design/icons";
 import "./address-select-custom.css";
 import {
   Button,
@@ -11,7 +10,7 @@ import {
   Switch,
   Typography,
 } from "antd";
-import { Check, RefreshCw } from "lucide-react";
+import { Check, ChevronDown, RefreshCw } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { useAdminContext } from "@/lib/stored";
@@ -155,7 +154,7 @@ export const AddressSelectCustom = ({
             <ProvinceSelect
               className="property-address-field-select"
               allowClear={false}
-              suffixIcon={<DownOutlined />}
+              suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
               placeholder={mapMode ? "" : "Chọn"}
               onChange={() => form.resetFields([nameDistrict, nameWard, nameStreet])}
             />
@@ -168,7 +167,7 @@ export const AddressSelectCustom = ({
               <DistrictSelect
                 className="property-address-field-select"
                 allowClear={false}
-                suffixIcon={<DownOutlined />}
+                suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
                 placeholder={mapMode ? "" : "Chọn"}
                 parentVal={provinceWatch}
                 onChange={() => form.resetFields([nameWard, nameStreet])}
@@ -182,7 +181,7 @@ export const AddressSelectCustom = ({
             <WardSelect
               className="property-address-field-select"
               allowClear={false}
-              suffixIcon={<DownOutlined />}
+              suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
               placeholder={mapMode ? "" : "Chọn"}
               parentVal={wardParentVal}
               isNew={isNewAddressWatch}
@@ -196,7 +195,7 @@ export const AddressSelectCustom = ({
             <StreetSelect
               className="property-address-field-select"
               allowClear={false}
-              suffixIcon={<DownOutlined />}
+              suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
               placeholder={mapMode ? "" : "Chọn"}
               parentVal={streetParentVal}
               isNew={isNewAddressWatch}
@@ -331,7 +330,11 @@ export const AddressSelectCustom = ({
         <Typography.Text ellipsis className="property-custom-dropdown-value">
           {addressLabel || (mapMode ? "Chọn khu vực" : "")}
         </Typography.Text>
-        <DownOutlined className="property-custom-dropdown-arrow" />
+        <ChevronDown
+          className="property-custom-dropdown-arrow"
+          size={16}
+          strokeWidth={1.8}
+        />
       </button>
     </Dropdown>
   );
