@@ -30,6 +30,7 @@ type AgencyRecord = {
   type: AgencyType;
   name: string;
   address: string;
+  wardId?: number;
   oldAddress?: string;
   status?: "active" | "hidden";
   updatedAt?: string;
@@ -72,7 +73,11 @@ const emptyAgencyMap = (): AgencyMap => ({
 
 const flattenWard = (ward: WardAgencyData): AgencyRecord[] =>
   agencyTypes.flatMap((type) =>
-    (ward.Agencies[type] ?? []).map((agency) => ({ type, ...agency })),
+    (ward.Agencies[type] ?? []).map((agency) => ({
+      type,
+      ...agency,
+      wardId: ward.WardId,
+    })),
   );
 
 const convertAgencyAddressToOld = (
@@ -180,6 +185,8 @@ function AgencyFloatingField({
 
 export default function AgencyManagerPage() {
   const [wards, setWards] = useState<WardAgencyData[]>([]);
+  const [areaProvinceOptions, setAreaProvinceOptions] = useState<IProvinceResponse[]>([]);
+  const [areaWardOptions, setAreaWardOptions] = useState<IWardResponse[]>([]);
   const [selectedWardId, setSelectedWardId] = useState<number>();
   const [agencySearchInput, setAgencySearchInput] = useState("");
   const [agencySearch, setAgencySearch] = useState("");
@@ -234,11 +241,31 @@ export default function AgencyManagerPage() {
     };
   }, []);
 
-  // Keep the Figma default state unfiltered (the select shows "Chọn") while
-  // showing the initial sample list until an area is chosen.
+  useEffect(() => {
+    let active = true;
+    Promise.all([
+      provinceApi.get({ pageIndex: 1, pageSize: 10000 }),
+      wardApi.get({ pageIndex: 1, pageSize: 10000, IsNew: true }),
+    ])
+      .then(([provincesResponse, wardsResponse]) => {
+        if (!active) return;
+        setAreaProvinceOptions(provincesResponse.data ?? []);
+        setAreaWardOptions(wardsResponse.data ?? []);
+      })
+      .catch(() => {
+        if (!active) return;
+        setAreaProvinceOptions([]);
+        setAreaWardOptions([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const selectedWard =
-    wards.find((ward) => ward.WardId === selectedWardId) ??
-    (selectedWardId === undefined ? wards[0] : undefined);
+    wards.find((ward) => ward.WardId === selectedWardId);
+  const editorSourceWard =
+    wards.find((ward) => ward.WardId === editingWardId) ?? selectedWard;
   const configuredProvinceWardOptions = configuredWardOptions.filter(
     (ward) => ward.ProvinceId === provinceId,
   );
@@ -391,7 +418,7 @@ export default function AgencyManagerPage() {
 
   useEffect(() => {
     if (!dialogOpen || mode !== "old" || !oldDistrictOptions.length) return;
-    const legacyDistrictNumber = selectedWard?.MergedFrom.map(
+    const legacyDistrictNumber = editorSourceWard?.MergedFrom.map(
       (address) => address.match(/\(Q(\d+)\)/)?.[1],
     ).find(Boolean);
     const legacyDistrict = legacyDistrictNumber
@@ -406,7 +433,7 @@ export default function AgencyManagerPage() {
         ? current
         : (legacyDistrict?.Id ?? oldDistrictOptions[0]?.Id),
     );
-  }, [dialogOpen, mode, oldDistrictOptions, selectedWard]);
+  }, [dialogOpen, mode, oldDistrictOptions, editorSourceWard]);
 
   useEffect(() => {
     if (!dialogOpen || mode !== "new" || !formWardId) {
@@ -516,7 +543,7 @@ export default function AgencyManagerPage() {
         if (!active) return;
         const wardOptions = wardsResponse.data ?? [];
         setOldWardOptions(wardOptions);
-        const legacyWardName = selectedWard?.MergedFrom[0]
+        const legacyWardName = editorSourceWard?.MergedFrom[0]
           ?.split("(")[0]
           ?.replace(/^một phần\s+/i, "")
           .trim();
@@ -544,25 +571,36 @@ export default function AgencyManagerPage() {
     return () => {
       active = false;
     };
-  }, [dialogOpen, mode, oldDistrictId, selectedWard]);
+  }, [dialogOpen, mode, oldDistrictId, editorSourceWard]);
   const agencies = useMemo(() => {
     const filter = agencySearch.trim().toLocaleLowerCase("vi");
-    return selectedWard
-      ? flattenWard(selectedWard).filter(
-          (item) =>
-            (agencyTypeFilter === "all" || item.type === agencyTypeFilter) &&
-            (agencyStatusFilter === "all" ||
-              (item.status ?? "active") === agencyStatusFilter) &&
-            (!filter ||
-              `${item.type} ${item.name} ${item.address}`
-                .toLocaleLowerCase("vi")
-                .includes(filter)),
-        )
-      : [];
-  }, [agencySearch, agencyStatusFilter, agencyTypeFilter, selectedWard]);
+    const sourceWards =
+      selectedWardId === undefined ? wards : selectedWard ? [selectedWard] : [];
+    return sourceWards
+      .flatMap(flattenWard)
+      .filter(
+        (item) =>
+          (agencyTypeFilter === "all" || item.type === agencyTypeFilter) &&
+          (agencyStatusFilter === "all" ||
+            (item.status ?? "active") === agencyStatusFilter) &&
+          (!filter ||
+            `${item.type} ${item.name} ${item.address}`
+              .toLocaleLowerCase("vi")
+              .includes(filter)),
+      );
+  }, [agencySearch, agencyStatusFilter, agencyTypeFilter, selectedWard, selectedWardId, wards]);
 
   const selectedAreaValue =
     selectedWardId === undefined ? "" : `new:${selectedWardId}`;
+  const selectedAreaWard = areaWardOptions.find(
+    (ward) => ward.Id === selectedWardId,
+  );
+  const selectedAreaProvince = areaProvinceOptions.find(
+    (province) => province.Id === selectedAreaWard?.ProvinceId,
+  );
+  const areaScopeLabel = selectedAreaWard
+    ? `${withAddressType(selectedAreaProvince?.Type, selectedAreaProvince?.Name)} · ${withAddressType(selectedAreaWard.Type, selectedAreaWard.Name)}`
+    : "Tất cả khu vực";
 
   const saveAgency = async () => {
     if (
@@ -620,9 +658,11 @@ export default function AgencyManagerPage() {
       );
     }
     await lookupApi.saveWardAgencies(formWard.WardId, updatedTarget);
-    next = next.map((ward) =>
-      ward.WardId === formWard.WardId ? updatedTarget : ward,
-    );
+    next = next.some((ward) => ward.WardId === formWard.WardId)
+      ? next.map((ward) =>
+          ward.WardId === formWard.WardId ? updatedTarget : ward,
+        )
+      : [...next, updatedTarget];
     setWards(next);
     setSelectedWardId(formWard.WardId);
     setDialogOpen(false);
@@ -631,13 +671,15 @@ export default function AgencyManagerPage() {
   };
 
   const removeAgency = async () => {
-    if (!selectedWard || !deleteTarget) return;
+    if (!deleteTarget) return;
+    const sourceWard = wards.find((ward) => ward.WardId === deleteTarget.wardId);
+    if (!sourceWard) return;
     const updatedWard = {
-      ...selectedWard,
+      ...sourceWard,
       Agencies: {
-        ...selectedWard.Agencies,
+        ...sourceWard.Agencies,
         [deleteTarget.type]: (
-          selectedWard.Agencies[deleteTarget.type] ?? []
+          sourceWard.Agencies[deleteTarget.type] ?? []
         ).filter(
           (item) =>
             item.name !== deleteTarget.name ||
@@ -645,10 +687,10 @@ export default function AgencyManagerPage() {
         ),
       },
     };
-    await lookupApi.saveWardAgencies(selectedWard.WardId, updatedWard);
+    await lookupApi.saveWardAgencies(sourceWard.WardId, updatedWard);
     setWards((current) =>
       current.map((ward) =>
-        ward.WardId === selectedWard.WardId ? updatedWard : ward,
+        ward.WardId === sourceWard.WardId ? updatedWard : ward,
       ),
     );
     setDeleteTarget(undefined);
@@ -656,8 +698,8 @@ export default function AgencyManagerPage() {
 
   const openEditor = (item?: AgencyRecord) => {
     setEditing(item);
-    setEditingWardId(item ? selectedWard?.WardId : undefined);
-    setFormWardId(selectedWardId ?? wards[0]?.WardId);
+    setEditingWardId(item?.wardId);
+    setFormWardId(item?.wardId ?? selectedWardId);
     setStreetOptions([]);
     setStreetName("");
     setProvinceOptions([]);
@@ -686,7 +728,7 @@ export default function AgencyManagerPage() {
   };
 
   const selectOldAddressMode = () => {
-    const legacyDistrictNumber = selectedWard?.MergedFrom.map(
+    const legacyDistrictNumber = editorSourceWard?.MergedFrom.map(
       (address) => address.match(/\(Q(\d+)\)/)?.[1],
     ).find(Boolean);
     const legacyDistrict = legacyDistrictNumber
@@ -723,11 +765,21 @@ export default function AgencyManagerPage() {
             placeholder="Chọn khu vực"
             searchPlaceholder="Tìm tỉnh/thành phố, phường/xã..."
             aria-label="Khu vực"
-            options={wards.map((ward) => ({
-              value: `new:${ward.WardId}`,
-              label: `${provinceOptions.find((province) => province.Id === configuredWardOptions.find((item) => item.Id === ward.WardId)?.ProvinceId)?.Name ?? "TP. Hồ Chí Minh"} · ${ward.WardType === "phường" ? "Phường" : ward.WardType === "xã" ? "Xã" : "Đặc khu"} ${ward.WardName}`,
-              keywords: `${ward.WardName} ${ward.MergedFrom.join(" ")} ${provinceOptions.find((province) => province.Id === configuredWardOptions.find((item) => item.Id === ward.WardId)?.ProvinceId)?.Name ?? "TP. Hồ Chí Minh"}`,
-            }))}
+            options={areaWardOptions.map((ward) => {
+              const province = areaProvinceOptions.find(
+                (item) => item.Id === ward.ProvinceId,
+              );
+              const provinceName = withAddressType(
+                province?.Type,
+                province?.Name,
+              );
+              const wardName = withAddressType(ward.Type, ward.Name);
+              return {
+                value: `new:${ward.Id}`,
+                label: `${provinceName} · ${wardName}`,
+                keywords: `${wardName} ${ward.DistrictName ?? ""} ${provinceName} ${ward.RefKey ?? ""} ${ward.Slug ?? ""}`,
+              };
+            })}
             onValueChange={(value) => {
               if (value.startsWith("new:"))
                 setSelectedWardId(Number(value.slice(4)));
@@ -834,9 +886,7 @@ export default function AgencyManagerPage() {
               </h2>
               <p className="mt-1 text-xs text-neutral-500">
                 Phạm vi áp dụng:{" "}
-                {selectedWardId !== undefined && selectedWard
-                  ? `Thành phố Hồ Chí Minh · ${selectedWard.WardName}`
-                  : "Thành phố Hồ Chí Minh"}
+                {areaScopeLabel}
               </p>
             </div>
             {!agencies.length ? (
@@ -861,7 +911,7 @@ export default function AgencyManagerPage() {
                     convertAgencyAddressToOld(
                       item.address,
                       wards,
-                      selectedWard?.WardName,
+                      wards.find((ward) => ward.WardId === item.wardId)?.WardName,
                     ) ?? item.oldAddress;
                   const capitalizeWardType = (address: string) =>
                     address.replace(
