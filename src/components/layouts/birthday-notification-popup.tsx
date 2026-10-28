@@ -9,6 +9,10 @@ import userAdminApi from '@/services/api/userAdmin/userAdminApi';
 
 type Props = { userId: number | string };
 
+// Layout instances may remount during route navigation. Keep a dismissal for
+// this tab session so one unread birthday notice doesn't reopen on every page.
+const dismissedBirthdayPopupIds = new Set<string>();
+
 export default function BirthdayNotificationPopup({ userId }: Props) {
   const [notification, setNotification] = useState<INotiUserResponse>();
   const checkedRef = useRef(false);
@@ -23,7 +27,12 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
         const birthday = (response.data ?? [])
           .filter((item) => isBirthdayNotification(item.Notification))
           .sort((a, b) => b.Notification.Id - a.Notification.Id)[0];
-        if (birthday) setNotification(birthday);
+        const dismissalKey = birthday
+          ? `${userId}:${birthday.Notification.Id}`
+          : "";
+        if (birthday && !dismissedBirthdayPopupIds.has(dismissalKey)) {
+          setNotification(birthday);
+        }
       })
       .catch(() => {
         // The notification center remains available if this optional popup fails.
@@ -153,7 +162,12 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
           <button
             type="button"
             aria-label="Đóng thông báo sinh nhật"
-            onClick={() => setNotification(undefined)}
+            onClick={() => {
+              dismissedBirthdayPopupIds.add(
+                `${userId}:${item.Id}`,
+              );
+              setNotification(undefined);
+            }}
             className="absolute right-1 top-1 z-20 rounded-full bg-white/90 p-1.5 text-neutral-700 shadow-md transition hover:bg-white max-sm:p-1"
           >
             <X size={17} aria-hidden="true" />
