@@ -1,5 +1,5 @@
-import { Search, X } from "lucide-react";
 "use client";
+import { Search, X } from "lucide-react";
 import { Card, Input } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
