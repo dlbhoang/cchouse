@@ -235,7 +235,12 @@ export const DesktopView = ({
             <div className="property-field-item property-proptype-item">
               <FloatingField label="Loại BĐS">
                 <Form.Item name="PropTypeIds" noStyle>
-                  <PropTypeSelect mode="multiple" placeholder="Loại BĐS" />
+                  <PropTypeSelect
+                    mode="multiple"
+                    placeholder="Loại BĐS"
+                    showSearch={false}
+                    popupClassName="property-admin-proptype-dropdown"
+                  />
                 </Form.Item>
               </FloatingField>
             </div>

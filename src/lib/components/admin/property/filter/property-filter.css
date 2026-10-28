@@ -294,7 +294,7 @@
 }
 /* Region dropdown panel (Khu vực) --------------------------------- */
 .property-address-dropdown-panel {
-  width: 340px;
+  width: 384px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -303,6 +303,9 @@
   border-radius: 14px !important;
   background: #fff;
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08) !important;
+}
+.property-address-dropdown-panel.map-address-dropdown-panel {
+  width: 340px;
 }
 .property-address-dropdown-toggle {
   display: flex;
@@ -1262,7 +1265,7 @@
 }
 
 .property-admin-price-dropdown .property-price-dropdown-header {
-  height: 48px;
+  height: 52px;
   box-sizing: border-box;
   padding: 0 20px;
   border-bottom: 1px solid var(--pf-price-border);
@@ -1284,25 +1287,25 @@
 .property-admin-price-dropdown .property-price-dropdown-list {
   max-height: none;
   margin: 0;
-  padding: 12px 12px 0;
+  padding: 16px 16px 0;
   gap: 0;
   overflow: visible;
 }
 
 .property-admin-price-dropdown .property-price-dropdown-list li {
-  height: 32px;
+  height: 36px;
 }
 
 .property-admin-price-dropdown .property-price-dropdown-item {
-  height: 32px;
-  min-height: 32px;
+  height: 36px;
+  min-height: 36px;
   box-sizing: border-box;
-  padding: 0 8px;
+  padding: 6px 8px;
   border-radius: 6px;
   color: var(--pf-price-text);
   font-size: 13px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .property-admin-price-dropdown .property-price-dropdown-item:hover,
@@ -1315,7 +1318,7 @@
 }
 
 .property-admin-price-dropdown .property-price-dropdown-section-title {
-  margin: 16px 16px 8px;
+  margin: 24px 16px 12px;
   color: var(--pf-price-text);
   font-size: 12px;
   font-weight: 600;
@@ -1366,13 +1369,13 @@
 
 .property-admin-price-dropdown .property-price-dropdown-footer {
   gap: 8px;
-  padding: 20px 12px 12px;
+  padding: 16px;
 }
 
 .property-admin-price-dropdown .property-price-dropdown-reset-btn,
 .property-admin-price-dropdown .property-price-dropdown-apply-btn {
-  height: 36px;
-  min-height: 36px;
+  height: 40px;
+  min-height: 40px;
   padding: 0 12px;
   gap: 6px;
   border-radius: 8px;
@@ -1972,6 +1975,20 @@
   flex-direction: column;
   gap: 8px;
   box-sizing: border-box;
+}
+
+.property-admin-proptype-dropdown.ant-select-dropdown {
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: calc(100vw - 24px) !important;
+  max-height: 336px;
+  padding: 4px !important;
+}
+
+.property-admin-proptype-dropdown .ant-select-item {
+  min-height: 36px;
+  padding: 8px 12px !important;
+  line-height: 20px;
 }
 
 .property-location-dropdown .property-location-feature-group .ant-checkbox-wrapper {

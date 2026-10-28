@@ -16,6 +16,7 @@ export const PropTypeSelect = ({
       mode={mode}
       placeholder={placeholder}
       allowClear
+      showSearch={props.showSearch}
       options={propType.map((e) => ({
         label: e.Name,
         value: e.Id,

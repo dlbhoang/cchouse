@@ -25,6 +25,7 @@ export type SelectType = {
   label?: string;
   required?: boolean;
   showAllOption?: boolean;
+  showSearch?: boolean;
   className?: string;
   popupClassName?: string;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';

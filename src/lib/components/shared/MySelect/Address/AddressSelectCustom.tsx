@@ -128,7 +128,11 @@ export const AddressSelectCustom = ({
   });
 
   const dropdownRender = () => (
-    <div className="property-address-dropdown-panel">
+    <div
+      className={`property-address-dropdown-panel ${
+        mapMode ? "map-address-dropdown-panel" : ""
+      }`}
+    >
       <div className={mapMode ? "map-address-dropdown-body" : "property-address-dropdown-body"}>
         {!mapMode && (
           <div className="property-address-dropdown-toggle">
