@@ -65,7 +65,7 @@ export const columns = ({
   {
     title: 'Mã nhân viên',
     dataIndex: 'Code',
-    width: 120,
+    width: 110,
     sorter: true,
     render(value, record) {
       return (
@@ -78,7 +78,7 @@ export const columns = ({
   {
     title: 'Tên nhân viên',
     dataIndex: 'Name',
-    width: 230,
+    width: 165,
     render(value, record) {
       const literacy = literacyOptions.find(
         (option) => Number(option.Value) === Number(record.Literacy),
@@ -118,7 +118,7 @@ export const columns = ({
   {
     title: 'Ngày sinh / Giới tính',
     dataIndex: 'DateOfBirth',
-    width: 160,
+    width: 115,
     render(value, record) {
       const gender = record.Sex === 1 ? 'Nam' : record.Sex === 2 ? 'Nữ' : 'Khác';
       return (
@@ -134,7 +134,7 @@ export const columns = ({
   {
     title: 'Quản lý',
     dataIndex: 'ManagerName',
-    width: 170,
+    width: 130,
     render(value, record) {
       return (
         <UserAdminCellLink record={record} onReview={onReview}>
@@ -146,7 +146,7 @@ export const columns = ({
   {
     title: 'Chức vụ',
     dataIndex: 'RoleName',
-    width: 190,
+    width: 140,
     render(value, record) {
       return (
         <UserAdminCellLink record={record} onReview={onReview}>
@@ -158,7 +158,7 @@ export const columns = ({
   {
     title: 'Phòng ban',
     dataIndex: 'Id',
-    width: 150,
+    width: 110,
     render(_value, record) {
       const department = (record as IUserAdminResponse & { Department?: string })
         .Department;
@@ -172,7 +172,7 @@ export const columns = ({
   {
     title: 'Quyền lợi',
     dataIndex: 'Salary',
-    width: 180,
+    width: 130,
     render(value, record) {
       const benefits = [
         safeDisplayValue(value, '' ) !== '' ? 'Lương' : '',
@@ -189,7 +189,7 @@ export const columns = ({
   {
     title: 'Ngày làm việc',
     dataIndex: 'WorkStartDate',
-    width: 140,
+    width: 110,
     render(_value, record) {
       const workStartDate = (record as IUserAdminResponse & { WorkStartDate?: string })
         .WorkStartDate;
@@ -230,7 +230,7 @@ export const columns = ({
         {
           title: 'Thao tác',
           dataIndex: 'Id',
-          width: 112,
+          width: 100,
           render: (_value: number | undefined, record: IUserAdminResponse) => {
             return (
               <Space size={4}>
