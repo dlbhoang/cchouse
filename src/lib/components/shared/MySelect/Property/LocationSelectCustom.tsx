@@ -60,7 +60,11 @@ export const LocationSelectCustom = ({
 
   const dropdownRender = () => (
     <div
-      className={mapMode ? "map-location-dropdown-content" : undefined}
+      className={
+        mapMode
+          ? "map-location-dropdown-content"
+          : "property-location-dropdown-content"
+      }
       style={mapMode ? undefined : contentStyle}
     >
       <Typography.Text strong>Vị trí</Typography.Text>

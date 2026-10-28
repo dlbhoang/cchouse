@@ -1250,7 +1250,8 @@
   --pf-price-text: #0a0a0a;
   --pf-price-muted: #737373;
   --pf-price-subtle: #a1a1aa;
-  width: 340px !important;
+  /* Khoang_gia component in Figma uses the Modal-Sm width (384px). */
+  width: 384px !important;
   max-width: calc(100vw - 24px) !important;
   padding: 0 !important;
   overflow: hidden;
@@ -1964,6 +1965,13 @@
 .property-location-dropdown .property-location-feature-heading {
   display: block;
   margin-bottom: 4px;
+}
+
+.property-location-dropdown-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
 }
 
 .property-location-dropdown .property-location-feature-group .ant-checkbox-wrapper {
