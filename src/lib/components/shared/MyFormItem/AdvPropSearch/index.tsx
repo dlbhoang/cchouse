@@ -1,14 +1,12 @@
 import {
-  Button,
   Dropdown,
   Form,
   type FormInstance,
   Input,
   Space,
-  Tooltip,
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { History, MapPin, RotateCcwIcon } from "lucide-react";
+import { History, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SpeechToText } from "@/lib/components/shared/SpeechToText";
 import AreaSelector, { type AreaSelection } from "@/lib/components/shared/AreaSelector";
@@ -30,6 +28,27 @@ type SuggestItem = {
   label: string;
   onClick?: () => void;
 };
+
+const SearchAreaIcon = () => (
+  <svg
+    width="23"
+    height="23"
+    viewBox="0 0 23 23"
+    fill="none"
+    aria-hidden="true"
+  >
+    <circle cx="11.5" cy="11.5" r="11.5" fill="#2563EB" />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M4.798 7.799a.6.6 0 0 1 .6-.6h6.395a.6.6 0 1 1 0 1.2H5.398a.6.6 0 0 1-.6-.6Zm0 3.198a.6.6 0 0 1 .6-.6h6.395a.6.6 0 1 1 0 1.2H5.398a.6.6 0 0 1-.6-.6Zm0 3.197a.6.6 0 0 1 .6-.6h6.395a.6.6 0 1 1 0 1.2H5.398a.6.6 0 0 1-.6-.6Z"
+      fill="#fff"
+    />
+    <circle cx="3.299" cy="7.799" r=".799" fill="#fff" />
+    <circle cx="3.299" cy="10.997" r=".799" fill="#fff" />
+    <circle cx="3.299" cy="14.194" r=".799" fill="#fff" />
+  </svg>
+);
 
 export const AdvPropSearch = ({
   form,
@@ -193,7 +212,7 @@ export const AdvPropSearch = ({
             setAreaSelectorOpen(true);
           }}
         >
-          <MapPin size={14} color="#0588f0" />
+          <SearchAreaIcon />
           <span>Chọn khu vực (thành phố, quận huyện, phường, xã...)</span>
         </Space>
       </div>
@@ -211,7 +230,7 @@ export const AdvPropSearch = ({
       overlayClassName="adv-prop-search-dropdown"
       dropdownRender={() => dropdownContent}
       overlayStyle={{
-        width: areaSelectorOpen ? 384 : "min(760px, calc(100vw - 32px))",
+        width: areaSelectorOpen ? 384 : "min(916px, calc(100vw - 32px))",
       }}
     >
       <Form.Item name="search" noStyle>

@@ -90,14 +90,16 @@
 }
 
 .adv-prop-search-area-action {
-  color: #3e3e3e;
+  color: #3b82f6;
   cursor: pointer;
   font-size: 13px;
+  font-weight: 600;
   line-height: 18px;
 }
 
 .adv-prop-search-area-action svg {
-  color: #3e3e3e;
+  color: #2563eb;
+  flex: 0 0 23px;
 }
 
 @media (max-width: 720px) {

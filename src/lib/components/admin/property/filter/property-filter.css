@@ -1250,8 +1250,8 @@
   --pf-price-text: #0a0a0a;
   --pf-price-muted: #737373;
   --pf-price-subtle: #a1a1aa;
-  /* Match the Figma Khoang_gia popup: 340px wide with compact 32px options. */
-  width: 340px !important;
+  /* Figma Khoang_gia uses the shared Modal-Sm width (384px). */
+  width: 384px !important;
   max-width: calc(100vw - 24px) !important;
   padding: 0 !important;
   overflow: hidden;
