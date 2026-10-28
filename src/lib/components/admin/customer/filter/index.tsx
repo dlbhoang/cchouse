@@ -116,7 +116,7 @@ const CustomerFilter = ({
       layout="vertical"
     >
       <Row gutter={[12, 12]}>
-        <Col xs={24} md={8} xl={3}>
+        <Col xs={24} md={8} xl={4}>
           <Form.Item name="Type" noStyle>
             <CustomerTypeSelect className="w-full" placeholder="Khách hàng" />
           </Form.Item>
@@ -124,7 +124,7 @@ const CustomerFilter = ({
         <Col xs={24} md={8} xl={4}>
           <DateFilter form={form} />
         </Col>
-        <Col xs={24} xl={17}>
+        <Col xs={24} xl={16}>
           <SearchInput
             form={form}
             placeholder="Tìm theo tên, số điện thoại"
@@ -166,7 +166,7 @@ const CustomerFilter = ({
         <Col xs={24} md={8} xl={5}>
           <AreaFilter form={form} />
         </Col>
-        <Col xs={24} xl={5} className="flex justify-end">
+        <Col xs={24} xl={4} className="flex justify-end">
           <Tooltip title="Đặt lại bộ lọc">
             <Button
               aria-label="Đặt lại bộ lọc"
