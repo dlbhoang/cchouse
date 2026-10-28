@@ -88,13 +88,14 @@ const CustomerFilter = ({
               allowClear
               placeholder="Khách hàng"
               aria-label="Lọc theo nhân sự chăm sóc"
+              className="w-full"
             />
           </Form.Item>
         </Col>
-        <Col xs={24} md={8} xl={5}>
+        <Col xs={24} md={8} xl={4}>
           <DateFilter form={form} />
         </Col>
-        <Col xs={24} xl={16}>
+        <Col xs={24} xl={17}>
           <SearchInput
             form={form}
             placeholder="Tìm tên, số điện thoại,..."
@@ -105,7 +106,7 @@ const CustomerFilter = ({
 
         <Col xs={24} md={8} xl={5}>
           <Form.Item name="Type" noStyle>
-            <CustomerTypeSelect />
+            <CustomerTypeSelect className="w-full" />
           </Form.Item>
         </Col>
         <Col xs={24} md={8} xl={4}>
@@ -151,7 +152,11 @@ const CustomerFilter = ({
         <Col xs={24} md={8} xl={5}>
           <AreaFilter form={form} />
         </Col>
-        <Col xs={24} xl={5} className="flex justify-end">
+        <Col
+          xs={24}
+          xl={5}
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
           <Tooltip title="Đặt lại bộ lọc">
             <Button
               aria-label="Đặt lại bộ lọc"
