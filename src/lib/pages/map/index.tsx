@@ -7,6 +7,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import PropertyFilter from "@/lib/components/admin/property/filter";
 import { PropListMap } from "@/lib/components/admin/property/propListMap";
+import PropertyDetailDialog from "@/lib/components/admin/property/detail-dialog";
 import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import { hasMapCoordinates } from "@/lib/core/utils/map-coordinates";
@@ -15,7 +16,6 @@ import type { IPropAdminMap, IPropResponse } from "@/lib/interfaces/Property/IPr
 import { useAdminContext } from "@/lib/stored";
 import propertyApi from "@/services/api/property/propertyApi";
 import { MapServices } from "@/services/api/services/mapServices";
-import PropMapDetail from "./propDetail";
 import { mapReviewFixtures, mapReviewPolygon } from "./review-fixtures";
 import "./map-page.css";
 
@@ -276,7 +276,11 @@ const MapPage = () => {
             {isResultsOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
           </button>
         </section>
-        {detail && <PropMapDetail data={detail} onClose={closeDetail} />}
+        <PropertyDetailDialog
+          open={Boolean(detail)}
+          data={detail}
+          onClose={closeDetail}
+        />
       </main>
     </ConfigProvider>
   );

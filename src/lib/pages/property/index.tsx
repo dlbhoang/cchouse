@@ -5,8 +5,10 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { mutate } from "swr";
 import PropertyFilter from "@/lib/components/admin/property/filter";
 import { PropertyTable } from "@/lib/components/admin/property/table";
+import PropertyDetailDialog from "@/lib/components/admin/property/detail-dialog";
 import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
+import type { IPropResponse } from "@/lib/interfaces/Property/IProp";
 import type { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
 import PropertyFormModal from "@/lib/pages/property/prop-detail";
 import propertyApi from "@/services/api/property/propertyApi";
@@ -55,6 +57,9 @@ const PropertyPage = ({ transType }: Props) => {
 
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [selectedPropId, setSelectedPropId] = useState<number>();
+  const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [detailError, setDetailError] = useState(false);
   const [resultsTotal, setResultsTotal] = useState(0);
   const [addTransType, setAddTransType] = useState(transType);
   const [addQuery, setAddQuery] = useState<{
@@ -106,14 +111,19 @@ const PropertyPage = ({ transType }: Props) => {
   const handleCloseModal = useCallback(() => {
     setFormModalOpen(false);
     setSelectedPropId(undefined);
+    setSelectedProperty(undefined);
+    setDetailLoading(false);
+    setDetailError(false);
     setAddQuery(undefined);
     clearModalParams();
   }, [clearModalParams]);
 
   const handleOpenDetail = useCallback((id: number) => {
     setSelectedPropId(id);
+    setSelectedProperty(undefined);
+    setDetailError(false);
     setAddQuery(undefined);
-    setFormModalOpen(true);
+    setFormModalOpen(false);
   }, []);
 
   const handleOpenAdd = useCallback(
@@ -128,6 +138,7 @@ const PropertyPage = ({ transType }: Props) => {
       };
     }) => {
       setSelectedPropId(undefined);
+      setSelectedProperty(undefined);
       setAddTransType(opts?.transType ?? transType);
       setAddQuery(opts?.query);
       setFormModalOpen(true);
@@ -136,15 +147,46 @@ const PropertyPage = ({ transType }: Props) => {
   );
 
   useEffect(() => {
+    let active = true;
+    const fetchDetail = async () => {
+      if (!selectedPropId) {
+        setSelectedProperty(undefined);
+        setDetailLoading(false);
+        return;
+      }
+
+      setDetailLoading(true);
+      setDetailError(false);
+      try {
+        const response = await propertyApi.getById(selectedPropId);
+        if (!response.data?.Id) throw new Error("Property not found");
+        if (active) setSelectedProperty(response.data);
+      } catch {
+        if (active) setDetailError(true);
+      } finally {
+        if (active) setDetailLoading(false);
+      }
+    };
+
+    fetchDetail();
+    return () => {
+      active = false;
+    };
+  }, [selectedPropId]);
+
+  useEffect(() => {
     if (modalParams.openPropId) {
       setSelectedPropId(modalParams.openPropId);
+      setSelectedProperty(undefined);
+      setDetailError(false);
       setAddQuery(undefined);
-      setFormModalOpen(true);
+      setFormModalOpen(false);
       return;
     }
 
     if (modalParams.isAddAction) {
       setSelectedPropId(undefined);
+      setSelectedProperty(undefined);
       setAddTransType(transType);
       setAddQuery({
         AddressNumber: modalParams.addressNumber,
@@ -244,6 +286,13 @@ const PropertyPage = ({ transType }: Props) => {
           id={selectedPropId}
           transType={addTransType}
           query={addQuery}
+        />
+        <PropertyDetailDialog
+          open={Boolean(selectedPropId)}
+          data={selectedProperty}
+          loading={detailLoading}
+          error={detailError}
+          onClose={handleCloseModal}
         />
       </>
     )

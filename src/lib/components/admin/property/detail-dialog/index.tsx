@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Alert, Modal, Spin } from "antd";
 import { X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, type ReactNode } from "react";
@@ -13,11 +13,15 @@ import type { IMyUploadFile } from "@/lib/interfaces/custom/IMyUploadFile";
 import type { IPropResponse } from "@/lib/interfaces/Property/IProp";
 import imagesApi from "@/services/api/imagesApi";
 import { fileServices } from "@/services/api/services/fileServices";
+import "./property-detail-dialog.css";
 
 type DetailTab = "overview" | "media" | "phone" | "history";
 
 type Prop = {
-  data: IPropResponse;
+  open: boolean;
+  data?: IPropResponse;
+  loading?: boolean;
+  error?: boolean;
   onClose: () => void;
 };
 
@@ -36,7 +40,7 @@ const hasValue = (value: unknown): boolean => {
 };
 
 const DetailField = ({ label, value }: { label: string; value: unknown }) => (
-  <div className="admin-map-detail-field">
+  <div className="property-detail-dialog-field">
     <span>{label}</span>
     <strong>{hasValue(value) ? display(value) : "—"}</strong>
   </div>
@@ -54,9 +58,9 @@ const DetailSection = ({
   children?: ReactNode;
 }) => {
   return (
-    <section className="admin-map-detail-section">
+    <section className="property-detail-dialog-section">
       <h3>{title}</h3>
-      <div className="admin-map-detail-grid">
+      <div className="property-detail-dialog-grid">
         {fields.map((field) => (
           <DetailField key={field.label} {...field} />
         ))}
@@ -66,20 +70,32 @@ const DetailSection = ({
   );
 };
 
-const PropMapDetail = ({ data, onClose }: Prop) => {
+const PropertyDetailDialog = ({
+  open,
+  data,
+  loading = false,
+  error = false,
+  onClose,
+}: Prop) => {
   const { data: session } = useSession();
   const [images, setImages] = useState<IMyUploadFile[]>([]);
   const [activeTab, setActiveTab] = useState<DetailTab>("overview");
-  const propAddress = data.PropAddress;
+  const propAddress = data?.PropAddress;
   const canViewPhone =
-    [1, 2].includes(session?.user.RoleId ?? 0) ||
-    session?.user.Id === data.UserAdminId ||
-    !data.IsHidePhone;
-  const phones = data.CustomerPhone?.toString().split(",").filter(Boolean) ?? [];
+    Boolean(data) && (
+      [1, 2].includes(session?.user.RoleId ?? 0) ||
+      session?.user.Id === data?.UserAdminId ||
+      !data?.IsHidePhone
+    );
+  const phones = data?.CustomerPhone?.toString().split(",").filter(Boolean) ?? [];
 
   useEffect(() => {
     let active = true;
     const fetchData = async () => {
+      if (!open || !data) {
+        setImages([]);
+        return;
+      }
       const result = await imagesApi.get({
         ContentId: Number(data.Id),
         TableName: ETableName.Property,
@@ -127,7 +143,7 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
     return () => {
       active = false;
     };
-  }, [data.Id]);
+  }, [data, open]);
 
   const tabs: { id: DetailTab; label: string }[] = [
     { id: "overview", label: "Tổng quan" },
@@ -138,24 +154,31 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
 
   return (
     <Modal
-      open
+      open={open}
       onCancel={onClose}
       footer={null}
       title={null}
       width={960}
       centered
-      className="admin-map-detail-modal"
-      rootClassName="admin-map-detail-root"
+      className="property-detail-dialog-modal"
+      rootClassName="property-detail-dialog-root"
       closeIcon={<X size={20} />}
       destroyOnClose
     >
-      <div className="admin-map-detail-dialog">
-        <header className="admin-map-detail-header">
+      {loading ? (
+        <div className="property-detail-dialog-loading"><Spin size="large" /></div>
+      ) : error ? (
+        <div className="property-detail-dialog-loading">
+          <Alert type="error" showIcon message="Không tải được chi tiết bất động sản." />
+        </div>
+      ) : data && propAddress ? (
+      <div className="property-detail-dialog">
+        <header className="property-detail-dialog-header">
           <h2>CHI TIẾT BẤT ĐỘNG SẢN</h2>
         </header>
 
-        <div className="admin-map-detail-toolbar">
-          <nav className="admin-map-detail-tabs" aria-label="Chi tiết bất động sản">
+        <div className="property-detail-dialog-toolbar">
+          <nav className="property-detail-dialog-tabs" aria-label="Chi tiết bất động sản">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -167,20 +190,20 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
               </button>
             ))}
           </nav>
-          <div className="admin-map-detail-audit">
+          <div className="property-detail-dialog-audit">
             <span>Người nhập: <strong>{display(data.UserAdminName || data.CreatedBy)}</strong></span>
             <span>Ngày nhập: <strong>{FormatDate(data.CreatedDate)}</strong></span>
           </div>
         </div>
 
-        <div className="admin-map-detail-summary">
+        <div className="property-detail-dialog-summary">
           <div><span>Mã BĐS:</span><strong>{data.Id}</strong></div>
           <div><span>Địa chỉ:</span><strong>{display(propAddress.DisplayAddress)}</strong></div>
         </div>
 
-        <div className="admin-map-detail-scroll">
+        <div className="property-detail-dialog-scroll">
           {activeTab === "overview" && (
-            <div className="admin-map-detail-overview">
+            <div className="property-detail-dialog-overview">
               <DetailSection
                 title="Thông tin chính"
                 fields={[
@@ -242,9 +265,9 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
           )}
 
           {activeTab === "media" && (
-            <div className="admin-map-detail-media">
+            <div className="property-detail-dialog-media">
               <DetailSection title="Hình ảnh / tài liệu">
-                <div className="admin-map-detail-media-content">
+                <div className="property-detail-dialog-media-content">
                   {images.length ? <ImagesPreview images={images} imgWidth={120} /> : <p>Chưa có hình ảnh</p>}
                 </div>
               </DetailSection>
@@ -256,7 +279,7 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
 
           {activeTab === "phone" && (
             <DetailSection title="Thông tin liên hệ">
-              <div className="admin-map-detail-phone">
+              <div className="property-detail-dialog-phone">
                 {canViewPhone ? (
                   phones.length ? <RenderPhone phones={phones} /> : <span>Chưa có số điện thoại</span>
                 ) : (
@@ -268,15 +291,16 @@ const PropMapDetail = ({ data, onClose }: Prop) => {
 
           {activeTab === "history" && (
             <DetailSection title="Lịch sử thay đổi">
-              <div className="admin-map-detail-history">
+              <div className="property-detail-dialog-history">
                 <HistoryTree instanceId={data.Id} TableName="tblProp" />
               </div>
             </DetailSection>
           )}
         </div>
       </div>
+      ) : null}
     </Modal>
   );
 };
 
-export default PropMapDetail;
+export default PropertyDetailDialog;
