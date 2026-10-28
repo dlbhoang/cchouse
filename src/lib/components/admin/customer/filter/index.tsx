@@ -188,6 +188,12 @@ const CustomerFilter = ({
           </div>
         </Col>
         <Col span={24}>
+          <Form.Item name="PriceFrm" hidden>
+            <Input />
+          </Form.Item>
+          <Form.Item name="PriceTo" hidden>
+            <Input />
+          </Form.Item>
           <Form.Item name="TransType" hidden>
             <Input />
           </Form.Item>
