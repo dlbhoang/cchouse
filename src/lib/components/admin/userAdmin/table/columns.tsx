@@ -10,6 +10,26 @@ import { IUserAdminResponse } from '@/services/api/userAdmin/IUserAdmin';
 
 const { Text, Paragraph } = Typography;
 
+function safeDisplayValue(value: unknown, fallback = '—') {
+  if (typeof value !== 'string' && typeof value !== 'number') return fallback;
+  const text = String(value).trim();
+  if (
+    !text ||
+    /^(?:(?:undefined|null|nan)\s*(?:[-–,/|]\s*)?)+$/i.test(text)
+  ) {
+    return fallback;
+  }
+  return text;
+}
+
+function safeDisplayList(value: unknown, fallback = 'Chưa cấu hình') {
+  if (!Array.isArray(value)) return safeDisplayValue(value, fallback);
+  const values = value
+    .map((item) => safeDisplayValue(item, ''))
+    .filter(Boolean);
+  return values.length ? values.join(', ') : fallback;
+}
+
 type CellLinkProps = {
   record: IUserAdminResponse;
   onReview: (item: IUserAdminResponse) => void;
@@ -118,10 +138,10 @@ export const columns = ({
         <UserAdminCellLink record={record} onReview={onReview}>
           <Space direction="vertical">
             <Typography.Text>
-              Loại giao dịch: {value?.join(', ')}
+              Loại giao dịch: {safeDisplayList(value)}
             </Typography.Text>
             <Typography.Text>
-              Vị trí: {record.UserAccess?.DisplayLocations?.join(', ')}
+              Vị trí: {safeDisplayList(record.UserAccess?.DisplayLocations)}
             </Typography.Text>
           </Space>
         </UserAdminCellLink>
@@ -135,16 +155,14 @@ export const columns = ({
     render: (val, record) => (
       <UserAdminCellLink record={record} onReview={onReview}>
         <Space direction="vertical">
-          <Text>{`Giá: ${record.UserAccess?.PriceFrm ?? '—'} - ${record.UserAccess?.PriceTo ?? '—'} (tỷ)`}</Text>
+          <Text>{`Giá: ${safeDisplayValue(record.UserAccess?.PriceFrm)} - ${safeDisplayValue(record.UserAccess?.PriceTo)} (tỷ)`}</Text>
           <Paragraph
             ellipsis={{ rows: 2, expandable: true, symbol: 'xem thêm' }}
           >
             Quận:{' '}
-            {val?.length === districtLength
+            {Array.isArray(val) && val.length === districtLength
               ? 'Tất cả'
-              : val?.length
-                ? val.join(', ')
-                : 'Chưa chọn'}
+              : safeDisplayList(val, 'Chưa chọn')}
           </Paragraph>
         </Space>
       </UserAdminCellLink>
@@ -157,16 +175,14 @@ export const columns = ({
     render: (val, record) => (
       <UserAdminCellLink record={record} onReview={onReview}>
         <Space direction="vertical">
-          <Text>{`Giá: ${record.UserAccess?.PriceRentFrm ?? '—'} - ${record.UserAccess?.PriceRentTo ?? '—'} (triệu)`}</Text>
+          <Text>{`Giá: ${safeDisplayValue(record.UserAccess?.PriceRentFrm)} - ${safeDisplayValue(record.UserAccess?.PriceRentTo)} (triệu)`}</Text>
           <Paragraph
             ellipsis={{ rows: 2, expandable: true, symbol: 'xem thêm' }}
           >
             Quận:{' '}
-            {val?.length === districtLength
+            {Array.isArray(val) && val.length === districtLength
               ? 'Tất cả'
-              : val?.length
-                ? val.join(', ')
-                : 'Chưa chọn'}
+              : safeDisplayList(val, 'Chưa chọn')}
           </Paragraph>
         </Space>
       </UserAdminCellLink>
@@ -200,7 +216,9 @@ export const columns = ({
               Hoa hồng:{' '}
               {record.Commission ? `${record.Commission}%` : 'Không có'}
             </Typography.Text>
-            <Typography.Text>Quản lý: {record.ManagerName}</Typography.Text>
+            <Typography.Text>
+              Quản lý: {safeDisplayValue(record.ManagerName, 'Chưa phân công')}
+            </Typography.Text>
           </Space>
         </UserAdminCellLink>
       );

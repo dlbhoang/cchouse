@@ -907,11 +907,16 @@
 }
 
 @media (max-width: 640px) {
-  .property-page-content { padding: 0; }
+  .property-page-content {
+    padding: 0 0 calc(88px + env(safe-area-inset-bottom));
+  }
   .property-page-header { align-items: stretch; flex-direction: column; }
 }
 
 @media (max-width: 767px) {
+  .property-page-content {
+    padding: 4px 4px calc(88px + env(safe-area-inset-bottom));
+  }
   .property-add-button { display: none; }
   .property-add-icon-button {
     display: inline-flex;

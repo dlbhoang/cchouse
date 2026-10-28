@@ -51,6 +51,8 @@ type Props = {
   /** Tên field (Form) cho ô "Tờ bản đồ". */
   nameMapSheet?: string;
   mapMode?: boolean;
+  /** Keep the address mode toggle while hiding fields irrelevant to region-only filters. */
+  hideParcelFields?: boolean;
 };
 
 export const AddressSelectCustom = ({
@@ -65,6 +67,7 @@ export const AddressSelectCustom = ({
   nameLandParcel = "LandParcelNumber",
   nameMapSheet = "MapSheetNo",
   mapMode = false,
+  hideParcelFields = false,
 }: Props) => {
   const { districts, propType } = useAdminContext();
   const provinceWatch = Form.useWatch(nameProvince, form);
@@ -211,7 +214,7 @@ export const AddressSelectCustom = ({
           </AddressField>
         )}
 
-        {!mapMode && (
+        {!mapMode && !hideParcelFields && (
           <Row gutter={12}>
             <Col span={12}>
               <AddressField label="Thửa đất">

@@ -168,7 +168,7 @@ const CustomerFilter = ({
               aria-label="Đặt lại bộ lọc"
               icon={<RotateCcw size={16} strokeWidth={1.8} />}
               onClick={handleRefresh}
-              style={{ color: '#0788f5', borderColor: '#0788f5' }}
+              style={{ color: '#0588f0', borderColor: '#0588f0' }}
             />
           </Tooltip>
         </Col>
@@ -181,7 +181,7 @@ const CustomerFilter = ({
                 type="primary"
                 icon={<Plus size={16} strokeWidth={1.8} />}
                 onClick={onCreateCustomer}
-                style={{ backgroundColor: '#0788f5', borderColor: '#0788f5' }}
+                style={{ backgroundColor: '#0588f0', borderColor: '#0588f0' }}
               >
                 Thêm mới
               </Button>

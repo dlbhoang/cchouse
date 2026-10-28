@@ -2,11 +2,12 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 
 import {Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Modal} from "antd";
+import { Form, Modal } from "antd";
 import { Input } from "@/components/ui/input";
 import { SearchableSelect } from "@/components/ui/searchable-select";
+import { AddressSelectCustom } from "@/lib/components/shared/MySelect/Address/AddressSelectCustom";
 import {
   WARD_AGENCIES,
   type AgencyMap,
@@ -21,6 +22,7 @@ import type {
 } from "@/lib/interfaces/ConfigAddress/IConfigAddress";
 import districtApi from "@/services/api/districtApi";
 import lookupApi from "@/services/api/lookupApi";
+import mergeWardApi from "@/services/api/mergeWardApi";
 import provinceApi from "@/services/api/provinceApi";
 import streetApi from "@/services/api/streetApi";
 import wardApi from "@/services/api/wardApi";
@@ -40,6 +42,22 @@ type AgencyAddressOption = Pick<
   "Id" | "Name" | "Type" | "ProvinceId" | "DistrictId"
 >;
 type AgencyStatusFilter = "all" | "active" | "hidden";
+type AgencyAreaFilter = {
+  isNewAddress: boolean;
+  provinceId?: number;
+  districtId?: number;
+  wardId?: number;
+  newWardId?: number;
+  streetName?: string;
+  label: string;
+};
+type AgencyWardMerge = {
+  OldDistrictId: number;
+  OldDistrictName: string;
+  OldWardId: number;
+  OldWardName: string;
+  NewWardId: number;
+};
 
 const agencyTypes: AgencyType[] = [
   "Ủy ban nhân dân phường",
@@ -168,7 +186,7 @@ function AgencyFloatingField({
       <label
         htmlFor={id}
         aria-hidden="true"
-        className={`pointer-events-none absolute left-3 z-10 flex -translate-y-1/2 items-center gap-1 bg-white px-1 transition-all duration-200 ease-out group-focus-within/agency-field:top-0 group-focus-within/agency-field:text-xs group-focus-within/agency-field:text-[#0588f0] ${
+        className={`pointer-events-none absolute left-3 z-10 flex -translate-y-1/2 items-center gap-1 bg-white px-1 transition-all duration-200 ease-out group-focus-within/agency-field:top-0 group-focus-within/agency-field:text-xs group-focus-within/agency-field:text-[#6858d6] ${
           filled
             ? "top-0 text-xs text-neutral-600"
             : "top-1/2 text-sm text-neutral-500"
@@ -184,13 +202,19 @@ function AgencyFloatingField({
 }
 
 export default function AgencyManagerPage() {
+  const [areaFilterForm] = Form.useForm();
   const [wards, setWards] = useState<WardAgencyData[]>([]);
-  const [areaProvinceOptions, setAreaProvinceOptions] = useState<IProvinceResponse[]>([]);
+  const areaProvinceOptionsRef = useRef<IProvinceResponse[]>([]);
   const [areaWardOptions, setAreaWardOptions] = useState<IWardResponse[]>([]);
+  const [areaWardMerges, setAreaWardMerges] = useState<AgencyWardMerge[]>([]);
+  const [agencyAreaFilter, setAgencyAreaFilter] = useState<AgencyAreaFilter>({
+    isNewAddress: true,
+    label: "Thành phố Hồ Chí Minh",
+  });
   const [selectedWardId, setSelectedWardId] = useState<number>();
   const [agencySearchInput, setAgencySearchInput] = useState("");
   const [agencySearch, setAgencySearch] = useState("");
-  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyType | "all">("all");
+  const [agencyTypeFilter, setAgencyTypeFilter] = useState<AgencyType>("Văn phòng công chứng");
   const [agencyStatusFilter, setAgencyStatusFilter] =
     useState<AgencyStatusFilter>("all");
   const [mode, setMode] = useState<"new" | "old">("new");
@@ -243,18 +267,33 @@ export default function AgencyManagerPage() {
 
   useEffect(() => {
     let active = true;
+    mergeWardApi
+      .get()
+      .then((response) => {
+        if (active) setAreaWardMerges(response.data ?? []);
+      })
+      .catch(() => {
+        if (active) setAreaWardMerges([]);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
     Promise.all([
       provinceApi.get({ pageIndex: 1, pageSize: 10000 }),
       wardApi.get({ pageIndex: 1, pageSize: 10000, IsNew: true }),
     ])
       .then(([provincesResponse, wardsResponse]) => {
         if (!active) return;
-        setAreaProvinceOptions(provincesResponse.data ?? []);
+        areaProvinceOptionsRef.current = provincesResponse.data ?? [];
         setAreaWardOptions(wardsResponse.data ?? []);
       })
       .catch(() => {
         if (!active) return;
-        setAreaProvinceOptions([]);
+        areaProvinceOptionsRef.current = [];
         setAreaWardOptions([]);
       });
     return () => {
@@ -572,35 +611,68 @@ export default function AgencyManagerPage() {
       active = false;
     };
   }, [dialogOpen, mode, oldDistrictId, editorSourceWard]);
+  const areaWardIds = useMemo(() => {
+    if (agencyAreaFilter.wardId !== undefined) {
+      return agencyAreaFilter.isNewAddress
+        ? [agencyAreaFilter.wardId]
+        : areaWardMerges
+            .filter((merge) => merge.OldWardId === agencyAreaFilter.wardId)
+            .map((merge) => merge.NewWardId);
+    }
+    if (agencyAreaFilter.districtId !== undefined) {
+      return areaWardMerges
+        .filter((merge) => merge.OldDistrictId === agencyAreaFilter.districtId)
+        .map((merge) => merge.NewWardId);
+    }
+    if (agencyAreaFilter.provinceId !== undefined) {
+      return areaWardOptions
+        .filter((ward) => ward.ProvinceId === agencyAreaFilter.provinceId)
+        .map((ward) => ward.Id);
+    }
+    return undefined;
+  }, [agencyAreaFilter, areaWardMerges, areaWardOptions]);
+  const areaWardIdSet = useMemo(
+    () => (areaWardIds ? new Set(areaWardIds) : undefined),
+    [areaWardIds],
+  );
+
   const agencies = useMemo(() => {
     const filter = agencySearch.trim().toLocaleLowerCase("vi");
-    const sourceWards =
-      selectedWardId === undefined ? wards : selectedWard ? [selectedWard] : [];
+    const sourceWards = areaWardIdSet
+      ? wards.filter((ward) => areaWardIdSet.has(ward.WardId))
+      : wards;
     return sourceWards
       .flatMap(flattenWard)
       .filter(
         (item) =>
-          (agencyTypeFilter === "all" || item.type === agencyTypeFilter) &&
+          item.type === agencyTypeFilter &&
           (agencyStatusFilter === "all" ||
             (item.status ?? "active") === agencyStatusFilter) &&
+          (!agencyAreaFilter.streetName ||
+            normalizeAddressName(item.address).includes(
+              normalizeAddressName(agencyAreaFilter.streetName),
+            )) &&
           (!filter ||
             `${item.type} ${item.name} ${item.address}`
               .toLocaleLowerCase("vi")
               .includes(filter)),
       );
-  }, [agencySearch, agencyStatusFilter, agencyTypeFilter, selectedWard, selectedWardId, wards]);
+  }, [
+    agencyAreaFilter.streetName,
+    agencySearch,
+    agencyStatusFilter,
+    agencyTypeFilter,
+    areaWardIdSet,
+    selectedWard,
+    selectedWardId,
+    wards,
+  ]);
 
-  const selectedAreaValue =
-    selectedWardId === undefined ? "" : `new:${selectedWardId}`;
-  const selectedAreaWard = areaWardOptions.find(
-    (ward) => ward.Id === selectedWardId,
-  );
-  const selectedAreaProvince = areaProvinceOptions.find(
-    (province) => province.Id === selectedAreaWard?.ProvinceId,
-  );
-  const areaScopeLabel = selectedAreaWard
-    ? `${withAddressType(selectedAreaProvince?.Type, selectedAreaProvince?.Name)} · ${withAddressType(selectedAreaWard.Type, selectedAreaWard.Name)}`
-    : "Tất cả khu vực";
+  const areaScopeLabel = agencyAreaFilter.label;
+  const agencyCount =
+    agencyStatusFilter === "all"
+      ? agencies.filter((item) => (item.status ?? "active") === "active").length
+      : agencies.length;
 
   const saveAgency = async () => {
     if (
@@ -696,6 +768,67 @@ export default function AgencyManagerPage() {
     setDeleteTarget(undefined);
   };
 
+  const applyAreaFilters = async (values: Record<string, unknown>) => {
+    const asId = (value: unknown) =>
+      value === undefined || value === null || value === ""
+        ? undefined
+        : Number(value);
+    const isNewAddress = values.AreaIsNewAddress !== false;
+    const nextProvinceId = asId(values.AreaProvinceId);
+    const districtId = asId(values.AreaDistrictId);
+    const wardId = asId(values.AreaWardId);
+    const newWardId = isNewAddress
+      ? wardId
+      : areaWardMerges.find((merge) => merge.OldWardId === wardId)?.NewWardId;
+    let nextStreetName = "";
+    const streetId = asId(values.AreaStreetId);
+    if (streetId) {
+      try {
+        const result = await streetApi.getById(streetId);
+        nextStreetName = result.data?.Name?.replace(/^đường\s+/i, "") ?? "";
+      } catch {
+        nextStreetName = "";
+      }
+    }
+
+    const selectedProvince = areaProvinceOptionsRef.current.find(
+      (province) => province.Id === nextProvinceId,
+    );
+    const selectedNewWard = areaWardOptions.find(
+      (ward) => ward.Id === newWardId,
+    );
+    const mergeForOldWard = areaWardMerges.find(
+      (merge) => merge.OldWardId === wardId,
+    );
+    const selectedDistrictName = districtId
+      ? areaWardMerges.find((merge) => merge.OldDistrictId === districtId)
+          ?.OldDistrictName
+      : undefined;
+    const label = [
+      selectedProvince
+        ? withAddressType(selectedProvince.Type, selectedProvince.Name)
+        : undefined,
+      !isNewAddress && selectedDistrictName,
+      isNewAddress && selectedNewWard
+        ? withAddressType(selectedNewWard.Type, selectedNewWard.Name)
+        : mergeForOldWard?.OldWardName,
+      nextStreetName,
+    ]
+      .filter(Boolean)
+      .join(" · ") || "Thành phố Hồ Chí Minh";
+
+    setAgencyAreaFilter({
+      isNewAddress,
+      provinceId: nextProvinceId,
+      districtId: isNewAddress ? undefined : districtId,
+      wardId,
+      newWardId,
+      streetName: nextStreetName || undefined,
+      label,
+    });
+    setSelectedWardId(newWardId);
+  };
+
   const openEditor = (item?: AgencyRecord) => {
     setEditing(item);
     setEditingWardId(item?.wardId);
@@ -746,8 +879,11 @@ export default function AgencyManagerPage() {
 
   const resetAgencyFilters = () => {
     setSelectedWardId(undefined);
+    areaFilterForm.resetFields();
+    areaFilterForm.setFieldsValue({ AreaIsNewAddress: true });
+    setAgencyAreaFilter({ isNewAddress: true, label: "Thành phố Hồ Chí Minh" });
     setMode("new");
-    setAgencyTypeFilter("all");
+    setAgencyTypeFilter("Văn phòng công chứng");
     setAgencyStatusFilter("all");
     setAgencySearchInput("");
     setAgencySearch("");
@@ -756,36 +892,27 @@ export default function AgencyManagerPage() {
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 bg-[#f5f5f5] p-6 max-md:p-3">
       <div className="flex flex-wrap items-center gap-2 rounded-xl border border-neutral-200 bg-white p-3">
-        <div className="relative w-full sm:w-[280px]">
-          <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
-            Khu vực
-          </span>
-          <SearchableSelect
-            value={selectedAreaValue}
-            placeholder="Chọn khu vực"
-            searchPlaceholder="Tìm tỉnh/thành phố, phường/xã..."
-            aria-label="Khu vực"
-            options={areaWardOptions.map((ward) => {
-              const province = areaProvinceOptions.find(
-                (item) => item.Id === ward.ProvinceId,
-              );
-              const provinceName = withAddressType(
-                province?.Type,
-                province?.Name,
-              );
-              const wardName = withAddressType(ward.Type, ward.Name);
-              return {
-                value: `new:${ward.Id}`,
-                label: `${provinceName} · ${wardName}`,
-                keywords: `${wardName} ${ward.DistrictName ?? ""} ${provinceName} ${ward.RefKey ?? ""} ${ward.Slug ?? ""}`,
-              };
-            })}
-            onValueChange={(value) => {
-              if (value.startsWith("new:"))
-                setSelectedWardId(Number(value.slice(4)));
-            }}
-            className="h-10 rounded-lg pt-1"
-          />
+        <div className="w-full sm:w-[280px]">
+          <Form
+            component={false}
+            form={areaFilterForm}
+            initialValues={{ AreaIsNewAddress: true }}
+            onFinish={applyAreaFilters}
+          >
+            <AddressSelectCustom
+              form={areaFilterForm}
+              nameProvince="AreaProvinceId"
+              nameDistrict="AreaDistrictId"
+              nameWard="AreaWardId"
+              nameStreet="AreaStreetId"
+              nameAddressNumber="AreaAddressNumber"
+              nameIsNewAddress="AreaIsNewAddress"
+              nameLandParcel="AreaLandParcel"
+              nameMapSheet="AreaMapSheet"
+              isHiddenField
+              hideParcelFields
+            />
+          </Form>
         </div>
         <div className="relative w-full sm:w-[190px]">
           <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
@@ -820,7 +947,7 @@ export default function AgencyManagerPage() {
         </div>
         <Button
           onClick={() => setAgencySearch(agencySearchInput)}
-          className="h-10 gap-2 rounded-lg bg-[#0588f0] hover:bg-[#0477d1]"
+          className="h-10 gap-2 rounded-lg bg-[#6858d6] hover:bg-[#5949c7]"
         >
           <Search size={16} />
           Tìm kiếm
@@ -840,7 +967,7 @@ export default function AgencyManagerPage() {
         </h1>
         <Button
           onClick={() => openEditor()}
-          className="gap-2 rounded-lg bg-[#0588f0] hover:bg-[#0477d1]"
+          className="gap-2 rounded-lg bg-[#6858d6] hover:bg-[#5949c7]"
         >
           <Plus size={16} />
           Thêm mới cơ quan
@@ -848,7 +975,7 @@ export default function AgencyManagerPage() {
       </div>
 
       <section className="min-h-0 flex-1 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
-        <div className="border-b border-neutral-200 bg-[#eff6ff] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
+        <div className="border-b border-neutral-200 bg-[#eae8ff] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
           Danh mục cơ quan hành chính
         </div>
         <div className="flex h-[calc(100%-45px)] min-h-0 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
@@ -861,15 +988,12 @@ export default function AgencyManagerPage() {
               placeholder="Chọn cơ quan hành chính"
               searchPlaceholder="Tìm danh mục cơ quan..."
               aria-label="Danh mục cơ quan hành chính"
-              options={[
-                { value: "all", label: "Tất cả cơ quan" },
-                ...agencyTypes.map((type) => ({
+              options={agencyTypes.map((type) => ({
                   value: type,
                   label: agencyTypeLabel(type),
-                })),
-              ]}
+                }))}
               onValueChange={(value) =>
-                setAgencyTypeFilter(value as AgencyType | "all")
+                setAgencyTypeFilter(value as AgencyType)
               }
               className="h-10 rounded-lg bg-white pt-1"
             />
@@ -879,10 +1003,8 @@ export default function AgencyManagerPage() {
             <div className="border-b border-neutral-200 pb-3">
               <h2 className="text-sm font-bold">
                 Danh sách{" "}
-                {agencyTypeFilter === "all"
-                  ? "cơ quan hành chính"
-                  : agencyTypeFilter}{" "}
-                ({agencies.length})
+                {agencyTypeFilter}{" "}
+                ({agencyCount})
               </h2>
               <p className="mt-1 text-xs text-neutral-500">
                 Phạm vi áp dụng:{" "}
@@ -942,10 +1064,10 @@ export default function AgencyManagerPage() {
                             {agencyDisplayName(item.name)}
                           </h3>
                           <span
-                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#eff6ff] text-[#0574c9]"}`}
+                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#eae8ff] text-[#5f50cf]"}`}
                           >
                             <span
-                              className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#0588f0]"}`}
+                              className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#6858d6]"}`}
                             />
                             {item.status === "hidden"
                               ? "Tạm ngừng"
@@ -1047,7 +1169,7 @@ export default function AgencyManagerPage() {
                 <Input
                   id="agency-name"
                   aria-label="Tên cơ quan"
-                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
+                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#6858d6] focus-visible:ring-2 focus-visible:ring-[#6858d6]/20 focus-visible:ring-offset-0"
                   value={form.name}
                   onChange={(event) =>
                     setForm((current) => ({
@@ -1060,7 +1182,7 @@ export default function AgencyManagerPage() {
             </div>
           </div>
           <div>
-            <div className="mb-4 flex flex-col items-start gap-3">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <h3 className="text-sm font-bold">Thông tin địa chỉ</h3>
               <div
                 className="flex w-fit rounded-lg bg-neutral-100 p-1"
@@ -1210,7 +1332,7 @@ export default function AgencyManagerPage() {
                 <Input
                   id="agency-address"
                   aria-label="Địa chỉ"
-                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20 focus-visible:ring-offset-0"
+                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#6858d6] focus-visible:ring-2 focus-visible:ring-[#6858d6]/20 focus-visible:ring-offset-0"
                   value={form.address}
                   onChange={(event) =>
                     setForm((current) => ({
@@ -1234,7 +1356,7 @@ export default function AgencyManagerPage() {
                     status: current.status === "hidden" ? "active" : "hidden",
                   }))
                 }
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#0588f0]" : "bg-neutral-300"}`}
+                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6858d6] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#6858d6]" : "bg-neutral-300"}`}
               >
                 <span
                   className={`inline-block size-4 rounded-full bg-white shadow transition-transform ${(form.status ?? "active") === "active" ? "translate-x-4" : "translate-x-0.5"}`}
@@ -1262,7 +1384,7 @@ export default function AgencyManagerPage() {
               !form.address.trim() ||
               (mode === "old" && (!oldDistrictId || !oldWardId))
             }
-            className="bg-[#0588f0] hover:bg-[#0477d1]"
+            className="bg-[#6858d6] hover:bg-[#5949c7]"
           >
             Lưu
           </Button>

@@ -21,7 +21,7 @@ export const SearchInput = ({ form, placeholder, handleRefresh, hideRefresh = fa
           enterButton={
             <Button
               type="primary"
-              style={{ backgroundColor: '#0788f5', borderColor: '#0788f5' }}
+              style={{ backgroundColor: '#0588f0', borderColor: '#0588f0' }}
               icon={<SearchIcon className="size-4" />}
             >
               {searchButtonLabel}
@@ -32,7 +32,7 @@ export const SearchInput = ({ form, placeholder, handleRefresh, hideRefresh = fa
           <Tooltip title="Đặt lại">
             <Button
               type="default"
-              style={{ color: '#0788f5', borderColor: '#0788f5' }}
+              style={{ color: '#0588f0', borderColor: '#0588f0' }}
               icon={<RotateCcwIcon className="size-4" />}
               onClick={handleRefresh}
             />

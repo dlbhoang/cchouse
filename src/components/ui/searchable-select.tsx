@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -65,7 +65,11 @@ export function SearchableSelect({
           )}
         >
           <span className="truncate">{selected?.label ?? placeholder}</span>
-          <ChevronsUpDown className="ml-2 size-4 shrink-0 text-neutral-400" />
+          <ChevronDown
+            aria-hidden="true"
+            className="ml-2 size-4 shrink-0 text-neutral-500"
+            strokeWidth={1.8}
+          />
         </Button>
       </PopoverTrigger>
       <PopoverContent

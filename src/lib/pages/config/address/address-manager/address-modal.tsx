@@ -80,7 +80,7 @@ function Field({
           "pointer-events-none absolute left-3 z-10 flex items-center gap-1 px-1 leading-4 transition-all duration-150",
           active
             ? "-top-2 bg-white text-[11px] text-[#737373]"
-            : "top-1/2 -translate-y-1/2 bg-transparent text-[13px] text-[#737373] group-focus-within/field:-top-2 group-focus-within/field:translate-y-0 group-focus-within/field:bg-white group-focus-within/field:text-[11px] group-focus-within/field:text-[#0588f0]"
+            : "top-1/2 -translate-y-1/2 bg-transparent text-[13px] text-[#737373] group-focus-within/field:-top-2 group-focus-within/field:translate-y-0 group-focus-within/field:bg-white group-focus-within/field:text-[11px] group-focus-within/field:text-[#6858d6]"
         )}
       >
         {label}
@@ -92,7 +92,7 @@ function Field({
 }
 
 const inputCls =
-  "h-9 rounded-[10px] border-[#e5e5e5] bg-white px-3 text-[13px] font-medium text-[#0a0a0a] shadow-none focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20";
+  "h-9 rounded-[10px] border-[#e5e5e5] bg-white px-3 text-[13px] font-medium text-[#0a0a0a] shadow-none focus:border-[#6858d6] focus:ring-2 focus:ring-[#6858d6]/20 focus-visible:border-[#6858d6] focus-visible:ring-2 focus-visible:ring-[#6858d6]/20";
 
 function TextField({
   label,
@@ -126,7 +126,8 @@ function SelectField({
       <SearchableSelect
         value={value ? String(value) : ""}
         onValueChange={(v) => onChange(Number(v))}
-        placeholder={`Chọn ${label.toLocaleLowerCase("vi")}`}
+        aria-label={label}
+        placeholder=" "
         searchPlaceholder={`Tìm ${label.toLocaleLowerCase("vi")}...`}
         options={options.map((option) => ({
           value: String(option.id),
@@ -159,7 +160,7 @@ function WardGroup({
     <div className="flex flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white px-5 py-2">
       <div className="flex items-center gap-4">
         <p className="flex-1 text-[13px] font-medium text-[#0a0a0a]">
-          Phường/Xã: <span className="text-[#0588f0]">#{index}</span>
+          Phường/Xã: <span className="text-[#6858d6]">#{index}</span>
         </p>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -197,7 +198,7 @@ function DashedAdd({ label, onClick }: { label: string; onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center justify-center gap-2 rounded-[10px] border border-dashed border-[#0588f0] bg-white px-4 py-1.5 text-sm font-medium text-[#0588f0]"
+      className="flex w-full items-center justify-center gap-2 rounded-[10px] border border-dashed border-[#6858d6] bg-white px-4 py-1.5 text-sm font-medium text-[#6858d6]"
     >
       <Plus size={14} />
       {label}
@@ -571,7 +572,7 @@ export default function AddressModal({
                 >
                   <div className="flex items-center gap-2">
                     <p className="flex-1 py-2 text-[13px] font-medium text-[#0a0a0a]">
-                      Quận/Huyện<span className="text-[#dc3e42]">*</span>: <span className="text-[#0588f0]">#{di + 1}</span>
+                      Quận/Huyện<span className="text-[#dc3e42]">*</span>: <span className="text-[#6858d6]">#{di + 1}</span>
                     </p>
                     <button
                       type="button"
@@ -589,7 +590,7 @@ export default function AddressModal({
                           x.key === d.key ? { ...x, wards: [...x.wards, newWard()] } : x
                         ))
                       }
-                      className="inline-flex items-center gap-1 rounded-md bg-[#0588f0] px-2.5 py-1 text-[12px] font-medium text-white"
+                      className="inline-flex items-center gap-1 rounded-md bg-[#6858d6] px-2.5 py-1 text-[12px] font-medium text-white"
                     >
                       <Plus size={14} />
                       Thêm Phường/Xã
@@ -650,7 +651,7 @@ export default function AddressModal({
             type="button"
             disabled={saving}
             onClick={save}
-            className="rounded-[10px] bg-[#0588f0] px-4 py-1.5 text-sm font-medium text-white disabled:opacity-60"
+            className="rounded-[10px] bg-[#6858d6] px-4 py-1.5 text-sm font-medium text-white disabled:opacity-60"
           >
             {saving ? "Đang lưu..." : intent === "edit" ? "Cập nhật thay đổi" : "Lưu thông tin"}
           </button>
