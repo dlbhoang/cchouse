@@ -948,7 +948,7 @@ export default function AgencyManagerPage() {
         </div>
         <Button
           onClick={() => setAgencySearch(agencySearchInput)}
-          className="h-10 gap-2 rounded-lg bg-[#168cf2] hover:bg-[#0d76d8]"
+          className="h-10 gap-2 rounded-lg !bg-[#0588f0] hover:!bg-[#0d74ce]"
         >
           <Search size={16} />
           Tìm kiếm
@@ -968,7 +968,7 @@ export default function AgencyManagerPage() {
         </h1>
         <Button
           onClick={() => openEditor()}
-          className="gap-2 rounded-lg bg-[#168cf2] hover:bg-[#0d76d8]"
+          className="gap-2 rounded-lg !bg-[#0588f0] hover:!bg-[#0d74ce]"
         >
           <Plus size={16} />
           Thêm mới cơ quan
@@ -1388,7 +1388,7 @@ export default function AgencyManagerPage() {
               !form.address.trim() ||
               (mode === "old" && (!oldDistrictId || !oldWardId))
             }
-            className="bg-[#168cf2] hover:bg-[#0d76d8]"
+            className="!bg-[#0588f0] hover:!bg-[#0d74ce]"
           >
             Lưu
           </Button>
