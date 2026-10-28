@@ -4,7 +4,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { MapContainer, Marker, Polygon, Popup, useMap } from "react-leaflet";
 
 import { IPropAdminMap } from "@/lib/interfaces/Property/IProp";
@@ -47,7 +47,15 @@ function MyComponent({
 }: Props) {
   const map = useMap();
   const searchParams = useSearchParams();
+  const markerClickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const properties = Array.isArray(data) ? data : [];
+
+  useEffect(
+    () => () => {
+      if (markerClickTimer.current) clearTimeout(markerClickTimer.current);
+    },
+    [],
+  );
 
   useEffect(() => {
     const osm = L.tileLayer(
@@ -116,8 +124,16 @@ function MyComponent({
         key={e.Id}
         position={[e.PropAddress.Lat ?? 0, e.PropAddress.Lng ?? 0]}
         eventHandlers={{
-          click: () => onSelectProperty?.(e),
+          click: () => {
+            if (markerClickTimer.current) clearTimeout(markerClickTimer.current);
+            markerClickTimer.current = setTimeout(() => {
+              markerClickTimer.current = null;
+              onSelectProperty?.(e);
+            }, 260);
+          },
           dblclick: (event) => {
+            if (markerClickTimer.current) clearTimeout(markerClickTimer.current);
+            markerClickTimer.current = null;
             event.originalEvent.preventDefault();
             event.originalEvent.stopPropagation();
             onOpenPropertyDetail?.(e);
