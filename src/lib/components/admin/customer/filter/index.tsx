@@ -150,6 +150,7 @@ const CustomerFilter = ({
             <SelectBase
               mode="multiple"
               allowClear
+              showAllOption={false}
               placeholder="Khu vực"
               aria-label="Lọc theo khu vực"
               className="w-full"
