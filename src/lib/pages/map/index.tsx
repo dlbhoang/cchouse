@@ -35,6 +35,12 @@ const MapPage = () => {
   const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
   const [isResultsOpen, setIsResultsOpen] = useState(false);
 
+  useEffect(() => {
+    // Main Design shows the results list beside the map on desktop. Keep it
+    // closed on phones so the map remains usable until the user opens the sheet.
+    setIsResultsOpen(!smallScreen);
+  }, [smallScreen]);
+
   const propertyId = searchParams?.get("PropertyId");
   const isMockMode = searchParams?.get("mapMock") === "1";
   const filterParams = new URLSearchParams(searchParams?.toString() ?? "");
