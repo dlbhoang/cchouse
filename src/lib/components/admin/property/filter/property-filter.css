@@ -498,11 +498,6 @@
   width: 16px !important;
   height: 16px !important;
   color: #69737e !important;
-  transition: transform 0.15s ease;
-}
-
-.property-price-trigger-arrow.is-open {
-  transform: rotate(180deg);
 }
 /* Status --------------------------------------------------------- */
 .property-floating-field { position: relative; width: 100%; min-width: 0; }
@@ -1255,8 +1250,8 @@
   --pf-price-text: #0a0a0a;
   --pf-price-muted: #737373;
   --pf-price-subtle: #a1a1aa;
-  /* Khoang_gia component in Figma uses the Modal-Sm width (384px). */
-  width: 384px !important;
+  /* Match the Figma Khoang_gia popup: 340px wide with compact 32px options. */
+  width: 340px !important;
   max-width: calc(100vw - 24px) !important;
   padding: 0 !important;
   overflow: hidden;
@@ -1267,7 +1262,7 @@
 }
 
 .property-admin-price-dropdown .property-price-dropdown-header {
-  height: 52px;
+  height: 48px;
   box-sizing: border-box;
   padding: 0 20px;
   border-bottom: 1px solid var(--pf-price-border);
@@ -1289,23 +1284,23 @@
 .property-admin-price-dropdown .property-price-dropdown-list {
   max-height: none;
   margin: 0;
-  padding: 16px 16px 0;
+  padding: 12px 16px 0;
   gap: 0;
   overflow: visible;
 }
 
 .property-admin-price-dropdown .property-price-dropdown-list li {
-  height: 36px;
+  height: 32px;
 }
 
 .property-admin-price-dropdown .property-price-dropdown-item {
-  height: 36px;
-  min-height: 36px;
+  height: 32px;
+  min-height: 32px;
   box-sizing: border-box;
-  padding: 6px 8px;
+  padding: 4px 8px;
   border-radius: 6px;
   color: var(--pf-price-text);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 24px;
 }
@@ -1320,7 +1315,7 @@
 }
 
 .property-admin-price-dropdown .property-price-dropdown-section-title {
-  margin: 24px 16px 12px;
+  margin: 16px 16px 12px;
   color: var(--pf-price-text);
   font-size: 12px;
   font-weight: 600;
@@ -1349,7 +1344,7 @@
   border-color: var(--pf-price-border);
   border-radius: 8px;
   color: var(--pf-price-text);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
 }
 
@@ -1371,13 +1366,13 @@
 
 .property-admin-price-dropdown .property-price-dropdown-footer {
   gap: 8px;
-  padding: 16px;
+  padding: 16px 16px 12px;
 }
 
 .property-admin-price-dropdown .property-price-dropdown-reset-btn,
 .property-admin-price-dropdown .property-price-dropdown-apply-btn {
-  height: 40px;
-  min-height: 40px;
+  height: 36px;
+  min-height: 36px;
   padding: 0 12px;
   gap: 6px;
   border-radius: 8px;

@@ -41,7 +41,7 @@ const CustomerPhoneButton = ({
       <Button
         type="link"
         aria-label={`Số điện thoại khách hàng, nhóm ${typeName || "chưa phân loại"}`}
-        icon={<PhoneFilled style={{ color }} />}
+        icon={<PhoneFilled style={{ color, fontSize: 16 }} />}
         style={{ color }}
         {...props}
       />

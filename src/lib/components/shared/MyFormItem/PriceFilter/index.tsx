@@ -1,4 +1,4 @@
-import { ChevronDown, RotateCcw, Check, X } from "lucide-react";
+import { ChevronDown, ChevronUp, RotateCcw, Check, X } from "lucide-react";
 import { Form, FormInstance } from "antd";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -117,10 +117,11 @@ export const PriceFilter = ({ form }: Props) => {
             >
               {valueLabel}
             </span>
-            <ChevronDown
-              className={cn("property-price-trigger-arrow", open && "is-open")}
-              size={16}
-            />
+            {open ? (
+              <ChevronUp className="property-price-trigger-arrow" size={16} />
+            ) : (
+              <ChevronDown className="property-price-trigger-arrow" size={16} />
+            )}
           </span>
         </button>
       </PopoverTrigger>
