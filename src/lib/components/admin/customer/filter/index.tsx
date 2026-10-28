@@ -152,11 +152,7 @@ const CustomerFilter = ({
         <Col xs={24} md={8} xl={5}>
           <AreaFilter form={form} />
         </Col>
-        <Col
-          xs={24}
-          xl={5}
-          style={{ display: 'flex', justifyContent: 'flex-end' }}
-        >
+        <Col xs={24} xl={5} className="flex justify-end">
           <Tooltip title="Đặt lại bộ lọc">
             <Button
               aria-label="Đặt lại bộ lọc"
