@@ -73,7 +73,6 @@ const PropertyPage = ({ transType }: Props) => {
   const searchOptions = {
     ...Object.fromEntries(query?.entries() ?? []),
     TransType: transType,
-    ProvinceId: 1,
     pageSize: Number(query?.get("pageSize")) || 10,
   } as any as IPropAdminOpts;
 
