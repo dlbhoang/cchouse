@@ -50,7 +50,15 @@ const isActive = (x: object) => {
 };
 
 const norm = (s: string) => s.toLocaleLowerCase("vi");
-const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const normalizeAddressSearch = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("vi")
+    .replace(/đ/g, "d")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()
+    .replace(/\s+/g, " ");
 
 function RowName({ name }: { name: string }) {
   // "Hai Bà Trưng (đoạn từ ...)" → phần trong ngoặc in nghiêng, như Figma.
@@ -296,12 +304,16 @@ export default function AddressManagerPage() {
     () => streetApi.get({ ...PAGE_ALL, WardId: oldWardMerge?.NewWardId, IsNew: true })
   );
 
-  const q = norm(query.trim());
-  const provinceQ = norm(provinceQuery.trim());
-  const provinceSearchPattern = provinceQ ? new RegExp(escapeRegExp(provinceQ), "u") : undefined;
-  const keep = (i: Item) => !q || norm(i.keywords).indexOf(q) !== -1;
+  const q = normalizeAddressSearch(query);
+  const keep = (i: Item) => {
+    if (!q || normalizeAddressSearch(i.keywords).includes(q)) return true;
+    if (mode !== "new") return false;
+    if (i.kind === "province") return matchedSearchProvinceIds.has(i.id);
+    if (i.kind === "ward") return matchedSearchWardIds.has(i.id);
+    return false;
+  };
   const matchesColumnQuery = (item: Item, value: string) =>
-    !value.trim() || norm(item.keywords).includes(norm(value.trim()));
+    !value.trim() || normalizeAddressSearch(item.keywords).includes(normalizeAddressSearch(value));
   const isHcmSelected = norm(
     provinces.find((province) => province.Id === provinceId)?.Name ?? ""
   ).includes("hồ chí minh");
@@ -542,8 +554,14 @@ export default function AddressManagerPage() {
         keywords: `${street.Name} ${street.RefKey ?? ""} ${street.Slug ?? ""} ${wardName ?? ""} ${provinceName ?? ""}`,
       };
     })
-    .filter((item) => q && norm(item.keywords).includes(q))
+    .filter((item) => q && normalizeAddressSearch(item.keywords).includes(q))
     .slice(0, 8);
+  const matchedSearchProvinceIds = new Set(
+    addressSuggestions.flatMap((item) => item.provinceId ? [item.provinceId] : [])
+  );
+  const matchedSearchWardIds = new Set(
+    addressSuggestions.flatMap((item) => item.wardId ? [item.wardId] : [])
+  );
 
   return (
     <div className="relative flex h-[calc(100dvh-96px)] min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
@@ -664,7 +682,7 @@ export default function AddressManagerPage() {
           }}
           onDelete={(item) => void deleteItem(item)}
           title="TỈNH/THÀNH PHỐ"
-          items={provinceItems.filter((item) => keep(item) && (!provinceSearchPattern || provinceSearchPattern.test(norm(item.keywords))))}
+          items={provinceItems.filter((item) => keep(item) && matchesColumnQuery(item, provinceQuery))}
           searchValue={provinceQuery}
           onSearch={setProvinceQuery}
           selectedId={provinceId}
