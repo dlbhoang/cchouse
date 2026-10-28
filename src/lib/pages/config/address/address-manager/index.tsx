@@ -141,7 +141,7 @@ function Column({
             key={item.id}
             className={cn(
               "group flex shrink-0 items-center border-b border-[#f5f5f5] border-l-2 border-l-transparent px-3 text-left",
-              item.id === selectedId ? "border-l-[#6858d6] bg-[#f5f5f5]" : "bg-white hover:bg-[#fafafa]",
+              item.id === selectedId ? "border-l-[#6858d6] bg-[#eff6ff]" : "bg-white hover:bg-[#fafafa]",
               !onSelect && "cursor-default"
             )}
           >

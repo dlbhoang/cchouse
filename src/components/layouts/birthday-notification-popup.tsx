@@ -53,7 +53,17 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
     .filter(Boolean);
   const employeeName = summaryName || titleName || descriptionParts?.[0] || '';
   const employeeRole = descriptionParts?.slice(1).join(' · ') ?? '';
-  const wish = item.Description?.split(/\n\s*\n/).slice(1).join('\n\n').trim();
+  const descriptionLines = (item.Description ?? '')
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const descriptionBody = descriptionLines.length > 1
+    ? descriptionLines.slice(1).join('\n\n')
+    : (descriptionLines[0] ?? '').replace(
+        /^🎉?\s*(?:chúc mừng sinh nhật|ngày mai là sinh nhật)[^.!?\n]*(?:[.!?]\s*)?/i,
+        '',
+      );
+  const wish = descriptionBody.trim();
   const avatar = item.Thumbnail?.trim();
   const normalizedEmployeeName = employeeName
     .normalize('NFD')
@@ -62,6 +72,10 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
   const isFigmaSample =
     !isUpcoming && normalizedEmployeeName === 'le thi mai chi';
   const bannerTitle = isUpcoming ? 'NGÀY MAI LÀ SINH NHẬT' : 'CHÚC MỪNG SINH NHẬT';
+  const detailsTitle = `${isUpcoming ? '🎉 Ngày mai là sinh nhật' : '🎉 Chúc mừng sinh nhật'}${employeeName ? ` ${employeeName}` : ''}${employeeRole ? ` - ${employeeRole}` : ''}`;
+  const detailsWish = wish || (isUpcoming
+    ? 'Ngày mai là sinh nhật đồng nghiệp. C.C.House cùng gửi lời chúc tốt đẹp và chuẩn bị một ngày thật vui nhé!'
+    : 'Hôm nay là một ngày đặc biệt! C.C.House gửi những lời chúc tốt đẹp nhất đến bạn. Chúc bạn tuổi mới thật nhiều niềm vui, hạnh phúc, sức khỏe và thành công rực rỡ trong sự nghiệp. Cảm ơn bạn đã luôn đồng hành cùng công ty.');
   const popupWidth = {
     width: 'min(768px, calc(100vw - 2rem), calc((100dvh - 2rem) * 1.7902))',
   };
@@ -73,7 +87,7 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
         aria-label="Thông báo sinh nhật"
         aria-modal="true"
         style={popupWidth}
-        className="static m-0 block max-w-full overflow-hidden rounded-2xl border-0 bg-[#0d4b85] p-0 shadow-[0_24px_80px_rgba(0,0,0,.42)]"
+        className="static m-0 block max-h-[90dvh] max-w-full overflow-y-auto rounded-xl border-0 bg-white p-4 shadow-[0_16px_48px_rgba(15,23,42,.24)] max-sm:p-3"
       >
         <div className="relative aspect-[256/143] w-full overflow-hidden">
           <Image
@@ -97,7 +111,7 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
                 </h2>
                 {employeeName && (
                   <p className="mt-[1.5%] max-w-full truncate text-[clamp(11px,2.75vw,23px)] font-extrabold leading-tight text-white [text-shadow:0_2px_4px_rgba(0,0,0,.65)]">
-                    {employeeName}
+                    {employeeName ? `EM: ${employeeName}` : ''}
                   </p>
                 )}
                 {employeeRole && (
@@ -106,9 +120,7 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
                   </p>
                 )}
                 <p className="mt-[2%] line-clamp-3 max-w-full text-[clamp(6px,1.45vw,12px)] font-semibold leading-[1.25] text-white [text-shadow:0_1px_3px_rgba(0,0,0,.8)]">
-                  {wish || (isUpcoming
-                    ? 'Ngày mai là sinh nhật đồng nghiệp. Hãy cùng chuẩn bị lời chúc tốt đẹp nhé!'
-                    : 'Chúc tuổi mới nhiều niềm vui, hạnh phúc và thành công rực rỡ!')}
+                  {detailsWish}
                   {!isUpcoming && <span className="mt-[1%] block text-[#ffe69a]">Trân trọng, Ban Lãnh Đạo &amp; Đồng Nghiệp</span>}
                 </p>
               </div>
@@ -140,6 +152,12 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
           >
             <X size={17} aria-hidden="true" />
           </button>
+        </div>
+        <div className="px-2 pb-2 pt-4 text-[#262626] max-sm:px-1 max-sm:pt-3">
+          <h2 className="text-sm font-semibold leading-6 sm:text-base">{detailsTitle}</h2>
+          <p className="mt-2 whitespace-pre-line text-sm leading-6 text-neutral-700 max-sm:text-[13px] max-sm:leading-5">
+            {detailsWish}
+          </p>
         </div>
       </dialog>
     </div>
