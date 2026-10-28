@@ -1,7 +1,7 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { BellRing, X } from 'lucide-react';
+import { BellRing } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { AppRoutes } from '@/lib/core/configs/appRoutes';
@@ -186,7 +186,7 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
           <BellRing size={19} aria-hidden="true" />
         </span>
         <div className="min-w-0 flex-1">
-          <div className="mb-1 flex items-center gap-2 pr-5">
+          <div className="mb-1 flex items-center gap-2">
             <p className="text-sm font-bold text-neutral-900">{item.Title}</p>
             <span className="shrink-0 rounded-full bg-[#0588f0] px-2 py-0.5 text-[10px] font-semibold text-white">
               Mới
@@ -203,14 +203,6 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
             Xem thông báo
           </Link>
         </div>
-        <button
-          type="button"
-          aria-label="Đóng thông báo mới"
-          onClick={close}
-          className="absolute right-2 top-2 rounded-md p-1 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900"
-        >
-          <X size={16} aria-hidden="true" />
-        </button>
       </div>
     </aside>
   );
