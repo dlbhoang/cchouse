@@ -98,7 +98,7 @@ export const LocationSelectCustom = ({
             </Row>
           </Checkbox.Group>
           <Typography.Text strong className="property-location-feature-heading">
-            Đặc điểm nội thất
+            Đặc điểm nhà
           </Typography.Text>
           <Checkbox.Group
             className="property-location-feature-group"
