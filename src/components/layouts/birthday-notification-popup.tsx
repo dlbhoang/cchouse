@@ -34,16 +34,18 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
 
   const item = notification.Notification;
   const isUpcoming = item.ReferenceId?.endsWith(':tomorrow') ?? false;
-  const summaryName = (item.Summary ?? '')
-    .replace(/^Sinh nhật (hôm nay|ngày mai):\s*/i, '')
-    .replace(/^🎉?\s*Chúc mừng sinh nhật\s*/i, '')
+  const cleanBirthdayLabel = (value: string) => value
+    .replace(/^🎉?\s*/i, '')
+    .replace(/^Sinh nhật\s+(?:hôm nay|ngày mai)[:\s-]*/i, '')
+    .replace(/^Chúc mừng sinh nhật[:\s-]*/i, '')
+    .replace(/^Ngày mai là sinh nhật[:\s-]*/i, '')
+    .replace(/^(?:TEST\s+)?SINH NHẬT(?:\s+(?:HÔM NAY|NGÀY MAI))?[:\s-]*/i, '')
     .trim();
-  const titleName = (item.Title ?? '')
-    .replace(
-      /^🎉?\s*(?:TEST\s+)?SINH NHẬT(?:\s+(?:HÔM NAY|NGÀY MAI))?[:\s-]*/i,
-      ''
-    )
-    .trim();
+  const summaryName = cleanBirthdayLabel(item.Summary ?? '');
+  const titleName = cleanBirthdayLabel(item.Title ?? '');
+  const testEmployeeName = item.Description?.match(
+    /sinh nhật thử nghiệm cho\s+([^\n.!?]+)/i,
+  )?.[1]?.trim();
   const descriptionLabel = item.Description?.match(
     /(?:Chúc mừng sinh nhật|Ngày mai là sinh nhật)\s+([^\n.!?]+)/i
   )?.[1]?.trim();
@@ -51,7 +53,8 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
     ?.split(/\s+-\s+/)
     .map((part) => part.trim())
     .filter(Boolean);
-  const employeeName = summaryName || titleName || descriptionParts?.[0] || '';
+  const employeeName = cleanBirthdayLabel(testEmployeeName ?? '') || summaryName ||
+    cleanBirthdayLabel(descriptionParts?.[0] ?? '') || titleName;
   const employeeRole = descriptionParts?.slice(1).join(' · ') ?? '';
   const descriptionLines = (item.Description ?? '')
     .split(/\r?\n/)
@@ -63,7 +66,10 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
         /^🎉?\s*(?:chúc mừng sinh nhật|ngày mai là sinh nhật)[^.!?\n]*(?:[.!?]\s*)?/i,
         '',
       );
-  const wish = descriptionBody.trim();
+  const technicalTestDescription = /(thử nghiệm|không thay đổi ngày sinh|tự ẩn sau|\btest\b)/i.test(
+    item.Description ?? '',
+  );
+  const wish = technicalTestDescription ? '' : descriptionBody.trim();
   const avatar = item.Thumbnail?.trim();
   const normalizedEmployeeName = employeeName
     .normalize('NFD')
