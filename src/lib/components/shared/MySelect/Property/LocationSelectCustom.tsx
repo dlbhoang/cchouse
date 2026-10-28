@@ -41,6 +41,7 @@ export const LocationSelectCustom = ({
   const [open, setOpen] = useState(false);
   const handleApply = () => {
     form.submit();
+    setOpen(false);
   };
 
   const colStyle = {
