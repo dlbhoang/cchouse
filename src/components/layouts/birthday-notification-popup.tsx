@@ -44,6 +44,7 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
   const isUpcoming = item.ReferenceId?.endsWith(':tomorrow') ?? false;
   const summaryName = (item.Summary ?? '')
     .replace(/^Sinh nhật (hôm nay|ngày mai):\s*/i, '')
+    .replace(/^🎉?\s*Chúc mừng sinh nhật\s*/i, '')
     .trim();
   const titleName = (item.Title ?? '')
     .replace(
@@ -54,7 +55,7 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
   const descriptionName = item.Description?.match(
     /(?:cho|của)\s+([^.!?\n]+)/i
   )?.[1]?.trim();
-  const employeeName = summaryName || titleName || descriptionName || '';
+  const employeeName = descriptionName || summaryName || titleName || '';
   const avatar = item.Thumbnail?.trim();
 
   return (
