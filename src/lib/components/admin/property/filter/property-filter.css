@@ -2005,8 +2005,18 @@
 .property-location-dropdown-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   box-sizing: border-box;
+}
+
+.property-location-dropdown-content .ant-form-item {
+  margin-bottom: 0 !important;
+}
+
+.property-location-dropdown-content .property-location-apply-btn {
+  height: 32px;
+  min-height: 32px;
+  border-radius: 8px;
 }
 
 .property-admin-proptype-dropdown.ant-select-dropdown {
