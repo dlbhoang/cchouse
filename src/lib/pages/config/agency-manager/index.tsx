@@ -186,7 +186,7 @@ function AgencyFloatingField({
       <label
         htmlFor={id}
         aria-hidden="true"
-        className={`pointer-events-none absolute left-3 z-10 flex -translate-y-1/2 items-center gap-1 bg-white px-1 transition-all duration-200 ease-out group-focus-within/agency-field:top-0 group-focus-within/agency-field:text-xs group-focus-within/agency-field:text-[#6858d6] ${
+        className={`pointer-events-none absolute left-3 z-10 flex -translate-y-1/2 items-center gap-1 bg-white px-1 transition-all duration-200 ease-out group-focus-within/agency-field:top-0 group-focus-within/agency-field:text-xs group-focus-within/agency-field:text-[#168cf2] ${
           filled
             ? "top-0 text-xs text-neutral-600"
             : "top-1/2 text-sm text-neutral-500"
@@ -947,7 +947,7 @@ export default function AgencyManagerPage() {
         </div>
         <Button
           onClick={() => setAgencySearch(agencySearchInput)}
-          className="h-10 gap-2 rounded-lg bg-[#6858d6] hover:bg-[#5949c7]"
+          className="h-10 gap-2 rounded-lg bg-[#168cf2] hover:bg-[#0d76d8]"
         >
           <Search size={16} />
           Tìm kiếm
@@ -967,7 +967,7 @@ export default function AgencyManagerPage() {
         </h1>
         <Button
           onClick={() => openEditor()}
-          className="gap-2 rounded-lg bg-[#6858d6] hover:bg-[#5949c7]"
+          className="gap-2 rounded-lg bg-[#168cf2] hover:bg-[#0d76d8]"
         >
           <Plus size={16} />
           Thêm mới cơ quan
@@ -975,7 +975,7 @@ export default function AgencyManagerPage() {
       </div>
 
       <section className="min-h-0 flex-1 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
-        <div className="border-b border-neutral-200 bg-[#eae8ff] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
+        <div className="border-b border-neutral-200 bg-[#e8f3ff] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
           Danh mục cơ quan hành chính
         </div>
         <div className="flex h-[calc(100%-45px)] min-h-0 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
@@ -1064,10 +1064,10 @@ export default function AgencyManagerPage() {
                             {agencyDisplayName(item.name)}
                           </h3>
                           <span
-                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#eae8ff] text-[#5f50cf]"}`}
+                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#e8f3ff] text-[#167ee0]"}`}
                           >
                             <span
-                              className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#6858d6]"}`}
+                              className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#168cf2]"}`}
                             />
                             {item.status === "hidden"
                               ? "Tạm ngừng"
@@ -1169,7 +1169,7 @@ export default function AgencyManagerPage() {
                 <Input
                   id="agency-name"
                   aria-label="Tên cơ quan"
-                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#6858d6] focus-visible:ring-2 focus-visible:ring-[#6858d6]/20 focus-visible:ring-offset-0"
+                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#168cf2] focus-visible:ring-2 focus-visible:ring-[#168cf2]/20 focus-visible:ring-offset-0"
                   value={form.name}
                   onChange={(event) =>
                     setForm((current) => ({
@@ -1332,7 +1332,7 @@ export default function AgencyManagerPage() {
                 <Input
                   id="agency-address"
                   aria-label="Địa chỉ"
-                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#6858d6] focus-visible:ring-2 focus-visible:ring-[#6858d6]/20 focus-visible:ring-offset-0"
+                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#168cf2] focus-visible:ring-2 focus-visible:ring-[#168cf2]/20 focus-visible:ring-offset-0"
                   value={form.address}
                   onChange={(event) =>
                     setForm((current) => ({
@@ -1356,7 +1356,7 @@ export default function AgencyManagerPage() {
                     status: current.status === "hidden" ? "active" : "hidden",
                   }))
                 }
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6858d6] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#6858d6]" : "bg-neutral-300"}`}
+                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#168cf2] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#168cf2]" : "bg-neutral-300"}`}
               >
                 <span
                   className={`inline-block size-4 rounded-full bg-white shadow transition-transform ${(form.status ?? "active") === "active" ? "translate-x-4" : "translate-x-0.5"}`}
@@ -1384,7 +1384,7 @@ export default function AgencyManagerPage() {
               !form.address.trim() ||
               (mode === "old" && (!oldDistrictId || !oldWardId))
             }
-            className="bg-[#6858d6] hover:bg-[#5949c7]"
+            className="bg-[#168cf2] hover:bg-[#0d76d8]"
           >
             Lưu
           </Button>
@@ -1402,7 +1402,7 @@ export default function AgencyManagerPage() {
         <div className="p-6">
           <h2 className="text-lg font-bold">Xóa cơ quan hành chính?</h2>
           <p className="mt-3 text-sm text-neutral-600">
-            Bạn có chắc chắn muốn xóa “{deleteTarget?.name}”? Thao tác này không thể
+            Bạn có chắc muốn xóa “{deleteTarget?.name}”? Thao tác này không thể
             hoàn tác.
           </p>
         </div>
