@@ -248,6 +248,7 @@ const MapPage = () => {
               data={mapPoints}
               polygon={polygon}
               focusedProperty={focusedProperty}
+              resultsOpen={isResultsOpen}
             />
             {pointsError && !isMockMode ? (
               <div className="admin-map-notice" role="status">

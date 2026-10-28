@@ -30,11 +30,12 @@ type Props = {
   data: IPropAdminMap[];
   polygon?: any;
   focusedProperty?: IPropAdminMap;
+  resultsOpen?: boolean;
 };
 
 const hcmPosition = { lat: 10.845, lng: 106.675 };
 
-function MyComponent({ data, polygon, focusedProperty }: Props) {
+function MyComponent({ data, polygon, focusedProperty, resultsOpen = false }: Props) {
   const map = useMap();
   const searchParams = useSearchParams();
   const properties = Array.isArray(data) ? data : [];
@@ -66,24 +67,29 @@ function MyComponent({ data, polygon, focusedProperty }: Props) {
     const size = map.getSize();
     const desktop = size.x > 768;
     map.fitBounds(L.latLngBounds(positions), {
-      paddingTopLeft: [desktop ? 380 : 24, 24],
+      paddingTopLeft: [desktop && resultsOpen ? 380 : 24, 24],
       paddingBottomRight: [24, desktop ? 24 : Math.round(size.y * 0.5)],
       maxZoom: 14,
     });
-  }, [properties, map]);
+  }, [properties, map, resultsOpen]);
 
   useEffect(() => {
     if (!hasMapCoordinates(focusedProperty?.PropAddress)) return;
     const { Lat, Lng } = focusedProperty.PropAddress;
     const zoom = 17;
     const size = map.getSize();
-    const offset = size.x > 768 ? L.point(-190, 0) : L.point(0, size.y * 0.22);
+    const offset =
+      size.x > 768 && resultsOpen
+        ? L.point(-190, 0)
+        : size.x > 768
+          ? L.point(0, 0)
+          : L.point(0, size.y * 0.22);
     const center = map.unproject(
       map.project([Lat, Lng], zoom).add(offset),
       zoom,
     );
     map.flyTo(center, zoom, { duration: 0.45 });
-  }, [focusedProperty, map]);
+  }, [focusedProperty, map, resultsOpen]);
 
   const markerProperties =
     focusedProperty && hasMapCoordinates(focusedProperty.PropAddress)
@@ -222,7 +228,7 @@ const MapSizeObserver = () => {
   return null;
 };
 
-const Leaflet = ({ data, polygon, focusedProperty }: Props) => {
+const Leaflet = ({ data, polygon, focusedProperty, resultsOpen = false }: Props) => {
   return (
     <MapContainer
       center={hcmPosition}
@@ -236,6 +242,7 @@ const Leaflet = ({ data, polygon, focusedProperty }: Props) => {
         data={data}
         polygon={polygon}
         focusedProperty={focusedProperty}
+        resultsOpen={resultsOpen}
       />
     </MapContainer>
   );
