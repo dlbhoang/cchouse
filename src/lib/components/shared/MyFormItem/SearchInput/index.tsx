@@ -1,5 +1,5 @@
-import { Button, Form, FormInstance, Input, Space, Tooltip } from "antd";
-import { RotateCcwIcon, SearchIcon } from "lucide-react";
+import { Button, Form, FormInstance, Input, Space, Tooltip } from 'antd';
+import { RotateCcwIcon, SearchIcon } from 'lucide-react';
 
 const { Search } = Input;
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 export const SearchInput = ({ form, placeholder, handleRefresh }: Props) => {
   return (
     <Form.Item name="Search">
-      <Space.Compact direction="horizontal" style={{ width: "100%" }}>
+      <Space.Compact direction="horizontal" style={{ width: '100%' }}>
         <Search
           placeholder={placeholder}
           onSearch={() => {
@@ -18,14 +18,16 @@ export const SearchInput = ({ form, placeholder, handleRefresh }: Props) => {
           }}
           enterButton={
             <Button
-              style={{ backgroundColor: "orange" }}
+              type="primary"
+              style={{ backgroundColor: '#0788f5', borderColor: '#0788f5' }}
               icon={<SearchIcon className="size-4" />}
             />
           }
         />
         <Tooltip title="Đặt lại">
           <Button
-            type="primary"
+            type="default"
+            style={{ color: '#0788f5', borderColor: '#0788f5' }}
             icon={<RotateCcwIcon className="size-4" />}
             onClick={handleRefresh}
           />
