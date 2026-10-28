@@ -1,5 +1,5 @@
 import { Button, ButtonProps, Tooltip } from "antd";
-import { PhoneFilled } from "@ant-design/icons";
+import { Phone } from "lucide-react";
 
 type Props = {
   typeName:
@@ -41,7 +41,7 @@ const CustomerPhoneButton = ({
       <Button
         type="link"
         aria-label={`Số điện thoại khách hàng, nhóm ${typeName || "chưa phân loại"}`}
-        icon={<PhoneFilled style={{ color, fontSize: 16 }} />}
+        icon={<Phone size={16} strokeWidth={2} style={{ color }} />}
         style={{ color }}
         {...props}
       />
