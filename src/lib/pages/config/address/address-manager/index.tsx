@@ -38,6 +38,7 @@ type Item = {
   oldWardId?: number;
   newWardId?: number;
   wardId?: number;
+  count?: number;
   managed?: boolean;
 };
 
@@ -162,6 +163,7 @@ function Column({
             >
               <p title={item.name} className="w-full truncate text-sm font-semibold leading-5 text-[#0a0a0a]">
                 <RowName name={item.name} />
+                {item.count !== undefined && <span className="ml-1 font-medium text-[#525252]">({item.count})</span>}
               </p>
               <div className="flex w-full items-start gap-1.5 text-xs leading-4">
                 {item.sub && <span title={item.sub} className="line-clamp-2 w-fit max-w-[calc(100%_-_0.75rem)] whitespace-normal text-[#0a0a0a]">{item.sub}</span>}
@@ -350,6 +352,9 @@ export default function AddressManagerPage() {
         kind: "province" as const,
         id: p.Id,
         name: fullName,
+        count: searchableWards.data
+          ? searchableWards.data.data.filter((ward) => ward.ProvinceId === p.Id).length
+          : undefined,
         sub: displayShortName
           ? `(${displayShortName})`
           : undefined,
@@ -412,6 +417,9 @@ export default function AddressManagerPage() {
     kind: "ward" as const,
     id: ward.Id,
     name: ward.Name,
+    count: searchableStreets.data
+      ? searchableStreets.data.data.filter((street) => street.WardId === ward.Id).length
+      : undefined,
     oldDistrictId: ward.DistrictId,
     sub: (() => {
       const districtName = oldDistrictsByNewWard.get(ward.Id) ??
@@ -422,11 +430,11 @@ export default function AddressManagerPage() {
     keywords: `${ward.Name} ${ward.RefKey ?? ""} ${ward.Slug ?? ""}`,
     active: isActive(ward),
   })).sort((a, b) => {
-    const aPreferred = isHcmSelected && norm(a.name) === "phường sài gòn";
-    const bPreferred = isHcmSelected && norm(b.name) === "phường sài gòn";
+    const aPreferred = isHcmSelected && norm(a.name.replace(/\s+\(\d+\)$/, "")) === "phường sài gòn";
+    const bPreferred = isHcmSelected && norm(b.name.replace(/\s+\(\d+\)$/, "")) === "phường sài gòn";
     if (aPreferred !== bPreferred) return aPreferred ? -1 : 1;
-    const aName = norm(a.name);
-    const bName = norm(b.name);
+    const aName = norm(a.name.replace(/\s+\(\d+\)$/, ""));
+    const bName = norm(b.name.replace(/\s+\(\d+\)$/, ""));
     const aFigmaRank = figmaWardRank.get(aName) ?? Number.MAX_SAFE_INTEGER;
     const bFigmaRank = figmaWardRank.get(bName) ?? Number.MAX_SAFE_INTEGER;
     return aFigmaRank - bFigmaRank ||
