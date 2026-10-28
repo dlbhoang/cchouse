@@ -393,11 +393,13 @@
 
 .property-custom-dropdown-arrow {
   position: absolute !important;
-  right: 13px !important;
+  right: 12px !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   color: #69737e !important;
-  font-size: 12px !important;
+  width: 16px !important;
+  height: 16px !important;
+  stroke-width: 1.8px !important;
 }
 
 /* Price trigger ---------------------------------------------------

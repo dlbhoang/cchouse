@@ -5,7 +5,6 @@ import {
   History,
   Image as ImageIcon,
   MapPin,
-  Phone,
   ShoppingCart,
   Video,
 } from "lucide-react";
@@ -151,7 +150,6 @@ const MobilePropertyList = ({
                       {canSeePhone ? (
                         <CustomerPhoneButton
                           typeName={property.CustomerTypeName}
-                          icon={<Phone size={17} aria-hidden="true" />}
                           aria-label="Liên hệ khách hàng"
                           onClick={() => onOpenContact(property.Id)}
                         />

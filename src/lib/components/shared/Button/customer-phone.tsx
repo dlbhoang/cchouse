@@ -1,6 +1,5 @@
-import { Button, ButtonProps, Space, Tag } from "antd";
-import { PhoneIcon } from "lucide-react";
-import { ReactNode } from "react";
+import { Button, ButtonProps } from "antd";
+import { PhoneFilled } from "@ant-design/icons";
 
 type Props = {
   typeName:
@@ -12,65 +11,38 @@ type Props = {
     | "Ngân hàng"
     | "Nhân viên công ty"
     | string;
-  icon?: ReactNode;
 };
 
-const tagColorMap: Record<string, string | undefined> = {
-  "Đầu tư": "blue",
-  "Môi giới": "red",
-  "Tiêu dùng": "grey",
-  "Đại diện": "green",
-  "Đấu giá": "#FFC107",
-  "Ngân hàng": "#FFC107",
-  "Nhân viên công ty": "brown",
+const customerTypeColors: Record<string, string> = {
+  "Tiêu dùng": "#8C8C8C",
+  "Môi giới": "#E53935",
+  "Đầu tư": "#1677FF",
+  "Đại diện": "#22A447",
+  "Đấu giá": "#F5B301",
+  "Ngân hàng": "#F5B301",
 };
 
 const CustomerPhoneButton = ({
   typeName,
-  icon,
   ...props
 }: Props & ButtonProps) => {
-  const danger = typeName === "Môi giới";
   if (typeName === "Tìm chủ")
     return (
-      <Button type="link" danger {...props}>
+      <Button type="link" danger title="Tìm chủ" aria-label="Tìm chủ" {...props}>
         {typeName}
       </Button>
     );
-  if (["Đầu tư", "Môi giới"].includes(typeName))
-    return (
-      <Button
-        type="link"
-        danger={danger}
-        icon={
-          icon || (
-            <PhoneIcon
-              className="size-4"
-              fill={tagColorMap[typeName] || "orange"}
-            />
-          )
-        }
-        {...props}
-      />
-    );
 
+  const color = customerTypeColors[typeName] ?? "#8C8C8C";
   return (
-    <Space direction="vertical">
-      <Button
-        type="link"
-        style={{ color: tagColorMap[typeName] || "orange" }}
-        {...props}
-        icon={
-          icon || (
-            <PhoneIcon
-              className="size-4"
-              fill={tagColorMap[typeName] || "orange"}
-            />
-          )
-        }
-      ></Button>
-      {!tagColorMap[typeName] && <Tag>{typeName}</Tag>}
-    </Space>
+    <Button
+      type="link"
+      title={`Nhận diện khách hàng: ${typeName || "Chưa phân loại"}`}
+      aria-label={`Số điện thoại khách hàng, nhóm ${typeName || "chưa phân loại"}`}
+      icon={<PhoneFilled style={{ color }} />}
+      style={{ color }}
+      {...props}
+    />
   );
 };
 

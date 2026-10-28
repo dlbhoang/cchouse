@@ -1,8 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import { sendGTMEvent } from "@next/third-parties/google";
-import { Avatar, Space, Tag, Tooltip, Typography } from "antd";
+import { Space, Tag, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
+  CirclePlusIcon,
   CopyIcon,
   HistoryIcon,
   ImageIcon,
@@ -13,7 +14,6 @@ import {
 import { ReactNode } from "react";
 import { mutate } from "swr";
 import { Button } from "@/components/ui/button";
-import CopyButton from "@/components/ui/button/copy-btn";
 import CustomerPhoneButton from "@/lib/components/shared/Button/customer-phone";
 import RenderArea from "@/lib/components/shared/CustomRender/RenderArea";
 import NoteModal from "@/lib/components/shared/noteModal";
@@ -359,9 +359,6 @@ Props): ColumnsType<IPropResponse> => {
       align: "center",
       width: 86,
       render: (value, record) => {
-        const logo = record.CustomerLogo ? (
-          <Avatar src={record.CustomerLogo?.toString()} size={"small"} />
-        ) : undefined;
         return record.IsHidePhone &&
           record.UserAdminId !== userSession?.Id &&
           userSession?.RoleName !== "Admin" ? (
@@ -371,7 +368,6 @@ Props): ColumnsType<IPropResponse> => {
             <Space direction="vertical">
               <CustomerPhoneButton
                 typeName={record.CustomerTypeName}
-                icon={logo}
                 onClick={() => handleOpenContact(record.Id)}
               />
 
@@ -427,8 +423,8 @@ Props): ColumnsType<IPropResponse> => {
               <Tooltip
                 title={
                   listCompare.some((x) => x.Id === record.Id)
-                    ? "Bỏ lưu"
-                    : "Lưu so sánh"
+                    ? "Bỏ khỏi so sánh"
+                    : "So sánh"
                 }
               >
                 <Button
@@ -446,7 +442,7 @@ Props): ColumnsType<IPropResponse> => {
                     });
                   }}
                 >
-                  <CopyIcon
+                  <CirclePlusIcon
                     className={
                       listCompare.some((x) => x.Id === record.Id)
                         ? "text-blue-500 fill-blue-500"
@@ -456,17 +452,25 @@ Props): ColumnsType<IPropResponse> => {
                 </Button>
               </Tooltip>
 
-              <CopyButton
-                id={`btn-copy-property-${record.Id}`}
-                onCopy={() => {
-                  sendGTMEvent({
-                    event: "copy_property",
-                    value: record.Id,
-                  });
+              <Tooltip title="Sao chép">
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  className="rounded-full"
+                  id={`btn-copy-property-${record.Id}`}
+                  onClick={() => {
+                    sendGTMEvent({
+                      event: "copy_property",
+                      value: record.Id,
+                    });
 
-                  navigator.clipboard.writeText(CopyProp(record));
-                }}
-              />
+                    navigator.clipboard.writeText(CopyProp(record));
+                  }}
+                  aria-label="Sao chép bất động sản"
+                >
+                  <CopyIcon className="size-4" />
+                </Button>
+              </Tooltip>
             </Space>
           )}
           {record.NoBroker && <Tag color="warning">Miễn trung gian</Tag>}

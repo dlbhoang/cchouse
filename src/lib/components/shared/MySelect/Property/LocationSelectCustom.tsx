@@ -1,4 +1,4 @@
-import { DownOutlined } from "@ant-design/icons";
+import { ChevronDown } from "lucide-react";
 import {
   Button,
   Col,
@@ -218,7 +218,11 @@ export const LocationSelectCustom = ({
         <Typography.Text ellipsis className="property-custom-dropdown-value">
           {location && feature ? `${location}, ${feature}` : location || feature || ""}
         </Typography.Text>
-        <DownOutlined className="property-custom-dropdown-arrow" />
+        <ChevronDown
+          className="property-custom-dropdown-arrow"
+          size={16}
+          aria-hidden="true"
+        />
       </button>
     </Dropdown>
   );
