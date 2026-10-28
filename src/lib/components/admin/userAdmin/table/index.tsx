@@ -31,7 +31,7 @@ const UserAdminTable = ({
   handleMutate,
   onRejected,
 }: Props) => {
-  const { districts } = useAdminContext();
+  const { enumList } = useAdminContext();
   const [openQU, setOpenQU] = useState<boolean>(false);
   const [selectedData, setSelectedData] = useState<IUserAdminResponse>();
   const [reviewData, setReviewData] = useState<IUserAdminResponse>();
@@ -44,8 +44,8 @@ const UserAdminTable = ({
         searchOptions={searchOptions}
         data={data}
         cols={columns({
-          districtLength: districts.length,
           status: searchOptions.Status,
+          literacyOptions: enumList.Literacy,
           onEdit: (item) => {
             setSelectedData(item);
             setOpenQU(true);

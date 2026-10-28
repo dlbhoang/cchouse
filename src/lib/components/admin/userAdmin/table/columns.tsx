@@ -6,9 +6,10 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AppRoutes } from '@/lib/core/configs/appRoutes';
 import { FormatDate } from '@/lib/core/utils/myFormat';
+import { IEnumItem } from '@/lib/interfaces/base/ISelectListBase';
 import { IUserAdminResponse } from '@/services/api/userAdmin/IUserAdmin';
 
-const { Text, Paragraph } = Typography;
+const { Text } = Typography;
 
 function safeDisplayValue(value: unknown, fallback = '—') {
   if (typeof value !== 'string' && typeof value !== 'number') return fallback;
@@ -20,14 +21,6 @@ function safeDisplayValue(value: unknown, fallback = '—') {
     return fallback;
   }
   return text;
-}
-
-function safeDisplayList(value: unknown, fallback = 'Chưa cấu hình') {
-  if (!Array.isArray(value)) return safeDisplayValue(value, fallback);
-  const values = value
-    .map((item) => safeDisplayValue(item, ''))
-    .filter(Boolean);
-  return values.length ? values.join(', ') : fallback;
 }
 
 type CellLinkProps = {
@@ -57,52 +50,42 @@ const UserAdminCellLink = ({ record, onReview, children }: CellLinkProps) => {
 };
 
 type Props = {
-  districtLength: number;
   status?: number;
+  literacyOptions: IEnumItem[];
   onEdit: (item: IUserAdminResponse) => void;
   onReview: (item: IUserAdminResponse) => void;
 };
 
 export const columns = ({
-  districtLength,
   status,
+  literacyOptions,
   onEdit,
   onReview,
 }: Props): ColumnsType<IUserAdminResponse> => [
   {
-    title: 'Mã',
+    title: 'Mã nhân viên',
     dataIndex: 'Code',
-    width: 100,
+    width: 120,
     sorter: true,
-    align: 'center',
-    render(value, record) {
-      return (
-        <Space direction="vertical">
-          <UserAdminCellLink record={record} onReview={onReview}>
-            <Text strong>{value}</Text>
-          </UserAdminCellLink>
-        </Space>
-      );
-    },
-  },
-  {
-    title: 'Chi nhánh',
-    dataIndex: 'BranchName',
-    width: 100,
     render(value, record) {
       return (
         <UserAdminCellLink record={record} onReview={onReview}>
-          <Text>{value}</Text>
+          <Text strong>{safeDisplayValue(value)}</Text>
         </UserAdminCellLink>
       );
     },
   },
   {
-    title: 'Họ tên',
+    title: 'Tên nhân viên',
     dataIndex: 'Name',
+    width: 230,
     render(value, record) {
+      const literacy = literacyOptions.find(
+        (option) => Number(option.Value) === Number(record.Literacy),
+      )?.Name;
+
       return (
-        <Space>
+        <Space size={10}>
           {record.Avatar && (
             <Avatar
               src={
@@ -112,14 +95,16 @@ export const columns = ({
                   src={record.Avatar.toString()}
                 />
               }
-              size={{ xl: 38 }}
+              size={38}
             />
           )}
-
-          <Space direction="vertical">
+          <Space direction="vertical" size={0}>
             <UserAdminCellLink record={record} onReview={onReview}>
-              <Text>{value}</Text>
+              <Text>{safeDisplayValue(value, 'Chưa cập nhật')}</Text>
             </UserAdminCellLink>
+            <Text type="secondary" className="text-xs">
+              {safeDisplayValue(literacy, 'Chưa cập nhật')}
+            </Text>
             {record.ShowWebsite && (
               <Tooltip title="Hiển thị trang chủ">
                 <CheckCircleIcon className="size-4 text-green-500" />
@@ -131,95 +116,72 @@ export const columns = ({
     },
   },
   {
-    title: 'Loại giao dịch/Vị trí',
-    dataIndex: ['UserAccess', 'DisplayTransTypes'],
+    title: 'Ngày sinh / Giới tính',
+    dataIndex: 'DateOfBirth',
+    width: 160,
     render(value, record) {
+      const gender = record.Sex === 1 ? 'Nam' : record.Sex === 2 ? 'Nữ' : 'Khác';
       return (
         <UserAdminCellLink record={record} onReview={onReview}>
-          <Space direction="vertical">
-            <Typography.Text>
-              Loại giao dịch: {safeDisplayList(value)}
-            </Typography.Text>
-            <Typography.Text>
-              Vị trí: {safeDisplayList(record.UserAccess?.DisplayLocations)}
-            </Typography.Text>
+          <Space direction="vertical" size={0}>
+            <Text>{value ? FormatDate(value) : 'Chưa cập nhật'}</Text>
+            <Text type="secondary" className="text-xs">{gender}</Text>
           </Space>
         </UserAdminCellLink>
       );
     },
   },
   {
-    title: 'Thông tin bán',
-    dataIndex: ['UserAccess', 'DisplayDistricts'],
-    width: 200,
-    render: (val, record) => (
-      <UserAdminCellLink record={record} onReview={onReview}>
-        <Space direction="vertical">
-          <Text>{`Giá: ${safeDisplayValue(record.UserAccess?.PriceFrm)} - ${safeDisplayValue(record.UserAccess?.PriceTo)} (tỷ)`}</Text>
-          <Paragraph
-            ellipsis={{ rows: 2, expandable: true, symbol: 'xem thêm' }}
-          >
-            Quận:{' '}
-            {Array.isArray(val) && val.length === districtLength
-              ? 'Tất cả'
-              : safeDisplayList(val, 'Chưa chọn')}
-          </Paragraph>
-        </Space>
-      </UserAdminCellLink>
-    ),
-  },
-  {
-    title: 'Thông tin thuê',
-    dataIndex: ['UserAccess', 'DisplayDistrictsRent'],
-    width: 200,
-    render: (val, record) => (
-      <UserAdminCellLink record={record} onReview={onReview}>
-        <Space direction="vertical">
-          <Text>{`Giá: ${safeDisplayValue(record.UserAccess?.PriceRentFrm)} - ${safeDisplayValue(record.UserAccess?.PriceRentTo)} (triệu)`}</Text>
-          <Paragraph
-            ellipsis={{ rows: 2, expandable: true, symbol: 'xem thêm' }}
-          >
-            Quận:{' '}
-            {Array.isArray(val) && val.length === districtLength
-              ? 'Tất cả'
-              : safeDisplayList(val, 'Chưa chọn')}
-          </Paragraph>
-        </Space>
-      </UserAdminCellLink>
-    ),
-  },
-
-  {
-    title: 'Ngày sinh',
-    dataIndex: 'DateOfBirth',
-    width: 100,
-    render: (value, record) => (
-      <UserAdminCellLink record={record} onReview={onReview}>
-        <Space direction="vertical">
-          <Text>
-            {record.Sex === 1 ? 'Nam' : record.Sex === 2 ? 'Nữ' : 'Khác'}
-          </Text>
-          <Text>{FormatDate(value)}</Text>
-        </Space>
-      </UserAdminCellLink>
-    ),
-  },
-  {
-    title: 'Chức vụ & Quản lý',
-    dataIndex: 'RoleName',
+    title: 'Quản lý',
+    dataIndex: 'ManagerName',
+    width: 170,
     render(value, record) {
       return (
         <UserAdminCellLink record={record} onReview={onReview}>
-          <Space direction="vertical">
-            <Typography.Text>{value}</Typography.Text>
-            <Typography.Text>
-              Hoa hồng:{' '}
-              {record.Commission ? `${record.Commission}%` : 'Không có'}
-            </Typography.Text>
-            <Typography.Text>
-              Quản lý: {safeDisplayValue(record.ManagerName, 'Chưa phân công')}
-            </Typography.Text>
-          </Space>
+          <Text>{safeDisplayValue(value, 'Chưa phân công')}</Text>
+        </UserAdminCellLink>
+      );
+    },
+  },
+  {
+    title: 'Chức vụ',
+    dataIndex: 'RoleName',
+    width: 190,
+    render(value, record) {
+      return (
+        <UserAdminCellLink record={record} onReview={onReview}>
+          <Text>{safeDisplayValue(value, 'Chưa cập nhật')}</Text>
+        </UserAdminCellLink>
+      );
+    },
+  },
+  {
+    title: 'Phòng ban',
+    dataIndex: 'Id',
+    width: 150,
+    render(_value, record) {
+      const department = (record as IUserAdminResponse & { Department?: string })
+        .Department;
+      return (
+        <UserAdminCellLink record={record} onReview={onReview}>
+          <Text type="secondary">{safeDisplayValue(department, 'Chưa cập nhật')}</Text>
+        </UserAdminCellLink>
+      );
+    },
+  },
+  {
+    title: 'Quyền lợi',
+    dataIndex: 'Salary',
+    width: 180,
+    render(value, record) {
+      const benefits = [
+        safeDisplayValue(value, '' ) !== '' ? 'Lương' : '',
+        Number(record.Commission) > 0 ? `Hoa hồng ${record.Commission}%` : '',
+        record.Insurrance ? 'Bảo hiểm' : '',
+      ].filter(Boolean);
+      return (
+        <UserAdminCellLink record={record} onReview={onReview}>
+          <Text>{benefits.length ? benefits.join(', ') : 'Chưa cập nhật'}</Text>
         </UserAdminCellLink>
       );
     },
@@ -232,7 +194,7 @@ export const columns = ({
           width: 240,
           render: (value: string | undefined, record: IUserAdminResponse) =>
             record.Status === 4 ? (
-              <Space direction="vertical">
+              <Space direction="vertical" size={0}>
                 <Text>{value || record.Note || 'Không có lý do'}</Text>
                 <Text type="secondary">
                   {record.RejectedByName || 'Không rõ người từ chối'}
@@ -252,7 +214,8 @@ export const columns = ({
         {
           title: 'Thao tác',
           dataIndex: 'Id',
-          render: (val: number | undefined, record: IUserAdminResponse) => {
+          width: 72,
+          render: (_value: number | undefined, record: IUserAdminResponse) => {
             if (record.Status === 3) {
               return (
                 <a
@@ -271,6 +234,7 @@ export const columns = ({
                 size="icon-sm"
                 variant="ghost"
                 onClick={() => onEdit(record)}
+                aria-label={`Thao tác với ${record.Name}`}
               >
                 <EllipsisVerticalIcon />
               </Button>
@@ -279,17 +243,4 @@ export const columns = ({
         },
       ]
     : []),
-
-  // {
-  //     title: 'Người tạo/Ngày tạo',
-  //     dataIndex: 'createdBy',
-  //     render: (value, record, index) => {
-  //         return (<>
-  //             <Space direction="vertical">
-  //                 {value}
-  //                 <Text type="secondary">{moment(record.createdDate).format('DD-MM-YYYY')}</Text>
-  //             </Space>
-  //         </>)
-  //     }
-  // },
 ];
