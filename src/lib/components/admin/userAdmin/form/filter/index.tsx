@@ -126,6 +126,7 @@ const UserAdminFilter = ({ model, onSubmit }: Props) => {
               <Button
                 type="primary"
                 icon={<Plus className="size-4" />}
+                style={{ backgroundColor: "#0588f0", borderColor: "#0588f0" }}
                 aria-label="Thêm mới nhân viên"
                 onClick={() => router.push(`${AppRoutes.userAdmin.url}/add`)}
               >
