@@ -1,11 +1,12 @@
 import {
-  DownloadOutlined,
-  RotateLeftOutlined,
-  RotateRightOutlined,
-  SwapOutlined,
-  ZoomInOutlined,
-  ZoomOutOutlined,
-} from "@ant-design/icons";
+  Download,
+  FlipHorizontal2,
+  RotateCcw,
+  RotateCw,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
+
 import { Image, message, Space } from "antd";
 import { useState } from "react";
 import type { IMyUploadFile } from "@/lib/interfaces/custom/IMyUploadFile";
@@ -103,16 +104,32 @@ const ImagesPreview = ({
           }
         ) => (
           <Space size={12} className="toolbar-wrapper">
-            <DownloadOutlined
+            <Download
+              size={20}
               onClick={onDownloadMultiple}
-              disabled={download}
+              aria-disabled={download}
+              className={download ? "is-disabled" : undefined}
             />
-            <SwapOutlined rotate={90} onClick={onFlipY} />
-            <SwapOutlined onClick={onFlipX} />
-            <RotateLeftOutlined onClick={onRotateLeft} />
-            <RotateRightOutlined onClick={onRotateRight} />
-            <ZoomOutOutlined disabled={scale === 1} onClick={onZoomOut} />
-            <ZoomInOutlined disabled={scale === 50} onClick={onZoomIn} />
+            <FlipHorizontal2
+              size={20}
+              style={{ transform: "rotate(90deg)" }}
+              onClick={onFlipY}
+            />
+            <FlipHorizontal2 size={20} onClick={onFlipX} />
+            <RotateCcw size={20} onClick={onRotateLeft} />
+            <RotateCw size={20} onClick={onRotateRight} />
+            <ZoomOut
+              size={20}
+              aria-disabled={scale === 1}
+              className={scale === 1 ? "is-disabled" : undefined}
+              onClick={() => scale !== 1 && onZoomOut()}
+            />
+            <ZoomIn
+              size={20}
+              aria-disabled={scale === 50}
+              className={scale === 50 ? "is-disabled" : undefined}
+              onClick={() => scale !== 50 && onZoomIn()}
+            />
           </Space>
         ),
       }}

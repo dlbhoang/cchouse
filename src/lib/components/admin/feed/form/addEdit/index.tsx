@@ -1,4 +1,4 @@
-import { EyeOutlined } from "@ant-design/icons";
+
 import {
   Alert,
   Button,
@@ -22,7 +22,7 @@ import {
   UploadFile,
 } from "antd";
 import dayjs from "dayjs";
-import { ImageIcon } from "lucide-react";
+import { ImageIcon, Eye } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -646,7 +646,7 @@ const AddEditForm = ({ model }: Props) => {
               <Tag color={tagColor(model?.StatusName)}>{model?.StatusName}</Tag>
             )}
             <Button
-              icon={<EyeOutlined />}
+              icon={<Eye size={16} />}
               size="large"
               onClick={async () => {
                 if (await form.validateFields()) {

@@ -1,4 +1,5 @@
-import { PhoneOutlined } from "@ant-design/icons";
+import { Phone } from "lucide-react";
+
 import { Space, Typography } from "antd";
 import { useState } from "react";
 import { appConst } from "@/lib/core/configs/appConst";
@@ -26,7 +27,7 @@ const RenderPhone = ({
 }) => {
   return (
     <Space>
-      {showIcon && <PhoneOutlined />}
+      {showIcon && <Phone size={16} />}
       {phones && phones.length > 0 ? (
         phones.map((e) => <EllipsisText text={e} />)
       ) : (

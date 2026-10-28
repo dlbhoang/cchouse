@@ -1,4 +1,5 @@
-import { AudioOutlined } from '@ant-design/icons';
+import { Mic } from "lucide-react";
+
 import { Input } from 'antd';
 import { SearchProps } from 'antd/es/input';
 
@@ -19,7 +20,7 @@ export const AudioInput = ({
       placeholder={placeholder}
       enterButton="Search"
       suffix={
-        <AudioOutlined
+        <Mic size={16}
           style={{
             fontSize: 16,
             color: '#1677ff',

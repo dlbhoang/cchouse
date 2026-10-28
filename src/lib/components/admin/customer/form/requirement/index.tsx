@@ -82,8 +82,8 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
       //       getValueProps={switchValueToBoolean}
       //     >
       //       <Switch
-      //         checkedChildren={<CheckOutlined />}
-      //         unCheckedChildren={<CloseOutlined />}
+      //         checkedChildren={<Check />}
+      //         unCheckedChildren={<X />}
       //       />
       //     </Form.Item>
       //   )
@@ -100,8 +100,8 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
               getValueProps={switchValueToBoolean}
             >
               <Switch
-                checkedChildren={<CheckOutlined />}
-                unCheckedChildren={<CloseOutlined />}
+                checkedChildren={<Check />}
+                unCheckedChildren={<X />}
               />
             </Form.Item> */}
             <Form.Item label="Trạng thái" name={[itemName, "Status"]}>

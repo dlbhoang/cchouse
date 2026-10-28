@@ -5,8 +5,8 @@ import {
   Input,
   Space,
 } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import { History, MapPin } from "lucide-react";
+
+import { History, MapPin, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SpeechToText } from "@/lib/components/shared/SpeechToText";
 import AreaSelector, { type AreaSelection } from "@/lib/components/shared/AreaSelector";
@@ -252,7 +252,7 @@ export const AdvPropSearch = ({
                   onListeningChange={setIsListening}
                 />
               ) : (
-                <SearchOutlined />
+                <Search size={16} />
               )
             }
             className="adv-search-input"

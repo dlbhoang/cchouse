@@ -1,5 +1,6 @@
+import { Plus } from "lucide-react";
 import { Flex, Typography } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+
 import { Button } from "@/components/ui/button";
 import { ETransType } from "@/lib/core/enum";
 import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
@@ -42,7 +43,7 @@ const PropertyPageHeader = ({ total, searchOptions, onAdd }: Props) => {
 
       {onAdd && (
         <Button type="button" onClick={onAdd} className="rounded-full">
-          <PlusOutlined />
+          <Plus size={16} />
           Thêm mới
         </Button>
       )}

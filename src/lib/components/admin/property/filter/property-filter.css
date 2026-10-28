@@ -587,7 +587,7 @@
   font-weight: 500 !important;
   padding: 0 16px !important;
 }
-.property-filter-search-btn.ant-btn .anticon { font-size: 14px !important; }
+.property-filter-search-btn.ant-btn .lucide { width: 14px; height: 14px; }
 .property-filter-card .property-filter-reset-btn.ant-btn {
   width: 36px !important;
   min-width: 36px !important;

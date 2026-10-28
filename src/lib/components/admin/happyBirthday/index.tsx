@@ -1,7 +1,7 @@
-import { GiftTwoTone } from "@ant-design/icons";
+
 import { Modal, Result } from "antd";
 import dayjs from "dayjs";
-import { CakeIcon } from "lucide-react";
+import { CakeIcon, Gift } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { appConst } from "@/lib/core/configs/appConst";
 import { usePropStore } from "@/lib/stored";
@@ -36,7 +36,7 @@ const HappyBirthdayModal = () => {
       style={{ padding: 0 }}
     >
       <Result
-        icon={<GiftTwoTone />}
+        icon={<Gift size={72} />}
         title={
           <span>
             "Thật tuyệt, hôm nay là sinh nhật bạn. Chúc bạn có một ngày tuyệt

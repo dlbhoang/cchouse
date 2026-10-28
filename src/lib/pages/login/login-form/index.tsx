@@ -1,6 +1,7 @@
+import { EyeOff, Eye } from "lucide-react";
 // LoginForm.tsx
 import { Modal, Typography, Flex, Input, Button, Checkbox } from "antd";
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+
 import { getSession, signIn } from "next-auth/react";
 import { performLogout } from "@/services/auth/logout";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -264,7 +265,7 @@ const LoginForm = ({ isVisible, onModeChange, onMustChangePassword }: Props) => 
                 onClick={() => setShowPw((v) => !v)}
                 style={{ cursor: "pointer", color: "#9CA3AF" }}
               >
-                {showPw ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                {showPw ? <Eye size={16} /> : <EyeOff size={16} />}
               </span>
             }
             onChange={(e) => {

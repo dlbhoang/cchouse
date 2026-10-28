@@ -1,6 +1,7 @@
 "use client";
 
-import { PlayCircleOutlined } from "@ant-design/icons";
+
+import { CirclePlay } from "lucide-react";
 import { Image } from "antd";
 import { useMediaQuery } from "react-responsive";
 import { openVideoModal } from "@/lib/components/shared/MyModal/Video";
@@ -28,7 +29,7 @@ const MediaCard = ({
       className="pd-media-video"
       onClick={() => item.url && onVideoClick?.(item.url)}
     >
-      <PlayCircleOutlined style={{ fontSize: 36, color: "rgba(255,255,255,0.9)" }} />
+      <CirclePlay size={36} style={{ color: "rgba(255,255,255,0.9)" }} />
       <div className="pd-media-video-badge">Video</div>
     </div>
   ) : (

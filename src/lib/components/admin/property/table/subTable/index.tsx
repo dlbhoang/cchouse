@@ -1,7 +1,8 @@
+import { Copy } from "lucide-react";
 import TableNoPaging from "@/lib/components/shared/TableNoPaging";
 import { IPropResponse } from "@/lib/interfaces/Property/IProp";
 
-import { CopyOutlined } from "@ant-design/icons";
+
 import { useMemo } from "react";
 import BtnConfirm from "@/lib/components/shared/BtnConfirm";
 import { subCols } from "./subCols";
@@ -24,7 +25,7 @@ const PropertySubTable = ({ data, loading, onCopy }: Props) => {
           render: (value: number) => {
             return (
               <BtnConfirm
-                icon={<CopyOutlined />}
+                icon={<Copy size={16} />}
                 title="Sao chép nhanh thông tin bất động sản"
                 type="icon"
                 description="Thông tin sẽ được điền nhanh vào mẫu"

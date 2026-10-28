@@ -1,4 +1,5 @@
-import { VideoCameraOutlined } from '@ant-design/icons';
+import { Video } from "lucide-react";
+
 import { Modal } from 'antd';
 import ReactPlayer from 'react-player';
 
@@ -7,7 +8,7 @@ import { NotiBase } from '../../NotiBase';
 export const openVideoModal = (isMobile: boolean, videoUrl?: string) =>
   videoUrl
     ? Modal.info({
-        icon: <VideoCameraOutlined />,
+        icon: <Video size={16} />,
         width: 750,
         centered: true,
         title: 'Video',

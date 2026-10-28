@@ -1,4 +1,5 @@
-import { EyeOutlined } from "@ant-design/icons";
+import { Eye } from "lucide-react";
+
 import { Button, Space, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
@@ -130,7 +131,7 @@ const columns = ({
           ) && (
             <Tooltip title="Xem dữ liệu">
               <Button
-                icon={<EyeOutlined />}
+                icon={<Eye size={16} />}
                 onClick={() => handlePreview(record.Id)}
               />
             </Tooltip>
@@ -138,7 +139,7 @@ const columns = ({
           {/* {value === EPropTempStatus.Error && (
             <Tooltip title="Chuyển đổi">
               <Button
-                icon={<SyncOutlined />}
+                icon={<RefreshCw />}
                 onClick={async () => {
                   await propTempApi.syncToPropById(record.Id);
                   mutate(propTempApi.statisticKey);

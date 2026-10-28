@@ -1,5 +1,6 @@
 "use client";
-import { UploadOutlined } from "@ant-design/icons";
+
+import { Upload as LucideUpload } from "lucide-react";
 import type { UploadFile, UploadProps } from "antd";
 import { Button, Result, Upload } from "antd";
 import { useSession } from "next-auth/react";
@@ -72,7 +73,7 @@ const RulePage = () => {
       extra={
         [1, 2].includes(session?.user.RoleId ?? 0) && (
           <Upload showUploadList={false} onChange={handleChange}>
-            <Button type="primary" key="console" icon={<UploadOutlined />}>
+            <Button type="primary" key="console" icon={<LucideUpload size={16} />}>
               Thêm quy định
             </Button>
           </Upload>

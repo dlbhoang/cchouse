@@ -1,4 +1,5 @@
-import { FacebookOutlined } from "@ant-design/icons";
+import { Facebook } from "lucide-react";
+
 import { Popconfirm, Space, Switch, Tag, Tooltip, Typography } from "antd";
 import type { TagProps } from "antd/lib";
 import type { ColumnsType } from "antd/lib/table";
@@ -67,7 +68,7 @@ export const columns = ({
           {record.FacebookId && (
             <Tooltip title="Tài khoản có liên kết Facebook">
               <Space align="center">
-                <FacebookOutlined />
+                <Facebook size={16} />
                 <Text>Có liên kết Facebook</Text>
               </Space>
             </Tooltip>

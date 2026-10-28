@@ -1,8 +1,5 @@
-import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { CircleCheck, CircleX, UserRound } from "lucide-react";
+
 import {
   Avatar,
   Card,
@@ -158,7 +155,7 @@ const UseWebsiteDetail = ({ data }: Props) => {
         <Typography.Title level={5} style={{ marginTop: 10 }}>
           Thông tin khách hàng
         </Typography.Title>
-        <Avatar src={data.Avatar} icon={<UserOutlined />} size={64} />
+        <Avatar src={data.Avatar} icon={<UserRound size={16} />} size={64} />
       </Col>
       {data?.StatusName === "Chờ duyệt" && (
         <Col>
@@ -171,7 +168,7 @@ const UseWebsiteDetail = ({ data }: Props) => {
                 btnText="Duyệt"
                 btnType="primary"
                 type="text"
-                icon={<CheckCircleOutlined />}
+                icon={<CircleCheck size={16} />}
                 title="Xác nhận duyệt tài khoản?"
                 description="Sau khi duyệt, tài khoản sẽ có thể đăng tin bất động sản"
                 onOkClick={async () => {
@@ -188,7 +185,7 @@ const UseWebsiteDetail = ({ data }: Props) => {
                 btnText="Từ chối"
                 danger
                 type="text"
-                icon={<CloseCircleOutlined />}
+                icon={<CircleX size={16} />}
                 title="Xác nhận từ chối?"
                 onOkClick={async () => {
                   if (data.Id) {

@@ -10,12 +10,8 @@ import {
   Select,
   type SelectProps,
 } from "antd";
-import {
-  FilterOutlined,
-  ReloadOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
-import { ListFilterPlus, RotateCcw, X } from "lucide-react";
+
+import { ListFilterPlus, RotateCcw, X, SlidersHorizontal, RotateCw, Search } from "lucide-react";
 import { useState } from "react";
 import { useAdminContext } from "@/lib/stored";
 import {
@@ -176,7 +172,7 @@ export const DesktopView = ({
         <Button
           type="primary"
           htmlType="submit"
-          icon={<SearchOutlined />}
+          icon={<Search size={16} />}
           className="property-filter-search-btn"
           style={{
             backgroundColor: "#0588f0",
@@ -189,7 +185,7 @@ export const DesktopView = ({
 
         <Button
           htmlType="button"
-          icon={mapMode ? <RotateCcw size={16} /> : <ReloadOutlined />}
+          icon={mapMode ? <RotateCcw size={16} /> : <RotateCw size={16} />}
           className="property-filter-reset-btn"
           style={{
             backgroundColor: "#fff",
@@ -249,7 +245,7 @@ export const DesktopView = ({
 
         <Button
           htmlType="button"
-          icon={mapMode ? <ListFilterPlus size={16} /> : <FilterOutlined />}
+          icon={mapMode ? <ListFilterPlus size={16} /> : <SlidersHorizontal size={16} />}
           className={`property-filter-more-btn ${mapMode && hasAdvancedFilters(model) ? "is-active" : ""} ${moreOpen ? "is-open" : ""}`}
           aria-expanded={moreOpen}
           aria-haspopup="dialog"

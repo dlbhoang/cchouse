@@ -1,4 +1,5 @@
-import { AlertOutlined } from "@ant-design/icons";
+import { TriangleAlert } from "lucide-react";
+
 import {
   Button,
   Col,
@@ -115,7 +116,7 @@ const EmblededGoong = ({ form, name, address }: Props) => {
                 <Button onClick={() => onSearch(search)}>Tìm vị trí</Button>
               </Space>
             }
-            indicator={<AlertOutlined />}
+            indicator={<TriangleAlert size={16} />}
           >
             <iframe
               title="my_embed_goong"

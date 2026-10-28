@@ -1,5 +1,6 @@
 "use client";
-import { PlusOutlined } from "@ant-design/icons";
+
+import { Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { mutate } from "swr";
@@ -247,7 +248,7 @@ const PropertyPage = ({ transType }: Props) => {
                       aria-label="Thêm mới bất động sản"
                       title="Thêm mới"
                     >
-                      <PlusOutlined />
+                      <Plus size={16} />
                     </button>
                   </div>
                   <p>
@@ -259,7 +260,7 @@ const PropertyPage = ({ transType }: Props) => {
                   onClick={() => handleOpenAdd()}
                   className="property-add-button"
                 >
-                  <PlusOutlined />
+                  <Plus size={16} />
                   Thêm mới
                 </button>
               </div>

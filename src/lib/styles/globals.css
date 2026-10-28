@@ -1,8 +1,6 @@
 @import "tailwindcss";
 /* Global Styling here */
-/* .anticon{
-    font-size: 16px;
-} */
+/* Legacy Ant Design icon sizing rule removed after migration to Lucide. */
 
 /* Align pagination in the news table footer to the right */
 .news-table .ant-table-footer .ant-row {
@@ -569,7 +567,7 @@ button:not(:disabled),
   padding: 40px;
 }
 
-.terms-modal .ant-modal-confirm-body > .anticon {
+.terms-modal .ant-modal-confirm-body > svg {
   display: none;
 }
 
@@ -999,17 +997,18 @@ button:not(:disabled),
   transform: translateX(-50%);
 }
 
-.toolbar-wrapper .anticon {
+.toolbar-wrapper .lucide {
   padding: 12px;
   cursor: pointer;
 }
 
-.toolbar-wrapper .anticon[disabled] {
+.toolbar-wrapper .lucide.is-disabled {
   cursor: not-allowed;
   opacity: 0.3;
+  pointer-events: none;
 }
 
-.toolbar-wrapper .anticon:hover {
+.toolbar-wrapper .lucide:not(.is-disabled):hover {
   opacity: 0.3;
 }
 

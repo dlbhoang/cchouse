@@ -1,7 +1,7 @@
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+
 import { Button, Checkbox, DatePicker, Form, Image, Input, Modal, Select, Space, Typography, Upload } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
-import { CheckCircle2, Circle } from "lucide-react";
+import { CheckCircle2, Circle, EyeOff, Eye } from "lucide-react";
 import { useEffect, useState, type ChangeEvent } from "react";
 import { useMediaQuery } from "react-responsive";
 import { PhoneNumber } from "@/lib/components/shared/MyFormItem";
@@ -315,7 +315,7 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           size={isMobile ? "middle" : "large"}
           placeholder="Nhập mật khẩu"
           visibilityToggle={{ visible: showPw, onVisibleChange: setShowPw }}
-          iconRender={(visible) => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
+          iconRender={(visible) => (visible ? <Eye size={16} /> : <EyeOff size={16} />)}
         />
       </Form.Item>
 

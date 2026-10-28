@@ -1,6 +1,7 @@
 "use client";
 
-import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+
+import { EyeOff, Eye } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useMemo, useState } from "react";
 import RenderPhone from "@/lib/components/shared/CustomRender/RenderPhone";
@@ -55,7 +56,7 @@ const ContactSection = ({ data }: Props) => {
               onClick={() => setRevealed((prev) => !prev)}
               aria-label={revealed ? "Ẩn số điện thoại" : "Hiện số điện thoại"}
             >
-              {revealed ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+              {revealed ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
           )}
         </div>

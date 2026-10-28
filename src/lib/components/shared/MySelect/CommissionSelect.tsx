@@ -1,4 +1,5 @@
-import { PlusOutlined } from '@ant-design/icons';
+import { Plus } from "lucide-react";
+
 import { Button, Divider, InputNumber, Select, Space } from 'antd';
 import { useRef, useState } from 'react';
 
@@ -41,7 +42,7 @@ const CommissionSelect = ({ value, onChange }: Props) => {
               onChange={(val) => val && setName(val)}
               onKeyDown={(e) => e.stopPropagation()}
             />
-            <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
+            <Button type="text" icon={<Plus size={16} />} onClick={addItem}>
               Thêm lựa chọn
             </Button>
           </Space>

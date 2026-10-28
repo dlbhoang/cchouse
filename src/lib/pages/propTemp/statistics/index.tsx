@@ -1,5 +1,6 @@
 "use client";
-import { SyncOutlined } from "@ant-design/icons";
+
+import { RefreshCw } from "lucide-react";
 import { Button, Card, Col, Row, Statistic } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -49,7 +50,7 @@ const PropTempStatistics = () => {
                     <Col>
                       <Button
                         type="primary"
-                        icon={<SyncOutlined />}
+                        icon={<RefreshCw size={16} />}
                         onClick={handleSync}
                         loading={loading}
                       >

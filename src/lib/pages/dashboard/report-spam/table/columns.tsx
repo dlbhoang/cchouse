@@ -1,5 +1,6 @@
+import { Check } from "lucide-react";
 /* eslint-disable no-nested-ternary */
-import { CheckOutlined } from "@ant-design/icons";
+
 import { Button, Space, Typography } from "antd";
 import type { ColumnsType } from "antd/lib/table";
 import BtnPhone from "@/lib/components/shared/BtnPhone";
@@ -70,7 +71,7 @@ export const columns = ({
     render: (val, record) => {
       return (
         <Button
-          icon={<CheckOutlined />}
+          icon={<Check size={16} />}
           onClick={() => {
             console.log(val);
           }}

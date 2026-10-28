@@ -1,4 +1,5 @@
-import { EditOutlined } from "@ant-design/icons";
+import { Pencil } from "lucide-react";
+
 import { Button, Col, Image, Input, Row, Space, Typography } from "antd";
 import type { ColumnsType } from "antd/lib/table";
 import { useEffect, useState } from "react";
@@ -89,7 +90,7 @@ const WardTab = ({ districtId }: Props) => {
         return (
           <Space>
             <Button
-              icon={<EditOutlined />}
+              icon={<Pencil size={16} />}
               onClick={() => handleEdit(record)}
             />
           </Space>

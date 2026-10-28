@@ -1,5 +1,6 @@
 "use client";
-import { WarningOutlined } from "@ant-design/icons";
+
+import { TriangleAlert } from "lucide-react";
 import { Card, Col, Row, Statistic } from "antd";
 import Link from "next/link";
 import { baseFilter } from "@/lib/core/configs/appConst";
@@ -35,7 +36,7 @@ const DashboardPage = () => {
               title="Báo xấu tin đăng"
               value={reports?.totalRow ?? 0}
               valueStyle={{ color: "#c00" }}
-              prefix={<WarningOutlined />}
+              prefix={<TriangleAlert size={16} />}
             />
             <Link href={AppRoutes.reportSpam.url}>Chi tiết</Link>
           </Row>

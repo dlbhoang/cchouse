@@ -1,4 +1,5 @@
-import { UploadOutlined } from "@ant-design/icons";
+import { Upload as LucideUpload } from "lucide-react";
+
 import { Button, Space, Upload, type UploadProps } from "antd";
 import { useSession } from "next-auth/react";
 import ReactPlayer from "react-player";
@@ -48,7 +49,7 @@ const VideoUpload = ({
           beforeUpload={fileServices.beforeUpload}
           {...props}
         >
-          <Button icon={<UploadOutlined />}>Tải video lên</Button>
+          <Button icon={<LucideUpload size={16} />}>Tải video lên</Button>
         </Upload>
         {fileList && fileList.length > 0 && (
           <Button onClick={() => onDelete?.(fileList[0].uid)}>Xoá</Button>

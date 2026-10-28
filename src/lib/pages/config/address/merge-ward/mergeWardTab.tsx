@@ -1,6 +1,7 @@
 "use client";
 
-import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from "@ant-design/icons";
+
+import { Trash2, Pencil, Plus, Search } from "lucide-react";
 import { Button, Form, Input, Modal, Popconfirm, Select, Space, Table, Tag, Typography } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useEffect, useMemo, useState } from "react";
@@ -110,17 +111,17 @@ export default function MergeWardTab() {
     { title: "Địa chỉ cũ", render: (_, row) => <Space direction="vertical" size={2}><Typography.Text strong>{row.OldWardName}</Typography.Text><Typography.Text type="secondary">{row.OldDistrictName}</Typography.Text></Space> },
     { title: "Phường/xã mới", render: (_, row) => <Space direction="vertical" size={2}><Tag color="blue" bordered={false}>{row.NewWardName}</Tag><Typography.Text type="secondary">{row.NewDistrictName}</Typography.Text></Space> },
     { title: "Thao tác", width: 112, render: (_, row) => <Space>
-      <Button className="address-row-action address-row-edit" aria-label="Sửa ánh xạ" icon={<EditOutlined />} onClick={() => showEdit(row)} />
+      <Button className="address-row-action address-row-edit" aria-label="Sửa ánh xạ" icon={<Pencil size={16} />} onClick={() => showEdit(row)} />
       <Popconfirm title="Xóa ánh xạ địa chỉ này?" onConfirm={async () => { await mergeWardApi.delete(row.Id); await refresh(); }}>
-        <Button className="address-row-action address-row-delete" aria-label="Xóa ánh xạ" danger icon={<DeleteOutlined />} />
+        <Button className="address-row-action address-row-delete" aria-label="Xóa ánh xạ" danger icon={<Trash2 size={16} />} />
       </Popconfirm>
     </Space> },
   ];
 
   return <div className="address-conversion">
     <div className="address-conversion-toolbar">
-      <Input allowClear prefix={<SearchOutlined />} placeholder="Tìm địa chỉ cũ hoặc địa chỉ chuyển đổi" value={search} onChange={(event) => setSearch(event.target.value)} />
-      <Button type="primary" icon={<PlusOutlined />} onClick={showAdd}>Thêm mới</Button>
+      <Input allowClear prefix={<Search size={16} />} placeholder="Tìm địa chỉ cũ hoặc địa chỉ chuyển đổi" value={search} onChange={(event) => setSearch(event.target.value)} />
+      <Button type="primary" icon={<Plus size={16} />} onClick={showAdd}>Thêm mới</Button>
     </div>
     <div className="address-conversion-table">
       <Table rowKey="Id" columns={columns} dataSource={filteredRows} loading={loading} pagination={{ pageSize: 10, showSizeChanger: true, showTotal: (total) => `${total} địa chỉ` }} />

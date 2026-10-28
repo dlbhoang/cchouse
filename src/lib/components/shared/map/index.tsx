@@ -1,5 +1,6 @@
 "use client";
-import { AimOutlined } from "@ant-design/icons";
+
+import { LocateFixed } from "lucide-react";
 import "@changey/react-leaflet-markercluster/dist/styles.min.css";
 import { Button } from "antd";
 import L from "leaflet";
@@ -40,7 +41,7 @@ const PositionButton = () => {
               setLoading(false);
             }, 3000);
           }}
-          icon={<AimOutlined />}
+          icon={<LocateFixed size={16} />}
           loading={loading}
         />
       </div>

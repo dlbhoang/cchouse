@@ -1,4 +1,5 @@
-import { AppstoreOutlined, BarsOutlined } from "@ant-design/icons";
+import { LayoutGrid, List } from "lucide-react";
+
 import { Col, Form, Row, Segmented } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -60,8 +61,8 @@ const UserWebsiteFilter = ({ model, onSubmit }: Props) => {
       <Col>
         <Segmented
           options={[
-            { value: "list", icon: <BarsOutlined /> },
-            { value: "card", icon: <AppstoreOutlined /> },
+            { value: "list", icon: <List size={16} /> },
+            { value: "card", icon: <LayoutGrid size={16} /> },
           ]}
           onChange={(value) => {
             router.push(

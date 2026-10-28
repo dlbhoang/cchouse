@@ -1,5 +1,6 @@
 "use client";
-import { CaretRightOutlined, SendOutlined } from "@ant-design/icons";
+
+import { ChevronRight, Send } from "lucide-react";
 import {
   Button,
   Card,
@@ -42,7 +43,7 @@ const NotiPage = () => {
   const genExtra = (f: INotiResponse) => (
     <Space size="middle">
       <Button
-        icon={<SendOutlined />}
+        icon={<Send size={16} />}
         onClick={() => {
           setEditModel(f);
           setOpenModal(true);
@@ -57,7 +58,10 @@ const NotiPage = () => {
     <Collapse
       // eslint-disable-next-line react/no-unstable-nested-components
       expandIcon={({ isActive }) => (
-        <CaretRightOutlined rotate={isActive ? 90 : 0} />
+        <ChevronRight
+          size={16}
+          style={{ transform: `rotate(${isActive ? 90 : 0}deg)` }}
+        />
       )}
       items={data?.data.map((f) => ({
         key: f.Id?.toString(),

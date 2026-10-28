@@ -1,4 +1,5 @@
-import { MessageOutlined, PhoneOutlined } from "@ant-design/icons";
+import { MessageCircle, Phone } from "lucide-react";
+
 import {
   Avatar,
   Button,
@@ -33,12 +34,12 @@ const ConsultantContact = ({ data }: { data: IFeedResponse }) => {
       <Divider />
       <Row gutter={[10, 10]}>
         <Col span={12}>
-          <Button block icon={<PhoneOutlined />}>
+          <Button block icon={<Phone size={16} />}>
             <Link href={`tel:${data?.Author?.Phone}`}>Liên hệ</Link>
           </Button>
         </Col>
         <Col span={12}>
-          <Button block icon={<MessageOutlined />}>
+          <Button block icon={<MessageCircle size={16} />}>
             <Link
               href={`https://zalo.me/${data?.Author?.Phone}`}
               target="_blank"

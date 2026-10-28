@@ -659,8 +659,9 @@ const FLOATING_FIELD_CSS = `
     border-color: #0d74ce !important;
     transform: none;
   }
-  .news-filter-create-btn .anticon {
-    font-size: 14px;
+  .news-filter-create-btn .lucide {
+    width: 14px;
+    height: 14px;
   }
 
 `;

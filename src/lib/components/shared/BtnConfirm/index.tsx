@@ -1,4 +1,5 @@
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { CircleAlert } from "lucide-react";
+
 import { Button, Popconfirm } from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
 
@@ -59,7 +60,7 @@ const BtnConfirm = ({
       description={description ?? 'Thao tác này không thể hoàn tác'}
       open={open}
       icon={
-        <ExclamationCircleFilled
+        <CircleAlert size={18}
           className={danger ? 'app-popconfirm-icon-danger' : 'app-popconfirm-icon-primary'}
         />
       }

@@ -1,4 +1,5 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { Plus } from "lucide-react";
+
 import {
   Avatar,
   Checkbox,
@@ -131,7 +132,7 @@ const ContactZone = ({ model, form, isFull }: Props) => {
               suffix={
                 customerTypeWatch === 9 && (
                   <Tooltip title="Logo">
-                    <PlusOutlined
+                    <Plus size={10}
                       style={{ fontSize: 10 }}
                       onClick={() => setOpenLogo(true)}
                     />

@@ -1,5 +1,6 @@
 "use client";
-import { SearchOutlined } from "@ant-design/icons";
+
+import { Search } from "lucide-react";
 import { Badge, Input, List, Skeleton } from "antd";
 import { useEffect, useState } from "react";
 import { useAdminContext } from "@/lib/stored";
@@ -28,7 +29,7 @@ const ApplyList = ({ id }: { id: number }) => {
       header={
         <Input
           placeholder="Tìm kiếm theo tên, sdt"
-          suffix={<SearchOutlined />}
+          suffix={<Search size={16} />}
           style={{ width: 200 }}
           value={search}
           onChange={(e) => setSearch(e.target.value)}

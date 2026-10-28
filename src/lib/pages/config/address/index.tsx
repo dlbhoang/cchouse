@@ -1,5 +1,6 @@
 "use client";
-import { EditOutlined } from "@ant-design/icons";
+
+import { Pencil } from "lucide-react";
 import {
   Button,
   Card,
@@ -60,7 +61,7 @@ const AddressPage = () => {
         />
       ),
       extra: selectedProvince && (
-        <Button icon={<EditOutlined />} onClick={() => setOpenProvince(true)} />
+        <Button icon={<Pencil size={16} />} onClick={() => setOpenProvince(true)} />
       ),
     },
     {
@@ -92,7 +93,7 @@ const AddressPage = () => {
         />
       ),
       extra: selectedDistrict && (
-        <Button icon={<EditOutlined />} onClick={() => setOpenDistrict(true)} />
+        <Button icon={<Pencil size={16} />} onClick={() => setOpenDistrict(true)} />
       ),
     },
   ];

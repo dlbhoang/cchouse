@@ -1,5 +1,5 @@
-import { CopyOutlined } from "@ant-design/icons";
-import { Home, Plus } from "lucide-react";
+
+import { Home, Plus, Copy } from "lucide-react";
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import BtnConfirm from "@/lib/components/shared/BtnConfirm";
@@ -26,7 +26,7 @@ const LimitAccessPropTable = ({ data, loading, onCopy, onAdd }: Props) => {
           render: (value: number) => {
             return (
               <BtnConfirm
-                icon={<CopyOutlined />}
+                icon={<Copy size={16} />}
                 title="Sao chép nhanh thông tin bất động sản"
                 type="icon"
                 description="Thông tin sẽ được điền nhanh vào mẫu"

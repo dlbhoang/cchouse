@@ -1,4 +1,5 @@
-import { MessageOutlined, PhoneOutlined } from "@ant-design/icons";
+import { MessageCircle, Phone } from "lucide-react";
+
 import { Avatar, Button, Card, Col, Row, Typography } from "antd";
 import { useEffect, useState } from "react";
 import "swiper/css";
@@ -83,9 +84,9 @@ const UserAdminSwiper = () => {
                 }}
                 actions={[
                   <Typography.Link href={`tel:${e.CompanyPhone}`}>
-                    <Button icon={<PhoneOutlined />}>Liên hệ</Button>
+                    <Button icon={<Phone size={16} />}>Liên hệ</Button>
                   </Typography.Link>,
-                  <Button icon={<MessageOutlined />}>Nhắn tin</Button>,
+                  <Button icon={<MessageCircle size={16} />}>Nhắn tin</Button>,
                 ]}
               >
                 <Meta

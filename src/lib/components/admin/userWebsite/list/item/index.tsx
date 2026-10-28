@@ -1,9 +1,5 @@
-import {
-  EyeOutlined,
-  LockOutlined,
-  UnlockFilled,
-  UserOutlined,
-} from "@ant-design/icons";
+import { Eye, Lock, Unlock, UserRound } from "lucide-react";
+
 import { Avatar, Button, Card, Space, Typography } from "antd";
 import { useRouter } from "next/navigation";
 import RenderPhone from "@/lib/components/shared/CustomRender/RenderPhone";
@@ -26,7 +22,7 @@ const UserWebsiteItem = ({ data }: Props) => {
       <Card
         actions={[
           <Button
-            icon={data.IsActive ? <LockOutlined /> : <UnlockFilled />}
+            icon={data.IsActive ? <Lock size={16} /> : <Unlock size={16} />}
             onClick={async () =>
               data.Id && (await userWebsiteApi.block(data.Id))
             }
@@ -34,7 +30,7 @@ const UserWebsiteItem = ({ data }: Props) => {
             {data.IsActive ? "Tạm khoá" : "Kích hoạt"}
           </Button>,
           <Button
-            icon={<EyeOutlined />}
+            icon={<Eye size={16} />}
             onClick={() =>
               router.push(`${AppRoutes.userWebsite.url}/${data.Id}`)
             }
@@ -45,7 +41,7 @@ const UserWebsiteItem = ({ data }: Props) => {
       >
         <Meta
           avatar={
-            <Avatar src={data.Avatar} size={46} icon={<UserOutlined />} />
+            <Avatar src={data.Avatar} size={46} icon={<UserRound size={16} />} />
           }
           title={data.FullName}
           description={

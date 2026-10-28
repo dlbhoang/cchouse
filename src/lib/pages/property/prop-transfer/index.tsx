@@ -1,4 +1,5 @@
-import { EyeOutlined, HistoryOutlined } from "@ant-design/icons";
+import { Eye, History } from "lucide-react";
+
 import {
   Badge,
   Button,
@@ -85,7 +86,7 @@ const PropTransferDrawer = () => {
                 title={<Typography.Text>Mã BĐS {item.PropId}</Typography.Text>}
                 extra={
                   <Button
-                    icon={<HistoryOutlined />}
+                    icon={<History size={16} />}
                     onClick={() => handleHistoryClick(item.PropId)}
                   >
                     Lịch sử
@@ -175,7 +176,7 @@ const PropTransferDrawer = () => {
                         href={`/admin/property/${item.PropId}`}
                         target="_blank"
                       >
-                        <Button icon={<EyeOutlined />} />
+                        <Button icon={<Eye size={16} />} />
                       </Link>
                     </Tooltip>
                   </Col>
