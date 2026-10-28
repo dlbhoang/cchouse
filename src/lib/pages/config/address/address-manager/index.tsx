@@ -113,7 +113,7 @@ function Column({
       <div className="flex shrink-0 items-center gap-3 bg-[#eff6ff] px-3 py-2.5">
         <div className="flex min-w-px flex-1 items-center gap-2.5">
           <p className="whitespace-nowrap text-sm font-bold leading-5 text-[#0a0a0a]">{title}</p>
-          <span className="flex size-5 items-center justify-center rounded-full bg-[#6858d6] text-[11px] font-semibold leading-4 text-white">
+          <span className="flex size-5 items-center justify-center rounded-full bg-[#0588f0] text-[11px] font-semibold leading-4 text-white">
             {items.length}
           </span>
         </div>
@@ -133,7 +133,7 @@ function Column({
             onChange={(event) => onSearch(event.target.value)}
             placeholder="Tìm kiếm"
             aria-label={`Tìm kiếm ${title}`}
-            className="h-8 rounded-md border-[#e5e5e5] bg-white px-2.5 text-xs placeholder:text-[#737373] focus:border-[#6858d6] focus:ring-2 focus:ring-[#6858d6]/20"
+            className="h-8 rounded-md border-[#e5e5e5] bg-white px-2.5 text-xs placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20"
           />
         </div>
       )}
@@ -141,7 +141,7 @@ function Column({
         {loading && <p className="p-3 text-xs text-[#737373]">Đang tải...</p>}
         {!loading && items.length === 0 && (
           <div className="flex min-h-40 flex-1 flex-col items-center justify-center gap-2 text-center text-[#737373]">
-            <span className="flex size-10 items-center justify-center rounded-full bg-[#eae8ff] text-[#6858d6]">
+            <span className="flex size-10 items-center justify-center rounded-full bg-[#e8f3ff] text-[#0588f0]">
               <CircleX size={18} />
             </span>
             <span className="text-xs">{emptyMessage ?? "Chưa có thông tin hiển thị"}</span>
@@ -152,14 +152,14 @@ function Column({
             key={item.id}
             className={cn(
               "group flex shrink-0 items-center border-b border-[#f5f5f5] border-l-2 border-l-transparent px-3 text-left",
-              item.id === selectedId ? "border-l-transparent bg-[#f1efff]" : "bg-white hover:bg-[#fafafa]",
+              item.id === selectedId ? "border-l-transparent bg-[#eaf4ff]" : "bg-white hover:bg-[#fafafa]",
               !onSelect && "cursor-default"
             )}
           >
             <button
               type="button"
               onClick={() => onSelect?.(item.id)}
-              className="flex min-w-0 flex-1 flex-col gap-0.5 py-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#6858d6]"
+              className="flex min-w-0 flex-1 flex-col gap-0.5 py-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0588f0]"
             >
               <p title={item.name} className="w-full truncate text-sm font-semibold leading-5 text-[#0a0a0a]">
                 <RowName name={item.name} />
@@ -182,7 +182,7 @@ function Column({
                 {onEdit && (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button type="button" aria-label={`Chỉnh sửa ${item.name}`} onClick={() => onEdit(item)} className="rounded p-1 text-[#525252] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6858d6]/40">
+                      <button type="button" aria-label={`Chỉnh sửa ${item.name}`} onClick={() => onEdit(item)} className="rounded p-1 text-[#525252] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0]/40">
                         <Pencil size={14} aria-hidden="true" />
                       </button>
                     </TooltipTrigger>
@@ -192,7 +192,7 @@ function Column({
                 {onDelete && (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button type="button" aria-label={`Xóa ${item.name}`} onClick={() => onDelete(item)} className="rounded p-1 text-[#dc3e42] hover:bg-[#fff1f0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
+                      <button type="button" aria-label={`Xóa ${item.name}`} onClick={() => onDelete(item)} className="rounded p-1 text-[#525252] hover:bg-[#fff1f0] hover:text-[#dc3e42] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
                         <Trash2 size={14} aria-hidden="true" />
                       </button>
                     </TooltipTrigger>
@@ -642,7 +642,7 @@ export default function AddressManagerPage() {
                 if (event.key === "Escape") setSearchSuggestionsOpen(false);
               }}
               placeholder="Tìm kiếm địa chỉ"
-              className="h-9 rounded-[8px] border-[#e5e5e5] bg-white pl-9 pr-3 text-xs font-medium placeholder:text-[#737373] focus:border-[#6858d6] focus:ring-2 focus:ring-[#6858d6]/20 focus-visible:border-[#6858d6] focus-visible:ring-2 focus-visible:ring-[#6858d6]/20"
+              className="h-9 rounded-[8px] border-[#e5e5e5] bg-white pl-9 pr-3 text-xs font-medium placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20"
             />
             {searchSuggestionsOpen && query.trim() && (
               <div className="absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden rounded-lg border border-[#e5e5e5] bg-white shadow-lg">
@@ -661,7 +661,7 @@ export default function AddressManagerPage() {
                             setQuery("");
                             setSearchSuggestionsOpen(false);
                           }}
-                          className="flex w-full flex-col gap-0.5 rounded-md px-3 py-2 text-left hover:bg-[#f3f1ff] focus-visible:bg-[#f3f1ff] focus-visible:outline-none"
+                          className="flex w-full flex-col gap-0.5 rounded-md px-3 py-2 text-left hover:bg-[#eff6ff] focus-visible:bg-[#eff6ff] focus-visible:outline-none"
                         >
                           <span className="text-sm font-semibold text-[#171717]">{item.address}</span>
                           <span className="text-xs text-[#737373]">{item.name}</span>
@@ -678,7 +678,7 @@ export default function AddressManagerPage() {
           <button
             type="button"
             onClick={() => addNew()}
-            className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#6858d6] px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#5949c7] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#6858d6]/40"
+            className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#0588f0] px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0d74ce] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0]/40"
           >
             <Plus size={15} aria-hidden="true" />
             Thêm mới
@@ -717,11 +717,11 @@ export default function AddressManagerPage() {
           <TabsList className="h-8 rounded-[8px] bg-[#e5e5e5] p-[3px]">
             <TabsTrigger
               value="new"
-              className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#6858d6]/30"
+              className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30"
             >
               Sau sáp nhập
             </TabsTrigger>
-            <TabsTrigger value="old" className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#6858d6]/30">
+          <TabsTrigger value="old" className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30">
               Trước sáp nhập
             </TabsTrigger>
           </TabsList>
