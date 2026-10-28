@@ -1,32 +1,32 @@
-import useSWR from "swr";
+import useSWR from 'swr';
 
-import { IPropResponse } from "@/lib/interfaces/Property/IProp";
-import { ICountItem } from "@/lib/interfaces/base/ICountStatus";
-import { IListData, ISingleData } from "@/lib/interfaces/base/IResponseBase";
+import { IPropResponse } from '@/lib/interfaces/Property/IProp';
+import { ICountItem } from '@/lib/interfaces/base/ICountStatus';
+import { IListData, ISingleData } from '@/lib/interfaces/base/IResponseBase';
 import {
   ISearchOptions,
   IUserAdminOpts,
-} from "@/lib/interfaces/filter/ISearchOptions";
-import { FormatDateSubmit } from "../../../lib/core/utils/myFormat";
-import { axiosClient } from "../api_config";
+} from '@/lib/interfaces/filter/ISearchOptions';
+import { FormatDateSubmit } from '../../../lib/core/utils/myFormat';
+import { axiosClient } from '../api_config';
 
-import { INotiOpts, INotiUserResponse } from "../notifications/INoti";
+import { INotiOpts, INotiUserResponse } from '../notifications/INoti';
 import {
   IUserAdminPublic,
   IUserAdminQU,
   IUserAdminRequest,
   IUserAdminResponse,
-} from "./IUserAdmin";
+} from './IUserAdmin';
 
-const url = "UserAdmin";
-const meUrl = "Me";
+const url = 'UserAdmin';
+const meUrl = 'Me';
 
 const normalizePascalFields = <T>(value: T): T => {
   if (Array.isArray(value)) {
     return value.map((item) => normalizePascalFields(item)) as T;
   }
 
-  if (!value || typeof value !== "object") {
+  if (!value || typeof value !== 'object') {
     return value;
   }
 
@@ -35,12 +35,12 @@ const normalizePascalFields = <T>(value: T): T => {
 
   for (const [key, nestedValue] of Object.entries(record)) {
     const keepKey = [
-      "data",
-      "message",
-      "status",
-      "totalRow",
-      "errorCode",
-      "traceId",
+      'data',
+      'message',
+      'status',
+      'totalRow',
+      'errorCode',
+      'traceId',
     ].includes(key);
 
     const normalizedKey = keepKey
@@ -54,7 +54,7 @@ const normalizePascalFields = <T>(value: T): T => {
 };
 
 const normalizeUserAdminPayload = <T>(payload: T): T => {
-  if (!payload || typeof payload !== "object") {
+  if (!payload || typeof payload !== 'object') {
     return payload;
   }
 
@@ -63,7 +63,7 @@ const normalizeUserAdminPayload = <T>(payload: T): T => {
     return record.map((item) => normalizeUserAdminPayload(item)) as T;
   }
 
-  if (typeof record.data !== "undefined") {
+  if (typeof record.data !== 'undefined') {
     return {
       ...record,
       data: normalizeUserAdminPayload(record.data),
@@ -77,7 +77,7 @@ const notiRoutes = {
   getNotifications(params: INotiOpts) {
     return axiosClient.get<any, IListData<INotiUserResponse>>(
       `${meUrl}/Notifications`,
-      { params },
+      { params }
     );
   },
   useGetNotifications(params: ISearchOptions) {
@@ -86,21 +86,44 @@ const notiRoutes = {
           params as unknown as Record<string, string>
         ).toString()}`
       : `${meUrl}/Notifications`;
-    return useSWR(key, async (route) => {
-      return axiosClient.get<any, IListData<INotiUserResponse>>(
-        `${meUrl}/Notifications`,
-        {
-          params,
-        }
-      );
-    });
+    return useSWR(
+      key,
+      async (route) => {
+        return axiosClient.get<any, IListData<INotiUserResponse>>(
+          `${meUrl}/Notifications`,
+          {
+            params,
+            timeout: 15000,
+          }
+        );
+      },
+      {
+        // Notification panels are secondary UI. A temporary outage should not
+        // start SWR's exponential retry loop; focus/reconnect will recover it.
+        shouldRetryOnError: false,
+        revalidateOnFocus: true,
+        revalidateOnReconnect: true,
+        dedupingInterval: 30000,
+      }
+    );
   },
 
   countUnReadKey: `${meUrl}/CountUnReadNoti`,
   useCountUnReadNoti() {
-    return useSWR(`${meUrl}/CountUnReadNoti`, async (route) => {
-      return axiosClient.get<any, ISingleData<number>>(route);
-    });
+    return useSWR(
+      `${meUrl}/CountUnReadNoti`,
+      async (route) => {
+        return axiosClient.get<any, ISingleData<number>>(route, {
+          timeout: 15000,
+        });
+      },
+      {
+        shouldRetryOnError: false,
+        revalidateOnFocus: true,
+        revalidateOnReconnect: true,
+        dedupingInterval: 30000,
+      }
+    );
   },
 };
 
