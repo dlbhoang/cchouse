@@ -151,6 +151,7 @@ export const PropertyTable = ({
           />
         ) : isPropCart ? (
           <TableBase
+            bordered={false}
             loading={isLoading || isValidating}
             total={Array.isArray(data?.data) ? data.data.length : 0}
             searchOptions={searchOptions}
@@ -164,6 +165,7 @@ export const PropertyTable = ({
           />
         ) : (
           <TableBase
+            bordered={false}
             loading={isLoading || isValidating}
             total={data?.totalRow || 0}
             searchOptions={searchOptions}
