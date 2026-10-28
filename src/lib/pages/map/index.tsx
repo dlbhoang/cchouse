@@ -33,13 +33,9 @@ const MapPage = () => {
   const [detailError, setDetailError] = useState(false);
   const [polygon, setPolygon] = useState<any[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
+  // Main Design opens the map without the results drawer; users can show it
+  // with the map toggle when they want to browse matching properties.
   const [isResultsOpen, setIsResultsOpen] = useState(false);
-
-  useEffect(() => {
-    // Main Design shows the results list beside the map on desktop. Keep it
-    // closed on phones so the map remains usable until the user opens the sheet.
-    setIsResultsOpen(!smallScreen);
-  }, [smallScreen]);
 
   const propertyId = searchParams?.get("PropertyId");
   const isMockMode = searchParams?.get("mapMock") === "1";
