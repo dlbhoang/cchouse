@@ -417,8 +417,11 @@ export default function AddressManagerPage() {
     kind: "ward" as const,
     id: ward.Id,
     name: ward.Name,
-    count: searchableStreets.data
-      ? searchableStreets.data.data.filter((street) => street.WardId === ward.Id).length
+    // Only show a street count for the ward whose filtered street request has
+    // completed. The all-streets lookup endpoint does not consistently return
+    // WardId for every record in the production dataset.
+    count: ward.Id === wardId && newStreets.data
+      ? newStreets.data.data.length
       : undefined,
     oldDistrictId: ward.DistrictId,
     sub: (() => {
