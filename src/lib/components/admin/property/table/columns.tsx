@@ -364,16 +364,14 @@ Props): ColumnsType<IPropResponse> => {
           userSession?.RoleName !== "Admin" ? (
           <Tag>Ẩn SĐT</Tag>
         ) : (
-          <Tooltip title={record.CustomerTypeName}>
-            <Space direction="vertical">
-              <CustomerPhoneButton
-                typeName={record.CustomerTypeName}
-                onClick={() => handleOpenContact(record.Id)}
-              />
+          <Space direction="vertical">
+            <CustomerPhoneButton
+              typeName={record.CustomerTypeName}
+              onClick={() => handleOpenContact(record.Id)}
+            />
 
-              {record.IsHidePhone && <Tag>Ẩn SĐT</Tag>}
-            </Space>
-          </Tooltip>
+            {record.IsHidePhone && <Tag>Ẩn SĐT</Tag>}
+          </Space>
         );
       },
     },
@@ -421,6 +419,23 @@ Props): ColumnsType<IPropResponse> => {
                 </Button>
               </Tooltip>
               <Tooltip
+                title="Sao chép"
+              >
+                <Button
+                  size="icon-sm"
+                  variant="ghost"
+                  className="rounded-full"
+                  id={`btn-copy-property-${record.Id}`}
+                  aria-label="Sao chép bất động sản"
+                  onClick={() => {
+                    sendGTMEvent({ event: "copy_property", value: record.Id });
+                    navigator.clipboard.writeText(CopyProp(record));
+                  }}
+                >
+                  <CopyIcon className="size-4" />
+                </Button>
+              </Tooltip>
+              <Tooltip
                 title={
                   listCompare.some((x) => x.Id === record.Id)
                     ? "Bỏ khỏi so sánh"
@@ -431,12 +446,11 @@ Props): ColumnsType<IPropResponse> => {
                   size="icon-sm"
                   variant="ghost"
                   className="rounded-full"
-                  onClick={async () => {
+                  aria-label="So sánh bất động sản"
+                  onClick={() => {
                     onCompare({
                       Id: record.Id,
-                      Image: record.MainImage
-                        ? record.MainImage.Path
-                        : "/home.jpg",
+                      Image: record.MainImage ? record.MainImage.Path : "/home.jpg",
                       DisplayPrice: record.DisplayPrice,
                       DisplayAddress: record.PropAddress.DisplayAddress,
                     });
@@ -449,26 +463,6 @@ Props): ColumnsType<IPropResponse> => {
                         : undefined
                     }
                   />
-                </Button>
-              </Tooltip>
-
-              <Tooltip title="Sao chép">
-                <Button
-                  size="icon-sm"
-                  variant="ghost"
-                  className="rounded-full"
-                  id={`btn-copy-property-${record.Id}`}
-                  onClick={() => {
-                    sendGTMEvent({
-                      event: "copy_property",
-                      value: record.Id,
-                    });
-
-                    navigator.clipboard.writeText(CopyProp(record));
-                  }}
-                  aria-label="Sao chép bất động sản"
-                >
-                  <CopyIcon className="size-4" />
                 </Button>
               </Tooltip>
             </Space>

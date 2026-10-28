@@ -232,12 +232,10 @@ const columns = ({
           return <Tag>Ẩn SĐT</Tag>;
 
         return (
-          <Tooltip title={record.Contact.TypeName}>
-            <CustomerPhoneButton
-              typeName={record.Contact.TypeName}
-              onClick={() => handleOpenContact(record.Id)}
-            />
-          </Tooltip>
+          <CustomerPhoneButton
+            typeName={record.Contact.TypeName}
+            onClick={() => handleOpenContact(record.Id)}
+          />
         );
       },
     },

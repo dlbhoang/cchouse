@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "antd";
+import { Button, ButtonProps, Tooltip } from "antd";
 import { PhoneFilled } from "@ant-design/icons";
 
 type Props = {
@@ -28,21 +28,24 @@ const CustomerPhoneButton = ({
 }: Props & ButtonProps) => {
   if (typeName === "Tìm chủ")
     return (
-      <Button type="link" danger title="Tìm chủ" aria-label="Tìm chủ" {...props}>
-        {typeName}
-      </Button>
+      <Tooltip title="Tìm chủ" placement="top">
+        <Button type="link" danger aria-label="Tìm chủ" {...props}>
+          {typeName}
+        </Button>
+      </Tooltip>
     );
 
   const color = customerTypeColors[typeName] ?? "#8C8C8C";
   return (
-    <Button
-      type="link"
-      title={`Nhận diện khách hàng: ${typeName || "Chưa phân loại"}`}
-      aria-label={`Số điện thoại khách hàng, nhóm ${typeName || "chưa phân loại"}`}
-      icon={<PhoneFilled style={{ color }} />}
-      style={{ color }}
-      {...props}
-    />
+    <Tooltip title={typeName || "Chưa phân loại khách hàng"} placement="top">
+      <Button
+        type="link"
+        aria-label={`Số điện thoại khách hàng, nhóm ${typeName || "chưa phân loại"}`}
+        icon={<PhoneFilled style={{ color }} />}
+        style={{ color }}
+        {...props}
+      />
+    </Tooltip>
   );
 };
 
