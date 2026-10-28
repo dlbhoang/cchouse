@@ -1953,7 +1953,15 @@
 /* Match the Figma location popover: two-column options fit without wrapping,
    and its primary action uses the same blue as the filter controls. */
 .property-location-dropdown
-  .property-location-apply-btn.ant-btn.ant-btn-primary:not(:disabled):not(.ant-btn-disabled) {
+  .property-location-apply-btn {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid #0588f0;
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
   border-color: #0588f0 !important;
   background: #0588f0 !important;
   background-color: #0588f0 !important;
@@ -1963,7 +1971,7 @@
 }
 
 .property-location-dropdown
-  .property-location-apply-btn.ant-btn.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+  .property-location-apply-btn:hover {
   border-color: #087bd6 !important;
   background: #087bd6 !important;
   background-color: #087bd6 !important;

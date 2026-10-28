@@ -153,20 +153,13 @@ export const LocationSelectCustom = ({
             </Button>
           </Col>
           <Col {...colStyle}>
-            <Button
-              block
-              type="primary"
-              htmlType="button"
+            <button
+              type="button"
               className="property-location-apply-btn"
-              style={{
-                backgroundColor: "#0588f0",
-                borderColor: "#0588f0",
-                color: "#fff",
-              }}
               onClick={handleApply}
             >
               Áp dụng
-            </Button>
+            </button>
           </Col>
         </Row>
       )}
