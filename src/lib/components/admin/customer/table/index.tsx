@@ -1,19 +1,19 @@
-import { Button, Col, Drawer, Form, Row, Typography } from "antd";
-import { useEffect, useMemo, useState } from "react";
-import FloatBtn from "@/lib/components/shared/FloatBtn";
-import TableBase from "@/lib/components/shared/TableBase";
-import { ETransType } from "@/lib/core/enum";
-import { ICustomerOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import AddEditCustomer from "@/lib/pages/customer/addEdit";
-import { useAdminContext } from "@/lib/stored";
-import customerApi from "@/services/api/customer/customerApi";
+import { Button, Col, Drawer, Form, Row, Typography } from 'antd';
+import { useMemo, useState } from 'react';
+import FloatBtn from '@/lib/components/shared/FloatBtn';
+import TableBase from '@/lib/components/shared/TableBase';
+import { ETransType } from '@/lib/core/enum';
+import { ICustomerOpts } from '@/lib/interfaces/filter/ISearchOptions';
+import AddEditCustomer from '@/lib/pages/customer/addEdit';
+import { useAdminContext } from '@/lib/stored';
+import customerApi from '@/services/api/customer/customerApi';
 import {
   ICustomerRequest,
   ICustomerResponse,
-} from "@/services/api/customer/ICustomer";
-import RecProps from "../recProps";
+} from '@/services/api/customer/ICustomer';
+import RecProps from '../recProps';
 
-import columns from "./columns";
+import columns from './columns';
 
 type Props = {
   searchOptions: ICustomerOpts;
@@ -21,7 +21,7 @@ type Props = {
 };
 export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
   const { smallScreen } = useAdminContext();
-  const { data, isValidating, mutate } = customerApi.useGet(searchOptions);
+  const { data, isValidating } = customerApi.useGet(searchOptions);
   const [form] = Form.useForm<ICustomerRequest>();
 
   const [open, setOpen] = useState(false);
@@ -42,16 +42,12 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
     setOpen(true);
   };
 
-  useEffect(() => {
-    mutate();
-  }, [mutate, searchOptions]);
-
   const cols = useMemo(() => {
     return columns({
       reqType:
         Number(searchOptions.TransType) === ETransType.sell
-          ? "BuyingRequirement"
-          : "RentingRequirement",
+          ? 'BuyingRequirement'
+          : 'RentingRequirement',
       handlSelect: (id) => {
         setSelect(id);
         setOpen(true);
@@ -82,13 +78,13 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
         title={
           <Typography.Text strong>
             {select > 0
-              ? "Chỉnh sửa".toUpperCase()
-              : "Thêm khách hàng".toUpperCase()}
+              ? 'Chỉnh sửa'.toUpperCase()
+              : 'Thêm khách hàng'.toUpperCase()}
           </Typography.Text>
         }
         onClose={handleCancel}
         open={open}
-        placement={smallScreen ? "bottom" : "right"}
+        placement={smallScreen ? 'bottom' : 'right'}
         height="100%"
         width={600}
         extra={
@@ -98,7 +94,7 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
               form.submit();
             }}
           >
-            {select > 0 ? "Lưu" : "Thêm"}
+            {select > 0 ? 'Lưu' : 'Thêm'}
           </Button>
         }
       >

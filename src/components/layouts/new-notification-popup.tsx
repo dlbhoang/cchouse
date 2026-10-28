@@ -1,18 +1,21 @@
-"use client";
+'use client';
 
-import { BellRing, X } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
-import type { INotiUserResponse } from "@/services/api/notifications/INoti";
-import { BIRTHDAY_NOTIFICATION_PREFIX, isBirthdayNotification } from "@/services/api/notifications/notification-types";
-import notiApi from "@/services/api/notifications/notiApi";
-import userAdminApi from "@/services/api/userAdmin/userAdminApi";
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import { BellRing, X } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
+import { AppRoutes } from '@/lib/core/configs/appRoutes';
+import type { INotiUserResponse } from '@/services/api/notifications/INoti';
+import notiApi from '@/services/api/notifications/notiApi';
+import {
+  BIRTHDAY_NOTIFICATION_PREFIX,
+  isBirthdayNotification,
+} from '@/services/api/notifications/notification-types';
+import userAdminApi from '@/services/api/userAdmin/userAdminApi';
 
 type Props = { userId: number | string; roleId?: number };
 
-const birthdayRunKey = "cchouse-birthday-notifications-last-run";
+const birthdayRunKey = 'cchouse-birthday-notifications-last-run';
 
 function birthdayDateForYear(value: string | undefined, year: number) {
   if (!value) return undefined;
@@ -20,14 +23,10 @@ function birthdayDateForYear(value: string | undefined, year: number) {
   if (!birthDate.isValid()) return undefined;
 
   // In non-leap years, observe a February 29 birthday on February 28.
-  if (
-    birthDate.month() === 1 &&
-    birthDate.date() === 29 &&
-    !isLeapYear(year)
-  ) {
+  if (birthDate.month() === 1 && birthDate.date() === 29 && !isLeapYear(year)) {
     return `${year}-02-28`;
   }
-  return `${year}-${birthDate.format("MM-DD")}`;
+  return `${year}-${birthDate.format('MM-DD')}`;
 }
 
 function isLeapYear(year: number) {
@@ -41,6 +40,7 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
   useEffect(() => {
     if (!userId || checkedRef.current) return;
     checkedRef.current = true;
+    let popupDelay: number | undefined;
 
     const loadNewNotification = async () => {
       try {
@@ -48,7 +48,7 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
         // daily birthday check when the app is opened, then targets all active staff.
         if ([1, 2].includes(Number(roleId))) {
           const today = dayjs();
-          const runKey = `${birthdayRunKey}:${today.format("YYYY-MM-DD")}`;
+          const runKey = `${birthdayRunKey}:${today.format('YYYY-MM-DD')}`;
           if (window.localStorage.getItem(birthdayRunKey) !== runKey) {
             const pageSize = 500;
             const employeesResponse = await userAdminApi.get({
@@ -58,7 +58,7 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
             });
             const employees = [...(employeesResponse.data ?? [])];
             const totalPages = Math.ceil(
-              (employeesResponse.totalRow ?? employees.length) / pageSize,
+              (employeesResponse.totalRow ?? employees.length) / pageSize
             );
             const remainingPages = await Promise.all(
               Array.from({ length: Math.max(totalPages - 1, 0) }, (_, index) =>
@@ -66,8 +66,8 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
                   Status: 1,
                   pageIndex: index + 2,
                   pageSize,
-                }),
-              ),
+                })
+              )
             );
             for (const page of remainingPages) {
               employees.push(...(page.data ?? []));
@@ -75,44 +75,57 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
             const recipients = employees
               .map((employee) => Number(employee.Id))
               .filter((id) => Number.isFinite(id) && id > 0);
-            const tomorrow = today.add(1, "day");
+            const tomorrow = today.add(1, 'day');
             const notifications = employees.flatMap((employee) => {
               const id = Number(employee.Id);
               if (!id || !employee.DateOfBirth) return [];
 
               const isToday =
-                birthdayDateForYear(employee.DateOfBirth?.toString(), today.year()) ===
-                today.format("YYYY-MM-DD");
+                birthdayDateForYear(
+                  employee.DateOfBirth?.toString(),
+                  today.year()
+                ) === today.format('YYYY-MM-DD');
               const isTomorrow =
-                birthdayDateForYear(employee.DateOfBirth?.toString(), tomorrow.year()) ===
-                tomorrow.format("YYYY-MM-DD");
+                birthdayDateForYear(
+                  employee.DateOfBirth?.toString(),
+                  tomorrow.year()
+                ) === tomorrow.format('YYYY-MM-DD');
               if (!isToday && !isTomorrow) return [];
 
               const employeeLabel = [
                 employee.Name,
                 employee.RoleName,
                 employee.BranchName,
-              ].filter(Boolean).join(" - ");
+              ]
+                .filter(Boolean)
+                .join(' - ');
               const title = isToday
-                ? "🎉 Chúc mừng sinh nhật!!!"
-                : "🎂 Ngày mai là sinh nhật nhân viên";
+                ? '🎉 Chúc mừng sinh nhật!!!'
+                : '🎂 Ngày mai là sinh nhật nhân viên';
               const description = isToday
                 ? `Chúc mừng sinh nhật ${employeeLabel}!\n\nHôm nay là một ngày đặc biệt. Công ty xin gửi đến bạn những lời chúc tốt đẹp nhất. Chúc bạn luôn mạnh khỏe, hạnh phúc, thành công và có thật nhiều niềm vui trong cuộc sống!`
                 : `Ngày mai là sinh nhật ${employeeLabel}. Hãy cùng chuẩn bị lời chúc tốt đẹp gửi đến đồng nghiệp nhé!`;
 
-              return [{
-                Id: 0,
-                Title: title,
-                Summary: isToday ? `Sinh nhật hôm nay: ${employee.Name}` : `Sinh nhật ngày mai: ${employee.Name}`,
-                Description: description,
-                Thumbnail: typeof employee.Avatar === "string" ? employee.Avatar : "",
-                ReferenceId: `${BIRTHDAY_NOTIFICATION_PREFIX}${today.format("YYYY-MM-DD")}:${id}:${isToday ? "today" : "tomorrow"}`,
-                ReferenceType: 2,
-                SendToUsers: recipients,
-              }];
+              return [
+                {
+                  Id: 0,
+                  Title: title,
+                  Summary: isToday
+                    ? `Sinh nhật hôm nay: ${employee.Name}`
+                    : `Sinh nhật ngày mai: ${employee.Name}`,
+                  Description: description,
+                  Thumbnail:
+                    typeof employee.Avatar === 'string' ? employee.Avatar : '',
+                  ReferenceId: `${BIRTHDAY_NOTIFICATION_PREFIX}${today.format('YYYY-MM-DD')}:${id}:${isToday ? 'today' : 'tomorrow'}`,
+                  ReferenceType: 2,
+                  SendToUsers: recipients,
+                },
+              ];
             });
 
-            await Promise.all(notifications.map((notification) => notiApi.add(notification)));
+            await Promise.all(
+              notifications.map((notification) => notiApi.add(notification))
+            );
             window.localStorage.setItem(birthdayRunKey, runKey);
           }
         }
@@ -123,18 +136,32 @@ export default function NewNotificationPopup({ userId, roleId }: Props) {
           pageSize: 20,
         });
         const unread = response.data ?? [];
-        const sorted = [...unread].filter(
-          (item) => !isBirthdayNotification(item.Notification),
-        ).sort(
-          (a, b) => b.Notification.Id - a.Notification.Id,
+        const hasUnreadBirthday = unread.some((item) =>
+          isBirthdayNotification(item.Notification)
         );
-        if (sorted[0]) setNotification(sorted[0]);
+        const sorted = [...unread]
+          .filter((item) => !isBirthdayNotification(item.Notification))
+          .sort((a, b) => b.Notification.Id - a.Notification.Id);
+        if (sorted[0]) {
+          if (hasUnreadBirthday) {
+            // Let the dedicated birthday dialog complete before showing a second popup.
+            popupDelay = window.setTimeout(
+              () => setNotification(sorted[0]),
+              5200
+            );
+          } else {
+            setNotification(sorted[0]);
+          }
+        }
       } catch {
         // The regular notification bell remains available if this request fails.
       }
     };
 
     void loadNewNotification();
+    return () => {
+      if (popupDelay !== undefined) window.clearTimeout(popupDelay);
+    };
   }, [roleId, userId]);
 
   useEffect(() => {

@@ -1,22 +1,22 @@
-import { Col, Form, Input, Row, Tabs } from "antd";
-import { useEffect, useState } from "react";
+import { Col, Form, Input, Row, Tabs } from 'antd';
+import { useEffect, useState } from 'react';
 
 import {
   AreaFilter,
   DateFilter,
   PriceFilter,
   SearchInput,
-} from "@/lib/components/shared/MyFormItem";
-import { CustomerTypeSelect } from "@/lib/components/shared/MySelect";
-import { baseFilter } from "@/lib/core/configs/appConst";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
-import { ETransType } from "@/lib/core/enum";
-import TitlePage from "@/lib/core/layout/components/TitlePage";
-import { globalHandleFailed } from "@/lib/core/utils/ant-func";
-import { convertToNumber } from "@/lib/core/utils/myFormat";
-import { ICountItem } from "@/lib/interfaces/base/ICountStatus";
-import { ICustomerOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import customerApi from "@/services/api/customer/customerApi";
+} from '@/lib/components/shared/MyFormItem';
+import { CustomerTypeSelect } from '@/lib/components/shared/MySelect';
+import { baseFilter } from '@/lib/core/configs/appConst';
+import { AppRoutes } from '@/lib/core/configs/appRoutes';
+import { ETransType } from '@/lib/core/enum';
+import TitlePage from '@/lib/core/layout/components/TitlePage';
+import { globalHandleFailed } from '@/lib/core/utils/ant-func';
+import { convertToNumber } from '@/lib/core/utils/myFormat';
+import { ICountItem } from '@/lib/interfaces/base/ICountStatus';
+import { ICustomerOpts } from '@/lib/interfaces/filter/ISearchOptions';
+import customerApi from '@/services/api/customer/customerApi';
 
 type Props = {
   model?: ICustomerOpts;
@@ -89,7 +89,7 @@ const CustomerFilter = ({ model, onSubmit }: Props) => {
         <Col xs={24} lg={12} xl={8}>
           <SearchInput
             form={form}
-            placeholder="Tìm tên, số diện thoại,..."
+            placeholder="Tìm tên, số điện thoại,..."
             handleRefresh={handleRefresh}
           />
         </Col>

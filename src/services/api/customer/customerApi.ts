@@ -1,20 +1,20 @@
-import useSWR from "swr";
+import useSWR from 'swr';
 
-import { ICountItem } from "@/lib/interfaces/base/ICountStatus";
-import { IListData, ISingleData } from "@/lib/interfaces/base/IResponseBase";
-import { ICustomerOpts } from "../../../lib/interfaces/filter/ISearchOptions";
-import { axiosClient } from "../api_config";
+import { ICountItem } from '@/lib/interfaces/base/ICountStatus';
+import { IListData, ISingleData } from '@/lib/interfaces/base/IResponseBase';
+import { ICustomerOpts } from '../../../lib/interfaces/filter/ISearchOptions';
+import { axiosClient } from '../api_config';
 
-import { ICustomerRequest, ICustomerResponse } from "./ICustomer";
+import { ICustomerRequest, ICustomerResponse } from './ICustomer';
 
-const url = "Customer";
+const url = 'Customer';
 
 const customerApi = {
   mutateKey: url,
   useGet(params: ICustomerOpts) {
-    return useSWR(url, async (route) => {
+    return useSWR([url, params] as const, async ([route, query]) => {
       return axiosClient.get<any, IListData<ICustomerResponse>>(route, {
-        params,
+        params: query,
       });
     });
   },

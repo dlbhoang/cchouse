@@ -42,9 +42,19 @@ export default function BirthdayNotificationPopup({ userId }: Props) {
 
   const item = notification.Notification;
   const isUpcoming = item.ReferenceId?.endsWith(':tomorrow') ?? false;
-  const employeeName = (item.Summary ?? '')
+  const summaryName = (item.Summary ?? '')
     .replace(/^Sinh nhật (hôm nay|ngày mai):\s*/i, '')
     .trim();
+  const titleName = (item.Title ?? '')
+    .replace(
+      /^🎉?\s*(?:TEST\s+)?SINH NHẬT(?:\s+(?:HÔM NAY|NGÀY MAI))?[:\s-]*/i,
+      ''
+    )
+    .trim();
+  const descriptionName = item.Description?.match(
+    /(?:cho|của)\s+([^.!?\n]+)/i
+  )?.[1]?.trim();
+  const employeeName = summaryName || titleName || descriptionName || '';
   const avatar = item.Thumbnail?.trim();
 
   return (
