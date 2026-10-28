@@ -167,7 +167,7 @@ const MobilePropertyList = ({
                             aria-label="Xem hình ảnh bất động sản"
                             onClick={() => onOpenImages(property.Id)}
                           >
-                            <ImageIcon size={18} aria-hidden="true" />
+                            <ImageIcon size={16} aria-hidden="true" />
                           </button>
                         </Tooltip>
                       )}
@@ -179,7 +179,7 @@ const MobilePropertyList = ({
                             aria-label="Xem video bất động sản"
                             onClick={() => onOpenVideo(property.Video)}
                           >
-                            <Video size={18} aria-hidden="true" />
+                            <Video size={16} aria-hidden="true" />
                           </button>
                         </Tooltip>
                       )}
@@ -190,7 +190,7 @@ const MobilePropertyList = ({
                           aria-label="Xem lịch sử bất động sản"
                           onClick={() => onOpenHistory(property.Id)}
                         >
-                          <History size={18} aria-hidden="true" />
+                          <History size={16} aria-hidden="true" />
                         </button>
                       </Tooltip>
                       <Tooltip title={property.IsSaved ? "Bỏ lưu" : "Lưu giỏ hàng"}>
@@ -200,7 +200,7 @@ const MobilePropertyList = ({
                           aria-label={property.IsSaved ? "Bỏ lưu bất động sản" : "Lưu bất động sản"}
                           onClick={() => onToggleSaved(property.Id)}
                         >
-                          <ShoppingCart size={18} aria-hidden="true" />
+                          <ShoppingCart size={16} aria-hidden="true" />
                         </button>
                       </Tooltip>
                       <Tooltip title={isCompared ? "Bỏ so sánh" : "Lưu so sánh"}>
@@ -219,7 +219,7 @@ const MobilePropertyList = ({
                             })
                           }
                         >
-                          <Copy size={18} aria-hidden="true" />
+                          <Copy size={16} aria-hidden="true" />
                         </button>
                       </Tooltip>
                     </div>
