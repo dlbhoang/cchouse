@@ -31,11 +31,20 @@ type Props = {
   polygon?: any;
   focusedProperty?: IPropAdminMap;
   resultsOpen?: boolean;
+  onSelectProperty?: (item: IPropAdminMap) => void;
+  onOpenPropertyDetail?: (item: IPropAdminMap) => void;
 };
 
 const hcmPosition = { lat: 10.845, lng: 106.675 };
 
-function MyComponent({ data, polygon, focusedProperty, resultsOpen = false }: Props) {
+function MyComponent({
+  data,
+  polygon,
+  focusedProperty,
+  resultsOpen = false,
+  onSelectProperty,
+  onOpenPropertyDetail,
+}: Props) {
   const map = useMap();
   const searchParams = useSearchParams();
   const properties = Array.isArray(data) ? data : [];
@@ -106,6 +115,14 @@ function MyComponent({ data, polygon, focusedProperty, resultsOpen = false }: Pr
         zIndexOffset={focusedProperty?.Id === e.Id ? 1000 : 0}
         key={e.Id}
         position={[e.PropAddress.Lat ?? 0, e.PropAddress.Lng ?? 0]}
+        eventHandlers={{
+          click: () => onSelectProperty?.(e),
+          dblclick: (event) => {
+            event.originalEvent.preventDefault();
+            event.originalEvent.stopPropagation();
+            onOpenPropertyDetail?.(e);
+          },
+        }}
       >
         <Popup
           className="admin-map-property-popup"
@@ -228,7 +245,14 @@ const MapSizeObserver = () => {
   return null;
 };
 
-const Leaflet = ({ data, polygon, focusedProperty, resultsOpen = false }: Props) => {
+const Leaflet = ({
+  data,
+  polygon,
+  focusedProperty,
+  resultsOpen = false,
+  onSelectProperty,
+  onOpenPropertyDetail,
+}: Props) => {
   return (
     <MapContainer
       center={hcmPosition}
@@ -243,6 +267,8 @@ const Leaflet = ({ data, polygon, focusedProperty, resultsOpen = false }: Props)
         polygon={polygon}
         focusedProperty={focusedProperty}
         resultsOpen={resultsOpen}
+        onSelectProperty={onSelectProperty}
+        onOpenPropertyDetail={onOpenPropertyDetail}
       />
     </MapContainer>
   );

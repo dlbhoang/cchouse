@@ -32,7 +32,7 @@ const MapPage = () => {
   const [detail, setDetail] = useState<IPropResponse>();
   const [detailError, setDetailError] = useState(false);
   const [polygon, setPolygon] = useState<any[]>([]);
-  const [selectedProperty, setSelectedProperty] = useState<IPropResponse>();
+  const [selectedProperty, setSelectedProperty] = useState<IPropAdminMap>();
   // Main Design opens the map without the results drawer; users can show it
   // with the map toggle when they want to browse matching properties.
   const [isResultsOpen, setIsResultsOpen] = useState(false);
@@ -173,10 +173,10 @@ const MapPage = () => {
     hasMapCoordinates(PropAddress),
   );
 
-  const selectProperty = (item: IPropResponse) => {
+  const selectProperty = (item: IPropAdminMap) => {
     setSelectedProperty(item);
   };
-  const openPropertyDetail = (item: IPropResponse) => {
+  const openPropertyDetail = (item: IPropAdminMap) => {
     const params = new URLSearchParams(searchParams?.toString() ?? "");
     params.set("PropertyId", item.Id.toString());
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
@@ -249,6 +249,8 @@ const MapPage = () => {
               polygon={polygon}
               focusedProperty={focusedProperty}
               resultsOpen={isResultsOpen}
+              onSelectProperty={selectProperty}
+              onOpenPropertyDetail={openPropertyDetail}
             />
             {pointsError && !isMockMode ? (
               <div className="admin-map-notice" role="status">
