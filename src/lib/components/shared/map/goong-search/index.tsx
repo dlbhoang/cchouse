@@ -1,3 +1,4 @@
+import { Search, X } from "lucide-react";
 import { Input, List, Popover } from "antd";
 import type { SearchProps } from "antd/es/input/Search";
 import { useState } from "react";
@@ -55,6 +56,8 @@ const GoongSearch = ({ handleSearch }: Props) => {
       placement="bottom"
     >
       <Input.Search
+                enterButton={<Search size={16} strokeWidth={1.8} />}
+                allowClear={{ clearIcon: <X size={14} strokeWidth={1.8} /> }}
         style={{ width: smallScreen ? 250 : 400 }}
         value={search}
         onChange={(e) => setSearch(e.target.value)}

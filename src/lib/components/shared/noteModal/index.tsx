@@ -1,16 +1,5 @@
-import {
-  Image,
-  Input,
-  Modal,
-  ModalProps,
-  Space,
-  Tabs,
-  TabsProps,
-  Tooltip,
-  Typography,
-  Button,
-  Badge,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Image, Input, ModalProps, Space, Tabs, TabsProps, Tooltip, Typography, Button, Badge} from "antd";
 import { useEffect, useState } from "react";
 import HistoryTree from "@/lib/components/shared/HistoryTree";
 
@@ -221,7 +210,7 @@ const NoteModal = ({
         </Space>
       </Tooltip>
 
-      <Modal
+      <LucideModal
         {...props}
         title={modalTitle}
         open={open}
@@ -251,7 +240,7 @@ const NoteModal = ({
           style={{ marginTop: 4 }}
           tabBarStyle={{ marginBottom: 12 }}
         />
-      </Modal>
+      </LucideModal>
     </>
   );
 };

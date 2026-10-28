@@ -1,15 +1,5 @@
-import {
-  Button,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Row,
-  Space,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Col, Form, Input, InputNumber, Radio, Row, Space, Typography} from "antd";
 import { useEffect, useState } from "react";
 import { UserAdminStatusSelect } from "@/lib/components/shared/MySelect";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -62,7 +52,7 @@ const QuickUpdateModal = ({
   }, [form, model]);
 
   return (
-    <Modal
+    <LucideModal
       title="Thông tin khác & Thao tác"
       maskClosable={false}
       open={isModalOpen}
@@ -164,7 +154,7 @@ const QuickUpdateModal = ({
           </Col>
         </Row>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

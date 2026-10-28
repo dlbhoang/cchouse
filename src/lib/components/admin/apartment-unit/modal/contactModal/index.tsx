@@ -1,14 +1,5 @@
-import {
-  Button,
-  Col,
-  Collapse,
-  Descriptions,
-  Modal,
-  Row,
-  Space,
-  Tag,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Col, Collapse, Descriptions, Row, Space, Tag, Typography} from "antd";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -79,7 +70,7 @@ const ContactModal = ({ isModalOpen, model, handleCancel }: Props) => {
 
   return (
     contact && (
-      <Modal
+      <LucideModal
         title={
           <Row
             justify="space-between"
@@ -206,7 +197,7 @@ const ContactModal = ({ isModalOpen, model, handleCancel }: Props) => {
             </Panel>
           ))}
         </Collapse>
-      </Modal>
+      </LucideModal>
     )
   );
 };

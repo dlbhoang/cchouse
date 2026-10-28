@@ -1,13 +1,6 @@
-import {
-  Col,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Row,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+import {Col, Form, Input, InputNumber, Radio, Row} from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
@@ -67,7 +60,7 @@ const SimRequestModal = ({
   }, [form, model]);
 
   return (
-    <Modal
+    <LucideModal
       title={(model?.Id ?? 0) > 0 ? "Chỉnh sửa" : "Thêm mới"}
       maskClosable={false}
       open={isModalOpen}
@@ -140,7 +133,7 @@ const SimRequestModal = ({
           </Col>
           <Col xs={24} lg={8} xl={8}>
             <Form.Item label="Ngày nhận" name="ReceivedDate">
-              <DatePicker
+              <LucideDatePicker
                 format={["DD/MM/YYYY", "DD/MM/YY"]}
                 style={{ width: "100%" }}
               />
@@ -153,7 +146,7 @@ const SimRequestModal = ({
           </Col>
         </Row>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

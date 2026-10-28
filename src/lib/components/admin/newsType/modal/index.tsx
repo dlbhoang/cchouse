@@ -1,4 +1,5 @@
-import { Col, Form, Input, Modal, Row } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Col, Form, Input, Row} from "antd";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { mutate } from "swr";
@@ -45,7 +46,7 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
   }, [form, model]);
 
   return (
-    <Modal
+    <LucideModal
       open={isModalOpen}
       title={model?.Id ? "Chỉnh sửa loại tin" : "Thêm mới chủ đề"}
       width={384}
@@ -102,7 +103,7 @@ const AddEditModal = ({ isModalOpen, model, handleCancel }: Props) => {
         </Row>
       </Form>
 
-    </Modal>
+    </LucideModal>
   );
 };
 

@@ -1,6 +1,7 @@
-import { CircleAlert } from "lucide-react";
+import { Popconfirm as LucidePopconfirm } from "@/lib/components/antd-lucide";
+import {CircleAlert } from "lucide-react";
 
-import { Button, Popconfirm } from 'antd';
+import { Button} from 'antd';
 import { CSSProperties, ReactNode, useState } from 'react';
 
 import { NotiBase } from '../NotiBase';
@@ -55,7 +56,7 @@ const BtnConfirm = ({
   };
 
   return (
-    <Popconfirm
+    <LucidePopconfirm
       title={title ?? 'Xác nhận xoá dữ liệu?'}
       description={description ?? 'Thao tác này không thể hoàn tác'}
       open={open}
@@ -97,7 +98,7 @@ const BtnConfirm = ({
           {...props}
         />
       )}
-    </Popconfirm>
+    </LucidePopconfirm>
   );
 };
 

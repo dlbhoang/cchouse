@@ -1,5 +1,6 @@
 "use client";
-import { DatePicker } from "antd";
+import { DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+
 import dayjs from "dayjs";
 import { useFormContext } from "react-hook-form";
 import {
@@ -69,7 +70,7 @@ export function DateRangeFilter({
                   <div style={{ fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase", marginBottom: 2 }}>
                     Ngày bắt đầu
                   </div>
-                  <DatePicker
+                  <LucideDatePicker
                     value={fromDate ? dayjs(fromDate) : null}
                     onChange={(val) => {
                       form.setValue(fromDateName, val?.format("YYYY-MM-DD") || null);
@@ -97,7 +98,7 @@ export function DateRangeFilter({
                   <div style={{ fontSize: 11, color: "#888", fontWeight: 600, textTransform: "uppercase", marginBottom: 2 }}>
                     Ngày kết thúc
                   </div>
-                  <DatePicker
+                  <LucideDatePicker
                     value={toDate ? dayjs(toDate) : null}
                     onChange={(val) => {
                       form.setValue(toDateName, val?.format("YYYY-MM-DD") || null);

@@ -1,4 +1,5 @@
-import { Col, Form, Input, Modal, Row } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Col, Form, Input, Row} from "antd";
 import { useEffect, useState } from "react";
 
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -58,7 +59,7 @@ const PropTypeRequestModal = ({
   }, [form, model]);
 
   return (
-    <Modal
+    <LucideModal
       title={(model?.Id ?? 0) > 0 ? "Chỉnh sửa" : "Thêm mới"}
       maskClosable={false}
       open={isModalOpen}
@@ -116,7 +117,7 @@ const PropTypeRequestModal = ({
           </Col>
         </Row>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

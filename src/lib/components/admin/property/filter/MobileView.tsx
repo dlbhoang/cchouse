@@ -1,12 +1,5 @@
-import {
-  Checkbox,
-  Drawer,
-  Flex,
-  Form,
-  FormInstance,
-  Input,
-  Segmented,
-} from "antd";
+import { Drawer as LucideDrawer } from "@/lib/components/antd-lucide";
+import {Checkbox, Flex, Form, FormInstance, Input, Segmented} from "antd";
 import { ListFilterPlus } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -99,7 +92,7 @@ export const MobileView = ({
         </Button>
       </div>
 
-      <Drawer
+      <LucideDrawer
         title="Bộ lọc"
         forceRender={mapMode}
         placement="bottom"
@@ -255,7 +248,7 @@ export const MobileView = ({
             </Form.Item>
           </Flex>
         </Flex>
-      </Drawer>
+      </LucideDrawer>
     </>
   );
 };

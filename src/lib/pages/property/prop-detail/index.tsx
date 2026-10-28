@@ -1,6 +1,7 @@
 "use client";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 
-import { Button, Modal, Row, Spin } from "antd";
+import {Button, Row, Spin} from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PropAddEdit from "@/lib/components/admin/property/form/propAddEdit";
@@ -131,7 +132,7 @@ const PropertyFormModal = ({
     ) : null;
 
   return (
-    <Modal
+    <LucideModal
       title={modalTitle}
       open={open}
       width="95vw"
@@ -165,7 +166,7 @@ const PropertyFormModal = ({
       {!loading && showRequestAccess && (
         <RequestAccess model={accessInfo} onClose={onClose} />
       )}
-    </Modal>
+    </LucideModal>
   );
 };
 

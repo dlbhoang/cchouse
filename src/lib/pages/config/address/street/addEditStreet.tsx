@@ -1,4 +1,5 @@
-import { Col, Form, Input, Modal, Row, type UploadFile } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Col, Form, Input, Row, type UploadFile} from "antd";
 import { useEffect, useState } from "react";
 import { mutate } from "swr";
 import AppUpload from "@/lib/components/shared/components/app-upload";
@@ -65,7 +66,7 @@ const AddEditStreet = ({
       });
   }, [districtId, form, model]);
   return (
-    <Modal
+    <LucideModal
       title={title}
       maskClosable={false}
       open={isModalOpen}
@@ -159,7 +160,7 @@ const AddEditStreet = ({
           </Col>
         </Row>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

@@ -1,11 +1,12 @@
 "use client";
-import { Button, Result } from "antd";
+import { Result as LucideResult } from "@/lib/components/antd-lucide";
+import {Button} from "antd";
 
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { ETransType } from "@/lib/core/enum";
 
 export default function NotFound() {
-  <Result
+  <LucideResult
     status="404"
     title="404"
     subTitle="Không tìm thấy trang mong muốn!"

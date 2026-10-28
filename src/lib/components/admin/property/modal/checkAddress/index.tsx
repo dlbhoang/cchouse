@@ -1,12 +1,5 @@
-import {
-  Button,
-  Card,
-  Form,
-  FormInstance,
-  Modal,
-  Space,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Card, Form, FormInstance, Space, Typography} from "antd";
 import { useEffect, useState } from "react";
 
 import { ETransType } from "@/lib/core/enum";
@@ -103,7 +96,7 @@ const PropertyCheckAddress = ({ form, model, transType }: Props) => {
   };
 
   return (
-    <Modal
+    <LucideModal
       title="Kiểm tra địa chỉ"
       centered
       open={openModalExist}
@@ -132,7 +125,7 @@ const PropertyCheckAddress = ({ form, model, transType }: Props) => {
           />
         </Card>
       </Space>
-    </Modal>
+    </LucideModal>
   );
 };
 

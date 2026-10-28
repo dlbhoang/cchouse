@@ -1,4 +1,6 @@
-import { Alert, Modal, Spin } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Alert as LucideAlert } from "@/lib/components/antd-lucide";
+import {Modal, Spin} from "antd";
 import { X } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, type ReactNode } from "react";
@@ -153,7 +155,7 @@ const PropertyDetailDialog = ({
   ];
 
   return (
-    <Modal
+    <LucideModal
       open={open}
       onCancel={onClose}
       footer={null}
@@ -169,7 +171,7 @@ const PropertyDetailDialog = ({
         <div className="property-detail-dialog-loading"><Spin size="large" /></div>
       ) : error ? (
         <div className="property-detail-dialog-loading">
-          <Alert type="error" showIcon message="Không tải được chi tiết bất động sản." />
+          <LucideAlert type="error" showIcon message="Không tải được chi tiết bất động sản." />
         </div>
       ) : data && propAddress ? (
       <div className="property-detail-dialog">
@@ -299,7 +301,7 @@ const PropertyDetailDialog = ({
         </div>
       </div>
       ) : null}
-    </Modal>
+    </LucideModal>
   );
 };
 

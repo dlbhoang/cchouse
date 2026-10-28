@@ -1,4 +1,5 @@
-import { ConfigProvider, Pagination, Select, Table } from "antd";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {ConfigProvider, Pagination, Table} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TableRowSelection } from "antd/es/table/interface";
 import {
@@ -109,6 +110,20 @@ function TableBase<T>({
               expandedRowRender: (record: any, index: number) =>
                 expandedRowRender && expandedRowRender(index),
               defaultExpandedRowKeys: ["0"],
+              expandIcon: ({ expanded, onExpand, record }) => (
+                <button
+                  type="button"
+                  aria-label={expanded ? "Thu gọn dòng" : "Mở rộng dòng"}
+                  className="inline-flex size-6 items-center justify-center text-[#737373] transition-colors hover:text-[#0788f5]"
+                  onClick={(event) => onExpand(record, event)}
+                >
+                  <ChevronRight
+                    size={16}
+                    strokeWidth={1.8}
+                    className={expanded ? "rotate-90 transition-transform" : "transition-transform"}
+                  />
+                </button>
+              ),
             }
           }
           onRow={(record: T) => handleRow(record)}
@@ -140,7 +155,7 @@ function TableBase<T>({
                   </span>
                   <div className="table-custom-pagination">
                     <span>{customPaginationLabels?.pageSize ?? "Hàng trên trang"}</span>
-                    <Select
+                    <LucideSelect
                       size="small"
                       value={currentPageSize}
                       options={[10, 20, 30, 40, 50].map((pageSize) => ({

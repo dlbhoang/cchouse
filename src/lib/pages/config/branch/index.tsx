@@ -1,5 +1,6 @@
 "use client";
-import { Card, Col, Form, Input, Modal, Row } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Card, Col, Form, Input, Row} from "antd";
 import { useEffect, useState } from "react";
 
 import BranchForm from "@/lib/components/admin/branch/form";
@@ -84,7 +85,7 @@ const BranchPage = () => {
         </Row>
       </Card>
 
-      <Modal
+      <LucideModal
         title={selectedData ? "Cập nhật chi nhánh" : "Thêm chi nhánh"}
         maskClosable={false}
         open={openCreateModal}
@@ -99,7 +100,7 @@ const BranchPage = () => {
         cancelText="Đóng"
       >
         <BranchForm form={form} onSubmit={handleSubmit} />
-      </Modal>
+      </LucideModal>
       <FloatBtn onClick={() => setOpenCreateModal(true)} />
     </>
   );

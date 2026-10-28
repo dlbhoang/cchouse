@@ -1,14 +1,5 @@
-import {
-  Card,
-  Col,
-  Divider,
-  FormInstance,
-  Image,
-  Modal,
-  Row,
-  Space,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Card, Col, Divider, FormInstance, Image, Row, Space, Typography} from "antd";
 import { useEffect, useState } from "react";
 import { UploadItem } from "@/lib/components/shared/MyFormItem";
 import { ETableName } from "@/lib/core/enum";
@@ -39,7 +30,7 @@ const LogoModal = ({ form, open, onOpenChange }: Props) => {
   }, []);
 
   return (
-    <Modal
+    <LucideModal
       title="Vui lòng chọn logo"
       open={open}
       //   okButtonProps={{ disabled: !image }}
@@ -102,7 +93,7 @@ const LogoModal = ({ form, open, onOpenChange }: Props) => {
           </Space>
         </Col>
       </Row>
-    </Modal>
+    </LucideModal>
   );
 };
 

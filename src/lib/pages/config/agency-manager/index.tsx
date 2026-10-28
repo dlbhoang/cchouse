@@ -1,9 +1,10 @@
 "use client";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 
-import { Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
+import {Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Modal } from "antd";
+import { Modal} from "antd";
 import { Input } from "@/components/ui/input";
 import { SearchableSelect } from "@/components/ui/searchable-select";
 import {
@@ -940,7 +941,7 @@ export default function AgencyManagerPage() {
         </div>
       </section>
 
-      <Modal
+      <LucideModal
         open={dialogOpen}
         onCancel={() => setDialogOpen(false)}
         footer={null}
@@ -1216,9 +1217,9 @@ export default function AgencyManagerPage() {
             Lưu
           </Button>
         </footer>
-      </Modal>
+      </LucideModal>
 
-      <Modal
+      <LucideModal
         open={Boolean(deleteTarget)}
         onCancel={() => setDeleteTarget(undefined)}
         footer={null}
@@ -1241,7 +1242,7 @@ export default function AgencyManagerPage() {
             Xóa
           </Button>
         </footer>
-      </Modal>
+      </LucideModal>
     </div>
   );
 }

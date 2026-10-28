@@ -1,4 +1,5 @@
-import { Col, Descriptions, Modal, Row } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Col, Descriptions, Row} from "antd";
 import { useEffect, useState } from "react";
 
 import BtnConfirm from "@/lib/components/shared/BtnConfirm";
@@ -127,7 +128,7 @@ export const CheckAddressModal = ({
   console.log(data);
 
   return (
-    <Modal
+    <LucideModal
       title="Kiểm tra thông tin"
       maskClosable={false}
       open={isModalOpen}
@@ -147,6 +148,6 @@ export const CheckAddressModal = ({
           ))}
         </Row>
       )}
-    </Modal>
+    </LucideModal>
   );
 };

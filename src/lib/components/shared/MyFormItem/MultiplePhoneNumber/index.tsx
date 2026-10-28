@@ -1,4 +1,5 @@
-import { Form, Select } from 'antd';
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Form} from 'antd';
 import { Rule } from 'antd/es/form';
 import { ReactNode } from 'react';
 
@@ -44,7 +45,7 @@ export const MultiplePhoneNumber = ({ label, name, required }: Props) => {
         },
       ]}
     >
-      <Select mode="tags" maxTagCount="responsive" />
+      <LucideSelect mode="tags" maxTagCount="responsive" />
     </Form.Item>
   );
 };

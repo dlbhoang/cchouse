@@ -1,14 +1,5 @@
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  FormInstance,
-  Input,
-  Modal,
-  Row,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Checkbox, Col, Form, FormInstance, Input, Row, Typography} from "antd";
 import { useState } from "react";
 import { OptionType } from "@/lib/types/common";
 import { CombineAddress } from "../../../../core/utils/myFormat";
@@ -68,7 +59,7 @@ export const AdvAddress = ({ form }: Props) => {
         </Typography.Text>
       </Button>
 
-      <Modal
+      <LucideModal
         title="Địa chỉ"
         closeIcon={null}
         maskClosable={false}
@@ -194,7 +185,7 @@ export const AdvAddress = ({ form }: Props) => {
             </Form.Item>
           </Col>
         </Row>
-      </Modal>
+      </LucideModal>
     </>
   );
 };

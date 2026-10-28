@@ -1,13 +1,5 @@
-import {
-  Col,
-  Form,
-  FormInstance,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Space,
-} from "antd";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Col, Form, FormInstance, Input, InputNumber, Row, Space} from "antd";
 import { Rule } from "antd/es/form";
 
 import MyCard from "@/lib/components/shared/MyCard";
@@ -105,7 +97,7 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
               />
             </Form.Item> */}
             <Form.Item label="Trạng thái" name={[itemName, "Status"]}>
-              <Select
+              <LucideSelect
                 options={
                   itemName === "BuyingRequirement"
                     ? options.filter(

@@ -1,15 +1,6 @@
-import {
-  Button,
-  Checkbox,
-  Flex,
-  Form,
-  FormInstance,
-  Input,
-  Modal,
-  Segmented,
-  Select,
-  type SelectProps,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Button, Checkbox, Flex, Form, FormInstance, Input, Segmented, type SelectProps} from "antd";
 
 import { ListFilterPlus, RotateCcw, X, SlidersHorizontal, RotateCw, Search } from "lucide-react";
 import { useState } from "react";
@@ -121,7 +112,7 @@ export const DesktopView = ({
               }}
             />
           ) : (
-            <Select
+            <LucideSelect
               className="property-trans-type-select"
               popupClassName="property-trans-type-dropdown"
               options={[
@@ -260,7 +251,7 @@ export const DesktopView = ({
         </Button>
       </div>
 
-      <Modal
+      <LucideModal
         title="Bộ lọc"
         forceRender={mapMode}
         open={moreOpen}
@@ -448,7 +439,7 @@ export const DesktopView = ({
             </Form.Item>
           </div>
         </Flex>
-      </Modal>
+      </LucideModal>
     </Flex>
   );
 };

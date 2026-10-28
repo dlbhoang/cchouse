@@ -1,4 +1,5 @@
-import { Form, Input, Modal } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Form, Input} from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -49,7 +50,7 @@ const UserAdminEdit = ({ isModalOpen, model, handleCancel }: Props) => {
   };
 
   return (
-    <Modal
+    <LucideModal
       title="Thông tin nhân viên"
       maskClosable={false}
       open={isModalOpen}
@@ -87,7 +88,7 @@ const UserAdminEdit = ({ isModalOpen, model, handleCancel }: Props) => {
         </Form.Item>
         <PersonalForm form={form} hideAvatar={false} />
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

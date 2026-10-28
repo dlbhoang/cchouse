@@ -1,4 +1,5 @@
-import { Input, Popconfirm } from "antd";
+import { Popconfirm as LucidePopconfirm } from "@/lib/components/antd-lucide";
+import {Input} from "antd";
 import { useEffect, useState } from "react";
 
 import { TransStatusSelect } from "../../MySelect";
@@ -39,7 +40,7 @@ export const TransStatusConfirm = ({
   };
 
   return (
-    <Popconfirm
+    <LucidePopconfirm
       title={status === 7 ? "Vui lòng nhập lý do xoá?" : title}
       description={
         status === 7 ? (
@@ -71,6 +72,6 @@ export const TransStatusConfirm = ({
         }}
       />
       {/* <Button danger>Delete a task</Button> */}
-    </Popconfirm>
+    </LucidePopconfirm>
   );
 };

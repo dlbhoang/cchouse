@@ -1,4 +1,5 @@
-import { Select, type SelectProps, Spin } from "antd";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {type SelectProps, Spin} from "antd";
 import type { JSXElementConstructor, ReactElement } from "react";
 
 const onSearch = (value: string) => {
@@ -82,7 +83,7 @@ const SelectBase = ({
   const antMode = mode === "single" ? undefined : mode;
 
   return (
-    <Select
+    <LucideSelect
       {...props}
       className={className}
       showSearch={showSearch}

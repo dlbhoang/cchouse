@@ -1,3 +1,4 @@
+import { Search, X } from "lucide-react";
 "use client";
 import { Card, Input } from "antd";
 import { usePathname, useRouter } from "next/navigation";
@@ -37,12 +38,13 @@ const ConsignmentPage = ({ searchParams }: Props) => {
   return (
     <Card loading={isLoading}>
       <Input.Search
+                enterButton={<Search size={16} strokeWidth={1.8} />}
         style={{ width: 300, paddingBottom: 10 }}
         placeholder="Tìm theo mã tin, sdt, tên người báo xấu"
         onSearch={(value, _e, info) => {
           onSearchChange({ ...opts, search: value });
         }}
-        allowClear
+        allowClear={{ clearIcon: <X size={14} strokeWidth={1.8} /> }}
       />
       <TitlePage title={AppRoutes.consignment.name} />
       <span>

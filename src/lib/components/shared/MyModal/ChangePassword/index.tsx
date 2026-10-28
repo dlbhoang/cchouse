@@ -1,4 +1,5 @@
-import { Form, Input, Modal } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Form, Input} from "antd";
 import { useState } from "react";
 
 import authApi from "@/services/auth/authApi";
@@ -33,7 +34,7 @@ export const ChangePasswordModal = ({ isModalOpen, onClose }: Props) => {
   };
 
   return (
-    <Modal
+    <LucideModal
       maskClosable
       title="Thay đổi mật khẩu"
       open={isModalOpen}
@@ -101,6 +102,6 @@ export const ChangePasswordModal = ({ isModalOpen, onClose }: Props) => {
           <Input.Password />
         </Form.Item>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };

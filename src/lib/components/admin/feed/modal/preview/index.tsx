@@ -1,15 +1,6 @@
-import {
-  Button,
-  Card,
-  Col,
-  DatePicker,
-  Input,
-  Modal,
-  Row,
-  Space,
-  Tag,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+import {Button, Card, Col, Input, Row, Space, Tag, Typography} from "antd";
 import { RcFile } from "antd/es/upload";
 import { Dayjs } from "dayjs";
 import { useSession } from "next-auth/react";
@@ -131,7 +122,7 @@ const FeedModalPreview = ({
     }
   };
   return (
-    <Modal
+    <LucideModal
       title="Xem tin đăng"
       maskClosable={false}
       open={isModalOpen}
@@ -323,10 +314,10 @@ const FeedModalPreview = ({
                       liveData?.Author?.Id !== session?.user.Id
                     }
                     onClick={() => {
-                      Modal.confirm({
+                      LucideModal.confirm({
                         title: 'Vui lòng chọn lại "Ngày bắt đầu"',
                         content: (
-                          <DatePicker
+                          <LucideDatePicker
                             onChange={(val) => {
                               if (val) {
                                 refDate.current = val;
@@ -446,7 +437,7 @@ const FeedModalPreview = ({
           )}
         </Row>
       )}
-    </Modal>
+    </LucideModal>
   );
 };
 

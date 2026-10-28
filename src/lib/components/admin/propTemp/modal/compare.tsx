@@ -1,4 +1,5 @@
-import { Col, Descriptions, Modal, Row, Tag, Typography } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Col, Descriptions, Row, Tag, Typography} from "antd";
 import Link from "next/link";
 
 import RenderArea from "@/lib/components/shared/CustomRender/RenderArea";
@@ -26,7 +27,7 @@ const PropTempCompareModal = ({
   const { Location } = enumList;
 
   return (
-    <Modal
+    <LucideModal
       title={
         <Row justify={"space-between"}>
           <Col>
@@ -146,7 +147,7 @@ const PropTempCompareModal = ({
         <Descriptions.Item label="Ghi chú">{propTemp?.Note}</Descriptions.Item>
         <Descriptions.Item label="Ghi chú">{prop?.Note}</Descriptions.Item>
       </Descriptions>
-    </Modal>
+    </LucideModal>
   );
 };
 

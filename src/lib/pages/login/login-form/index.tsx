@@ -1,6 +1,7 @@
-import { EyeOff, Eye } from "lucide-react";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {EyeOff, Eye } from "lucide-react";
 // LoginForm.tsx
-import { Modal, Typography, Flex, Input, Button, Checkbox } from "antd";
+import { Modal, Typography, Flex, Input, Button, Checkbox} from "antd";
 
 import { getSession, signIn } from "next-auth/react";
 import { performLogout } from "@/services/auth/logout";
@@ -52,7 +53,7 @@ const showRejectedAccount = async (
   if (error.startsWith(rejectedPrefix)) {
     const [, reason, rejectedBy, rejectedAt] = error.split("|");
     await performLogout({ redirect: false });
-    Modal.info({
+    LucideModal.info({
       title: "Tài khoản bị từ chối",
       content: (
         <div>
@@ -69,7 +70,7 @@ const showRejectedAccount = async (
 
   if (error.toLowerCase().includes("đăng nhập ở thiết bị khác") || error.toLowerCase().includes("device") || error.toLowerCase().includes("already logged in")) {
     await performLogout({ redirect: false });
-    Modal.warning({
+    LucideModal.warning({
       title: "Tài khoản đang được sử dụng",
       content: "Tài khoản đang đăng nhập ở thiết bị khác. Vui lòng đăng xuất trước khi đăng nhập",
       okText: "Đã hiểu",
@@ -184,7 +185,7 @@ const LoginForm = ({ isVisible, onModeChange, onMustChangePassword }: Props) => 
   };
 
   const openTermsModal = () =>
-    Modal.info({
+    LucideModal.info({
       icon: null,
       className: "terms-modal",
       width: isMobile ? "calc(100vw - 24px)" : 760,

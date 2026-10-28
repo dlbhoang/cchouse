@@ -1,14 +1,5 @@
-import {
-  Col,
-  DatePicker,
-  Form,
-  FormInstance,
-  Input,
-  InputNumber,
-  Row,
-  Space,
-  TimePicker,
-} from "antd";
+import { DatePicker as LucideDatePicker, TimePicker as LucideTimePicker } from "@/lib/components/antd-lucide";
+import {Col, Form, FormInstance, Input, InputNumber, Row, Space} from "antd";
 
 import {
   DistrictSelect,
@@ -116,17 +107,17 @@ const UserAccessForm = ({ form }: Props) => {
           name={["UserAccess", "DateStart"]}
           rules={[{ required: true, message: "Vui lòng chọn ngày" }]}
         >
-          <DatePicker format={["DD/MM/YYYY", "DD/MM/YY"]} />
+          <LucideDatePicker format={["DD/MM/YYYY", "DD/MM/YY"]} />
         </Form.Item>
       </Col>
       <Col {...colResponsive} xs={12}>
         <Form.Item label="Giờ làm việc" required style={{ marginBottom: 0 }}>
           <Space>
             <Form.Item name={["UserAccess", "TimeFrom"]}>
-              <TimePicker showNow={false} format={timeFormat} />
+              <LucideTimePicker showNow={false} format={timeFormat} />
             </Form.Item>
             <Form.Item name={["UserAccess", "TimeTo"]}>
-              <TimePicker showNow={false} format={timeFormat} />
+              <LucideTimePicker showNow={false} format={timeFormat} />
             </Form.Item>
           </Space>
         </Form.Item>

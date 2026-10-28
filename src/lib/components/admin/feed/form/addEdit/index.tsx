@@ -1,26 +1,8 @@
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Alert as LucideAlert } from "@/lib/components/antd-lucide";
+import {Select as LucideSelect, DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
 
-import {
-  Alert,
-  Button,
-  Card,
-  Checkbox,
-  Col,
-  DatePicker,
-  Divider,
-  Form,
-  Image,
-  Input,
-  InputNumber,
-  Modal,
-  Radio,
-  Row,
-  Segmented,
-  Select,
-  Space,
-  Tag,
-  Typography,
-  UploadFile,
-} from "antd";
+import {Alert, Button, Card, Checkbox, Col, Divider, Form, Image, Input, InputNumber, Radio, Row, Segmented, Space, Tag, Typography, UploadFile} from "antd";
 import dayjs from "dayjs";
 import { ImageIcon, Eye } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -395,7 +377,7 @@ const AddEditForm = ({ model }: Props) => {
                   >
                     Chọn
                   </Button>
-                  <Modal
+                  <LucideModal
                     maskClosable
                     onCancel={() => setShowPropImages(false)}
                     open={showPropImages}
@@ -438,7 +420,7 @@ const AddEditForm = ({ model }: Props) => {
                         </Card>
                       ))}
                     </Space>
-                  </Modal>
+                  </LucideModal>
                 </>
               )
             }
@@ -554,7 +536,7 @@ const AddEditForm = ({ model }: Props) => {
                   ]}
                   initialValue="30"
                 >
-                  <Select
+                  <LucideSelect
                     placeholder="Chọn"
                     allowClear
                     options={appConst.ARR_DAYS_FEED.map((e) => ({
@@ -587,7 +569,7 @@ const AddEditForm = ({ model }: Props) => {
                     },
                   ]}
                 >
-                  <DatePicker
+                  <LucideDatePicker
                     disabledDate={DisabledDate}
                     placeholder="Chọn"
                     format={["DD/MM/YYYY", "DD/MM/YY"]}
@@ -612,7 +594,7 @@ const AddEditForm = ({ model }: Props) => {
               </Col>
             </Row>
           </Card>
-          <Alert
+          <LucideAlert
             message={
               <Form.Item
                 label="Chọn SĐT hiển thị"
@@ -689,10 +671,10 @@ const AddEditForm = ({ model }: Props) => {
                     model?.Author?.Id !== session?.user.Id
                   }
                   onClick={() => {
-                    Modal.confirm({
+                    LucideModal.confirm({
                       title: 'Vui lòng chọn lại "Ngày bắt đầu"',
                       content: (
-                        <DatePicker
+                        <LucideDatePicker
                           onChange={(val) =>
                             form.setFieldValue("StartDate", val)
                           }

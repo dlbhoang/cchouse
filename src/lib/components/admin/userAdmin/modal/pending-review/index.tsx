@@ -1,16 +1,5 @@
-import {
-  Button,
-  Card,
-  Col,
-  Descriptions,
-  Form,
-  Input,
-  Modal,
-  Row,
-  Space,
-  Typography,
-  type UploadFile,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Card, Col, Descriptions, Form, Input, Row, Space, Typography, type UploadFile} from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -195,7 +184,7 @@ const PendingReviewModal = ({
 
   return (
     <>
-      <Modal
+      <LucideModal
         open={open}
         title="Thông tin đăng ký tài khoản"
         width={900}
@@ -238,8 +227,8 @@ const PendingReviewModal = ({
             )}
           </>
         )}
-      </Modal>
-      <Modal
+      </LucideModal>
+      <LucideModal
         open={activationOpen}
         title="Kích hoạt tài khoản"
         width={1000}
@@ -296,8 +285,8 @@ const PendingReviewModal = ({
             </Row>
           </Card>
         </Form>
-      </Modal>
-      <Modal
+      </LucideModal>
+      <LucideModal
         open={rejectOpen}
         title="Lý do từ chối"
         okText="Xác nhận từ chối"
@@ -312,7 +301,7 @@ const PendingReviewModal = ({
           onChange={(event) => setReason(event.target.value)}
           placeholder="Nhập lý do từ chối hồ sơ"
         />
-      </Modal>
+      </LucideModal>
     </>
   );
 };

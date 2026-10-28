@@ -1,4 +1,5 @@
-import { Col, Form, Input, InputNumber, Modal, Row } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Col, Form, Input, InputNumber, Row} from "antd";
 import { useEffect, useState } from "react";
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -52,7 +53,7 @@ const AddUpdateFeedPricingModal = ({
   }, [form, model]);
 
   return (
-    <Modal
+    <LucideModal
       title="Thông tin khác & Thao tác"
       maskClosable={false}
       open={isModalOpen}
@@ -115,7 +116,7 @@ const AddUpdateFeedPricingModal = ({
           ))}
         </Row>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

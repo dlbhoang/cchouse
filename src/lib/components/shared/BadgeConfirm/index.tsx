@@ -1,4 +1,5 @@
-import { Badge, Button, Popconfirm, Tooltip } from 'antd';
+import { Popconfirm as LucidePopconfirm } from "@/lib/components/antd-lucide";
+import {Badge, Button, Tooltip} from 'antd';
 import { useState } from 'react';
 
 type Props = {
@@ -27,7 +28,7 @@ const BadgeConfirm = ({ title, value, description, onOkClick }: Props) => {
     setOpen(false);
   };
   return (
-    <Popconfirm
+    <LucidePopconfirm
       title={title ?? 'Xác nhận chuyển trạng thái?'}
       description={description ?? ''}
       open={open}
@@ -45,7 +46,7 @@ const BadgeConfirm = ({ title, value, description, onOkClick }: Props) => {
           />
         </Button>
       </Tooltip>
-    </Popconfirm>
+    </LucidePopconfirm>
   );
 };
 

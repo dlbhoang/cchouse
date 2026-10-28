@@ -1,5 +1,7 @@
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Result as LucideResult } from "@/lib/components/antd-lucide";
 
-import { Modal, Result } from "antd";
+import {Modal} from "antd";
 import dayjs from "dayjs";
 import { CakeIcon, Gift } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -24,7 +26,7 @@ const HappyBirthdayModal = () => {
   }
 
   return (
-    <Modal
+    <LucideModal
       open={visibleBirthday}
       onOk={() => {
         hiddenHappyBirthdayModal();
@@ -35,7 +37,7 @@ const HappyBirthdayModal = () => {
       footer=""
       style={{ padding: 0 }}
     >
-      <Result
+      <LucideResult
         icon={<Gift size={72} />}
         title={
           <span>
@@ -45,7 +47,7 @@ const HappyBirthdayModal = () => {
           </span>
         }
       />
-    </Modal>
+    </LucideModal>
   );
 };
 

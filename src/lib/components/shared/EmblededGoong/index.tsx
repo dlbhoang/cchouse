@@ -1,4 +1,4 @@
-import { TriangleAlert } from "lucide-react";
+import { Search, TriangleAlert, X } from "lucide-react";
 
 import {
   Button,
@@ -150,6 +150,8 @@ const EmblededGoong = ({ form, name, address }: Props) => {
               placement="bottom"
             >
               <Input.Search
+                enterButton={<Search size={16} strokeWidth={1.8} />}
+                allowClear={{ clearIcon: <X size={14} strokeWidth={1.8} /> }}
                 style={{ width: 400 }}
                 value={search}
                 onSearch={onSearch}

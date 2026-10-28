@@ -1,4 +1,5 @@
-import { Button, ConfigProvider, InputRef, Modal, Typography } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, ConfigProvider, InputRef, Typography} from "antd";
 import { CirclePlus, MoreVertical, Plus, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -151,7 +152,7 @@ const NewsTypeTabs = ({
         />
       </div>
 
-      <Modal
+      <LucideModal
         title={null}
         className="news-type-modal"
         wrapClassName="news-type-modal-wrap"
@@ -191,7 +192,7 @@ const NewsTypeTabs = ({
             </button>
           </div>
         </div>
-      </Modal>
+      </LucideModal>
 
       <AddEditModal
         isModalOpen={openAddModal}
@@ -414,7 +415,7 @@ const NewsTypeTabs = ({
       )}
 
       {/* News Form Modal */}
-      <Modal
+      <LucideModal
         title={null}
         open={isNewsFormModalOpen}
         onCancel={handleCloseNewsFormModal}
@@ -442,7 +443,7 @@ const NewsTypeTabs = ({
           onReject={handleRejectNews}
           onApprove={handleApproveNews}
         />
-      </Modal>
+      </LucideModal>
 
     </div>
     </ConfigProvider>

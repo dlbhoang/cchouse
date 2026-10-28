@@ -1,4 +1,5 @@
-import { DatePicker, Form } from "antd";
+import { DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+import {Form} from "antd";
 import { Calendar } from "lucide-react";
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
@@ -74,7 +75,7 @@ const NewsDateFilter = ({
   return (
     <>
       <div style={{ width: "100%" }} onMouseDownCapture={() => { ignoreNextClearRef.current = false; }}>
-      <DatePicker
+      <LucideDatePicker
         suffixIcon={<Calendar size={16} />}
         popupClassName="news-date-picker-popup"
         open={open}

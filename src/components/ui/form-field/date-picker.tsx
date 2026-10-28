@@ -1,5 +1,6 @@
 "use client";
-import { DatePicker } from "antd";
+import { DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+
 import dayjs from "dayjs";
 import { useFormContext } from "react-hook-form";
 import {
@@ -43,7 +44,7 @@ export function DatePickerField({
               <FormLabel isRequired={isRequired}>{label}</FormLabel>
             )}
             <FormControl>
-              <DatePicker
+              <LucideDatePicker
                 value={date ? dayjs(date) : null}
                 onChange={(values) => {
                   form.setValue(name, values?.format("YYYY-MM-DD") || null);

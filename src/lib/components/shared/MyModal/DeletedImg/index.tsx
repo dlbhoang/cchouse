@@ -1,4 +1,5 @@
-import { Modal } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+
 import { useEffect, useState } from "react";
 
 import { ETableName } from "@/lib/core/enum";
@@ -77,7 +78,7 @@ export const DeletedImgModal = ({
     }
   }, [contentId, tableName]);
   return (
-    <Modal
+    <LucideModal
       maskClosable
       onCancel={onClose}
       open={isOpen}
@@ -86,6 +87,6 @@ export const DeletedImgModal = ({
       width={900}
     >
       <ImagesPreview images={images} imgWidth={30} mode="horizontal" />
-    </Modal>
+    </LucideModal>
   );
 };

@@ -1,4 +1,5 @@
-import { Button, Divider, InputNumber, Select, Space } from 'antd';
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Button, Divider, InputNumber, Space} from 'antd';
 import { useRef, useState } from 'react';
 
 type Props = {
@@ -34,7 +35,7 @@ export const FloorSelect = ({ value, onChange }: Props) => {
   // }, [items, value]);
 
   return (
-    <Select
+    <LucideSelect
       showSearch
       placeholder="Chọn"
       // eslint-disable-next-line react/no-unstable-nested-components

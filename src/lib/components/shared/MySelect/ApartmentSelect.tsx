@@ -1,4 +1,5 @@
-import { Select, type SelectProps } from "antd";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {type SelectProps} from "antd";
 import apartmentApi from "@/services/api/apartment/apartmentApi";
 
 export const ApartmentSelect = ({ ...props }: SelectProps) => {
@@ -7,7 +8,7 @@ export const ApartmentSelect = ({ ...props }: SelectProps) => {
     pageSize: 1000,
   });
   return (
-    <Select
+    <LucideSelect
       {...props}
       style={{ width: "100%" }}
       loading={isLoading}

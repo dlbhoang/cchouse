@@ -1,4 +1,5 @@
-import { Button, Col, Drawer, Form, Row, Typography } from 'antd';
+import { Drawer as LucideDrawer } from "@/lib/components/antd-lucide";
+import {Button, Col, Form, Row, Typography} from 'antd';
 import { useMemo, useState } from 'react';
 import FloatBtn from '@/lib/components/shared/FloatBtn';
 import TableBase from '@/lib/components/shared/TableBase';
@@ -74,7 +75,7 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
         />
       </Col>
 
-      <Drawer
+      <LucideDrawer
         title={
           <Typography.Text strong>
             {select > 0
@@ -103,7 +104,7 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
           id={select}
           handleClose={() => setOpen(false)}
         />
-      </Drawer>
+      </LucideDrawer>
       <FloatBtn
         onClick={() => {
           form.resetFields();

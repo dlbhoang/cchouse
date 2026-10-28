@@ -1,5 +1,6 @@
 "use client";
-import { Alert, Button, Card, Space, Typography } from "antd";
+import { Alert as LucideAlert } from "@/lib/components/antd-lucide";
+import {Button, Card, Space, Typography} from "antd";
 import { useEffect, useState } from "react";
 
 import NewsForm from "@/lib/components/admin/news/form";
@@ -44,7 +45,7 @@ const EditNewsPage = ({ id }: Props) => {
     return (
       <Card title={<TitlePage title="Chỉnh sửa bài viết" />}>
         <Space direction="vertical" size="middle">
-          <Alert
+          <LucideAlert
             type="info"
             showIcon
             message="Tin đã duyệt không thể chỉnh sửa. Hãy ẩn hoặc xóa tin rồi tạo tin mới."

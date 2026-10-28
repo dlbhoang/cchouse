@@ -1,6 +1,7 @@
-import { Plus } from "lucide-react";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Plus } from "lucide-react";
 
-import { Button, Divider, InputNumber, Select, Space } from 'antd';
+import { Button, Divider, InputNumber, Space} from 'antd';
 import { useRef, useState } from 'react';
 
 type Props = {
@@ -28,7 +29,7 @@ const CommissionSelect = ({ value, onChange }: Props) => {
   };
 
   return (
-    <Select
+    <LucideSelect
       placeholder="Chọn"
       // eslint-disable-next-line react/no-unstable-nested-components
       dropdownRender={(menu) => (

@@ -1,4 +1,5 @@
-import { Form, Input, Modal } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Form, Input} from "antd";
 import { useEffect, useState } from "react";
 
 import { globalHandleFailed } from "@/lib/core/utils/ant-func";
@@ -39,7 +40,7 @@ const FeedQU = ({ isModalOpen, model, handleCancel, handleMutate }: Props) => {
   }, [form, model]);
 
   return (
-    <Modal
+    <LucideModal
       title="Vui lòng nhập lý do"
       maskClosable={false}
       open={isModalOpen}
@@ -74,7 +75,7 @@ const FeedQU = ({ isModalOpen, model, handleCancel, handleMutate }: Props) => {
           <TextArea />
         </Form.Item>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

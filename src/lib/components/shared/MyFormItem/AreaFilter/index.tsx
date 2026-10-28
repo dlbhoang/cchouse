@@ -1,19 +1,10 @@
-import {
-  Col,
-  Divider,
-  Form,
-  FormInstance,
-  Input,
-  Row,
-  Select,
-  Space,
-  Typography,
-} from "antd";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Col, Divider, Form, FormInstance, Input, Row, Space, Typography} from "antd";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
 const { Text } = Typography;
-const { Option } = Select;
+const { Option } = LucideSelect;
 
 const areaData = [
   {
@@ -91,7 +82,7 @@ export const AreaFilter = ({ form, mapMode = false, adminMode = false, placehold
   }, [areaFrm, areaTo]);
 
   return (
-    <Select
+    <LucideSelect
       style={{ width: "100%" }}
       open={isDropdownOpen}
       dropdownMatchSelectWidth={false}
@@ -249,6 +240,6 @@ export const AreaFilter = ({ form, mapMode = false, adminMode = false, placehold
           {e.text} m<sup>2</sup>
         </Option>
       ))}
-    </Select>
+    </LucideSelect>
   );
 };

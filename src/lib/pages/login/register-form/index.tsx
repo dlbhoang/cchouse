@@ -1,5 +1,7 @@
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Select as LucideSelect, DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
 
-import { Button, Checkbox, DatePicker, Form, Image, Input, Modal, Select, Space, Typography, Upload } from "antd";
+import {Button, Checkbox, Form, Image, Input, Space, Typography, Upload} from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
 import { CheckCircle2, Circle, EyeOff, Eye } from "lucide-react";
 import { useEffect, useState, type ChangeEvent } from "react";
@@ -83,7 +85,7 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
   ];
 
   const openTermsModal = () =>
-    Modal.info({
+    LucideModal.info({
       icon: null,
       className: "terms-modal",
       width: isMobile ? "calc(100vw - 24px)" : 760,
@@ -210,13 +212,13 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           rules={[{ required: true, message: "Vui lòng chọn chức vụ" }]}
           style={{ marginBottom: isMobile ? 12 : 16, flex: 1 }}
         >
-          <Select size={isMobile ? "middle" : "large"} placeholder="Chọn">
+          <LucideSelect size={isMobile ? "middle" : "large"} placeholder="Chọn">
             {positionOptions.map((p) => (
-              <Select.Option key={p} value={p}>
+              <LucideSelect.Option key={p} value={p}>
                 {p}
-              </Select.Option>
+              </LucideSelect.Option>
             ))}
-          </Select>
+          </LucideSelect>
         </Form.Item>
         <Form.Item
           label="Trình độ"
@@ -224,13 +226,13 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           rules={[{ required: true, message: "Vui lòng chọn trình độ" }]}
           style={{ marginBottom: isMobile ? 12 : 16, flex: 1 }}
         >
-          <Select size={isMobile ? "middle" : "large"} placeholder="Chọn">
+          <LucideSelect size={isMobile ? "middle" : "large"} placeholder="Chọn">
             {levelOptions.map((l) => (
-              <Select.Option key={l} value={l}>
+              <LucideSelect.Option key={l} value={l}>
                 {l}
-              </Select.Option>
+              </LucideSelect.Option>
             ))}
-          </Select>
+          </LucideSelect>
         </Form.Item>
       </div>
 
@@ -241,7 +243,7 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           rules={[{ required: true, message: "Vui lòng chọn ngày sinh" }]}
           style={{ marginBottom: isMobile ? 12 : 16, flex: 1 }}
         >
-          <DatePicker
+          <LucideDatePicker
             className="register-date-picker-field"
             popupClassName="register-date-picker-popup"
             size={isMobile ? "middle" : "large"}
@@ -256,11 +258,11 @@ const RegisterForm = ({ isVisible, onModeChange }: Props) => {
           rules={[{ required: true, message: "Vui lòng chọn giới tính" }]}
           style={{ marginBottom: isMobile ? 12 : 16, flex: 1 }}
         >
-          <Select size={isMobile ? "middle" : "large"} placeholder="Chọn">
-            <Select.Option value={1}>Nam</Select.Option>
-            <Select.Option value={2}>Nữ</Select.Option>
-            <Select.Option value={3}>Khác</Select.Option>
-          </Select>
+          <LucideSelect size={isMobile ? "middle" : "large"} placeholder="Chọn">
+            <LucideSelect.Option value={1}>Nam</LucideSelect.Option>
+            <LucideSelect.Option value={2}>Nữ</LucideSelect.Option>
+            <LucideSelect.Option value={3}>Khác</LucideSelect.Option>
+          </LucideSelect>
         </Form.Item>
       </div>
 

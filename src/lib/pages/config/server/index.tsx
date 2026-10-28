@@ -1,6 +1,7 @@
 "use client";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 
-import { Form, Input, Modal, Space, Typography } from "antd";
+import {Form, Input, Space, Typography} from "antd";
 import { Server, Save, CheckCircle2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -40,7 +41,7 @@ const ServerConfigModal = ({ open, onClose }: ServerConfigModalProps) => {
   };
 
   return (
-    <Modal
+    <LucideModal
       title={
         <Space align="start" size={14}>
           <div
@@ -122,7 +123,7 @@ const ServerConfigModal = ({ open, onClose }: ServerConfigModalProps) => {
           </Button>
         </div>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

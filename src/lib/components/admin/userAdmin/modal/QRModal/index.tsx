@@ -1,4 +1,5 @@
-import { Button, Col, Modal, QRCode, Row } from 'antd';
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Col, QRCode, Row} from 'antd';
 
 type Props = {
   isModalOpen: boolean;
@@ -22,7 +23,7 @@ const UserAdminQRModal = ({ isModalOpen, handleCancel }: Props) => {
   };
 
   return (
-    <Modal
+    <LucideModal
       open={isModalOpen}
       onCancel={() => {
         handleCancel();
@@ -47,7 +48,7 @@ const UserAdminQRModal = ({ isModalOpen, handleCancel }: Props) => {
           <Button onClick={downloadQRCode}>Tải xuống</Button>
         </Col>
       </Row>
-    </Modal>
+    </LucideModal>
   );
 };
 

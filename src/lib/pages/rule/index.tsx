@@ -1,7 +1,8 @@
 "use client";
+import { Result as LucideResult } from "@/lib/components/antd-lucide";
 
-import { Upload as LucideUpload } from "lucide-react";
-import type { UploadFile, UploadProps } from "antd";
+import {Upload as LucideUpload } from "lucide-react";
+import type { UploadFile, UploadProps} from "antd";
 import { Button, Result, Upload } from "antd";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -68,7 +69,7 @@ const RulePage = () => {
       )}
     </>
   ) : (
-    <Result
+    <LucideResult
       title="KHÔNG TÌM THẤY DỮ LIỆU"
       extra={
         [1, 2].includes(session?.user.RoleId ?? 0) && (

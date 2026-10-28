@@ -1,4 +1,5 @@
-import { Button, Modal } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button} from "antd";
 import type { ReactNode } from "react";
 import { useState } from "react";
 import { NotiBase } from "@/lib/components/shared/NotiBase";
@@ -33,7 +34,7 @@ const NewsConfirmButton = ({ label, className, title, description, icon, danger,
 
   return <>
     <Button className={`news-action-btn${className ? ` ${className}` : ""}`} aria-label={label} title={label} icon={icon} onClick={() => setOpen(true)} />
-    <Modal
+    <LucideModal
       open={open}
       centered
       width={448}
@@ -49,7 +50,7 @@ const NewsConfirmButton = ({ label, className, title, description, icon, danger,
     >
       <h2 className="news-confirm-title">{title}</h2>
       <div className="news-confirm-description">{description}</div>
-    </Modal>
+    </LucideModal>
   </>;
 };
 

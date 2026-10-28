@@ -1,14 +1,5 @@
-import {
-  Col,
-  DatePicker,
-  Form,
-  FormInstance,
-  Input,
-  Radio,
-  Row,
-  Select,
-  UploadFile,
-} from "antd";
+import { Select as LucideSelect, DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+import {Col, Form, FormInstance, Input, Radio, Row, UploadFile} from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import AppUpload from "@/lib/components/shared/components/app-upload";
@@ -25,7 +16,7 @@ type Props = {
   form: FormInstance;
   hideAvatar: boolean;
 };
-const { Option } = Select;
+const { Option } = LucideSelect;
 
 const colResponsive = {
   xl: 6,
@@ -202,10 +193,10 @@ const PersonalForm = ({ form, hideAvatar }: Props) => {
                   name="EmailExt"
                   rules={[{ required: true, message: "Vui lòng nhập Email" }]}
                 >
-                  <Select disabled={!!modelId}>
+                  <LucideSelect disabled={!!modelId}>
                     <Option value="@gmail.com">@gmail.com</Option>
                     <Option value="@cchouse.vn">@cchouse.vn</Option>
-                  </Select>
+                  </LucideSelect>
                 </Form.Item>
               }
             />
@@ -237,7 +228,7 @@ const PersonalForm = ({ form, hideAvatar }: Props) => {
           name="DateOfBirth"
           rules={[{ required: true, message: "Vui lòng chọn ngày" }]}
         >
-          <DatePicker format={["DD/MM/YYYY", "DD/MM/YY"]} placeholder="Chọn" />
+          <LucideDatePicker format={["DD/MM/YYYY", "DD/MM/YY"]} placeholder="Chọn" />
         </Form.Item>
       </Col>
       <Col {...colResponsive}>

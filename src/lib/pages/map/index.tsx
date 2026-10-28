@@ -1,6 +1,7 @@
 "use client";
+import { Alert as LucideAlert } from "@/lib/components/antd-lucide";
 
-import { Alert, Button, ConfigProvider } from "antd";
+import {Button, ConfigProvider} from "antd";
 import dynamic from "next/dynamic";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -214,7 +215,7 @@ const MapPage = () => {
           />
         </div>
         {detailError && (
-          <Alert
+          <LucideAlert
             type="error"
             showIcon
             message="Không tải được chi tiết bất động sản. Vui lòng thử lại."

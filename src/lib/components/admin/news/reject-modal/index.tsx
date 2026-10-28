@@ -1,6 +1,7 @@
-import { XIcon } from "lucide-react";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {XIcon } from "lucide-react";
 import { useState } from "react";
-import { Button, Input, Modal } from "antd";
+import { Button, Input} from "antd";
 
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 import newsApi from "@/services/api/news/newsApi";
@@ -47,7 +48,7 @@ const RejectNewsModal = ({ id }: Props) => {
         icon={<XIcon className="size-4 text-[#ff4d4f]" />}
         onClick={() => setOpen(true)}
       />
-      <Modal
+      <LucideModal
         title="Từ chối bài viết?"
         open={open}
         onCancel={() => {
@@ -70,7 +71,7 @@ const RejectNewsModal = ({ id }: Props) => {
           rows={4}
           autoFocus
         />
-      </Modal>
+      </LucideModal>
     </>
   );
 };

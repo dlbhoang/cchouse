@@ -1,20 +1,8 @@
-import { Plus } from "lucide-react";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Plus } from "lucide-react";
 
 import {
-  Avatar,
-  Checkbox,
-  Col,
-  ColProps,
-  Form,
-  FormInstance,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Space,
-  Tooltip,
-  Typography,
-} from "antd";
+  Avatar, Checkbox, Col, ColProps, Form, FormInstance, Input, InputNumber, Row, Space, Tooltip, Typography} from "antd";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -255,10 +243,10 @@ const ContactZone = ({ model, form, isFull }: Props) => {
               <InputNumber
                 addonAfter={
                   <Form.Item noStyle name={["PropAddress", "EndTimeRentUnit"]}>
-                    <Select>
-                      <Select.Option value="Tháng">Tháng</Select.Option>
-                      <Select.Option value="Năm">Năm</Select.Option>
-                    </Select>
+                    <LucideSelect>
+                      <LucideSelect.Option value="Tháng">Tháng</LucideSelect.Option>
+                      <LucideSelect.Option value="Năm">Năm</LucideSelect.Option>
+                    </LucideSelect>
                   </Form.Item>
                 }
               />

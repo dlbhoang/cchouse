@@ -1,13 +1,5 @@
-import {
-  Button,
-  Col,
-  Form,
-  FormInstance,
-  InputNumber,
-  Modal,
-  Row,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Col, Form, FormInstance, InputNumber, Row, Typography} from "antd";
 import { useState } from "react";
 
 import { CombineStructures } from "@/lib/core/utils/myFormat";
@@ -49,7 +41,7 @@ export const AdvStructures = ({ form, namePath = defaultItems }: Props) => {
         </Typography.Text>
       </Button>
 
-      <Modal
+      <LucideModal
         title="Kết cấu"
         closeIcon={null}
         maskClosable={false}
@@ -99,7 +91,7 @@ export const AdvStructures = ({ form, namePath = defaultItems }: Props) => {
             </Form.Item>
           </Col>
         </Row>
-      </Modal>
+      </LucideModal>
     </>
   );
 };

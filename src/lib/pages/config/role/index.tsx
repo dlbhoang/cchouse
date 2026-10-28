@@ -1,5 +1,6 @@
 "use client";
-import { Button, Card, Col, Form, Input, Modal, Row, Space } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Card, Col, Form, Input, Row, Space} from "antd";
 import { useEffect, useState } from "react";
 
 import RoleForm from "@/lib/components/admin/role/form";
@@ -123,7 +124,7 @@ const RolePage = () => {
         </Row>
       </Card>
 
-      <Modal
+      <LucideModal
         title="Thêm chức vụ"
         maskClosable={false}
         open={openCreateModal}
@@ -138,7 +139,7 @@ const RolePage = () => {
         cancelText="Đóng"
       >
         <RoleForm form={formCreate} onSubmit={handleAdd} />
-      </Modal>
+      </LucideModal>
       <FloatBtn onClick={() => setOpenCreateModal(true)} />
     </>
   );

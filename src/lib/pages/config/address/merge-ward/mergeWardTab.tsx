@@ -1,8 +1,11 @@
 "use client";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Popconfirm as LucidePopconfirm } from "@/lib/components/antd-lucide";
+import {Select as LucideSelect } from "@/lib/components/antd-lucide";
 
 
-import { Trash2, Pencil, Plus, Search } from "lucide-react";
-import { Button, Form, Input, Modal, Popconfirm, Select, Space, Table, Tag, Typography } from "antd";
+import {Trash2, Pencil, Plus, Search } from "lucide-react";
+import { Button, Form, Input, Space, Table, Tag, Typography} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useEffect, useMemo, useState } from "react";
 import type { IDistrictResponse, IWardResponse } from "@/lib/interfaces/ConfigAddress/IConfigAddress";
@@ -112,9 +115,9 @@ export default function MergeWardTab() {
     { title: "Phường/xã mới", render: (_, row) => <Space direction="vertical" size={2}><Tag color="blue" bordered={false}>{row.NewWardName}</Tag><Typography.Text type="secondary">{row.NewDistrictName}</Typography.Text></Space> },
     { title: "Thao tác", width: 112, render: (_, row) => <Space>
       <Button className="address-row-action address-row-edit" aria-label="Sửa ánh xạ" icon={<Pencil size={16} />} onClick={() => showEdit(row)} />
-      <Popconfirm title="Xóa ánh xạ địa chỉ này?" onConfirm={async () => { await mergeWardApi.delete(row.Id); await refresh(); }}>
+      <LucidePopconfirm title="Xóa ánh xạ địa chỉ này?" onConfirm={async () => { await mergeWardApi.delete(row.Id); await refresh(); }}>
         <Button className="address-row-action address-row-delete" aria-label="Xóa ánh xạ" danger icon={<Trash2 size={16} />} />
-      </Popconfirm>
+      </LucidePopconfirm>
     </Space> },
   ];
 
@@ -126,15 +129,15 @@ export default function MergeWardTab() {
     <div className="address-conversion-table">
       <Table rowKey="Id" columns={columns} dataSource={filteredRows} loading={loading} pagination={{ pageSize: 10, showSizeChanger: true, showTotal: (total) => `${total} địa chỉ` }} />
     </div>
-    <Modal title={editing ? "Sửa ánh xạ địa chỉ" : "Thêm chuyển đổi địa chỉ"} open={open} onCancel={() => setOpen(false)} onOk={() => form.submit()} okText={editing ? "Lưu thay đổi" : "Thêm chuyển đổi địa chỉ"} okButtonProps={{ className: "address-conversion-submit" }} confirmLoading={saving} destroyOnClose>
+    <LucideModal title={editing ? "Sửa ánh xạ địa chỉ" : "Thêm chuyển đổi địa chỉ"} open={open} onCancel={() => setOpen(false)} onOk={() => form.submit()} okText={editing ? "Lưu thay đổi" : "Thêm chuyển đổi địa chỉ"} okButtonProps={{ className: "address-conversion-submit" }} confirmLoading={saving} destroyOnClose>
       <Form form={form} layout="vertical" onFinish={save}>
         {!editing && <>
           {!customOld ? <Form.Item name="OldWardId" label="Phường/xã cũ" rules={[{ required: !customOld, message: "Vui lòng chọn phường/xã cũ" }]}>
-            <Select showSearch optionFilterProp="label" options={options} placeholder="Chọn địa chỉ cũ" />
+            <LucideSelect showSearch optionFilterProp="label" options={options} placeholder="Chọn địa chỉ cũ" />
           </Form.Item> : <>
             <Form.Item name="OldWardName" label="Tên phường/xã cũ" rules={[{ required: true, whitespace: true, message: "Vui lòng nhập tên phường/xã cũ" }]}><Input placeholder="Nhập tên địa chỉ cũ" /></Form.Item>
             <Form.Item name="OldDistrictId" label="Quận/huyện của địa chỉ cũ" rules={[{ required: true, message: "Vui lòng chọn quận/huyện" }]}>
-              <Select showSearch optionFilterProp="label" options={districts.map((d) => ({ value: d.Id, label: `${d.Name} (${d.ProvinceName})` }))} placeholder="Chọn quận/huyện" />
+              <LucideSelect showSearch optionFilterProp="label" options={districts.map((d) => ({ value: d.Id, label: `${d.Name} (${d.ProvinceName})` }))} placeholder="Chọn quận/huyện" />
             </Form.Item>
           </>}
           <Button type="link" className="address-conversion-inline-link" onClick={() => { setCustomOld(!customOld); form.setFieldsValue({ OldWardId: undefined, OldWardName: undefined, OldDistrictId: undefined }); }}>
@@ -142,17 +145,17 @@ export default function MergeWardTab() {
           </Button>
         </>}
         {!customNew ? <Form.Item name="NewWardId" label="Phường/xã mới" rules={[{ required: !customNew, message: "Vui lòng chọn phường/xã mới" }]}>
-          <Select showSearch optionFilterProp="label" options={options} placeholder="Chọn địa chỉ mới" />
+          <LucideSelect showSearch optionFilterProp="label" options={options} placeholder="Chọn địa chỉ mới" />
         </Form.Item> : <>
           <Form.Item name="NewWardName" label="Tên phường/xã mới" rules={[{ required: true, whitespace: true, message: "Vui lòng nhập tên phường/xã mới" }]}><Input placeholder="Nhập tên địa chỉ mới" /></Form.Item>
           <Form.Item name="NewDistrictId" label="Quận/huyện của địa chỉ mới" rules={[{ required: true, message: "Vui lòng chọn quận/huyện" }]}>
-            <Select showSearch optionFilterProp="label" options={districts.map((d) => ({ value: d.Id, label: `${d.Name} (${d.ProvinceName})` }))} placeholder="Chọn quận/huyện" />
+            <LucideSelect showSearch optionFilterProp="label" options={districts.map((d) => ({ value: d.Id, label: `${d.Name} (${d.ProvinceName})` }))} placeholder="Chọn quận/huyện" />
           </Form.Item>
         </>}
         <Button type="link" className="address-conversion-inline-link" onClick={() => { setCustomNew(!customNew); form.setFieldsValue({ NewWardId: undefined, NewWardName: undefined, NewDistrictId: undefined }); }}>
           {customNew ? "Chọn từ danh sách có sẵn" : "Không tìm thấy phường/xã mới? Nhập tên mới"}
         </Button>
       </Form>
-    </Modal>
+    </LucideModal>
   </div>;
 }

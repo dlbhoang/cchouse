@@ -1,21 +1,9 @@
-import { Eye, History } from "lucide-react";
+import { Drawer as LucideDrawer } from "@/lib/components/antd-lucide";
+import {Popconfirm as LucidePopconfirm } from "@/lib/components/antd-lucide";
+import {Eye, History } from "lucide-react";
 
 import {
-  Badge,
-  Button,
-  Card,
-  Col,
-  Divider,
-  Drawer,
-  Input,
-  List,
-  message,
-  Popconfirm,
-  Row,
-  Space,
-  Tooltip,
-  Typography,
-} from "antd";
+  Badge, Button, Card, Col, Divider, Input, List, message, Row, Space, Tooltip, Typography} from "antd";
 import Link from "next/link";
 import { useState } from "react";
 import HistoryModel from "@/lib/components/admin/property/modal/historyModal";
@@ -65,7 +53,7 @@ const PropTransferDrawer = () => {
       <Badge count={countData?.data}>
         <Button onClick={() => setOpen(true)}>Danh sách chuyển đổi</Button>
       </Badge>
-      <Drawer
+      <LucideDrawer
         title={<Typography.Text>DANH SÁCH CHUYỂN ĐỔI</Typography.Text>}
         open={open}
         onClose={() => {
@@ -122,7 +110,7 @@ const PropTransferDrawer = () => {
 
                 <Row gutter={8}>
                   <Col flex="auto">
-                    <Popconfirm
+                    <LucidePopconfirm
                       title="Từ chối chuyển đổi"
                       description={
                         <TextArea
@@ -152,7 +140,7 @@ const PropTransferDrawer = () => {
                       <Button block danger>
                         Từ chối
                       </Button>
-                    </Popconfirm>
+                    </LucidePopconfirm>
                   </Col>
                   <Col flex="auto">
                     <BtnConfirm
@@ -185,7 +173,7 @@ const PropTransferDrawer = () => {
             </List.Item>
           )}
         />
-      </Drawer>
+      </LucideDrawer>
 
       <HistoryModel
         isModalOpen={openHistory}

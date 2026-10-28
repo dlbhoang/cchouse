@@ -1,8 +1,9 @@
-import { DatePicker, TimeRangePickerProps } from "antd";
+import { DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+import type { TimeRangePickerProps } from "antd";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
 import { appConst } from "@/lib/core/configs/appConst";
-const { RangePicker } = DatePicker;
+const { RangePicker } = LucideDatePicker;
 
 const rangePresets: TimeRangePickerProps["presets"] = [
   { label: "7 ngày trước", value: [dayjs().add(-7, "d"), dayjs()] },

@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mutate } from "swr";
-import { Input, Modal } from "antd";
+import { Input} from "antd";
 import { ChevronDown, ImageIcon, Pencil, Plus, X } from "lucide-react";
 import { NotiBase } from "@/lib/components/shared/NotiBase";
 import TinyEditor from "@/lib/components/shared/tiny-editor";
@@ -563,7 +564,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: P
                 </button>
               )}
               {errors.Thumbnail && <div className={styles["field-error"]}>{errors.Thumbnail}</div>}
-              <Modal
+              <LucideModal
                 open={thumbnailImageOpen && Boolean(thumbnailPreview?.url)}
                 title="Hình minh họa"
                 footer={null}
@@ -578,7 +579,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: P
                     style={{ display: "block", width: "100%", maxHeight: "70vh", objectFit: "contain" }}
                   />
                 )}
-              </Modal>
+              </LucideModal>
             </div>
           </div>
 
@@ -756,7 +757,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: P
         </div>
       </div>
 
-      <Modal
+      <LucideModal
         title="Duyệt bài viết?"
         open={approvePanelOpen}
         onCancel={() => !isSubmit && setApprovePanelOpen(false)}
@@ -767,10 +768,10 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: P
         maskClosable={false}
       >
         <p>Bài viết sẽ được hiển thị công khai. Sau khi duyệt, nội dung không thể chỉnh sửa.</p>
-      </Modal>
+      </LucideModal>
 
       {/* Modal lý do từ chối */}
-      <Modal
+      <LucideModal
         title="Từ chối bài viết?"
         open={rejectPanelOpen}
         onCancel={() => {
@@ -795,7 +796,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: P
           rows={4}
           autoFocus
         />
-      </Modal>
+      </LucideModal>
 
       {/* Preview modal */}
       <NewPreview

@@ -1,4 +1,5 @@
-import { Descriptions, Modal, Typography } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Descriptions, Typography} from "antd";
 import { useEffect, useState } from "react";
 
 import RenderArea from "@/lib/components/shared/CustomRender/RenderArea";
@@ -37,7 +38,7 @@ const PreviewModal = ({
   }, [model.ApartmentId]);
 
   return (
-    <Modal
+    <LucideModal
       title="Kiểm tra thông tin"
       open={isModalOpen}
       width={1000}
@@ -97,7 +98,7 @@ const PreviewModal = ({
           )}
         </Descriptions.Item>
       </Descriptions>
-    </Modal>
+    </LucideModal>
   );
 };
 

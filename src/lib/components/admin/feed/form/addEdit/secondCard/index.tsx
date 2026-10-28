@@ -1,13 +1,5 @@
-import {
-  Checkbox,
-  Col,
-  Form,
-  FormInstance,
-  InputNumber,
-  Row,
-  Select,
-  Typography,
-} from "antd";
+import { Select as LucideSelect } from "@/lib/components/antd-lucide";
+import {Checkbox, Col, Form, FormInstance, InputNumber, Row, Typography} from "antd";
 import { useEffect, useState } from "react";
 
 import MyCard from "@/lib/components/shared/MyCard";
@@ -119,7 +111,7 @@ const SecondCard = ({ form }: Props) => {
           >
             <PriceAutoComplete
               addonAfter={
-                <Select
+                <LucideSelect
                   value={paymentMethod}
                   options={["VNĐ", "USD"].map((e) => ({ label: e, value: e }))}
                   onChange={(val) => {

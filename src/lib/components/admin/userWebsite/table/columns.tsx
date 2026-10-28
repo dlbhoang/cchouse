@@ -1,6 +1,7 @@
-import { Facebook } from "lucide-react";
+import { Popconfirm as LucidePopconfirm } from "@/lib/components/antd-lucide";
+import {Facebook } from "lucide-react";
 
-import { Popconfirm, Space, Switch, Tag, Tooltip, Typography } from "antd";
+import { Popconfirm, Space, Switch, Tag, Tooltip, Typography} from "antd";
 import type { TagProps } from "antd/lib";
 import type { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
@@ -113,14 +114,14 @@ export const columns = ({
     render: (value, record) => {
       return (
         <Space>
-          <Popconfirm
+          <LucidePopconfirm
             title={
               value ? "Xác nhận khoá tài khoản?" : "Kích hoạt lại tài khoản?"
             }
             onConfirm={() => onBlock(record.Id ?? 0)}
           >
             <Switch checked={value} />
-          </Popconfirm>
+          </LucidePopconfirm>
         </Space>
       );
     },

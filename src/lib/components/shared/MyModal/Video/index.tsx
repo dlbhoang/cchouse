@@ -1,13 +1,14 @@
-import { Video } from "lucide-react";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Video } from "lucide-react";
 
-import { Modal } from 'antd';
+import { Modal} from 'antd';
 import ReactPlayer from 'react-player';
 
 import { NotiBase } from '../../NotiBase';
 
 export const openVideoModal = (isMobile: boolean, videoUrl?: string) =>
   videoUrl
-    ? Modal.info({
+    ? LucideModal.info({
         icon: <Video size={16} />,
         width: 750,
         centered: true,

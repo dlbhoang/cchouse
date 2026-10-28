@@ -1,4 +1,5 @@
-import { Button, Modal } from 'antd';
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button} from 'antd';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
 
 const GeocodeModal = ({ isModalOpen, children, handleCancel }: Props) => {
   return (
-    <Modal
+    <LucideModal
       title="Xem thông tin vị trí"
       open={isModalOpen}
       width={1200}
@@ -24,7 +25,7 @@ const GeocodeModal = ({ isModalOpen, children, handleCancel }: Props) => {
       ]}
     >
       {children}
-    </Modal>
+    </LucideModal>
   );
 };
 

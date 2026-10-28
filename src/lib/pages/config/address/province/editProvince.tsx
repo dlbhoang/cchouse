@@ -1,4 +1,5 @@
-import { Col, Form, Input, Modal, Row, type UploadFile } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Col, Form, Input, Row, type UploadFile} from "antd";
 import { useEffect, useState } from "react";
 import AppUpload from "@/lib/components/shared/components/app-upload";
 import { ETableName } from "@/lib/core/enum";
@@ -47,7 +48,7 @@ const EditProvince = ({ isModalOpen, model, handleCancel }: Props) => {
   }, [form, model]);
 
   return (
-    <Modal
+    <LucideModal
       title={`${model.Type} ${model.Name}`}
       maskClosable={false}
       open={isModalOpen}
@@ -128,7 +129,7 @@ const EditProvince = ({ isModalOpen, model, handleCancel }: Props) => {
           </Col>
         </Row>
       </Form>
-    </Modal>
+    </LucideModal>
   );
 };
 

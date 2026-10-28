@@ -1,4 +1,5 @@
-import { Button, Modal, Space, Tag, Typography } from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import {Button, Space, Tag, Typography} from "antd";
 import { useEffect, useState } from "react";
 import { ETransType } from "@/lib/core/enum";
 import { IPropResponse } from "@/lib/interfaces/Property/IProp";
@@ -50,7 +51,7 @@ const RecProps = ({ isModalOpen, handleCancel, model, transType }: Props) => {
     fetch();
   }, [requirement, transType]);
   return (
-    <Modal
+    <LucideModal
       open={isModalOpen}
       title={
         <Space>
@@ -73,7 +74,7 @@ const RecProps = ({ isModalOpen, handleCancel, model, transType }: Props) => {
         Tìm được <Typography.Text strong>{totalRow}</Typography.Text> kết quả
       </Typography.Text>
       <PropertySubTable data={propList} loading={loading} />
-    </Modal>
+    </LucideModal>
   );
 };
 

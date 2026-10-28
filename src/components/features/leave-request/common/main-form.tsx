@@ -1,6 +1,7 @@
 "use client";
+import { Alert as LucideAlert } from "@/lib/components/antd-lucide";
 
-import { Alert, Input } from "antd";
+import {Input} from "antd";
 import type { UseFormReturn } from "react-hook-form";
 import {
   FormControl,
@@ -57,7 +58,7 @@ const MainForm = ({ form }: { form: UseFormReturn<ILeaveRequest> }) => {
           </FormItem>
         )}
       />
-      <Alert
+      <LucideAlert
         message={
           <ul className="list-disc list-inside text-sm">
             <li>

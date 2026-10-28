@@ -1,12 +1,5 @@
-import {
-  Descriptions,
-  Divider,
-  // Input,
-  Modal,
-  Space,
-  Tag,
-  Typography,
-} from "antd";
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import { Descriptions, Divider, Space, Tag, Typography } from "antd";
 
 import HistoryTree from "@/lib/components/shared/HistoryTree";
 import { FormatDate } from "@/lib/core/utils/myFormat";
@@ -23,7 +16,7 @@ type Props = {
 
 const HistoryModel = ({ isModalOpen, model, handleCancel }: Props) => {
   return (
-    <Modal
+    <LucideModal
       title={
         <Space>
           <Tag>{`Mã: ${model?.Code}`}</Tag>
@@ -61,7 +54,7 @@ const HistoryModel = ({ isModalOpen, model, handleCancel }: Props) => {
       {model && (
         <HistoryTree instanceId={model.Id} TableName="tblApartmentUnit" />
       )}
-    </Modal>
+    </LucideModal>
   );
 };
 
