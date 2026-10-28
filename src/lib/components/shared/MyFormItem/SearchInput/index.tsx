@@ -6,8 +6,9 @@ type Props = {
   form: FormInstance;
   placeholder: string;
   handleRefresh: () => void;
+  hideRefresh?: boolean;
 };
-export const SearchInput = ({ form, placeholder, handleRefresh }: Props) => {
+export const SearchInput = ({ form, placeholder, handleRefresh, hideRefresh = false }: Props) => {
   return (
     <Form.Item name="Search">
       <Space.Compact direction="horizontal" style={{ width: '100%' }}>
@@ -24,14 +25,16 @@ export const SearchInput = ({ form, placeholder, handleRefresh }: Props) => {
             />
           }
         />
-        <Tooltip title="Đặt lại">
-          <Button
-            type="default"
-            style={{ color: '#0788f5', borderColor: '#0788f5' }}
-            icon={<RotateCcwIcon className="size-4" />}
-            onClick={handleRefresh}
-          />
-        </Tooltip>
+        {!hideRefresh && (
+          <Tooltip title="Đặt lại">
+            <Button
+              type="default"
+              style={{ color: '#0788f5', borderColor: '#0788f5' }}
+              icon={<RotateCcwIcon className="size-4" />}
+              onClick={handleRefresh}
+            />
+          </Tooltip>
+        )}
       </Space.Compact>
     </Form.Item>
   );

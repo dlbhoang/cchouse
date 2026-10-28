@@ -1,6 +1,6 @@
 import { Drawer as LucideDrawer } from "@/lib/components/antd-lucide";
 import {Button, Col, Form, Row, Typography} from 'antd';
-import { useMemo, useState } from 'react';
+import { forwardRef, useImperativeHandle, useMemo, useState } from 'react';
 import FloatBtn from '@/lib/components/shared/FloatBtn';
 import TableBase from '@/lib/components/shared/TableBase';
 import { ETransType } from '@/lib/core/enum';
@@ -20,7 +20,13 @@ type Props = {
   searchOptions: ICustomerOpts;
   onPageIndexChange: (pageIndex: number, pageSize: number) => void;
 };
-export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
+
+export type CustomerTableHandle = {
+  createCustomer: () => void;
+};
+
+export const CustomerTable = forwardRef<CustomerTableHandle, Props>(
+  ({ searchOptions, onPageIndexChange }, ref) => {
   const { smallScreen } = useAdminContext();
   const { data, isValidating } = customerApi.useGet(searchOptions);
   const [form] = Form.useForm<ICustomerRequest>();
@@ -39,9 +45,13 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
     setSelect(0);
   };
 
-  const showModalAddEditCustomer = () => {
-    setOpen(true);
-  };
+  useImperativeHandle(ref, () => ({
+    createCustomer: () => {
+      form.resetFields();
+      setSelect(0);
+      setOpen(true);
+    },
+  }), [form]);
 
   const cols = useMemo(() => {
     return columns({
@@ -106,10 +116,11 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
         />
       </LucideDrawer>
       <FloatBtn
+        showAddButton={smallScreen}
         onClick={() => {
           form.resetFields();
           setSelect(0);
-          showModalAddEditCustomer();
+          setOpen(true);
         }}
       />
       {selectedData && (
@@ -122,4 +133,6 @@ export const CustomerTable = ({ searchOptions, onPageIndexChange }: Props) => {
       )}
     </Row>
   );
-};
+  }
+);
+CustomerTable.displayName = 'CustomerTable';

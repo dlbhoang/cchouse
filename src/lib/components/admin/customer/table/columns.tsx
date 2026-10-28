@@ -33,23 +33,6 @@ const columns = ({
     ),
   },
   {
-    title: "Trạng thái",
-    dataIndex: [reqType, "StatusName"],
-    render: (value, record) => {
-      let color = "success";
-      let label = value;
-      if ("Hết nhu cầu".includes(value)) {
-        color = "default";
-        label = reqType === "BuyingRequirement" ? "Đã mua" : "Đã thuê";
-      }
-      if (value === "Tạm ngưng") {
-        color = "orange";
-      }
-
-      return <Tag color={color}>{label}</Tag>;
-    },
-  },
-  {
     title: "Họ và tên",
     dataIndex: "Name",
     render: (val, r) => {
@@ -164,24 +147,6 @@ const columns = ({
       </Space>
     ),
   },
-  {
-    title: "Khác",
-    dataIndex: [reqType, "LocationName"],
-    render: (value, record) => (
-      <Space direction="vertical" onClick={() => handlSelect(record.Id)}>
-        <Typography.Text>{`Vị trí: ${value ?? "Tất cả"}`}</Typography.Text>
-        <Typography.Text>
-          {record[reqType]?.LocationFeatureName}
-        </Typography.Text>
-        <Typography.Text>
-          {(record[reqType]?.DirectionName.length ?? 0) > 0
-            ? `Hướng: ${record[reqType]?.DirectionName}`
-            : "Hướng: Tất cả"}
-        </Typography.Text>
-      </Space>
-    ),
-  },
-
   {
     title: "Ngày tạo",
     dataIndex: "CreatedDate",
