@@ -65,6 +65,7 @@ const UserAdminFilter = ({ model, onSubmit }: Props) => {
   return (
     <Form
       name="basic"
+      className="user-admin-filter"
       onFinish={onFinish}
       autoComplete="off"
       form={form}

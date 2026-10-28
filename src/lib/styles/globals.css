@@ -2587,6 +2587,21 @@ button.news-create-btn.ant-btn:active {
 .news-form-modal .tox .tox-tbtn svg { width: 16px; height: 16px; }
 .news-form-modal .tox .tox-toolbar__group { padding: 0 4px; }
 .news-form-modal .tox .tox-toolbar, .news-form-modal .tox .tox-toolbar__primary { background: #ffffff; }
+
+/* Match the Main Design blue for primary actions on the staff list. */
+.user-admin-filter .ant-btn-primary,
+.user-admin-filter .ant-input-search-button .ant-btn-primary {
+  background-color: #0588f0 !important;
+  border-color: #0588f0 !important;
+  color: #ffffff !important;
+}
+
+.user-admin-filter .ant-btn-primary:hover:not(:disabled),
+.user-admin-filter .ant-input-search-button .ant-btn-primary:hover:not(:disabled) {
+  background-color: #0d74ce !important;
+  border-color: #0d74ce !important;
+  color: #ffffff !important;
+}
 .news-form-modal .tox:not(.tox-tinymce-inline) .tox-editor-header { padding: 4px 0; box-shadow: none; border-bottom: 1px solid #e5e5e5; }
 
 .news-preview-modal { max-width: calc(100vw - 96px); }
