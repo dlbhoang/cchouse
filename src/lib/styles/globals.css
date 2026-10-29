@@ -828,6 +828,17 @@ button:not(:disabled),
   --sidebar-ring: oklch(0.739 0.1906 127.31);
 }
 
+/* The agency review requires these primary actions to use Main Design blue.
+   Keep this higher-specificity rule separate from the app-wide primary token. */
+html body button.agency-manager-primary-action,
+html body button.agency-manager-primary-action:hover,
+html body button.agency-manager-primary-action:focus-visible,
+html body button.agency-manager-primary-action:active {
+  background-color: #0587ef !important;
+  border-color: #0587ef !important;
+  color: #fff !important;
+}
+
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);

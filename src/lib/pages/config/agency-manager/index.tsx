@@ -1039,8 +1039,7 @@ export default function AgencyManagerPage() {
         </div>
         <Button
           onClick={() => setAgencySearch(agencySearchInput)}
-          style={{ backgroundColor: "#0587ef" }}
-          className="appearance-none !bg-[#0587ef] hover:!bg-[#0587ef] h-10 gap-2 rounded-lg"
+          className="agency-manager-primary-action h-10 gap-2 rounded-lg"
         >
           <Search size={16} />
           Tìm kiếm
@@ -1060,8 +1059,7 @@ export default function AgencyManagerPage() {
         </h1>
         <Button
           onClick={() => openEditor()}
-          style={{ backgroundColor: "#0587ef" }}
-          className="appearance-none !bg-[#0587ef] hover:!bg-[#0587ef] gap-2 rounded-lg"
+          className="agency-manager-primary-action gap-2 rounded-lg"
         >
           <Plus size={16} />
           Thêm mới cơ quan
@@ -1481,8 +1479,7 @@ export default function AgencyManagerPage() {
               !form.address.trim() ||
               (mode === "old" && (!oldDistrictId || !oldWardId))
             }
-            style={{ backgroundColor: "#0587ef" }}
-            className="appearance-none !bg-[#0587ef] hover:!bg-[#0587ef]"
+            className="agency-manager-primary-action"
           >
             Lưu
           </Button>
