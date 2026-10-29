@@ -31,10 +31,10 @@
 .property-table-shell .ant-table-tbody > tr > td {
   color: var(--Text-Main, #0A0A0A);
   font-family: var(--Font-family-Text, Inter), sans-serif;
-  font-size: var(--Font-sizes-text-sm, 14px);
+  font-size: 13px;
   font-style: normal;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 16px;
   padding: 4px 8px;
   vertical-align: top;
 }
