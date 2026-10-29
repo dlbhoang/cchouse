@@ -34,6 +34,8 @@ type AgencyRecord = {
   name: string;
   address: string;
   wardId?: number;
+  wardIds?: number[];
+  agencyLinks?: Array<{ name: string; address: string; wardId: number }>;
   oldAddress?: string;
   status?: "active" | "hidden";
   updatedAt?: string;
@@ -98,6 +100,87 @@ const flattenWard = (ward: WardAgencyData): AgencyRecord[] =>
       wardId: ward.WardId,
     })),
   );
+
+const normalizeAgencyIdentityPart = (value: string) =>
+  normalizeAddressName(value)
+    .replace(/\bduong\b/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+
+const groupAgencyRecords = (records: AgencyRecord[]) => {
+  const groups = new Map<string, AgencyRecord>();
+  for (const record of records) {
+    const key = [
+      record.type,
+      normalizeAgencyIdentityPart(agencyDisplayName(record.name)),
+      normalizeAgencyIdentityPart(record.address),
+    ].join("|");
+    const existing = groups.get(key);
+    if (!existing) {
+      groups.set(key, {
+        ...record,
+        wardIds: record.wardId === undefined ? [] : [record.wardId],
+        agencyLinks:
+          record.wardId === undefined
+            ? []
+            : [{ name: record.name, address: record.address, wardId: record.wardId }],
+      });
+      continue;
+    }
+
+    if (record.wardId !== undefined) {
+      existing.wardIds ??= [];
+      existing.agencyLinks ??= [];
+      if (!existing.wardIds.includes(record.wardId)) {
+        existing.wardIds.push(record.wardId);
+      }
+      if (
+        !existing.agencyLinks.some(
+          (link) =>
+            link.wardId === record.wardId &&
+            link.name === record.name &&
+            link.address === record.address,
+        )
+      ) {
+        existing.agencyLinks.push({
+          name: record.name,
+          address: record.address,
+          wardId: record.wardId,
+        });
+      }
+    }
+  }
+  return [...groups.values()];
+};
+
+const matchesAgencyLink = (
+  record: { name: string; address: string },
+  group: AgencyRecord,
+  wardId: number,
+) => {
+  const links = group.agencyLinks;
+  return links?.length
+    ? links.some(
+        (link) =>
+          link.wardId === wardId &&
+          link.name === record.name &&
+          link.address === record.address,
+      )
+    : group.wardId === wardId &&
+        group.name === record.name &&
+        group.address === record.address;
+};
+
+const saveWardAgencyUpdates = async (updates: WardAgencyData[]) => {
+  for (let index = 0; index < updates.length; index += 8) {
+    await Promise.all(
+      updates.slice(index, index + 8).map((ward) =>
+        lookupApi.saveWardAgencies(ward.WardId, ward),
+      ),
+    );
+  }
+};
 
 const convertAgencyAddressToOld = (
   newAddress: string,
@@ -642,8 +725,7 @@ export default function AgencyManagerPage() {
     const sourceWards = areaWardIdSet
       ? wards.filter((ward) => areaWardIdSet.has(ward.WardId))
       : wards;
-    return sourceWards
-      .flatMap(flattenWard)
+    return groupAgencyRecords(sourceWards.flatMap(flattenWard))
       .filter(
         (item) =>
           (agencyTypeFilter === "all" || item.type === agencyTypeFilter) &&
@@ -670,10 +752,7 @@ export default function AgencyManagerPage() {
   ]);
 
   const areaScopeLabel = agencyAreaFilter.label;
-  const agencyCount =
-    agencyStatusFilter === "all"
-      ? agencies.filter((item) => (item.status ?? "active") === "active").length
-      : agencies.length;
+  const agencyCount = agencies.length;
 
   const saveAgency = async () => {
     if (
@@ -685,24 +764,6 @@ export default function AgencyManagerPage() {
     )
       return;
     if (mode === "old" && (!oldDistrictId || !oldWardId)) return;
-    const originalWard =
-      editingWardId === undefined
-        ? undefined
-        : wards.find((ward) => ward.WardId === editingWardId);
-    const sourceWard = originalWard ?? formWard;
-    const sourceAgencies = { ...sourceWard.Agencies };
-    if (editing && originalWard) {
-      sourceAgencies[editing.type] = (
-        sourceAgencies[editing.type] ?? []
-      ).filter(
-        (item) =>
-          item.name !== editing.name || item.address !== editing.address,
-      );
-    }
-    const targetAgencies =
-      formWard.WardId === sourceWard.WardId
-        ? sourceAgencies
-        : { ...formWard.Agencies };
     const address = [
       form.address.trim(),
       streetName.trim(),
@@ -712,30 +773,57 @@ export default function AgencyManagerPage() {
         selectedProvince?.Name ?? "",
       ),
     ].join(", ");
-    targetAgencies[form.type] = [
-      ...(targetAgencies[form.type] ?? []),
-      {
-        name: form.name.trim(),
-        address,
-        status: form.status ?? "active",
-        updatedAt: new Date().toLocaleDateString("vi-VN"),
-      },
-    ];
-    const updatedTarget = { ...formWard, Agencies: targetAgencies };
-    let next = wards;
-    if (formWard.WardId !== sourceWard.WardId && editing && originalWard) {
-      const updatedSource = { ...sourceWard, Agencies: sourceAgencies };
-      await lookupApi.saveWardAgencies(sourceWard.WardId, updatedSource);
-      next = next.map((ward) =>
-        ward.WardId === sourceWard.WardId ? updatedSource : ward,
-      );
+    const newItem = {
+      name: form.name.trim(),
+      address,
+      status: form.status ?? "active",
+      updatedAt: new Date().toLocaleDateString("vi-VN"),
+    };
+    const sourceWardIds = editing
+      ? (editing.wardIds?.length
+          ? editing.wardIds
+          : editingWardId === undefined
+            ? []
+            : [editingWardId])
+      : [];
+    const targetWardIds =
+      editing && formWard.WardId === editing.wardId
+        ? sourceWardIds
+        : [formWard.WardId];
+    const sourceWardIdSet = new Set(sourceWardIds);
+    const targetWardIdSet = new Set(targetWardIds);
+    const affectedWardIds = new Set([...sourceWardIds, ...targetWardIds]);
+    const wardsById = new Map(wards.map((ward) => [ward.WardId, ward]));
+    const updates = new Map<number, WardAgencyData>();
+
+    for (const wardId of affectedWardIds) {
+      const original =
+        wardsById.get(wardId) ??
+        (formWard.WardId === wardId ? formWard : undefined);
+      if (!original) continue;
+
+      const agencies = { ...original.Agencies };
+      if (editing && sourceWardIdSet.has(wardId)) {
+        agencies[editing.type] = (agencies[editing.type] ?? []).filter(
+          (item) => !matchesAgencyLink(item, editing, wardId),
+        );
+      }
+      if (targetWardIdSet.has(wardId)) {
+        agencies[form.type] = [...(agencies[form.type] ?? []), newItem];
+      }
+      updates.set(wardId, { ...original, Agencies: agencies });
     }
-    await lookupApi.saveWardAgencies(formWard.WardId, updatedTarget);
-    next = next.some((ward) => ward.WardId === formWard.WardId)
-      ? next.map((ward) =>
-          ward.WardId === formWard.WardId ? updatedTarget : ward,
-        )
-      : [...next, updatedTarget];
+
+    const updatedWards = [...updates.values()];
+    await saveWardAgencyUpdates(updatedWards);
+    const updatedById = new Map(
+      updatedWards.map((ward) => [ward.WardId, ward]),
+    );
+    const next = wards.map((ward) => updatedById.get(ward.WardId) ?? ward);
+    if (!wards.some((ward) => ward.WardId === formWard.WardId)) {
+      const createdWard = updatedById.get(formWard.WardId);
+      if (createdWard) next.push(createdWard);
+    }
     setWards(next);
     setSelectedWardId(formWard.WardId);
     setDialogOpen(false);
@@ -745,26 +833,27 @@ export default function AgencyManagerPage() {
 
   const removeAgency = async () => {
     if (!deleteTarget) return;
-    const sourceWard = wards.find((ward) => ward.WardId === deleteTarget.wardId);
-    if (!sourceWard) return;
-    const updatedWard = {
-      ...sourceWard,
-      Agencies: {
-        ...sourceWard.Agencies,
-        [deleteTarget.type]: (
-          sourceWard.Agencies[deleteTarget.type] ?? []
-        ).filter(
-          (item) =>
-            item.name !== deleteTarget.name ||
-            item.address !== deleteTarget.address,
-        ),
-      },
-    };
-    await lookupApi.saveWardAgencies(sourceWard.WardId, updatedWard);
+    const sourceWardIds = deleteTarget.wardIds?.length
+      ? deleteTarget.wardIds
+      : deleteTarget.wardId === undefined
+        ? []
+        : [deleteTarget.wardId];
+    const sourceWardIdSet = new Set(sourceWardIds);
+    const updates = wards
+      .filter((ward) => sourceWardIdSet.has(ward.WardId))
+      .map((ward) => ({
+        ...ward,
+        Agencies: {
+          ...ward.Agencies,
+          [deleteTarget.type]: (ward.Agencies[deleteTarget.type] ?? []).filter(
+            (item) => !matchesAgencyLink(item, deleteTarget, ward.WardId),
+          ),
+        },
+      }));
+    await saveWardAgencyUpdates(updates);
+    const updatedById = new Map(updates.map((ward) => [ward.WardId, ward]));
     setWards((current) =>
-      current.map((ward) =>
-        ward.WardId === sourceWard.WardId ? updatedWard : ward,
-      ),
+      current.map((ward) => updatedById.get(ward.WardId) ?? ward),
     );
     setDeleteTarget(undefined);
   };
