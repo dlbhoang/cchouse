@@ -103,6 +103,8 @@ const flattenWard = (ward: WardAgencyData): AgencyRecord[] =>
 
 const normalizeAgencyIdentityPart = (value: string) =>
   normalizeAddressName(value)
+    .replace(/\btp\b/g, "thanh pho")
+    .replace(/\btphcm\b/g, "thanh pho ho chi minh")
     .replace(/\bduong\b/g, " ")
     .replace(/[^a-z0-9]+/g, " ")
     .trim()
