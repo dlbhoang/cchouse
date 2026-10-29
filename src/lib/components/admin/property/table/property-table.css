@@ -34,9 +34,22 @@
   font-size: var(--Font-sizes-text-sm, 14px);
   font-style: normal;
   font-weight: 400;
-  line-height: var(--Line-height-text-sm, 20px);
-  padding: 7px 8px;
+  line-height: 18px;
+  padding: 4px 8px;
   vertical-align: top;
+}
+
+/* Keep the compact row rhythm from the review reference when a cell contains
+   a price plus secondary text, or an ID plus its history action. */
+.property-table-shell .ant-table-tbody .ant-space-vertical {
+  gap: 4px !important;
+}
+
+.property-table-shell .ant-table-tbody > tr > td:first-child .ant-btn {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  padding: 0;
 }
 
 /* Header: bỏ border trên, giữ border dưới đậm hơn để tách khỏi tbody */
