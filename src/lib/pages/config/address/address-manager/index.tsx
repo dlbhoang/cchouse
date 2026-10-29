@@ -903,21 +903,21 @@ export default function AddressManagerPage() {
         }}
       />
       <Dialog open={Boolean(deleteTarget)} onOpenChange={(open) => !open && setDeleteTarget(undefined)}>
-        <DialogContent className="gap-0 rounded-xl p-0 sm:max-w-[520px]">
-          <div className="flex items-center justify-between border-b border-[#f0f0f0] px-5 py-4">
+        <DialogContent className="gap-0 rounded-lg p-0 sm:max-w-[520px]">
+          <div className="flex min-h-10 items-center justify-between border-b border-[#f0f0f0] px-3 py-2">
             <DialogTitle className="text-sm font-bold text-[#262626]">LỖI KIỂM TRA RÀNG BUỘC</DialogTitle>
             <DialogDescription className="sr-only">Không thể xóa địa giới đang được sử dụng</DialogDescription>
           </div>
-          <div className="px-5 py-4">
-            <p className="text-sm text-[#262626]">
+          <div className="px-3 py-3">
+            <p className="text-xs leading-[18px] text-[#262626]">
               Không thể xóa đơn vị hành chính <span className="font-semibold text-[#b42318]">“{deleteTarget?.name}”</span>.
             </p>
-            <div className="mt-3 rounded-lg bg-[#fff1f0] p-3 text-xs leading-5 text-[#8c2f2b]">
+            <div className="mt-2 rounded-md border border-[#ffccc7] bg-[#fff2f0] px-2.5 py-2 text-xs leading-[18px] text-[#8c2f2b]">
               Đơn vị hành chính này đang được sử dụng trong hệ thống. Hãy cập nhật các dữ liệu liên quan trước khi xóa.
             </div>
           </div>
-          <div className="flex justify-end border-t border-[#f0f0f0] px-5 py-3">
-            <button type="button" onClick={() => setDeleteTarget(undefined)} className="rounded-lg border border-[#e5e5e5] bg-white px-4 py-1.5 text-sm font-medium text-[#262626]">Đã hiểu</button>
+          <div className="flex justify-end border-t border-[#f0f0f0] px-3 py-2">
+            <button type="button" onClick={() => setDeleteTarget(undefined)} className="rounded-md border border-[#d9d9d9] bg-white px-3 py-1 text-xs font-medium text-[#262626]">Đã hiểu</button>
           </div>
         </DialogContent>
       </Dialog>

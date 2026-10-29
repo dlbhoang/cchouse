@@ -834,9 +834,11 @@ html body button.agency-manager-primary-action,
 html body button.agency-manager-primary-action:hover,
 html body button.agency-manager-primary-action:focus-visible,
 html body button.agency-manager-primary-action:active {
-  background-color: #0587ef !important;
+  background: #0587ef !important;
+  background-image: none !important;
   border-color: #0587ef !important;
   color: #fff !important;
+  box-shadow: none !important;
 }
 
 .dark {
