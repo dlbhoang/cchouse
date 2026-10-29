@@ -192,7 +192,7 @@ function Column({
                 {onDelete && (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <button type="button" aria-label={`Xóa ${item.name}`} onClick={() => onDelete(item)} className="rounded p-1 text-[#525252] hover:bg-[#fff1f0] hover:text-[#dc3e42] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
+                      <button type="button" aria-label={`Xóa ${item.name}`} onClick={() => onDelete(item)} className="rounded p-1 text-[#dc3e42] hover:bg-[#fff1f0] hover:text-[#b42318] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
                         <Trash2 size={14} aria-hidden="true" />
                       </button>
                     </TooltipTrigger>
