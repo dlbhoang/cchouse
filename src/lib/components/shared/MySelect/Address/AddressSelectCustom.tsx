@@ -10,7 +10,7 @@ import {
   Switch,
   Typography,
 } from "antd";
-import { Check, ChevronDown, RefreshCw } from "lucide-react";
+import { Check, ChevronDown, RefreshCw, X } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { useAdminContext } from "@/lib/stored";
@@ -53,6 +53,9 @@ type Props = {
   mapMode?: boolean;
   /** Keep the address mode toggle while hiding fields irrelevant to region-only filters. */
   hideParcelFields?: boolean;
+  triggerClassName?: string;
+  triggerPlaceholder?: string;
+  agencyManagerMode?: boolean;
 };
 
 export const AddressSelectCustom = ({
@@ -68,6 +71,9 @@ export const AddressSelectCustom = ({
   nameMapSheet = "MapSheetNo",
   mapMode = false,
   hideParcelFields = false,
+  triggerClassName,
+  triggerPlaceholder,
+  agencyManagerMode = false,
 }: Props) => {
   const { districts, propType } = useAdminContext();
   const provinceWatch = Form.useWatch(nameProvince, form);
@@ -133,8 +139,20 @@ export const AddressSelectCustom = ({
     <div
       className={`property-address-dropdown-panel ${
         mapMode ? "map-address-dropdown-panel" : ""
-      }`}
+      } ${agencyManagerMode ? "agency-manager-address-dropdown-panel" : ""}`}
     >
+      {agencyManagerMode && (
+        <div className="agency-manager-address-dropdown-header">
+          <span>Khu vực</span>
+          <button
+            type="button"
+            aria-label="Đóng khu vực"
+            onClick={() => setOpen(false)}
+          >
+            <X size={20} strokeWidth={2} />
+          </button>
+        </div>
+      )}
       <div className={mapMode ? "map-address-dropdown-body" : "property-address-dropdown-body"}>
         {!mapMode && (
           <div className="property-address-dropdown-toggle">
@@ -206,7 +224,7 @@ export const AddressSelectCustom = ({
           </Form.Item>
         </AddressField>
 
-        {!isHiddenField && !isLandSelected && (
+        {(!isHiddenField || agencyManagerMode) && !isLandSelected && (
           <AddressField label="Số nhà">
             <Form.Item name={nameAddressNumber} className="property-address-field-item" noStyle>
               <Input className="property-address-field-input" placeholder={mapMode ? "" : "Nhập"} />
@@ -237,7 +255,7 @@ export const AddressSelectCustom = ({
       <div
         className="property-address-dropdown-footer"
         style={
-          mapMode
+          mapMode || agencyManagerMode
             ? undefined
             : { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 14 }
         }
@@ -262,19 +280,21 @@ export const AddressSelectCustom = ({
             handleApply();
           }}
         >
-          {mapMode ? (
+          {mapMode || agencyManagerMode ? (
             <RefreshCw className="property-drawer-reset-icon" size={16} strokeWidth={2} />
           ) : (
             <span className="property-drawer-reset-icon">↺</span>
           )}
           Đặt lại
         </Button>
-        {mapMode ? (
+        {mapMode || agencyManagerMode ? (
           <Button
             block
             type="primary"
             htmlType="button"
-            className="property-filter-drawer-apply-btn map-address-apply"
+            className={`property-filter-drawer-apply-btn ${
+              mapMode ? "map-address-apply" : "agency-manager-address-apply"
+            }`}
             onClick={handleApply}
           >
             <Check className="property-drawer-check-icon" size={16} strokeWidth={2} />
@@ -315,7 +335,13 @@ export const AddressSelectCustom = ({
       trigger={["click"]}
       transitionName={mapMode ? "map-filter-popup" : undefined}
       dropdownRender={dropdownRender}
-      overlayClassName={mapMode ? "map-address-dropdown" : "property-admin-address-dropdown"}
+      overlayClassName={
+        mapMode
+          ? "map-address-dropdown"
+          : agencyManagerMode
+            ? "agency-manager-address-dropdown"
+            : "property-admin-address-dropdown"
+      }
       open={open}
       onOpenChange={setOpen}
     >
@@ -325,13 +351,13 @@ export const AddressSelectCustom = ({
         aria-label="Khu vực"
         aria-expanded={open}
         aria-haspopup="dialog"
-        className={`property-custom-dropdown-trigger ${mapMode ? "property-map-region-trigger" : ""} ${open ? "is-open" : ""} ${
+        className={`property-custom-dropdown-trigger ${mapMode ? "property-map-region-trigger" : ""} ${triggerClassName ?? ""} ${open ? "is-open" : ""} ${
           addressLabel ? "has-value" : ""
         }`}
       >
         <span className="property-custom-dropdown-label">Khu vực</span>
         <Typography.Text ellipsis className="property-custom-dropdown-value">
-          {addressLabel || (mapMode ? "Chọn khu vực" : "")}
+          {addressLabel || triggerPlaceholder || (mapMode ? "Chọn khu vực" : "")}
         </Typography.Text>
         <ChevronDown
           className="property-custom-dropdown-arrow"

@@ -259,7 +259,9 @@ const MapPage = () => {
         <header className="admin-map-heading">
           <div>
             <div className="admin-map-breadcrumb">
-              Bản đồ&nbsp; / &nbsp;Bản đồ nhà đất
+              <span>Bản đồ</span>
+              <span aria-hidden="true">/</span>
+              <strong aria-current="page">Bản đồ nhà đất</strong>
             </div>
             <h1>BẢN ĐỒ NHÀ ĐẤT</h1>
           </div>

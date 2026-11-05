@@ -4,7 +4,7 @@ import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import { Pencil, Plus, RefreshCw, Search, Trash2, X } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Form } from "antd";
+import { ConfigProvider, Form } from "antd";
 import { Input } from "@/components/ui/input";
 import { SearchableSelect } from "@/components/ui/searchable-select";
 import { AddressSelectCustom } from "@/lib/components/shared/MySelect/Address/AddressSelectCustom";
@@ -53,6 +53,7 @@ type AgencyAreaFilter = {
   wardId?: number;
   newWardId?: number;
   streetName?: string;
+  addressNumber?: string;
   label: string;
 };
 type AgencyWardMerge = {
@@ -369,8 +370,23 @@ export default function AgencyManagerPage() {
     ])
       .then(([provincesResponse, wardsResponse]) => {
         if (!active) return;
-        areaProvinceOptionsRef.current = provincesResponse.data ?? [];
+        const provinces = provincesResponse.data ?? [];
+        areaProvinceOptionsRef.current = provinces;
         setAreaWardOptions(wardsResponse.data ?? []);
+        const defaultProvince = provinces.find((province) =>
+          String(province.Name ?? "")
+            .toLocaleLowerCase("vi")
+            .includes("hồ chí minh"),
+        );
+        if (
+          defaultProvince &&
+          areaFilterForm.getFieldValue("AreaProvinceId") === undefined
+        ) {
+          areaFilterForm.setFieldsValue({
+            AreaProvinceId: defaultProvince.Id,
+            AreaIsNewAddress: false,
+          });
+        }
       })
       .catch(() => {
         if (!active) return;
@@ -380,7 +396,7 @@ export default function AgencyManagerPage() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [areaFilterForm]);
 
   const selectedWard =
     wards.find((ward) => ward.WardId === selectedWardId);
@@ -732,6 +748,10 @@ export default function AgencyManagerPage() {
             normalizeAddressName(item.address).includes(
               normalizeAddressName(agencyAreaFilter.streetName),
             )) &&
+          (!agencyAreaFilter.addressNumber ||
+            normalizeAddressName(item.address).includes(
+              normalizeAddressName(agencyAreaFilter.addressNumber),
+            )) &&
           (!filter ||
             `${item.type} ${item.name} ${item.address}`
               .toLocaleLowerCase("vi")
@@ -739,6 +759,7 @@ export default function AgencyManagerPage() {
       );
   }, [
     agencyAreaFilter.streetName,
+    agencyAreaFilter.addressNumber,
     agencySearch,
     agencyStatusFilter,
     agencyTypeFilter,
@@ -865,6 +886,7 @@ export default function AgencyManagerPage() {
     const nextProvinceId = asId(values.AreaProvinceId);
     const districtId = asId(values.AreaDistrictId);
     const wardId = asId(values.AreaWardId);
+    const addressNumber = String(values.AreaAddressNumber ?? "").trim();
     const newWardId = isNewAddress
       ? wardId
       : areaWardMerges.find((merge) => merge.OldWardId === wardId)?.NewWardId;
@@ -912,6 +934,7 @@ export default function AgencyManagerPage() {
       wardId,
       newWardId,
       streetName: nextStreetName || undefined,
+      addressNumber: addressNumber || undefined,
       label,
     });
     setSelectedWardId(newWardId);
@@ -968,8 +991,16 @@ export default function AgencyManagerPage() {
   const resetAgencyFilters = () => {
     setSelectedWardId(undefined);
     areaFilterForm.resetFields();
-    areaFilterForm.setFieldsValue({ AreaIsNewAddress: true });
-    setAgencyAreaFilter({ isNewAddress: true, label: "Thành phố Hồ Chí Minh" });
+    const defaultProvince = areaProvinceOptionsRef.current.find((province) =>
+      String(province.Name ?? "")
+        .toLocaleLowerCase("vi")
+        .includes("hồ chí minh"),
+    );
+    areaFilterForm.setFieldsValue({
+      AreaProvinceId: defaultProvince?.Id,
+      AreaIsNewAddress: false,
+    });
+    setAgencyAreaFilter({ isNewAddress: false, label: "Thành phố Hồ Chí Minh" });
     setMode("new");
     setAgencyTypeFilter("Văn phòng công chứng");
     setAgencyStatusFilter("all");
@@ -979,75 +1010,95 @@ export default function AgencyManagerPage() {
 
   return (
     <div className="flex h-full min-h-0 flex-col gap-5 bg-[#fbfbfd] p-6 max-md:p-3">
-      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-[#fafafa] bg-white px-4 py-6">
-        <div className="w-full sm:w-[280px]">
-          <Form
-            component={false}
-            form={areaFilterForm}
-            initialValues={{ AreaIsNewAddress: true }}
-            onFinish={applyAreaFilters}
-          >
-            <AddressSelectCustom
-              form={areaFilterForm}
-              nameProvince="AreaProvinceId"
-              nameDistrict="AreaDistrictId"
-              nameWard="AreaWardId"
-              nameStreet="AreaStreetId"
-              nameAddressNumber="AreaAddressNumber"
-              nameIsNewAddress="AreaIsNewAddress"
-              nameLandParcel="AreaLandParcel"
-              nameMapSheet="AreaMapSheet"
-              isHiddenField
-              hideParcelFields
+      <div className="agency-manager-search-bar flex flex-wrap items-center gap-4 rounded-lg border border-[#fafafa] bg-white px-4 py-6">
+        <div className="agency-manager-search-filters flex min-w-0 flex-1 flex-wrap items-center gap-1">
+          <div className="w-full shrink-0 sm:w-[300px]">
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: "#0688f0",
+                  colorPrimaryHover: "#0078dc",
+                  colorPrimaryActive: "#006dc5",
+                  colorBorder: "#e5e5e5",
+                  colorText: "#0a0a0a",
+                  controlOutline: "rgba(6, 136, 240, 0.12)",
+                },
+              }}
+            >
+              <Form
+                component={false}
+                form={areaFilterForm}
+                initialValues={{ AreaIsNewAddress: false }}
+                onFinish={applyAreaFilters}
+              >
+                <AddressSelectCustom
+                  form={areaFilterForm}
+                  nameProvince="AreaProvinceId"
+                  nameDistrict="AreaDistrictId"
+                  nameWard="AreaWardId"
+                  nameStreet="AreaStreetId"
+                  nameAddressNumber="AreaAddressNumber"
+                  nameIsNewAddress="AreaIsNewAddress"
+                  nameLandParcel="AreaLandParcel"
+                  nameMapSheet="AreaMapSheet"
+                  isHiddenField
+                  hideParcelFields
+                  agencyManagerMode
+                  triggerClassName="agency-manager-area-trigger"
+                  triggerPlaceholder="Chọn"
+                />
+              </Form>
+            </ConfigProvider>
+          </div>
+          <div className="relative w-full shrink-0 sm:w-[200px]">
+            <span className="pointer-events-none absolute -top-2 left-3 z-10 bg-white px-1 text-xs leading-4 text-neutral-500">
+              Trạng thái
+            </span>
+            <SearchableSelect
+              value={agencyStatusFilter}
+              aria-label="Trạng thái"
+              options={[
+                { value: "all", label: "Tất cả" },
+                { value: "active", label: "Hoạt động" },
+                { value: "hidden", label: "Tạm ngừng" },
+              ]}
+              onValueChange={(value) =>
+                setAgencyStatusFilter(value as AgencyStatusFilter)
+              }
+              className="h-10 rounded-lg pt-1"
             />
-          </Form>
+          </div>
+          <div className="relative min-w-[220px] flex-1">
+            <Search className="absolute left-3 top-2.5 size-4 text-neutral-400" />
+            <Input
+              aria-label="Tìm kiếm cơ quan hành chính"
+              value={agencySearchInput}
+              onChange={(event) => setAgencySearchInput(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") setAgencySearch(agencySearchInput);
+              }}
+              placeholder="Tìm kiếm cơ quan hành chính"
+              className="h-10 rounded-lg pl-9"
+            />
+          </div>
         </div>
-        <div className="relative w-full sm:w-[190px]">
-          <span className="pointer-events-none absolute -top-2 left-3 z-10 bg-white px-1 text-xs leading-4 text-neutral-500">
-            Trạng thái
-          </span>
-          <SearchableSelect
-            value={agencyStatusFilter}
-            aria-label="Trạng thái"
-            options={[
-              { value: "all", label: "Tất cả" },
-              { value: "active", label: "Hoạt động" },
-              { value: "hidden", label: "Tạm ngừng" },
-            ]}
-            onValueChange={(value) =>
-              setAgencyStatusFilter(value as AgencyStatusFilter)
-            }
-            className="h-10 rounded-lg pt-1"
-          />
+        <div className="flex shrink-0 items-center gap-1">
+          <Button
+            onClick={() => setAgencySearch(agencySearchInput)}
+            className="agency-manager-primary-action h-10 gap-2 rounded-lg"
+          >
+            <Search size={16} />
+            Tìm kiếm
+          </Button>
+          <Button
+            variant="outline"
+            aria-label="Làm mới bộ lọc"
+            onClick={resetAgencyFilters}
+            className="h-10 w-10 rounded-lg p-0"
+          >
+            <RefreshCw size={16} />
+          </Button>
         </div>
-        <div className="relative min-w-[220px] flex-1">
-          <Search className="absolute left-3 top-2.5 size-4 text-neutral-400" />
-          <Input
-            aria-label="Tìm kiếm cơ quan hành chính"
-            value={agencySearchInput}
-            onChange={(event) => setAgencySearchInput(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") setAgencySearch(agencySearchInput);
-            }}
-            placeholder="Tìm kiếm cơ quan hành chính"
-            className="h-10 rounded-lg pl-9"
-          />
-        </div>
-        <Button
-          onClick={() => setAgencySearch(agencySearchInput)}
-          className="agency-manager-primary-action h-10 gap-2 rounded-lg"
-        >
-          <Search size={16} />
-          Tìm kiếm
-        </Button>
-        <Button
-          variant="outline"
-          aria-label="Làm mới bộ lọc"
-          onClick={resetAgencyFilters}
-          className="h-10 w-10 rounded-lg p-0"
-        >
-          <RefreshCw size={16} />
-        </Button>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="m-0 text-2xl font-bold leading-8 text-neutral-950">

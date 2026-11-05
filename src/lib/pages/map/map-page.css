@@ -27,10 +27,16 @@
 }
 
 .admin-map-breadcrumb {
-  margin: 0;
-  color: var(--map-muted);
-  font-size: 14px;
-  line-height: 20px;
+  display: flex;
+  gap: 8px;
+  color: #a1a1aa;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.admin-map-breadcrumb strong {
+  color: var(--map-ink);
+  font-weight: 600;
 }
 
 .admin-map-heading h1 {
@@ -49,7 +55,7 @@
 
 .admin-map-filters .property-filter-card {
   display: grid !important;
-  grid-template-columns: 260px minmax(0, 1fr) 200px 200px 128px 40px;
+  grid-template-columns: max-content minmax(0, 1fr) 200px 200px 128px 40px;
   justify-content: stretch;
   align-items: center;
   gap: 8px !important;
@@ -111,7 +117,7 @@
 }
 
 .admin-map-filters .property-trans-type-map-segmented .ant-segmented-item {
-  flex: 1 1 50%;
+  flex: 0 0 auto;
   min-width: 0;
   height: 28px;
   border: 1px solid transparent;
@@ -910,7 +916,8 @@
 .admin-map-results {
   position: absolute;
   z-index: 450;
-  inset: 16px auto 16px 16px;
+  inset: 20px auto auto 20px;
+  height: min(748px, calc(100% - 40px));
   width: 356px;
   min-width: 0;
   overflow: hidden;
@@ -929,8 +936,8 @@
 .admin-map-results-toggle {
   position: absolute;
   z-index: 460;
-  top: 50%;
-  left: 16px;
+  top: min(394px, 50%);
+  left: 20px;
   display: inline-flex;
   width: 32px;
   height: 48px;
@@ -958,7 +965,7 @@
 }
 
 .admin-map-workspace.is-results-open .admin-map-results-toggle {
-  left: 356px;
+  left: 378px;
 }
 
 .admin-map-results > .ant-card {
@@ -1536,6 +1543,11 @@
     border: 1px solid #e5e8ec;
     border-radius: 8px;
     box-shadow: 0 4px 18px rgba(20, 33, 48, 0.18);
+  }
+
+  .admin-map-workspace:has(.mobile-results) .admin-map-results-toggle {
+    left: 16px;
+    top: 50%;
   }
 
   .admin-map-results.mobile-results > .ant-card {
