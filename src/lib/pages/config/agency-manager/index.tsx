@@ -1,10 +1,10 @@
 "use client";
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 
-import {Pencil, Plus, RefreshCw, Search, Trash2 } from "lucide-react";
+import { Pencil, Plus, RefreshCw, Search, Trash2, X } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Form, Modal } from "antd";
+import { Form } from "antd";
 import { Input } from "@/components/ui/input";
 import { SearchableSelect } from "@/components/ui/searchable-select";
 import { AddressSelectCustom } from "@/lib/components/shared/MySelect/Address/AddressSelectCustom";
@@ -40,6 +40,7 @@ type AgencyRecord = {
   status?: "active" | "hidden";
   updatedAt?: string;
 };
+type AgencyForm = Omit<AgencyRecord, "type"> & { type: AgencyType | "" };
 type AgencyAddressOption = Pick<
   IWardResponse,
   "Id" | "Name" | "Type" | "ProvinceId" | "DistrictId"
@@ -257,13 +258,11 @@ function AgencyFloatingField({
   id,
   label,
   required = false,
-  filled = false,
   children,
 }: {
   id: string;
   label: string;
   required?: boolean;
-  filled?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -272,15 +271,11 @@ function AgencyFloatingField({
       <label
         htmlFor={id}
         aria-hidden="true"
-        className={`pointer-events-none absolute left-3 z-10 flex -translate-y-1/2 items-center gap-1 bg-white px-1 transition-all duration-200 ease-out group-focus-within/agency-field:top-0 group-focus-within/agency-field:text-xs group-focus-within/agency-field:text-[#168cf2] ${
-          filled
-            ? "top-0 text-xs text-neutral-600"
-            : "top-1/2 text-sm text-neutral-500"
-        }`}
+        className="pointer-events-none absolute left-3 top-0 z-10 flex -translate-y-1/2 items-center gap-1 bg-white px-1 text-xs text-neutral-500 transition-colors duration-200 group-focus-within/agency-field:text-[#0688f0]"
       >
         <span>{label}</span>
         {required && (
-          <span className="text-[10px] leading-none text-red-500">*</span>
+          <span className="text-[10px] leading-none text-[#dc3e42]">*</span>
         )}
       </label>
     </div>
@@ -324,8 +319,8 @@ export default function AgencyManagerPage() {
   const [oldDistrictId, setOldDistrictId] = useState<number>();
   const [oldWardId, setOldWardId] = useState<number>();
   const [provinceId, setProvinceId] = useState<number>();
-  const [form, setForm] = useState<AgencyRecord>({
-    type: "Văn phòng công chứng",
+  const [form, setForm] = useState<AgencyForm>({
+    type: "",
     name: "",
     address: "",
   });
@@ -760,6 +755,7 @@ export default function AgencyManagerPage() {
     if (
       !formWard ||
       !provinceId ||
+      !form.type ||
       !form.name.trim() ||
       !streetName.trim() ||
       !form.address.trim()
@@ -942,7 +938,7 @@ export default function AgencyManagerPage() {
             status: item.status ?? "active",
           }
         : {
-            type: "Văn phòng công chứng",
+            type: "",
             name: "",
             address: "",
             status: "active",
@@ -982,8 +978,8 @@ export default function AgencyManagerPage() {
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-5 bg-[#f5f5f5] p-6 max-md:p-3">
-      <div className="flex flex-wrap items-center gap-2 rounded-xl border border-neutral-200 bg-white p-3">
+    <div className="flex h-full min-h-0 flex-col gap-5 bg-[#fbfbfd] p-6 max-md:p-3">
+      <div className="flex flex-wrap items-center gap-2 rounded-lg border border-[#fafafa] bg-white px-4 py-6">
         <div className="w-full sm:w-[280px]">
           <Form
             component={false}
@@ -1007,7 +1003,7 @@ export default function AgencyManagerPage() {
           </Form>
         </div>
         <div className="relative w-full sm:w-[190px]">
-          <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
+          <span className="pointer-events-none absolute -top-2 left-3 z-10 bg-white px-1 text-xs leading-4 text-neutral-500">
             Trạng thái
           </span>
           <SearchableSelect
@@ -1054,7 +1050,7 @@ export default function AgencyManagerPage() {
         </Button>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="m-0 text-xl font-bold text-neutral-950">
+        <h1 className="m-0 text-2xl font-bold leading-8 text-neutral-950">
           QUẢN LÝ CƠ QUAN HÀNH CHÍNH
         </h1>
         <Button
@@ -1062,17 +1058,17 @@ export default function AgencyManagerPage() {
           className="agency-manager-primary-action gap-2 rounded-lg"
         >
           <Plus size={16} />
-          Thêm mới cơ quan
+          Thêm cơ quan
         </Button>
       </div>
 
-      <section className="min-h-0 flex-1 overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
-        <div className="border-b border-neutral-200 bg-[#e8f3ff] px-5 py-3 text-sm font-bold uppercase text-neutral-900">
+      <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-[#f5f5f5] bg-white shadow-[0_1px_2px_rgba(60,64,67,0.08)]">
+        <div className="flex h-[60px] shrink-0 items-center border-b border-neutral-200 bg-[#dbeafe] px-4 text-lg font-bold leading-7 uppercase text-neutral-900">
           Danh mục cơ quan hành chính
         </div>
-        <div className="flex h-[calc(100%-45px)] min-h-0 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
+        <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
           <div className="relative">
-            <span className="pointer-events-none absolute -top-1.5 left-3 z-10 bg-white px-1 text-[10px] leading-none text-neutral-500">
+            <span className="pointer-events-none absolute -top-2 left-3 z-10 bg-white px-1 text-xs leading-4 text-neutral-500">
               Danh mục cơ quan hành chính
             </span>
             <SearchableSelect
@@ -1094,7 +1090,7 @@ export default function AgencyManagerPage() {
 
           <div className="flex min-h-0 flex-col gap-3">
             <div className="border-b border-neutral-200 pb-3">
-              <h2 className="text-sm font-bold">
+              <h2 className="text-base font-semibold leading-6">
                 Danh sách{" "}
                 {agencyTypeFilter === "all"
                   ? "tất cả cơ quan"
@@ -1159,10 +1155,10 @@ export default function AgencyManagerPage() {
                             {agencyDisplayName(item.name)}
                           </h3>
                           <span
-                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${item.status === "hidden" ? "bg-neutral-200 text-neutral-600" : "bg-[#e8f3ff] text-[#167ee0]"}`}
+                            className={`inline-flex h-[22px] items-center gap-1 rounded-[10px] px-2.5 py-0.5 text-xs font-medium ${item.status === "hidden" ? "bg-[#e2e8f0] text-[#475569]" : "bg-[#dbeafe] text-[#3c82f6]"}`}
                           >
                             <span
-                              className={`size-1.5 rounded-full ${item.status === "hidden" ? "bg-neutral-500" : "bg-[#168cf2]"}`}
+                              className={`size-2 rounded-full ${item.status === "hidden" ? "bg-[#64748b]" : "bg-[#3c82f6]"}`}
                             />
                             {item.status === "hidden"
                               ? "Tạm ngừng"
@@ -1174,7 +1170,7 @@ export default function AgencyManagerPage() {
                           {previousAddress ? ` (${previousAddress})` : ""}
                         </p>
                         {updatedAt && (
-                          <p className="mt-0.5 text-[10px] leading-4 text-neutral-400">
+                          <p className="mt-0.5 text-xs leading-4 text-neutral-500">
                             Cập nhật: {updatedAt}
                           </p>
                         )}
@@ -1214,33 +1210,37 @@ export default function AgencyManagerPage() {
         footer={null}
         width={768}
         centered
+        closeIcon={<X size={24} strokeWidth={1.8} />}
         styles={{
+          mask: { backgroundColor: "rgba(0, 0, 0, 0.3)" },
           content: { padding: 0, borderRadius: 16 },
-          body: { maxHeight: "90vh", overflowY: "auto" },
+          body: { maxHeight: "90vh", overflowY: "auto", padding: 0 },
         }}
       >
-        <div className="border-b border-neutral-200 px-6 py-5">
-          <h2 className="text-lg font-bold">
+        <div className="border-b border-[#f5f5f5] px-6 py-4">
+          <h2 className="text-lg font-bold leading-7">
             {editing ? "SỬA CƠ QUAN HÀNH CHÍNH" : "THÊM MỚI CƠ QUAN HÀNH CHÍNH"}
           </h2>
         </div>
-        <div className="flex flex-col gap-6 px-6 py-6">
-          <div>
-            <h3 className="mb-3 text-sm font-bold">Thông tin cơ quan</h3>
-            <p className="mb-3 text-xs text-neutral-500">
-              Chọn đúng đơn vị hành chính để địa chỉ xuất hiện trong danh sách
-              tương ứng.
-            </p>
+        <div className="flex flex-col gap-6 px-10 py-6">
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-1">
+              <h3 className="text-base font-semibold leading-6">Thông tin cơ quan</h3>
+              <p className="text-xs leading-4 text-[#a1a1aa]">
+                Chọn đúng đơn vị hành chính để địa chỉ xuất hiện trong danh sách
+                tương ứng.
+              </p>
+            </div>
             <div className="grid gap-6 sm:grid-cols-2">
               <AgencyFloatingField
                 id="agency-type"
                 label="Danh mục cơ quan"
                 required
-                filled
               >
                 <SearchableSelect
                   value={form.type}
                   aria-label="Danh mục cơ quan"
+                  placeholder="Chọn"
                   searchPlaceholder="Tìm danh mục cơ quan..."
                   options={agencyTypes.map((type) => ({
                     value: type,
@@ -1252,19 +1252,19 @@ export default function AgencyManagerPage() {
                       type: value as AgencyType,
                     }))
                   }
-                  className="h-10 rounded-md"
+                  className="h-10 rounded-[10px] text-sm font-medium"
                 />
               </AgencyFloatingField>
               <AgencyFloatingField
                 id="agency-name"
                 label="Tên cơ quan"
                 required
-                filled={Boolean(form.name.trim())}
               >
                 <Input
                   id="agency-name"
                   aria-label="Tên cơ quan"
-                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#168cf2] focus-visible:ring-2 focus-visible:ring-[#168cf2]/20 focus-visible:ring-offset-0"
+                  placeholder="Nhập"
+                  className="h-10 rounded-[10px] border-neutral-200 bg-white text-sm font-medium shadow-none placeholder:text-[#a1a1aa] focus-visible:border-[#0688f0] focus-visible:ring-2 focus-visible:ring-[#0688f0]/20 focus-visible:ring-offset-0"
                   value={form.name}
                   onChange={(event) =>
                     setForm((current) => ({
@@ -1277,10 +1277,10 @@ export default function AgencyManagerPage() {
             </div>
           </div>
           <div>
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-              <h3 className="text-sm font-bold">Thông tin địa chỉ</h3>
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <h3 className="text-base font-semibold leading-6">Thông tin địa chỉ</h3>
               <div
-                className="flex w-fit rounded-lg bg-neutral-100 p-1"
+                className="flex h-9 w-fit items-center rounded-[10px] bg-[#e5e5e5] p-[3px]"
                 role="group"
                 aria-label="Kiểu địa chỉ"
               >
@@ -1288,31 +1288,30 @@ export default function AgencyManagerPage() {
                   type="button"
                   aria-pressed={mode === "new"}
                   onClick={() => setMode("new")}
-                  className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "new" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}
+                  className={`h-7 rounded-lg px-2 text-sm transition-colors ${mode === "new" ? "bg-white font-medium text-neutral-900 shadow-[0_1px_3px_rgba(0,0,0,0.1)]" : "text-neutral-900"}`}
                 >
-                  Địa chỉ mới
+                  Sau sáp nhập
                 </button>
                 <button
                   type="button"
                   aria-pressed={mode === "old"}
                   onClick={selectOldAddressMode}
-                  className={`rounded-md px-3 py-1.5 text-xs transition-colors ${mode === "old" ? "bg-white font-semibold text-neutral-900 shadow-sm" : "text-neutral-500"}`}
+                  className={`h-7 rounded-lg px-2 text-sm transition-colors ${mode === "old" ? "bg-white font-medium text-neutral-900 shadow-[0_1px_3px_rgba(0,0,0,0.1)]" : "text-neutral-900"}`}
                 >
-                  Địa chỉ cũ
+                  Trước sáp nhập
                 </button>
               </div>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
               <div className={mode === "old" ? "sm:col-span-2" : undefined}>
                 <AgencyFloatingField
                   id="agency-province"
                   label="Tỉnh/Thành phố"
-                  filled
                 >
                   <SearchableSelect
                     value={String(provinceId ?? "")}
                     aria-label="Tỉnh/Thành phố"
-                    placeholder="Chọn tỉnh/thành phố"
+                    placeholder="Chọn"
                     searchPlaceholder="Tìm tỉnh/thành phố..."
                     options={provinceOptions.map((province) => ({
                       value: String(province.Id),
@@ -1325,7 +1324,7 @@ export default function AgencyManagerPage() {
                       setOldWardId(undefined);
                       setStreetName("");
                     }}
-                    className="h-10 rounded-md"
+                    className="h-10 rounded-[10px] text-sm font-medium"
                   />
                 </AgencyFloatingField>
               </div>
@@ -1334,12 +1333,11 @@ export default function AgencyManagerPage() {
                   <AgencyFloatingField
                     id="agency-district"
                     label="Quận/Huyện"
-                    filled={Boolean(oldDistrictId)}
                   >
                     <SearchableSelect
                       value={String(oldDistrictId ?? "")}
                       aria-label="Quận/Huyện"
-                      placeholder="Chọn quận/huyện"
+                      placeholder="Chọn"
                       searchPlaceholder="Tìm quận/huyện..."
                       options={oldDistrictOptions.map((district) => ({
                         value: String(district.Id),
@@ -1350,18 +1348,17 @@ export default function AgencyManagerPage() {
                         setOldWardId(undefined);
                         setStreetName("");
                       }}
-                      className="h-10 rounded-md"
+                      className="h-10 rounded-[10px] text-sm font-medium"
                     />
                   </AgencyFloatingField>
                   <AgencyFloatingField
                     id="agency-old-ward"
                     label="Phường/Xã"
-                    filled={Boolean(oldWardId)}
                   >
                     <SearchableSelect
                       value={String(oldWardId ?? "")}
                       aria-label="Phường/Xã cũ"
-                      placeholder="Chọn phường/xã"
+                      placeholder="Chọn"
                       searchPlaceholder="Tìm phường/xã..."
                       options={oldWardOptions.map((ward) => ({
                         value: String(ward.Id),
@@ -1371,7 +1368,7 @@ export default function AgencyManagerPage() {
                         setOldWardId(Number(value));
                         setStreetName("");
                       }}
-                      className="h-10 rounded-md"
+                      className="h-10 rounded-[10px] text-sm font-medium"
                     />
                   </AgencyFloatingField>
                 </>
@@ -1379,12 +1376,11 @@ export default function AgencyManagerPage() {
                 <AgencyFloatingField
                   id="agency-ward"
                   label="Phường/Xã"
-                  filled={Boolean(formWard?.WardName)}
                 >
                   <SearchableSelect
                     value={String(formWardId ?? "")}
                     aria-label="Phường/Xã"
-                    placeholder="Chọn phường/xã"
+                    placeholder="Chọn"
                     searchPlaceholder="Tìm phường/xã..."
                     options={provinceWardOptions.map((ward) => ({
                       value: String(ward.Id),
@@ -1394,7 +1390,7 @@ export default function AgencyManagerPage() {
                       setFormWardId(Number(value));
                       setStreetName("");
                     }}
-                    className="h-10 rounded-md"
+                    className="h-10 rounded-[10px] text-sm font-medium"
                   />
                 </AgencyFloatingField>
               )}
@@ -1402,32 +1398,31 @@ export default function AgencyManagerPage() {
                 id="agency-street"
                 label="Tên đường"
                 required
-                filled={Boolean(streetName)}
               >
                 <SearchableSelect
                   value={streetName}
                   onValueChange={setStreetName}
                   aria-label="Tên đường"
-                  placeholder="Chọn tên đường"
+                  placeholder="Chọn"
                   searchPlaceholder="Tìm tên đường..."
                   emptyMessage="Chưa có tên đường được cấu hình"
                   options={streetOptions.map((street) => ({
                     value: street.Name,
                     label: street.Name,
                   }))}
-                  className="h-10 rounded-md"
+                  className="h-10 rounded-[10px] text-sm font-medium"
                 />
               </AgencyFloatingField>
               <AgencyFloatingField
                 id="agency-address"
                 label="Địa chỉ"
                 required
-                filled={Boolean(form.address.trim())}
               >
                 <Input
                   id="agency-address"
                   aria-label="Địa chỉ"
-                  className="h-10 border-neutral-200 bg-white shadow-none focus-visible:border-[#168cf2] focus-visible:ring-2 focus-visible:ring-[#168cf2]/20 focus-visible:ring-offset-0"
+                  placeholder="Nhập"
+                  className="h-10 rounded-[10px] border-neutral-200 bg-white text-sm font-medium shadow-none placeholder:text-[#a1a1aa] focus-visible:border-[#0688f0] focus-visible:ring-2 focus-visible:ring-[#0688f0]/20 focus-visible:ring-offset-0"
                   value={form.address}
                   onChange={(event) =>
                     setForm((current) => ({
@@ -1438,35 +1433,41 @@ export default function AgencyManagerPage() {
                 />
               </AgencyFloatingField>
             </div>
-            <div className="mt-4 flex items-center gap-2">
-              <span className="text-sm text-neutral-700">Trạng thái</span>
-              <button
-                type="button"
-                role="switch"
-                aria-label="Trạng thái hoạt động"
-                aria-checked={(form.status ?? "active") === "active"}
-                onClick={() =>
-                  setForm((current) => ({
-                    ...current,
-                    status: current.status === "hidden" ? "active" : "hidden",
-                  }))
-                }
-                className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#168cf2] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#168cf2]" : "bg-neutral-300"}`}
-              >
-                <span
-                  className={`inline-block size-4 rounded-full bg-white shadow transition-transform ${(form.status ?? "active") === "active" ? "translate-x-4" : "translate-x-0.5"}`}
-                />
-              </button>
-              <span className="text-xs text-neutral-500">
-                {(form.status ?? "active") === "active"
-                  ? "Hoạt động"
-                  : "Tạm ngừng"}
-              </span>
+            <div className="mt-6 flex items-center gap-4">
+              <span className="text-base font-semibold text-neutral-900">Trạng thái</span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  role="switch"
+                  aria-label="Trạng thái hoạt động"
+                  aria-checked={(form.status ?? "active") === "active"}
+                  onClick={() =>
+                    setForm((current) => ({
+                      ...current,
+                      status: current.status === "hidden" ? "active" : "hidden",
+                    }))
+                  }
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0688f0] focus-visible:ring-offset-2 ${(form.status ?? "active") === "active" ? "bg-[#0688f0]" : "bg-neutral-300"}`}
+                >
+                  <span
+                    className={`inline-block size-5 rounded-full bg-white shadow transition-transform ${(form.status ?? "active") === "active" ? "translate-x-[22px]" : "translate-x-0.5"}`}
+                  />
+                </button>
+                <span className="text-xs text-neutral-500">
+                  {(form.status ?? "active") === "active"
+                    ? "Hoạt động"
+                    : "Tạm ngừng"}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <footer className="flex justify-end gap-3 border-t border-neutral-200 px-6 py-4">
-          <Button variant="outline" onClick={() => setDialogOpen(false)}>
+        <footer className="flex justify-end gap-2 border-t border-neutral-200 px-6 py-4">
+          <Button
+            variant="outline"
+            onClick={() => setDialogOpen(false)}
+            className="h-10 text-base"
+          >
             Đóng
           </Button>
           <Button
@@ -1474,14 +1475,15 @@ export default function AgencyManagerPage() {
             disabled={
               !formWard ||
               !provinceId ||
+              !form.type ||
               !form.name.trim() ||
               !streetName.trim() ||
               !form.address.trim() ||
               (mode === "old" && (!oldDistrictId || !oldWardId))
             }
-            className="agency-manager-primary-action"
+            className="agency-manager-primary-action h-10 text-base"
           >
-            Lưu
+            Lưu thông tin
           </Button>
         </footer>
       </LucideModal>
@@ -1490,22 +1492,50 @@ export default function AgencyManagerPage() {
         open={Boolean(deleteTarget)}
         onCancel={() => setDeleteTarget(undefined)}
         footer={null}
-        width={440}
+        width={448}
         centered
-        styles={{ content: { padding: 0, borderRadius: 16 } }}
+        closable={false}
+        styles={{
+          mask: { backgroundColor: "rgba(0, 0, 0, 0.3)" },
+          content: { padding: 0, borderRadius: 16 },
+          body: { padding: 0 },
+        }}
       >
-        <div className="p-6">
-          <h2 className="text-lg font-bold">Xóa cơ quan hành chính?</h2>
-          <p className="mt-3 text-sm text-neutral-600">
-            Bạn có chắc muốn xóa “{deleteTarget?.name}”? Thao tác này không thể
-            hoàn tác.
-          </p>
+        <div className="flex flex-col gap-4 p-6">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-lg font-semibold leading-7">
+              Xóa địa chỉ cơ quan hành chính?
+            </h2>
+            <p className="text-sm leading-5 text-[#737373]">
+              Bạn sắp xóa địa chỉ của “
+              <span className="font-semibold text-[#0a0a0a]">
+                {deleteTarget ? agencyDisplayName(deleteTarget.name) : ""}
+              </span>
+              ”. Hành động này không thể hoàn tác sau khi xác nhận.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 rounded-lg border border-[#e5e5e5] bg-[#f5f5f5] p-4 text-sm leading-5">
+            <p className="font-semibold text-black">
+              {deleteTarget ? agencyDisplayName(deleteTarget.name) : ""}
+            </p>
+            <p className="text-[#737373]">{deleteTarget?.address}</p>
+          </div>
+          <div className="rounded-lg border border-[#f59e0b] bg-[#fff8e6] px-4 py-3 text-sm leading-5 text-[#b37300]">
+            Nếu cơ quan tạm ngưng hoạt động, nên cập nhật trạng thái thay vì xóa.
+          </div>
         </div>
-        <footer className="flex justify-end gap-3 border-t border-neutral-200 px-6 py-4">
-          <Button variant="outline" onClick={() => setDeleteTarget(undefined)}>
+        <footer className="flex justify-end gap-2 border-t border-neutral-200 px-6 py-4">
+          <Button
+            variant="outline"
+            onClick={() => setDeleteTarget(undefined)}
+            className="h-10 text-base"
+          >
             Hủy
           </Button>
-          <Button variant="destructive" onClick={removeAgency}>
+          <Button
+            onClick={removeAgency}
+            className="h-10 bg-[#ef4444] text-base text-white hover:bg-[#ef4444]/90"
+          >
             Xóa
           </Button>
         </footer>

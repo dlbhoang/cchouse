@@ -24,6 +24,69 @@ const MyLeaflet = dynamic(() => import("@/lib/components/leaflet"), {
   ssr: false,
 });
 
+const parseMockNumbers = (value: unknown): number[] => {
+  const values = Array.isArray(value)
+    ? value
+    : typeof value === "string"
+      ? value.split(",")
+      : value == null
+        ? []
+        : [value];
+
+  return values
+    .filter((item) => item != null && item !== "")
+    .map((item) => Number(item))
+    .filter((item) => Number.isFinite(item));
+};
+
+const mockMatchesRange = (
+  value: number | undefined,
+  from: unknown,
+  to: unknown,
+) => {
+  const min = parseMockNumbers(from)[0];
+  const max = parseMockNumbers(to)[0];
+  return (
+    (min === undefined || (value !== undefined && value >= min)) &&
+    (max === undefined || (value !== undefined && value <= max))
+  );
+};
+
+const filterMapMockProperties = (options: IPropAdminOpts) => {
+  const search = String(options.search ?? "")
+    .trim()
+    .toLocaleLowerCase("vi-VN");
+  const statuses = new Set(parseMockNumbers(options.Status));
+
+  return mapReviewFixtures.filter((item) => {
+    if (item.TransType !== Number(options.TransType)) return false;
+    if (statuses.size > 0 && !statuses.has(item.Status)) return false;
+    if (
+      search &&
+      ![
+        item.Id,
+        item.PropAddress.PropName,
+        item.PropAddress.DisplayAddress,
+        item.PropAddress.DistrictName,
+        item.PropAddress.WardName,
+        item.CustomerName,
+      ]
+        .join(" ")
+        .toLocaleLowerCase("vi-VN")
+        .includes(search)
+    ) {
+      return false;
+    }
+
+    return (
+      mockMatchesRange(item.Price, options.PriceFrm, options.PriceTo) &&
+      mockMatchesRange(item.Area, options.AreaFrm, options.AreaTo) &&
+      mockMatchesRange(item.Length, options.LengthFrm, options.LengthTo) &&
+      mockMatchesRange(item.Width, options.WidthFrm, options.WidthTo)
+    );
+  });
+};
+
 const MapPage = () => {
   const { smallScreen, provinces, districts } = useAdminContext();
   const searchParams = useSearchParams();
@@ -33,9 +96,7 @@ const MapPage = () => {
   const [detailError, setDetailError] = useState(false);
   const [polygon, setPolygon] = useState<any[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<IPropAdminMap>();
-  // Main Design opens the map without the results drawer; users can show it
-  // with the map toggle when they want to browse matching properties.
-  const [isResultsOpen, setIsResultsOpen] = useState(false);
+  const [isResultsOpen, setIsResultsOpen] = useState(true);
 
   const propertyId = searchParams?.get("PropertyId");
   const isMockMode = searchParams?.get("mapMock") === "1";
@@ -66,13 +127,8 @@ const MapPage = () => {
     pageSize: 10000,
   }, !isMockMode);
   const mockProperties = useMemo(
-    () =>
-      isMockMode
-        ? mapReviewFixtures.filter(
-            (item) => item.TransType === Number(searchOptions.TransType),
-          )
-        : undefined,
-    [isMockMode, searchOptions.TransType],
+    () => (isMockMode ? filterMapMockProperties(searchOptions) : undefined),
+    [isMockMode, searchOptions],
   );
   const mapPoints: IPropAdminMap[] =
     mockProperties ?? (Array.isArray(points?.data) ? points.data : []);

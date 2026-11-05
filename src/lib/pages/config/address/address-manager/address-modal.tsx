@@ -77,14 +77,14 @@ function Field({
     <div className={cn("group/field relative min-w-0 flex-1", className)}>
       <span
         className={cn(
-          "pointer-events-none absolute left-3 z-10 flex items-center gap-1 px-1 leading-4 transition-all duration-150",
+          "pointer-events-none absolute left-3 z-10 flex items-center gap-1 px-1 text-xs leading-4 transition-all duration-150",
           active
-            ? "-top-2 bg-white text-[11px] text-[#737373]"
-            : "top-1/2 -translate-y-1/2 bg-transparent text-[13px] text-[#737373] group-focus-within/field:-top-2 group-focus-within/field:translate-y-0 group-focus-within/field:bg-white group-focus-within/field:text-[11px] group-focus-within/field:text-[#0588f0]"
+            ? "-top-2 bg-white text-[#737373]"
+            : "top-1/2 -translate-y-1/2 bg-transparent text-[#737373] group-focus-within/field:-top-2 group-focus-within/field:translate-y-0 group-focus-within/field:bg-white group-focus-within/field:text-[#0688f0]"
         )}
       >
         {label}
-        {required && <span className="text-[10px] text-[#ef4444]">*</span>}
+        {required && <span className="text-xs text-[#dc3e42]">*</span>}
       </span>
       {children}
     </div>
@@ -92,7 +92,7 @@ function Field({
 }
 
 const inputCls =
-  "h-9 rounded-[10px] border-[#e5e5e5] bg-white px-3 text-[13px] font-medium text-[#0a0a0a] shadow-none focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20";
+  "h-10 rounded-[10px] border-[#e5e5e5] bg-white px-3 text-sm font-medium text-[#0a0a0a] shadow-none focus:border-[#0688f0] focus:ring-2 focus:ring-[#0688f0]/20 focus-visible:border-[#0688f0] focus-visible:ring-2 focus-visible:ring-[#0688f0]/20";
 
 function TextField({
   label,
@@ -133,7 +133,7 @@ function SelectField({
           value: String(option.id),
           label: option.name,
         }))}
-        className={cn(inputCls, "h-9 w-full justify-between text-[13px]")}
+        className={cn(inputCls, "h-10 w-full justify-between text-sm")}
       />
     </Field>
   );
@@ -157,21 +157,24 @@ function WardGroup({
   onRemove: () => void;
 }) {
   return (
-    <div className="flex flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white px-5 py-2">
-      <div className="flex items-center gap-4">
-        <p className="flex-1 text-[13px] font-medium text-[#0a0a0a]">
-          Phường/Xã: <span className="text-[#0588f0]">#{index}</span>
+    <div className="flex flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white px-6 py-3">
+      <div className="flex items-center gap-3">
+        <p className="flex flex-1 items-center gap-2 text-sm text-[#0a0a0a]">
+          Phường/Xã: <span className="text-xs text-[#dc3e42]">*</span>
+          <span className="flex h-6 items-center rounded-lg bg-[#eff6ff] px-2 text-sm text-[#3b82f6]">
+            #{index}
+          </span>
         </p>
         <Tooltip>
           <TooltipTrigger asChild>
-            <button type="button" aria-label={`Xóa Phường/Xã ${index}`} onClick={onRemove} className="rounded p-1 text-[#525252] hover:bg-[#fff1f0] hover:text-[#dc3e42] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
+            <button type="button" aria-label={`Xóa Phường/Xã ${index}`} onClick={onRemove} className="rounded-[10px] border border-[#e5e5e5] p-2 text-[#dc3e42] hover:bg-[#fff1f0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30">
               <Trash2 size={16} aria-hidden="true" />
             </button>
           </TooltipTrigger>
           <TooltipContent side="top">Xóa Phường/Xã</TooltipContent>
         </Tooltip>
       </div>
-      <div className="flex gap-3 pt-1">
+      <div className="flex gap-3">
         <TextField label="Phường/Xã" value={ward.name} onChange={(name) => onChange({ ...ward, name })} />
         {mode === "new" ? (
           <SelectField
@@ -198,9 +201,9 @@ function DashedAdd({ label, onClick }: { label: string; onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center justify-center gap-2 rounded-[10px] border border-dashed border-[#0588f0] bg-white px-4 py-1.5 text-sm font-medium text-[#0588f0]"
+      className="flex h-10 w-full items-center justify-center gap-2 rounded-[10px] border border-dashed border-[#0688f0] bg-white px-4 text-sm font-medium text-[#0688f0]"
     >
-      <Plus size={14} />
+      <Plus size={16} />
       {label}
     </button>
   );
@@ -451,9 +454,12 @@ export default function AddressModal({
 
   return (
     <Dialog open={open} onOpenChange={(o) => !o && close()}>
-      <DialogContent className="max-h-[90vh] gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[780px]">
-        <div className="border-b border-[#f5f5f5] px-5 py-3.5">
-          <DialogTitle className="text-base font-bold text-[#0a0a0a]">
+      <DialogContent
+        overlayClassName="bg-black/30"
+        className="max-h-[90vh] gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[768px] [&>button:last-of-type]:right-6 [&>button:last-of-type]:size-6 [&>button:last-of-type>svg]:size-6"
+      >
+        <div className="border-b border-[#f5f5f5] px-6 py-4">
+          <DialogTitle className="text-lg font-bold leading-7 text-[#0a0a0a]">
             {intent === "edit"
               ? createKind === "street" ? "CHỈNH SỬA ĐỊA GIỚI - TÊN ĐƯỜNG" : "CHỈNH SỬA ĐỊA GIỚI"
               : createKind === "street" ? "THÊM MỚI ĐỊA GIỚI - TÊN ĐƯỜNG" : "THÊM MỚI ĐỊA GIỚI"}
@@ -461,7 +467,7 @@ export default function AddressModal({
           <DialogDescription className="sr-only">Thêm mới đơn vị hành chính</DialogDescription>
         </div>
 
-        <div className="flex min-h-0 flex-col gap-5 overflow-y-auto px-8 py-5">
+        <div className="flex min-h-0 flex-col gap-6 overflow-y-auto px-10 py-6">
           {createKind !== "province" && (
             <div className="flex">
               {initialProvince ? (
@@ -486,27 +492,38 @@ export default function AddressModal({
           {initialProvince || initialDistrict || createKind === "province" ? (
             <TextField label={initialProvince || createKind === "province" ? "Tên Tỉnh/Thành phố" : "Tên Quận/Huyện"} value={entityName} onChange={setEntityName} />
           ) : initialStreet || createKind === "street" ? (
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-6">
               {mode === "new" ? (
-                <div className="flex gap-3">
-                  <SelectField
-                    label="Thuộc Phường/Xã"
-                    value={streetWardId}
-                    options={newWardOpts}
-                    onChange={setStreetWardId}
-                  />
-                  <SelectField
-                    label="Thuộc Quận/Huyện cũ"
-                    value={streetDistrictId}
-                    options={oldDistricts}
-                    onChange={(id) => {
-                      setStreetDistrictId(id);
-                      setStreetOldWardId(undefined);
-                    }}
-                  />
-                </div>
+                <>
+                  <div className="flex gap-6">
+                    <SelectField
+                      label="Thuộc Phường/Xã"
+                      value={streetWardId}
+                      options={newWardOpts}
+                      onChange={setStreetWardId}
+                    />
+                    <SelectField
+                      label="Thuộc Quận/Huyện cũ"
+                      value={streetDistrictId}
+                      options={oldDistricts}
+                      onChange={(id) => {
+                        setStreetDistrictId(id);
+                        setStreetOldWardId(undefined);
+                      }}
+                    />
+                  </div>
+                  <div className="flex gap-6">
+                    <TextField label="Tên đường" value={streetName} onChange={setStreetName} />
+                    <SelectField
+                      label="Thuộc Phường/Xã cũ"
+                      value={streetOldWardId}
+                      options={streetOldWardOpts}
+                      onChange={setStreetOldWardId}
+                    />
+                  </div>
+                </>
               ) : (
-                <div className="flex gap-3">
+                <>
                   <SelectField
                     label="Thuộc Quận/Huyện"
                     value={streetDistrictId}
@@ -516,33 +533,24 @@ export default function AddressModal({
                       setStreetOldWardId(undefined);
                     }}
                   />
-                  <SelectField
-                    label="Thuộc Phường/Xã"
-                    value={streetOldWardId}
-                    options={streetOldWardOpts}
-                    onChange={setStreetOldWardId}
-                  />
-                  <SelectField
-                    label="Nay thuộc Phường/Xã mới"
-                    value={streetWardId}
-                    options={newWardOpts}
-                    onChange={setStreetWardId}
-                  />
-                </div>
-              )}
-              <div className="flex gap-3">
-                <TextField label="Tên đường" value={streetName} onChange={setStreetName} />
-                {mode === "new" ? (
-                  <SelectField
-                    label="Thuộc Phường/Xã cũ"
-                    value={streetOldWardId}
-                    options={streetOldWardOpts}
-                    onChange={setStreetOldWardId}
-                  />
-                ) : (
+                  <div className="flex gap-6">
+                    <SelectField
+                      label="Thuộc Phường/Xã"
+                      value={streetOldWardId}
+                      options={streetOldWardOpts}
+                      onChange={setStreetOldWardId}
+                    />
+                    <SelectField
+                      label="Nay thuộc Phường/Xã mới"
+                      value={streetWardId}
+                      options={newWardOpts}
+                      onChange={setStreetWardId}
+                    />
+                  </div>
+                  <TextField label="Tên đường" value={streetName} onChange={setStreetName} />
                   <TextField label="Tên viết tắt" value={streetShortName} onChange={setStreetShortName} />
-                )}
-              </div>
+                </>
+              )}
             </div>
           ) : mode === "new" || initialWard || (mode === "old" && createKind === "ward") ? (
             <>
@@ -568,20 +576,24 @@ export default function AddressModal({
               {districts.map((d, di) => (
                 <div
                   key={d.key}
-                  className="flex flex-col gap-3 border-b border-[#e5e5e5] pb-4"
+                  className="flex flex-col gap-6"
                 >
-                  <div className="flex items-center gap-2">
-                    <p className="flex-1 py-2 text-[13px] font-medium text-[#0a0a0a]">
-                      Quận/Huyện<span className="text-[#dc3e42]">*</span>: <span className="text-[#0588f0]">#{di + 1}</span>
+                  <div className="flex h-12 items-center gap-2 border-b border-[#a1a1aa]">
+                    <p className="flex flex-1 items-center gap-2 text-base text-[#1e40af]">
+                      Quận/Huyện<span className="text-[#dc3e42]">*</span>:
+                      <span className="flex h-6 items-center rounded-lg bg-[#eff6ff] px-2 text-sm text-[#3b82f6]">
+                        #{di + 1}
+                      </span>
                     </p>
                     <button
                       type="button"
                       onClick={() => setDistricts((l) => l.filter((x) => x.key !== d.key))}
                       aria-label={`Xóa Quận/Huyện ${di + 1}`}
                       title="Xóa Quận/Huyện"
-                      className="rounded p-1 text-[#525252] hover:bg-[#fff1f0] hover:text-[#dc3e42] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30"
+                      className="inline-flex h-8 items-center gap-1 rounded-[10px] border border-[#e5e5e5] bg-white px-3 text-sm text-[#dc3e42] hover:bg-[#fff1f0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#dc3e42]/30"
                     >
                       <Trash2 size={16} aria-hidden="true" />
+                      Xoá
                     </button>
                     <button
                       type="button"
@@ -590,13 +602,13 @@ export default function AddressModal({
                           x.key === d.key ? { ...x, wards: [...x.wards, newWard()] } : x
                         ))
                       }
-                      className="inline-flex items-center gap-1 rounded-md bg-[#0588f0] px-2.5 py-1 text-[12px] font-medium text-white"
+                      className="inline-flex h-8 items-center gap-1 rounded-lg bg-[#0688f0] px-3 text-sm font-medium text-white"
                     >
                       <Plus size={14} />
                       Thêm Phường/Xã
                     </button>
                   </div>
-                  <div className="flex pt-1">
+                  <div className="flex">
                     <TextField
                       label="Quận/Huyện"
                       value={d.name}
@@ -639,11 +651,11 @@ export default function AddressModal({
           )}
         </div>
 
-        <div className="flex items-center justify-end gap-2 border-t border-[#e5e5e5] bg-white px-5 py-3">
+        <div className="flex items-center justify-end gap-2 border-t border-[#e5e5e5] bg-white px-6 py-4">
           <button
             type="button"
             onClick={close}
-            className="rounded-[10px] border border-[#e5e5e5] bg-white px-4 py-1.5 text-sm font-medium text-[#0a0a0a]"
+            className="rounded-[10px] border border-[#e5e5e5] bg-white px-4 py-2 text-base font-medium text-[#0a0a0a]"
           >
             Đóng
           </button>
@@ -651,7 +663,7 @@ export default function AddressModal({
             type="button"
             disabled={saving}
             onClick={save}
-            className="rounded-[10px] bg-[#0588f0] px-4 py-1.5 text-sm font-medium text-white disabled:opacity-60"
+            className="rounded-[10px] bg-[#0688f0] px-4 py-2 text-base font-medium text-white disabled:opacity-60"
           >
             {saving ? "Đang lưu..." : intent === "edit" ? "Cập nhật thay đổi" : "Lưu thông tin"}
           </button>

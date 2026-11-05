@@ -5,7 +5,15 @@ import "leaflet/dist/leaflet.css";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
-import { MapContainer, Marker, Polygon, Popup, useMap } from "react-leaflet";
+import {
+  CircleMarker,
+  MapContainer,
+  Marker,
+  Polygon,
+  Popup,
+  Tooltip,
+  useMap,
+} from "react-leaflet";
 
 import { IPropAdminMap } from "@/lib/interfaces/Property/IProp";
 import { hasMapCoordinates } from "@/lib/core/utils/map-coordinates";
@@ -36,6 +44,40 @@ type Props = {
 };
 
 const hcmPosition = { lat: 10.845, lng: 106.675 };
+
+type MapPosition = [number, number];
+
+const vietnameseArchipelagoes: {
+  name: string;
+  islands: MapPosition[];
+  labelAt: MapPosition;
+}[] = [
+  {
+    name: "Quần đảo Hoàng Sa",
+    islands: [
+      [16.83, 112.33],
+      [16.67, 112.72],
+      [16.54, 111.6],
+      [16.47, 111.73],
+      [15.78, 111.2],
+    ],
+    labelAt: [16.83, 112.33],
+  },
+  {
+    name: "Quần đảo Trường Sa",
+    islands: [
+      [11.43, 114.36],
+      [11.05, 114.28],
+      [10.38, 114.37],
+      [10.18, 114.37],
+      [9.89, 114.33],
+      [8.86, 112.22],
+      [8.64, 111.92],
+      [7.89, 112.92],
+    ],
+    labelAt: [11.05, 114.28],
+  },
+];
 
 function MyComponent({
   data,
@@ -226,6 +268,33 @@ function MyComponent({
           },
         }}
       />
+      {vietnameseArchipelagoes.map(({ name, islands, labelAt }) =>
+        islands.map((position) => (
+          <CircleMarker
+            key={`${name}-${position[0]}-${position[1]}`}
+            center={position}
+            radius={4}
+            pathOptions={{
+              color: "#075b68",
+              weight: 1.5,
+              fillColor: "#13b7c5",
+              fillOpacity: 0.95,
+            }}
+          >
+            {position[0] === labelAt[0] && position[1] === labelAt[1] && (
+              <Tooltip
+                permanent
+                direction="right"
+                offset={[8, 0]}
+                opacity={1}
+                className="admin-map-archipelago-label"
+              >
+                {name}
+              </Tooltip>
+            )}
+          </CircleMarker>
+        )),
+      )}
       {markers.length > 0 && (
         <MarkerClusterGroup
           showCoverageOnHover={false}

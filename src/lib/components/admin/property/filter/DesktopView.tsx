@@ -2,7 +2,16 @@ import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Select as LucideSelect } from "@/lib/components/antd-lucide";
 import {Button, Checkbox, Flex, Form, FormInstance, Input, Segmented, type SelectProps} from "antd";
 
-import { ListFilterPlus, RotateCcw, X, SlidersHorizontal, RotateCw, Search } from "lucide-react";
+import {
+  Check,
+  ListFilterPlus,
+  RefreshCw,
+  RotateCcw,
+  X,
+  SlidersHorizontal,
+  RotateCw,
+  Search,
+} from "lucide-react";
 import { useState } from "react";
 import { useAdminContext } from "@/lib/stored";
 import {
@@ -81,9 +90,19 @@ export const DesktopView = ({
       dynamicInset: false,
     },
   };
+  const propertyCustomerDropdownPlacements: SelectProps["builtinPlacements"] = {
+    bottomLeft: {
+      ...customerDropdownPlacements.bottomLeft,
+      offset: [1, 7],
+    },
+  };
 
   return (
-    <Flex vertical gap={16} className="property-filter-card">
+    <Flex
+      vertical
+      gap={16}
+      className={`property-filter-card ${mapMode ? "property-filter-map-card" : "property-filter-list-card"}`}
+    >
       {HIDDEN_FIELDS.filter((e) => e !== "TransType").map((e) => (
         <Form.Item key={e} name={e} hidden>
           <Input />
@@ -165,11 +184,6 @@ export const DesktopView = ({
           htmlType="submit"
           icon={<Search size={16} />}
           className="property-filter-search-btn"
-          style={{
-            backgroundColor: "#0588f0",
-            borderColor: "#0588f0",
-            color: "#fff",
-          }}
         >
           Tìm kiếm
         </Button>
@@ -178,11 +192,6 @@ export const DesktopView = ({
           htmlType="button"
           icon={mapMode ? <RotateCcw size={16} /> : <RotateCw size={16} />}
           className="property-filter-reset-btn"
-          style={{
-            backgroundColor: "#fff",
-            borderColor: "#0588f0",
-            color: "#0588f0",
-          }}
           onClick={handleRefresh}
           aria-label="Làm mới bộ lọc"
         />
@@ -240,11 +249,6 @@ export const DesktopView = ({
           className={`property-filter-more-btn ${mapMode && hasAdvancedFilters(model) ? "is-active" : ""} ${moreOpen ? "is-open" : ""}`}
           aria-expanded={moreOpen}
           aria-haspopup="dialog"
-          style={{
-            backgroundColor: "#fff",
-            borderColor: "#0588f0",
-            color: "#0588f0",
-          }}
           onClick={() => setMoreOpen(true)}
         >
           Lọc thêm
@@ -276,7 +280,11 @@ export const DesktopView = ({
                 setMoreOpen(false);
               }}
             >
-              <span className="property-drawer-reset-icon">↺</span>
+              <RefreshCw
+                className="property-drawer-reset-icon"
+                size={16}
+                strokeWidth={2}
+              />
               Đặt lại
             </Button>
             <Button
@@ -288,27 +296,31 @@ export const DesktopView = ({
                 setMoreOpen(false);
               }}
             >
-              <span className="property-drawer-check-icon">✓</span>
+              <Check
+                className="property-drawer-check-icon"
+                size={16}
+                strokeWidth={2}
+              />
               Áp dụng
             </Button>
           </div>
         }
         styles={{
           header: {
-            borderBottom: "1px solid #EEF2F6",
-            padding: "18px 20px 14px",
+            borderBottom: "1px solid #e5e5e5",
+            padding: "16px 24px",
             background: "#fff",
           },
-          body: { background: "#fff", padding: "12px 16px" },
+          body: { background: "#fff", padding: "24px 16px" },
           footer: {
-            borderTop: "1px solid #EEF2F6",
-            padding: "12px 16px 16px",
+            borderTop: "1px solid #e5e5e5",
+            padding: "16px 24px",
             background: "#fff",
           },
           content: {
             borderRadius: "16px",
             overflow: "hidden",
-            padding: mapMode ? 0 : undefined,
+            padding: 0,
           },
         }}
       >
@@ -400,11 +412,19 @@ export const DesktopView = ({
                 <Form.Item name="CustomerType" noStyle>
                   <CustomerTypeSelect
                     placeholder="Chọn"
-                    placement={mapMode ? "bottomLeft" : undefined}
-                    listHeight={mapMode ? 240 : undefined}
-                    popupClassName={mapMode ? "map-filter-customer-dropdown" : undefined}
-                    builtinPlacements={mapMode ? customerDropdownPlacements : undefined}
-                    options={mapMode ? customerTypeOptions : undefined}
+                    placement="bottomLeft"
+                    listHeight={mapMode ? 240 : 360}
+                    popupClassName={
+                      mapMode
+                        ? "map-filter-customer-dropdown"
+                        : "property-filter-customer-dropdown"
+                    }
+                    builtinPlacements={
+                      mapMode
+                        ? customerDropdownPlacements
+                        : propertyCustomerDropdownPlacements
+                    }
+                    options={customerTypeOptions}
                   />
                 </Form.Item>
               </FloatingField>

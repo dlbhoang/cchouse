@@ -69,6 +69,10 @@ const NewsTypeTabs = ({
 
   const { data } = newsTypeApi.useGet({ pageIndex: 1, pageSize: 50 });
   const tagsData = data?.data ?? [];
+  const allTagIds = tagsData.map((item) => item.Id?.toString() ?? "").filter(Boolean);
+  const isAllSelected =
+    selectedTags.length === 0 ||
+    (allTagIds.length > 0 && allTagIds.every((tagId) => selectedTags.includes(tagId)));
 
   // Dùng thẳng NewsCount backend đã tính đúng qua subquery — không tự đếm lại nữa
   const allCount = tagsData.reduce((sum, item) => sum + (item.NewsCount ?? 0), 0);
@@ -92,10 +96,12 @@ const NewsTypeTabs = ({
     const nextSelectedTags = isSelected
       ? selectedTags.filter((tag) => tag !== tagId)
       : [...selectedTags, tagId];
+    const hasSelectedAllTags =
+      allTagIds.length > 0 && allTagIds.every((id) => nextSelectedTags.includes(id));
 
     onSubmit({
       ...opts,
-      NewsTypeIds: nextSelectedTags.join(","),
+      NewsTypeIds: hasSelectedAllTags ? "" : nextSelectedTags.join(","),
       pageIndex: 1,
     });
   };
@@ -114,7 +120,7 @@ const NewsTypeTabs = ({
       <div className="news-type-tabs-list">
         <button
           type="button"
-          className={`news-type-tab ${selectedTags.length === 0 ? "active" : ""}`}
+          className={`news-type-tab ${isAllSelected ? "active" : ""}`}
           onClick={handleSelectAll}
         >
           Tất cả ({allCount})
@@ -126,7 +132,7 @@ const NewsTypeTabs = ({
               key={item.Id}
               type="button"
               className={`news-type-tab ${
-                selectedTags.includes(tagId) ? "active" : ""
+                !isAllSelected && selectedTags.includes(tagId) ? "active" : ""
               }`}
               onClick={() => handleChange(tagId)}
             >
