@@ -20,6 +20,7 @@ import HistoryModel from "../modal/historyModal";
 import columns from "./columns";
 import MobilePropertyList from "./mobile-property-list";
 import "./property-table.css";
+import AdminEmptyState from "@/lib/components/shared/AdminEmptyState";
 
 type Props = {
   isPropCart?: boolean;
@@ -47,7 +48,7 @@ export const PropertyTable = ({
   onOpenAdd,
   onTotalChange,
 }: Props) => {
-  const { data, isLoading, isValidating } =
+  const { data, isLoading, isValidating, error } =
     isPropCart === true
       ? userAdminApi.useGetSaveProps(searchOptions.UserAdminId ?? 0)
       : propertyApi.useGet(searchOptions);
@@ -115,7 +116,18 @@ export const PropertyTable = ({
       <div
         className={`property-table-shell ${isMobile && !isPropCart ? "is-mobile-list" : ""}`}
       >
-        {isMobile && !isPropCart ? (
+        {!isPropCart && !isLoading && !isValidating && !error && Array.isArray(data?.data) && data.data.length === 0 ? (
+          <AdminEmptyState
+            className="property-empty-state"
+            message="Không có kết quả nào phù hợp"
+            illustration={
+              <div className="property-empty-illustration">
+                <img src="/assets/admin/property-empty-documents.svg" alt="" />
+                <img src="/assets/admin/property-empty-search.svg" alt="" />
+              </div>
+            }
+          />
+        ) : isMobile && !isPropCart ? (
           <MobilePropertyList
             data={Array.isArray(data?.data) ? data.data : []}
             loading={isLoading || isValidating}
@@ -152,6 +164,7 @@ export const PropertyTable = ({
         ) : isPropCart ? (
           <TableBase
             bordered={false}
+            tableLayout="fixed"
             loading={isLoading || isValidating}
             total={Array.isArray(data?.data) ? data.data.length : 0}
             searchOptions={searchOptions}
@@ -160,19 +173,20 @@ export const PropertyTable = ({
             )}
             cols={cols}
             useCustomPagination
-            scrollY={!isPropCart ? "min(440px, calc(100vh - 435px))" : undefined}
+            scrollY={!isPropCart ? "max(240px, calc(100dvh - 500px))" : undefined}
             onPageIndexChange={onPageIndexChange}
           />
         ) : (
           <TableBase
             bordered={false}
+            tableLayout="fixed"
             loading={isLoading || isValidating}
             total={data?.totalRow || 0}
             searchOptions={searchOptions}
             data={data?.data || []}
             cols={cols}
             useCustomPagination
-            scrollY={!isPropCart ? "min(440px, calc(100vh - 435px))" : undefined}
+            scrollY={!isPropCart ? "max(240px, calc(100dvh - 500px))" : undefined}
             onPageIndexChange={onPageIndexChange}
           />
         )}

@@ -1,4 +1,5 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import Image from "next/image";
 import {Button, ConfigProvider, InputRef, Typography} from "antd";
 import { CirclePlus, MoreVertical, Plus, X } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -7,6 +8,7 @@ import useSWR, { mutate } from "swr";
 
 import MyBreadcrumb from "@/lib/components/shared/MyBreadcrumb";
 import TableBase from "@/lib/components/shared/TableBase";
+import CustomPagination from "@/lib/components/shared/TableBase/CustomPagination";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { INewsOpts } from "@/lib/interfaces/filter/ISearchOptions";
@@ -19,24 +21,14 @@ import { NewsTypeTable } from "../../newsType/table";
 import AddEditModal from "../../newsType/modal";
 import NewsFilter from "../filter";
 import { useNewsColumns } from "../table/columns";
+import AdminEmptyState from "@/lib/components/shared/AdminEmptyState";
 
 const NewsEmptyState = () => (
-  <div className="news-empty-state" role="status" aria-live="polite">
-    <svg className="news-empty-state-icon" viewBox="0 0 72 72" aria-hidden="true">
-      <circle cx="36" cy="36" r="32" fill="#F2EFFF" />
-      <path
-        d="M24 18h17l10 10v25a3 3 0 0 1-3 3H24a3 3 0 0 1-3-3V21a3 3 0 0 1 3-3Z"
-        fill="#fff"
-        stroke="#D8D2F5"
-        strokeWidth="2"
-      />
-      <path d="M41 18v10h10" fill="none" stroke="#D8D2F5" strokeWidth="2" />
-      <path d="M28 37h12M28 42h9" stroke="#C7C0E9" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="48" cy="47" r="10" fill="#7668E8" />
-      <path d="m45 44 6 6m0-6-6 6" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-    <span>Không tìm thấy dữ liệu</span>
-  </div>
+  <AdminEmptyState
+    className="news-empty-state"
+    message="Không tìm thấy dữ liệu"
+    illustration={<Image className="news-empty-state-icon" src="/assets/admin/news-empty-figma.svg" width={128} height={128} alt="" />}
+  />
 );
 
 const NewsErrorState = ({ onRetry }: { onRetry: () => void }) => (
@@ -121,6 +113,7 @@ const NewsTypeTabs = ({
         <button
           type="button"
           className={`news-type-tab ${isAllSelected ? "active" : ""}`}
+          aria-pressed={isAllSelected}
           onClick={handleSelectAll}
         >
           Tất cả ({allCount})
@@ -131,6 +124,7 @@ const NewsTypeTabs = ({
             <button
               key={item.Id}
               type="button"
+              aria-pressed={!isAllSelected && selectedTags.includes(tagId)}
               className={`news-type-tab ${
                 !isAllSelected && selectedTags.includes(tagId) ? "active" : ""
               }`}
@@ -344,6 +338,7 @@ const NewsTypeTabs = ({
       Button: { defaultHoverBg: "#ffffff", defaultHoverBorderColor: "#aeb4bf", defaultHoverColor: "#0a0a0a" },
     } }}>
     <div className="news-listing">
+      <div className="news-page-heading">
       <MyBreadcrumb
         items={[{ url: AppRoutes.config.url, name: "Quản lý nội dung" }]}
         current={AppRoutes.news.name}
@@ -366,6 +361,7 @@ const NewsTypeTabs = ({
           QUẢN LÍ TIN TỨC
         </Typography.Title>
 
+      </div>
       </div>
 
       {/* Filter + nút Viết bài cùng một hàng */}
@@ -392,8 +388,21 @@ const NewsTypeTabs = ({
             data={newsItems}
             cols={newsColumns}
             onPageIndexChange={handlePageIndexChange}
-            useCustomPagination
-            customPaginationLabels={{
+            showPagination={false}
+            scrollY={627}
+          />
+        )}
+      </div>
+      </section>
+
+      {!isEmpty && !hasLoadError && (
+        <div className="news-pagination">
+          <CustomPagination
+            total={countData?.data ?? data?.totalRow ?? 0}
+            currentPage={Number(opts.pageIndex ?? 1)}
+            pageSize={Number(opts.pageSize ?? 10)}
+            onPageChange={handlePageIndexChange}
+            labels={{
               selectedCount: (selectedCount, total) =>
                 `${selectedCount} of ${total} dòng đã chọn.`,
               pageSize: "Dòng trên trang",
@@ -401,9 +410,8 @@ const NewsTypeTabs = ({
                 `${currentPage} của ${totalPages} Trang`,
             }}
           />
-        )}
-      </div>
-      </section>
+        </div>
+      )}
 
       {previewNews && (
         <NewPreview

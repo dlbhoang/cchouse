@@ -1,0 +1,276 @@
+{
+  "tolerance_px": 2,
+  "scope": "Selected desktop component rectangles only, not whole-screen fidelity; content excluded",
+  "checks": [
+    {
+      "route": "property",
+      "component": "filter",
+      "actual": [
+        108,
+        110,
+        1300,
+        170
+      ],
+      "figma": [
+        108,
+        110,
+        1300,
+        170
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "property",
+      "component": "table",
+      "actual": [
+        108,
+        380,
+        1300,
+        628
+      ],
+      "figma": [
+        108,
+        380,
+        1300,
+        628
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "property",
+      "component": "footer",
+      "actual": [
+        108,
+        948,
+        1300,
+        60
+      ],
+      "figma": [
+        108,
+        948,
+        1300,
+        60
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "news",
+      "component": "heading",
+      "actual": [
+        84,
+        94,
+        1340,
+        64
+      ],
+      "figma": [
+        84,
+        94,
+        1340,
+        64
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "news",
+      "component": "filter",
+      "actual": [
+        84,
+        168,
+        1340,
+        72
+      ],
+      "figma": [
+        84,
+        168,
+        1340,
+        72
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "news",
+      "component": "tabs",
+      "actual": [
+        84,
+        250,
+        1340,
+        72
+      ],
+      "figma": [
+        84,
+        250,
+        1340,
+        72
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "news",
+      "component": "table",
+      "actual": [
+        100,
+        338,
+        1308,
+        671
+      ],
+      "figma": [
+        100,
+        338,
+        1308,
+        671
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "news",
+      "component": "pagination",
+      "actual": [
+        84,
+        1035,
+        1340,
+        60
+      ],
+      "figma": [
+        84,
+        1035,
+        1340,
+        60
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "agency",
+      "component": "search",
+      "actual": [
+        92,
+        94,
+        1332,
+        88
+      ],
+      "figma": [
+        92,
+        94,
+        1332,
+        88
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "agency",
+      "component": "card1",
+      "actual": [
+        120,
+        498,
+        1276,
+        102
+      ],
+      "figma": [
+        120,
+        498,
+        1276,
+        102
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "agency",
+      "component": "card2",
+      "actual": [
+        120,
+        616,
+        1276,
+        102
+      ],
+      "figma": [
+        120,
+        616,
+        1276,
+        102
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "agency",
+      "component": "card3",
+      "actual": [
+        120,
+        734,
+        1276,
+        102
+      ],
+      "figma": [
+        120,
+        734,
+        1276,
+        102
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "address",
+      "component": "heading",
+      "actual": [
+        92,
+        118,
+        373.671875,
+        32
+      ],
+      "figma": [
+        92,
+        118,
+        372,
+        32
+      ],
+      "max_error_px": 1.672,
+      "within_2px": true
+    },
+    {
+      "route": "address",
+      "component": "sidebar-item",
+      "actual": [
+        16,
+        78,
+        40,
+        36
+      ],
+      "figma": [
+        16,
+        78,
+        40,
+        36
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    },
+    {
+      "route": "address",
+      "component": "sidebar-icon",
+      "actual": [
+        26,
+        86,
+        20,
+        20
+      ],
+      "figma": [
+        26,
+        86,
+        20,
+        20
+      ],
+      "max_error_px": 0,
+      "within_2px": true
+    }
+  ]
+}

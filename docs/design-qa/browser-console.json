@@ -1,0 +1,94 @@
+[
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead."
+  },
+  {
+    "level": "warn",
+    "message": "Image with src \"http://localhost:3003/logo/logo-w-slogan.jpg\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead."
+  },
+  {
+    "level": "warn",
+    "message": "Image with src \"http://localhost:3003/logo/logo-w-slogan.jpg\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: DatePicker] `popupClassName` is deprecated. Please use `classNames.popup.root` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: DatePicker] `clearIcon` is deprecated. Please use `allowClear={{ clearIcon: React.ReactNode }}` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: `clearIcon` will be removed in future. Please use `allowClear` instead."
+  },
+  {
+    "level": "warn",
+    "message": "Image with src \"/logo/logo-w-slogan.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the \"priority\" property if this image is above the fold."
+  },
+  {
+    "level": "error",
+    "message": "Warning: Warning: There may be circular references"
+  },
+  {
+    "level": "warn",
+    "message": "TinyMCE is running in evaluation mode. Provide a valid license key or add license_key: 'gpl' to the init config to agree to the open source license terms. Read more at https://www.tiny.cloud/license-key/"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper "
+  },
+  {
+    "level": "warn",
+    "message": "Image with src \"http://localhost:3003/logo/logo-w-slogan.jpg\" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: \"auto\"' or 'height: \"auto\"' to maintain the aspect ratio."
+  },
+  {
+    "level": "warn",
+    "message": "Image with src \"/logo/logo-w-slogan.jpg\" was detected as the Largest Contentful Paint (LCP). Please add the \"priority\" property if this image is above the fold."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `popupClassName` is deprecated. Please use `classNames.popup.root` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `dropdownMatchSelectWidth` is deprecated. Please use `popupMatchSelectWidth` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `dropdownRender` is deprecated. Please use `popupRender` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `onDropdownVisibleChange` is deprecated. Please use `onOpenChange` instead."
+  },
+  {
+    "level": "error",
+    "message": "Warning: `onSearch` should work with `showSearch` instead of use alone."
+  }
+]

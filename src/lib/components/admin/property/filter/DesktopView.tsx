@@ -1,6 +1,6 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Select as LucideSelect } from "@/lib/components/antd-lucide";
-import {Button, Checkbox, Flex, Form, FormInstance, Input, Segmented, type SelectProps} from "antd";
+import {Button, Checkbox, Flex, Form, FormInstance, Input, Segmented, Tooltip, type SelectProps} from "antd";
 
 import {
   Check,
@@ -36,7 +36,7 @@ import {
 } from "@/lib/components/shared/MySelect";
 import { ETransType } from "@/lib/core/enum";
 import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import { hasAdvancedFilters } from "./activeFilters";
+import { additionalFilterSummary, hasAdvancedFilters } from "./activeFilters";
 import { HIDDEN_FIELDS } from "./config";
 import "./property-filter.css";
 
@@ -54,6 +54,13 @@ export const DesktopView = ({
   mapMode = false,
 }: DesktopViewProps) => {
   const [moreOpen, setMoreOpen] = useState(false);
+  const { enumList, listUserAdmin } = useAdminContext();
+  const additionalFilters = additionalFilterSummary(model, {
+    Direction: Object.fromEntries(enumList.Direction.map((item) => [item.Value, item.Name])),
+    Legal: Object.fromEntries(enumList.Law.map((item) => [item.Value, item.Name])),
+    CustomerType: Object.fromEntries(enumList.CustomerType.map((item) => [item.Value, item.Name])),
+    UserAdminId: Object.fromEntries(listUserAdmin.map((item) => [item.Id, item.Name])),
+  });
   const transTypeValue = Form.useWatch("TransType", form) ?? ETransType.sell;
   const directionOptions = useAdminContext((state) => state.enumList.Direction)
     .filter((item) => item.Name.trim().toLocaleLowerCase("vi") !== "tất cả")
@@ -243,16 +250,20 @@ export const DesktopView = ({
           </>
         )}
 
+        <Tooltip trigger={["hover", "focus"]} title={additionalFilters.length ? <ul className="property-filter-summary">{additionalFilters.map((item) => <li key={item}>{item}</li>)}</ul> : undefined}>
         <Button
           htmlType="button"
           icon={mapMode ? <ListFilterPlus size={16} /> : <SlidersHorizontal size={16} />}
           className={`property-filter-more-btn ${mapMode && hasAdvancedFilters(model) ? "is-active" : ""} ${moreOpen ? "is-open" : ""}`}
           aria-expanded={moreOpen}
           aria-haspopup="dialog"
+          aria-label={additionalFilters.length ? `Lọc thêm, ${additionalFilters.length} bộ lọc đã chọn` : "Lọc thêm"}
           onClick={() => setMoreOpen(true)}
         >
           Lọc thêm
+          {additionalFilters.length > 0 && <span className="property-more-count">{additionalFilters.length}</span>}
         </Button>
+        </Tooltip>
       </div>
 
       <LucideModal

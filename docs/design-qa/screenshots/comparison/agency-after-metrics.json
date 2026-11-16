@@ -1,0 +1,8 @@
+{
+  "width": 1440,
+  "height": 946,
+  "reference_top_crop": 78,
+  "mean_absolute_rgb_error_0_255": 7.9187424144546235,
+  "pixels_with_any_channel_error_over_16_percent": 9.084595959595958,
+  "normalization": "reference crop only; original screenshots unchanged"
+}

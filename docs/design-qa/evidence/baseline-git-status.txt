@@ -1,0 +1,13 @@
+ M src/components/layouts/index.tsx
+ M src/lib/components/AntProvider.tsx
+ M src/lib/components/admin/news/filter/index.tsx
+ M src/lib/components/admin/news/listing/index.tsx
+ M src/lib/components/admin/property/table/index.tsx
+ M src/lib/pages/config/address/address-manager/index.tsx
+ M src/lib/pages/config/agency-manager/index.tsx
+?? .github/
+?? docs/design-qa/
+?? public/assets/admin/
+?? src/lib/components/shared/AdminEmptyState.tsx
+?? src/lib/core/configs/admin-design.ts
+?? src/lib/styles/admin-design.css

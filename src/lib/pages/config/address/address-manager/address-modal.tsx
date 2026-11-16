@@ -158,7 +158,7 @@ function WardGroup({
 }) {
   return (
     <div className="flex flex-col gap-3 rounded-lg border border-[#e5e5e5] bg-white px-6 py-3">
-      <div className="flex items-center gap-3">
+      <div className="flex h-10 items-center gap-3">
         <p className="flex flex-1 items-center gap-2 text-sm text-[#0a0a0a]">
           Phường/Xã: <span className="text-xs text-[#dc3e42]">*</span>
           <span className="flex h-6 items-center rounded-lg bg-[#eff6ff] px-2 text-sm text-[#3b82f6]">
@@ -174,7 +174,7 @@ function WardGroup({
           <TooltipContent side="top">Xóa Phường/Xã</TooltipContent>
         </Tooltip>
       </div>
-      <div className="flex gap-3">
+      <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
         <TextField label="Phường/Xã" value={ward.name} onChange={(name) => onChange({ ...ward, name })} />
         {mode === "new" ? (
           <SelectField
@@ -456,9 +456,9 @@ export default function AddressModal({
     <Dialog open={open} onOpenChange={(o) => !o && close()}>
       <DialogContent
         overlayClassName="bg-black/30"
-        className="max-h-[90vh] gap-0 overflow-hidden rounded-2xl p-0 sm:max-w-[768px] [&>button:last-of-type]:right-6 [&>button:last-of-type]:size-6 [&>button:last-of-type>svg]:size-6"
+        className="max-h-[90vh] gap-0 overflow-hidden rounded-2xl border-0 p-0 sm:max-w-[768px] [&>button:last-of-type]:right-6 [&>button:last-of-type]:size-6 [&>button:last-of-type>svg]:size-6"
       >
-        <div className="border-b border-[#f5f5f5] px-6 py-4">
+        <div className="px-6 py-4 shadow-[inset_0_-1px_0_#f5f5f5]">
           <DialogTitle className="text-lg font-bold leading-7 text-[#0a0a0a]">
             {intent === "edit"
               ? createKind === "street" ? "CHỈNH SỬA ĐỊA GIỚI - TÊN ĐƯỜNG" : "CHỈNH SỬA ĐỊA GIỚI"
@@ -651,11 +651,11 @@ export default function AddressModal({
           )}
         </div>
 
-        <div className="flex items-center justify-end gap-2 border-t border-[#e5e5e5] bg-white px-6 py-4">
+        <div className="flex items-center justify-end gap-2 bg-white px-6 py-4 shadow-[inset_0_1px_0_#e5e5e5]">
           <button
             type="button"
             onClick={close}
-            className="rounded-[10px] border border-[#e5e5e5] bg-white px-4 py-2 text-base font-medium text-[#0a0a0a]"
+            className="h-10 rounded-[10px] border border-[#e5e5e5] bg-white px-4 py-2 text-base font-medium leading-6 text-[#0a0a0a]"
           >
             Đóng
           </button>
@@ -663,7 +663,7 @@ export default function AddressModal({
             type="button"
             disabled={saving}
             onClick={save}
-            className="rounded-[10px] bg-[#0688f0] px-4 py-2 text-base font-medium text-white disabled:opacity-60"
+            className="h-10 rounded-[10px] bg-[#0688f0] px-4 py-2 text-base font-medium leading-6 text-white disabled:opacity-60"
           >
             {saving ? "Đang lưu..." : intent === "edit" ? "Cập nhật thay đổi" : "Lưu thông tin"}
           </button>

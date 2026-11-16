@@ -1,0 +1,14 @@
+{
+  "buttons": [
+    {
+      "text": "Đặt lại",
+      "width": 174
+    },
+    {
+      "text": "Áp dụng",
+      "width": 172
+    }
+  ],
+  "scrollWidth": 390,
+  "width": 390
+}

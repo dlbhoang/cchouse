@@ -71,11 +71,11 @@ const PropertyPage = ({ transType }: Props) => {
     StreetId?: string;
   }>();
 
-  const searchOptions = {
+  const searchOptions = useMemo(() => ({
     ...Object.fromEntries(query?.entries() ?? []),
     TransType: transType,
     pageSize: Number(query?.get("pageSize")) || 10,
-  } as any as IPropAdminOpts;
+  } as any as IPropAdminOpts), [query, transType]);
 
   const { data: meta, mutate: mutateMeta } = propertyApi.useGetMeta(
     objToQueryString(searchOptions)

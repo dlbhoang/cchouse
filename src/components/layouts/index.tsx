@@ -32,6 +32,8 @@ import ServerConfigModal from "@/lib/pages/config/server";
 import { Server } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ChangePasswordModal } from "@/lib/components/shared/MyModal/ChangePasswordShadcn";
+import { adminDesignVariables } from "@/lib/core/configs/admin-design";
+import "@/lib/styles/admin-design.css";
 
 const AntProvider = dynamic(() => import("@/lib/components/AntProvider"), {
   ssr: false,
@@ -56,12 +58,12 @@ const getPageLayout = (pathname: string | null) => {
     };
   }
 
-  if (pathname === AppRoutes.news.url) {
+  if ([AppRoutes.news.url, AppRoutes.property.url, AppRoutes.addressManager.url, AppRoutes.agencyManager.url].includes(pathname ?? "")) {
     return {
       isNewsPage: true,
       sidebarStyle: { "--sidebar-width-icon": "68px" } as CSSProperties,
       headerClass: "news-admin-header h-[78px] border-b border-gray-100 bg-white",
-      contentClass: "min-w-0 gap-4 bg-white px-4 pb-4 pt-4 max-md:px-3 max-md:pt-4 max-md:pb-24",
+      contentClass: `admin-design-content min-w-0 gap-4 px-4 pb-4 pt-4 max-md:px-3 max-md:pt-4 max-md:pb-24 ${pathname === AppRoutes.news.url ? "bg-white" : "bg-[#fbfbfd]"}`,
     };
   }
 
@@ -108,10 +110,11 @@ const RootLayout = ({ children, session }: LayoutProps) => {
   }, []);
 
   return (
-    <AntProvider locale={vi_VN}>
+    <AntProvider locale={vi_VN} designTheme={pageLayout.isNewsPage}>
       <SidebarProvider
         defaultOpen={false}
-        style={pageLayout.sidebarStyle}
+        style={pageLayout.isNewsPage ? { ...adminDesignVariables, ...pageLayout.sidebarStyle } : pageLayout.sidebarStyle}
+        className={pageLayout.isNewsPage ? "admin-design-shell" : undefined}
       >
         <AppSidebar isNewsPage={pageLayout.isNewsPage} />
         <SidebarInset
@@ -124,9 +127,9 @@ const RootLayout = ({ children, session }: LayoutProps) => {
           <header
             className={`flex shrink-0 items-center gap-2 z-30 ${pageLayout.headerClass}`}
           >
-            <div className="flex justify-between w-full items-center px-4">
-              <div className="flex gap-2 items-center">
-                <SidebarTrigger className="hidden md:flex -ml-1" />
+            <div className="admin-header-inner flex justify-between w-full items-center px-4">
+              <div className="admin-header-navigation flex gap-2 items-center">
+                <SidebarTrigger className="admin-sidebar-trigger hidden md:flex -ml-1" />
                 <Link
                   href={`${AppRoutes.property.url}?TransType=${ETransType.sell}`}
                   className="flex md:hidden"
@@ -139,7 +142,7 @@ const RootLayout = ({ children, session }: LayoutProps) => {
                     height={30}
                   />
                 </Link>
-                <TopNavigation />
+                <TopNavigation designTheme={pageLayout.isNewsPage} />
               </div>
               {/* <SearchCommand isIconOnly={smallScreen} /> */}
 

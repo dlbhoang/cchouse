@@ -1,14 +1,8 @@
 import { Pagination as LucidePagination } from "@/lib/components/antd-lucide";
-import { Select as LucideSelect } from "@/lib/components/antd-lucide";
 import {ConfigProvider, Table} from "antd";
 import type { ColumnsType } from "antd/es/table";
 import type { TableRowSelection } from "antd/es/table/interface";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-} from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { baseFilter } from "@/lib/core/configs/appConst";
@@ -16,6 +10,7 @@ import { objToQueryString } from "@/lib/core/utils/app-func";
 import { ISearchOptions } from "@/lib/interfaces/filter/ISearchOptions";
 import { IBaseOpts } from "@/lib/types/filter";
 import { SkeletonTable } from "./TableSkeleton";
+import CustomPagination, { type PaginationLabels } from "./CustomPagination";
 
 interface IListData<T> {
   data: T[];
@@ -30,11 +25,8 @@ interface IListData<T> {
   expandedRowRender?: (index: number) => JSX.Element;
   onRowClick?: (record: T) => void;
   useCustomPagination?: boolean;
-  customPaginationLabels?: {
-    selectedCount?: (selectedCount: number, total: number) => string;
-    pageSize?: string;
-    pageCount?: (currentPage: number, totalPages: number) => string;
-  };
+  customPaginationLabels?: PaginationLabels;
+  showPagination?: boolean;
   scrollY?: number | string;
 }
 
@@ -52,6 +44,7 @@ function TableBase<T>({
   useCustomPagination = false,
   customPaginationLabels,
   scrollY,
+  showPagination = true,
   ...props
 }: IListData<T>) {
   const router = useRouter();
@@ -129,85 +122,21 @@ function TableBase<T>({
           }
           onRow={(record: T) => handleRow(record)}
           // eslint-disable-next-line react/no-unstable-nested-components
-          footer={() => {
+          footer={showPagination ? () => {
             const selectedCount = rowSelection?.selectedRowKeys?.length ?? 0;
             const currentPage = Number(searchOptions.pageIndex ?? 1);
             const currentPageSize = Number(
               searchOptions.pageSize ?? baseFilter.pageSize
             );
-            const totalPages = Math.max(
-              1,
-              Math.ceil((total ?? 0) / currentPageSize)
-            );
-            const changePage = (pageIndex: number) => {
-              onPageIndexChange
-                ? onPageIndexChange(pageIndex, currentPageSize)
-                : onDefPageIndexChange(pageIndex, currentPageSize);
-            };
-
             if (useCustomPagination) {
-              return (
-                <div className="table-custom-footer">
-                  <span className="table-selected-count">
-                    {customPaginationLabels?.selectedCount?.(
-                      selectedCount,
-                      total ?? 0
-                    ) ?? `${selectedCount} trên ${total ?? 0} hàng được chọn.`}
-                  </span>
-                  <div className="table-custom-pagination">
-                    <span>{customPaginationLabels?.pageSize ?? "Hàng trên trang"}</span>
-                    <LucideSelect
-                      size="small"
-                      value={currentPageSize}
-                      options={[10, 20, 30, 40, 50].map((pageSize) => ({
-                        label: pageSize,
-                        value: pageSize,
-                      }))}
-                      onChange={(pageSize) =>
-                        onPageIndexChange
-                          ? onPageIndexChange(1, pageSize)
-                          : onDefPageIndexChange(1, pageSize)
-                      }
-                    />
-                    <span>
-                      {customPaginationLabels?.pageCount?.(currentPage, totalPages) ??
-                        `Trang ${currentPage} trong ${totalPages}`}
-                    </span>
-                    <button
-                      type="button"
-                      aria-label="Trang đầu"
-                      disabled={currentPage <= 1}
-                      onClick={() => changePage(1)}
-                    >
-                      <ChevronsLeft size={16} strokeWidth={1.8} />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Trang trước"
-                      disabled={currentPage <= 1}
-                      onClick={() => changePage(currentPage - 1)}
-                    >
-                      <ChevronLeft size={16} strokeWidth={1.8} />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Trang sau"
-                      disabled={currentPage >= totalPages}
-                      onClick={() => changePage(currentPage + 1)}
-                    >
-                      <ChevronRight size={16} strokeWidth={1.8} />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Trang cuối"
-                      disabled={currentPage >= totalPages}
-                      onClick={() => changePage(totalPages)}
-                    >
-                      <ChevronsRight size={16} strokeWidth={1.8} />
-                    </button>
-                  </div>
-                </div>
-              );
+              return <CustomPagination
+                selectedCount={selectedCount}
+                total={total ?? 0}
+                currentPage={currentPage}
+                pageSize={currentPageSize}
+                labels={customPaginationLabels}
+                onPageChange={onPageIndexChange ?? onDefPageIndexChange}
+              />;
             }
 
             return (
@@ -238,7 +167,7 @@ function TableBase<T>({
                 </div>
               </div>
             );
-          }}
+          } : undefined}
         />
       )}
     </ConfigProvider>

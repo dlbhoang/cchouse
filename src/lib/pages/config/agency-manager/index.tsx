@@ -1009,7 +1009,7 @@ export default function AgencyManagerPage() {
   };
 
   return (
-    <div className="flex h-full min-h-0 flex-col gap-5 bg-[#fbfbfd] p-6 max-md:p-3">
+    <div className="agency-manager-page flex h-full min-h-0 flex-col gap-5 bg-[#fbfbfd]">
       <div className="agency-manager-search-bar flex flex-wrap items-center gap-4 rounded-lg border border-[#fafafa] bg-white px-4 py-6">
         <div className="agency-manager-search-filters flex min-w-0 flex-1 flex-wrap items-center gap-1">
           <div className="w-full shrink-0 sm:w-[300px]">
@@ -1100,7 +1100,7 @@ export default function AgencyManagerPage() {
           </Button>
         </div>
       </div>
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="agency-manager-title-bar flex flex-wrap items-center justify-between gap-3">
         <h1 className="m-0 text-2xl font-bold leading-8 text-neutral-950">
           QUẢN LÝ CƠ QUAN HÀNH CHÍNH
         </h1>
@@ -1117,7 +1117,7 @@ export default function AgencyManagerPage() {
         <div className="flex h-[60px] shrink-0 items-center border-b border-neutral-200 bg-[#dbeafe] px-4 text-lg font-bold leading-7 uppercase text-neutral-900">
           Danh mục cơ quan hành chính
         </div>
-        <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
+        <div className="agency-manager-body flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto">
           <div className="relative">
             <span className="pointer-events-none absolute -top-2 left-3 z-10 bg-white px-1 text-xs leading-4 text-neutral-500">
               Danh mục cơ quan hành chính
@@ -1139,8 +1139,8 @@ export default function AgencyManagerPage() {
             />
           </div>
 
-          <div className="flex min-h-0 flex-col gap-3">
-            <div className="border-b border-neutral-200 pb-3">
+          <div className="agency-manager-results flex min-h-0 flex-col gap-6 p-3">
+            <div className="border-b border-neutral-200 pb-2">
               <h2 className="text-base font-semibold leading-6">
                 Danh sách{" "}
                 {agencyTypeFilter === "all"
@@ -1148,7 +1148,7 @@ export default function AgencyManagerPage() {
                   : agencyTypeFilter}{" "}
                 ({agencyCount})
               </h2>
-              <p className="mt-1 text-xs text-neutral-500">
+              <p className="mt-[3px] text-xs leading-4 text-neutral-500">
                 Phạm vi áp dụng:{" "}
                 {areaScopeLabel}
               </p>
@@ -1169,7 +1169,7 @@ export default function AgencyManagerPage() {
                 </Button>
               </div>
             ) : (
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-4">
                 {agencies.map((item, index) => {
                   const legacyAddress =
                     convertAgencyAddressToOld(
@@ -1198,10 +1198,11 @@ export default function AgencyManagerPage() {
                   return (
                     <article
                       key={`${item.name}-${item.address}-${index}`}
-                      className="flex items-start justify-between gap-4 rounded-lg border border-neutral-200 bg-white p-3 transition-colors hover:bg-neutral-50 sm:p-4"
+                      className="agency-manager-card flex flex-col gap-3 rounded-lg bg-white p-3 shadow-[inset_0_0_0_1px_#e5e5e5] transition-colors hover:bg-neutral-50 sm:px-4 sm:py-3.5"
                     >
-                      <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
+                      <div className="flex items-start justify-between gap-2.5">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-start gap-4">
                           <h3 className="text-sm font-semibold text-neutral-900">
                             {agencyDisplayName(item.name)}
                           </h3>
@@ -1216,22 +1217,17 @@ export default function AgencyManagerPage() {
                               : "Hoạt động"}
                           </span>
                         </div>
-                        <p className="mt-1.5 text-xs leading-5 text-neutral-500">
+                        <p className="mt-1 text-sm leading-5 text-neutral-500">
                           Địa chỉ: {currentAddress}
                           {previousAddress ? ` (${previousAddress})` : ""}
                         </p>
-                        {updatedAt && (
-                          <p className="mt-0.5 text-xs leading-4 text-neutral-500">
-                            Cập nhật: {updatedAt}
-                          </p>
-                        )}
                       </div>
                       <div className="flex shrink-0 gap-2">
                         <Button
                           variant="outline"
                           size="icon"
                           aria-label="Sửa cơ quan"
-                          className="size-8 rounded-md"
+                          className="size-8 rounded-[10px]"
                           onClick={() => openEditor(item)}
                         >
                           <Pencil size={14} />
@@ -1240,12 +1236,18 @@ export default function AgencyManagerPage() {
                           variant="outline"
                           size="icon"
                           aria-label="Xóa cơ quan"
-                          className="size-8 rounded-md text-red-600"
+                          className="size-8 rounded-[10px] text-red-600"
                           onClick={() => setDeleteTarget(item)}
                         >
                           <Trash2 size={14} />
                         </Button>
                       </div>
+                      </div>
+                      {updatedAt && (
+                        <p className="text-xs leading-4 text-neutral-500">
+                          Cập nhật: {updatedAt}
+                        </p>
+                      )}
                     </article>
                   );
                 })}
@@ -1268,7 +1270,7 @@ export default function AgencyManagerPage() {
           body: { maxHeight: "90vh", overflowY: "auto", padding: 0 },
         }}
       >
-        <div className="border-b border-[#f5f5f5] px-6 py-4">
+        <div className="px-6 py-4 shadow-[inset_0_-1px_0_#f5f5f5]">
           <h2 className="text-lg font-bold leading-7">
             {editing ? "SỬA CƠ QUAN HÀNH CHÍNH" : "THÊM MỚI CƠ QUAN HÀNH CHÍNH"}
           </h2>
@@ -1513,7 +1515,7 @@ export default function AgencyManagerPage() {
             </div>
           </div>
         </div>
-        <footer className="flex justify-end gap-2 border-t border-neutral-200 px-6 py-4">
+        <footer className="flex justify-end gap-2 px-6 py-4 shadow-[inset_0_1px_0_#e5e5e5]">
           <Button
             variant="outline"
             onClick={() => setDialogOpen(false)}

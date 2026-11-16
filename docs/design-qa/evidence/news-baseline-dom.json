@@ -1,0 +1,179 @@
+{
+  "nodes": {
+    "breadcrumb": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px solid oklch(0.92 0.004 286.32)",
+      "borderRadius": "0px",
+      "box": [
+        84,
+        94,
+        1340,
+        24
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "letterSpacing": "normal",
+      "lineHeight": "24px",
+      "padding": "0px",
+      "selector": ".news-listing .ant-breadcrumb"
+    },
+    "create": {
+      "background": "rgb(5, 136, 240)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "8px",
+      "box": [
+        1296.359375,
+        186,
+        111.640625,
+        40
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "500",
+      "gap": "8px",
+      "letterSpacing": "normal",
+      "lineHeight": "24px",
+      "padding": "0px 16px",
+      "selector": ".news-filter-create-btn"
+    },
+    "filter": {
+      "background": "rgb(255, 255, 255)",
+      "border": "0px none rgb(10, 10, 10)",
+      "borderRadius": "12px",
+      "box": [
+        84,
+        170,
+        1340,
+        72
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "letterSpacing": "normal",
+      "lineHeight": "22px",
+      "padding": "16px",
+      "selector": ".news-filter-outer"
+    },
+    "firstHeader": {
+      "background": "rgb(255, 255, 255)",
+      "border": "",
+      "borderRadius": "12px 0px 0px",
+      "box": [
+        100,
+        340,
+        83,
+        44
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "13px",
+      "fontWeight": "500",
+      "gap": "normal",
+      "letterSpacing": "normal",
+      "lineHeight": "20.4286px",
+      "padding": "8px",
+      "selector": ".news-table th"
+    },
+    "firstRow": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px solid oklch(0.92 0.004 286.32)",
+      "borderRadius": "0px",
+      "box": [
+        100,
+        384,
+        1315,
+        0
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "14px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "letterSpacing": "normal",
+      "lineHeight": "22px",
+      "padding": "0px",
+      "selector": ".news-table tbody tr"
+    },
+    "heading": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px solid oklch(0.92 0.004 286.32)",
+      "borderRadius": "0px",
+      "box": [
+        84,
+        128,
+        202.15625,
+        32
+      ],
+      "font": "Inter",
+      "fontSize": "24px",
+      "fontWeight": "700",
+      "gap": "normal",
+      "letterSpacing": "normal",
+      "lineHeight": "32px",
+      "padding": "0px",
+      "selector": ".news-listing h4"
+    },
+    "panel": {
+      "background": "rgb(255, 255, 255)",
+      "border": "0px none rgb(10, 10, 10)",
+      "borderRadius": "12px",
+      "box": [
+        84,
+        252,
+        1340,
+        1205
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "letterSpacing": "normal",
+      "lineHeight": "24px",
+      "padding": "0px",
+      "selector": ".news-data-panel"
+    },
+    "table": {
+      "background": "rgb(245, 245, 245)",
+      "border": "0px solid oklch(0.92 0.004 286.32)",
+      "borderRadius": "0px",
+      "box": [
+        84,
+        324,
+        1340,
+        1133
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "normal",
+      "letterSpacing": "normal",
+      "lineHeight": "24px",
+      "padding": "16px",
+      "selector": ".news-table"
+    },
+    "tabs": {
+      "background": "rgba(0, 0, 0, 0)",
+      "border": "0px solid oklch(0.92 0.004 286.32)",
+      "borderRadius": "0px",
+      "box": [
+        84,
+        252,
+        1340,
+        72
+      ],
+      "font": "Inter, sans-serif",
+      "fontSize": "16px",
+      "fontWeight": "400",
+      "gap": "12px",
+      "letterSpacing": "normal",
+      "lineHeight": "24px",
+      "padding": "16px",
+      "selector": ".news-type-tabs-bar"
+    }
+  },
+  "viewport": [
+    1440,
+    1024
+  ]
+}

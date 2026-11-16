@@ -1,0 +1,46 @@
+src/components/layouts/top-navigation.tsx:107:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable documentItem is unused.
+  
+    106 │ // Add document as a standalone item
+  > 107 │ const documentItem: NavigationItem = {
+        │       ^^^^^^^^^^^^
+    108 │   title: "Văn bản",
+    109 │   url: AppRoutes.document.url,
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend documentItem with an underscore.
+  
+    105 105 │   
+    106 106 │   // Add document as a standalone item
+    107     │ - const·documentItem:·NavigationItem·=·{
+        107 │ + const·_documentItem:·NavigationItem·=·{
+    108 108 │     title: "Văn bản",
+    109 109 │     url: AppRoutes.document.url,
+  
+
+src/components/layouts/top-navigation.tsx:115:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable router is unused.
+  
+    114 │ export function TopNavigation({ designTheme = false }: { designTheme?: boolean }) {
+  > 115 │   const router = useRouter();
+        │         ^^^^^^
+    116 │   const currentPath = useCurrentPath();
+    117 │   const { data: session } = useSession();
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend router with an underscore.
+  
+    113 113 │   
+    114 114 │   export function TopNavigation({ designTheme = false }: { designTheme?: boolean }) {
+    115     │ - ··const·router·=·useRouter();
+        115 │ + ··const·_router·=·useRouter();
+    116 116 │     const currentPath = useCurrentPath();
+    117 117 │     const { data: session } = useSession();
+  
+
+Checked 7 files in 90ms. No fixes applied.
+Found 2 warnings.

@@ -1,0 +1,74 @@
+{
+  "agency-after-metrics": {
+    "width": 1440,
+    "height": 946,
+    "reference_top_crop": 78,
+    "mean_absolute_rgb_error_0_255": 7.9187424144546235,
+    "pixels_with_any_channel_error_over_16_percent": 9.084595959595958,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "address-before-metrics": {
+    "width": 1440,
+    "height": 763,
+    "reference_top_crop": 78,
+    "mean_absolute_rgb_error_0_255": 13.51550288820931,
+    "pixels_with_any_channel_error_over_16_percent": 12.619957769040338,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "agency-before-metrics": {
+    "width": 1440,
+    "height": 946,
+    "reference_top_crop": 78,
+    "mean_absolute_rgb_error_0_255": 8.429909560723514,
+    "pixels_with_any_channel_error_over_16_percent": 10.187999177824759,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "address-after-metrics": {
+    "width": 1440,
+    "height": 946,
+    "reference_top_crop": 78,
+    "mean_absolute_rgb_error_0_255": 10.151718003680212,
+    "pixels_with_any_channel_error_over_16_percent": 7.5248854827343195,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "news-before-metrics": {
+    "width": 1440,
+    "height": 1024,
+    "reference_top_crop": 0,
+    "mean_absolute_rgb_error_0_255": 12.030795853226273,
+    "pixels_with_any_channel_error_over_16_percent": 12.501356336805555,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "news-after-metrics": {
+    "width": 1440,
+    "height": 1024,
+    "reference_top_crop": 0,
+    "mean_absolute_rgb_error_0_255": 10.54968216507523,
+    "pixels_with_any_channel_error_over_16_percent": 9.808349609375,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "address-after-common-metrics": {
+    "width": 1440,
+    "height": 763,
+    "reference_top_crop": 78,
+    "mean_absolute_rgb_error_0_255": 10.635430925683218,
+    "pixels_with_any_channel_error_over_16_percent": 8.135193679918451,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "property-before-metrics": {
+    "width": 1440,
+    "height": 1024,
+    "reference_top_crop": 0,
+    "mean_absolute_rgb_error_0_255": 3.1608029966001157,
+    "pixels_with_any_channel_error_over_16_percent": 3.047824435763889,
+    "normalization": "reference crop only; original screenshots unchanged"
+  },
+  "property-after-metrics": {
+    "width": 1440,
+    "height": 1024,
+    "reference_top_crop": 0,
+    "mean_absolute_rgb_error_0_255": 3.022120949074074,
+    "pixels_with_any_channel_error_over_16_percent": 2.973904079861111,
+    "normalization": "reference crop only; original screenshots unchanged"
+  }
+}

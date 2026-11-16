@@ -81,8 +81,8 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Mã",
       dataIndex: "Id",
-      align: "center",
-      width: 72,
+      align: "left",
+      width: 80,
       render(value, record) {
         return (
           <Space direction="vertical" align="center">
@@ -107,7 +107,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Giá",
       dataIndex: "DisplayPrice",
-      width: 104,
+      width: 120,
       render(value, record) {
         return (
           <Space direction="vertical">
@@ -129,7 +129,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Số nhà, tên đường",
       dataIndex: ["PropAddress", "AddressNumber"],
-      width: 150,
+      width: 130,
       render(value, record) {
         const { LandNumber, MapNumber } = record.PropAddress;
         return (
@@ -198,7 +198,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Xã phường quận",
       dataIndex: ["PropAddress", "WardName"],
-      width: 210,
+      width: 160,
       render: (value, record) => {
         const oldParts = [
           record.PropAddress.OldWardName,
@@ -241,7 +241,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Loại BĐS",
       dataIndex: ["PropAddress", "PropTypeName"],
-      width: 92,
+      width: 90,
       render: (value, record) =>
         detailLink(
           record.Id,
@@ -256,7 +256,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Kết cấu",
       dataIndex: "CustomDisplayStructures",
-      width: 145,
+      width: 140,
       render(value, record) {
         return (
           <Space direction="vertical">
@@ -266,7 +266,7 @@ Props): ColumnsType<IPropResponse> => {
                 <Button
                   type="button"
                   size="icon-sm"
-                  className="rounded-full"
+                  className="property-media-button rounded-md"
                   onClick={() => {
                     handleOpenImages(record.Id);
                   }}
@@ -278,7 +278,7 @@ Props): ColumnsType<IPropResponse> => {
                 <Button
                   type="button"
                   size="icon-sm"
-                  className="rounded-full"
+                  className="property-media-button rounded-md"
                   onClick={() => {
                     handleOpenVideo(record.Video);
                   }}
@@ -294,10 +294,10 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Diện tích",
       dataIndex: "Area",
-      width: 135,
+      width: 160,
       render(value, record) {
         return (
-          <Space direction="vertical">
+          <Space direction="vertical" className="property-area-cell">
             <RenderArea
               title="DTTT: "
               area={value}
@@ -325,7 +325,7 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Vị trí",
       dataIndex: ["PropAddress", "LocationName"],
-      width: 132,
+      width: 120,
       render(value, record) {
         return detailLink(
           record.Id,
@@ -352,12 +352,12 @@ Props): ColumnsType<IPropResponse> => {
     {
       title: "Hướng",
       dataIndex: ["PropAddress", "DirectionName"],
-      width: 84,
+      width: 100,
     },
     {
       title: "SĐT",
       align: "center",
-      width: 86,
+      width: 60,
       render: (value, record) => {
         return record.IsHidePhone &&
           record.UserAdminId !== userSession?.Id &&
@@ -379,7 +379,7 @@ Props): ColumnsType<IPropResponse> => {
       key: "Action",
       title: "Hành động",
       dataIndex: "CreatedDate",
-      width: 112,
+      width: 140,
       render: (value, record) => (
         <Space direction="vertical">
           {record.StatusName === "Chờ xoá" ? (

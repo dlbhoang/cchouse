@@ -92,7 +92,7 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Loại tin</span>,
     dataIndex: "NewsTypeId",
-    width: 120,
+    width: 119,
     render(value, record) {
       const name = typeMap[Number(value)] ?? "—";
       return (
@@ -234,7 +234,7 @@ const createColumns = (
   {
     title: () => <span className="news-th-label">Người duyệt</span>,
     dataIndex: "ApprovedBy",
-    width: 112,
+    width: 160,
     render(value, record) {
       const isPending = record.Status === NEWS_STATUS_PENDING;
       const approvedDate =
@@ -255,7 +255,7 @@ const createColumns = (
   {
     key: "Action",
     title: () => <span className="news-th-label">Chức năng</span>,
-    width: 160,
+    width: 105,
     align: "center",
     render(_, record) {
       return (

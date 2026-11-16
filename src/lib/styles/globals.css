@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source not "../../../docs";
 /* Global Styling here */
 /* Legacy Ant Design icon sizing rule removed after migration to Lucide. */
 
@@ -1929,7 +1930,8 @@ button.news-create-btn.ant-btn:active {
   background: #ffffff !important;
   color: #a1a1aa !important;
   font-weight: 500 !important;
-  font-size: 13px !important;
+  font-size: 14px !important;
+  line-height: 20px;
   border-bottom: 1px solid #f0f0f0 !important;
 }
 
@@ -2659,7 +2661,7 @@ button.news-create-btn.ant-btn:active {
   border-top: 1px solid #e5e5e5;
   background: #fff;
 }
-.news-table .table-custom-footer {
+:is(.news-table, .news-pagination) .table-custom-footer {
   display: flex;
   min-height: 56px;
   align-items: center;
@@ -2672,26 +2674,26 @@ button.news-create-btn.ant-btn:active {
   font-weight: 400;
   line-height: 16px;
 }
-.news-table .table-selected-count {
+:is(.news-table, .news-pagination) .table-selected-count {
   color: #737373;
   white-space: nowrap;
 }
-.news-table .table-custom-pagination {
+:is(.news-table, .news-pagination) .table-custom-pagination {
   display: flex;
   align-items: center;
   gap: 8px;
   white-space: nowrap;
 }
-.news-table .table-custom-pagination .ant-select {
+:is(.news-table, .news-pagination) .table-custom-pagination .ant-select {
   min-width: 72px;
 }
-.news-table .table-custom-pagination .ant-select-selector {
+:is(.news-table, .news-pagination) .table-custom-pagination .ant-select-selector {
   height: 32px !important;
   border: 1px solid #e5e5e5 !important;
   border-radius: 8px !important;
   box-shadow: none !important;
 }
-.news-table .table-custom-pagination > button {
+:is(.news-table, .news-pagination) .table-custom-pagination > button {
   display: inline-flex;
   width: 28px;
   height: 28px;
@@ -2704,31 +2706,40 @@ button.news-create-btn.ant-btn:active {
   color: #0a0a0a;
   cursor: pointer;
 }
-.news-table .table-custom-pagination > button:hover:not(:disabled) {
+:is(.news-table, .news-pagination) .table-custom-pagination > button:hover:not(:disabled) {
   border-color: #aeb4bf;
 }
-.news-table .table-custom-pagination > button:disabled {
+:is(.news-table, .news-pagination) .table-custom-pagination > button:disabled {
   color: #a1a1aa;
   cursor: default;
 }
 @media (max-width: 767px) {
-  .news-table .table-custom-footer {
+  :is(.news-table, .news-pagination) .table-custom-footer {
     align-items: flex-start;
     flex-direction: column;
     gap: 12px;
   }
-  .news-table .table-custom-pagination {
+  :is(.news-table, .news-pagination) .table-custom-pagination {
     flex-wrap: wrap;
   }
 }
 
 .news-table .news-action-btn .lucide { color: #000000; }
 
-.group[data-collapsible="icon"] .news-sidebar [data-sidebar="group"] { padding-inline: 12px; }
-.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] {
-  width: 44px !important; height: 44px !important; padding: 10px !important; border-radius: 10px;
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="group"] {
+  padding-inline: var(--admin-sidebar-group-padding, 12px);
+  padding-top: var(--admin-sidebar-group-top, 8px);
 }
-.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] > svg { width: 24px; height: 24px; }
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] {
+  width: var(--admin-sidebar-item-width, 44px) !important;
+  height: var(--admin-sidebar-item-height, 44px) !important;
+  padding: var(--admin-sidebar-item-padding, 10px) !important;
+  border-radius: var(--admin-sidebar-item-radius, 10px);
+}
+.group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] > svg {
+  width: var(--admin-sidebar-icon-size, 24px);
+  height: var(--admin-sidebar-icon-size, 24px);
+}
 .group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] > span,
 .group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] > svg:not(:first-child) { display: none; }
 
@@ -2740,7 +2751,9 @@ button.news-create-btn.ant-btn:active {
 /* Tailwind's important collapsed-size utility lives in this layer. */
 @layer utilities {
   .group[data-collapsible="icon"] .news-sidebar [data-sidebar="menu-button"] {
-    width: 44px !important; height: 44px !important; padding: 10px !important;
+    width: var(--admin-sidebar-item-width, 44px) !important;
+    height: var(--admin-sidebar-item-height, 44px) !important;
+    padding: var(--admin-sidebar-item-padding, 10px) !important;
   }
 }
 

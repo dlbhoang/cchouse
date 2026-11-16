@@ -110,10 +110,10 @@ function Column({
 }) {
   return (
     <div className="flex h-full min-w-px flex-1 flex-col overflow-hidden rounded-xl border border-[#f5f5f5] bg-white">
-      <div className="flex shrink-0 items-center gap-3 bg-[#eff6ff] px-3 py-2.5">
+      <div className="address-manager-column-header flex shrink-0 items-center gap-3 px-4 py-3">
         <div className="flex min-w-px flex-1 items-center gap-2.5">
           <p className="whitespace-nowrap text-sm font-bold leading-5 text-[#0a0a0a]">{title}</p>
-          <span className="flex size-5 items-center justify-center rounded-full bg-[#0588f0] text-[11px] font-semibold leading-4 text-white">
+          <span className="flex size-7 items-center justify-center rounded-full bg-[#0588f0] text-xs font-semibold leading-4 text-white">
             {items.length}
           </span>
         </div>
@@ -133,7 +133,7 @@ function Column({
             onChange={(event) => onSearch(event.target.value)}
             placeholder="Tìm kiếm"
             aria-label={`Tìm kiếm ${title}`}
-            className="h-8 rounded-md border-[#e5e5e5] bg-white px-2.5 text-xs placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20"
+            className="h-10 rounded-[10px] border-[#e5e5e5] bg-white px-3 text-sm placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20"
           />
         </div>
       )}
@@ -151,7 +151,7 @@ function Column({
           <div
             key={item.id}
             className={cn(
-              "group flex shrink-0 items-center border-b border-[#f5f5f5] border-l-2 border-l-transparent px-3 text-left",
+              "address-manager-row group flex shrink-0 items-center shadow-[inset_0_-1px_0_#f5f5f5] border-l-2 border-l-transparent px-4 text-left",
               item.id === selectedId ? "border-l-transparent bg-[#eaf4ff]" : "bg-white hover:bg-[#fafafa]",
               !onSelect && "cursor-default"
             )}
@@ -159,13 +159,14 @@ function Column({
             <button
               type="button"
               onClick={() => onSelect?.(item.id)}
-              className="flex min-w-0 flex-1 flex-col gap-0.5 py-2.5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0588f0]"
+              aria-pressed={onSelect ? item.id === selectedId : undefined}
+              className="flex min-w-0 flex-1 flex-col gap-1 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#0588f0]"
             >
-              <p title={item.name} className="w-full truncate text-sm font-semibold leading-5 text-[#0a0a0a]">
+              <p title={item.name} className="address-manager-row-name w-full truncate font-semibold text-[#0a0a0a]">
                 <RowName name={item.name} />
                 {item.count !== undefined && <span className="ml-1 font-medium text-[#525252]">({item.count})</span>}
               </p>
-              <div className="flex w-full items-start gap-1.5 text-xs leading-4">
+              <div className="address-manager-row-detail flex w-full items-start gap-1.5">
                 {item.sub && <span title={item.sub} className="line-clamp-2 w-fit max-w-[calc(100%_-_0.75rem)] whitespace-normal text-[#0a0a0a]">{item.sub}</span>}
                 {!item.sub && <span className="flex-1" />}
                 <span
@@ -178,7 +179,7 @@ function Column({
               </div>
             </button>
             {(onEdit || onDelete) && item.managed !== false && (
-              <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+              <div className="address-manager-row-actions flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
                 {onEdit && (
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -620,9 +621,9 @@ export default function AddressManagerPage() {
   const displayedStreetItems = q ? matchedSearchStreetItems : streetItems;
 
   return (
-    <div className="relative flex h-[calc(100dvh-96px)] min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
-      <div className="flex items-center justify-between gap-4 px-5 py-3">
-        <h1 className="whitespace-nowrap text-xl font-bold leading-7 text-[#0a0a0a]">
+    <div className="address-manager-page relative flex min-h-0 flex-col overflow-hidden bg-[#fbfbfd] font-[Inter,sans-serif]">
+      <div className="address-manager-toolbar flex items-center justify-between gap-4">
+        <h1 className="whitespace-nowrap text-2xl font-bold leading-8 text-[#0a0a0a]">
           QUẢN LÝ ĐỊA GIỚI HÀNH CHÍNH
         </h1>
         <div className="flex min-w-0 flex-1 items-center justify-end gap-2 pl-4">
@@ -642,7 +643,7 @@ export default function AddressManagerPage() {
                 if (event.key === "Escape") setSearchSuggestionsOpen(false);
               }}
               placeholder="Tìm kiếm địa chỉ"
-              className="h-9 rounded-[8px] border-[#e5e5e5] bg-white pl-9 pr-3 text-xs font-medium placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20"
+              className="h-10 rounded-[10px] border-[#e5e5e5] bg-white pl-9 pr-3 text-sm font-medium placeholder:text-[#737373] focus:border-[#0588f0] focus:ring-2 focus:ring-[#0588f0]/20 focus-visible:border-[#0588f0] focus-visible:ring-2 focus-visible:ring-[#0588f0]/20"
             />
             {searchSuggestionsOpen && query.trim() && (
               <div className="absolute left-0 right-0 top-full z-50 mt-1 overflow-hidden rounded-lg border border-[#e5e5e5] bg-white shadow-lg">
@@ -678,7 +679,7 @@ export default function AddressManagerPage() {
           <button
             type="button"
             onClick={() => addNew()}
-            className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-[#0588f0] px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#0d74ce] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0]/40"
+            className="inline-flex h-10 shrink-0 items-center gap-2 rounded-[10px] bg-[#0588f0] px-4 text-base font-medium text-white transition-colors hover:bg-[#0d74ce] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0588f0]/40"
           >
             <Plus size={15} aria-hidden="true" />
             Thêm mới
@@ -686,10 +687,10 @@ export default function AddressManagerPage() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3 bg-[#f5f5f5] py-2 pl-5 pr-4">
+      <div className="address-manager-mode-bar flex flex-wrap items-center gap-3 bg-[#f5f5f5] py-3 pl-6 pr-4">
         <div className="flex min-w-px flex-1 items-center gap-3">
           <span className="size-2 shrink-0 rounded-full bg-black" />
-          <p className="flex-1 text-xs font-medium leading-5 text-[#0a0a0a]">
+          <p className="flex-1 text-base font-medium leading-6 text-[#0a0a0a]">
             {mode === "new"
               ? "Sơ đồ 3 Cấp Địa giới Hành chính Việt Nam (Tỉnh/Thành ➔ Phường/Xã ➔ Đường) hiển thị đồng bộ"
               : "Sơ đồ 4 Cấp Địa giới Hành chính Việt Nam (Tỉnh/Thành ➔ Quận/Huyện ➔ Phường/Xã ➔ Đường) hiển thị đồng bộ"}
@@ -714,21 +715,21 @@ export default function AddressManagerPage() {
             }
           }}
         >
-          <TabsList className="h-8 rounded-[8px] bg-[#e5e5e5] p-[3px]">
+          <TabsList className="h-9 rounded-[10px] bg-[#e5e5e5] p-[3px]">
             <TabsTrigger
               value="new"
-              className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30"
+              className="h-7 rounded-lg px-2 py-0 text-sm data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30"
             >
               Sau sáp nhập
             </TabsTrigger>
-          <TabsTrigger value="old" className="h-6 rounded-md px-2 py-0 text-[11px] data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30">
+          <TabsTrigger value="old" className="h-7 rounded-lg px-2 py-0 text-sm data-[state=active]:bg-white data-[state=active]:text-[#0a0a0a] data-[state=active]:shadow-sm focus-visible:ring-2 focus-visible:ring-[#0588f0]/30">
               Trước sáp nhập
             </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
 
-      <div className="flex min-h-0 flex-1 gap-3 py-3 pl-5 pr-4" style={{ maxHeight: "min(82dvh, calc(100dvh - 200px), 820px)" }}>
+      <div className="address-manager-columns flex min-h-0 flex-1 gap-4">
         <Column
           onAdd={() => addNew("province")}
           onEdit={(item) => {

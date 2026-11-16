@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/services/auth/auth";
+import { adminUiQaEnabled, getAdminUiFixture } from "@/lib/dev/admin-ui-fixtures";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,19 @@ async function proxy(
   const targetUrl = `${API_BASE_URL.replace(/\/$/, "")}/${targetPath}${req.nextUrl.search}`;
 
   const session = await auth();
+
+  if (adminUiQaEnabled(process.env)) {
+    if (!session?.user?.token) {
+      return NextResponse.json({ message: "Cần đăng nhập để kiểm tra UI" }, { status: 401 });
+    }
+    if (!["GET", "HEAD"].includes(req.method)) {
+      return NextResponse.json({ message: "Chế độ UI QA chỉ dùng dữ liệu mẫu, không lưu vào backend" }, { status: 405 });
+    }
+    const fixture = getAdminUiFixture(targetPath, req.nextUrl.searchParams);
+    if (fixture !== null) {
+      return NextResponse.json(fixture, { headers: { "X-Admin-UI-Fixture": "1", "Cache-Control": "no-store" } });
+    }
+  }
 
   const forwardHeaders = new Headers();
   req.headers.forEach((value, key) => {

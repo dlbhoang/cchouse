@@ -1,0 +1,201 @@
+{
+  "ancestorFilters": [],
+  "documentWidth": 1440,
+  "filter": {
+    "bottom": 280,
+    "height": 170,
+    "left": 108,
+    "right": 1408,
+    "top": 110,
+    "width": 1300,
+    "x": 108,
+    "y": 110
+  },
+  "footer": {
+    "bottom": 1008,
+    "height": 60,
+    "left": 108,
+    "right": 1408,
+    "top": 948,
+    "width": 1300,
+    "x": 108,
+    "y": 948
+  },
+  "headers": [
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 108,
+        "right": 188,
+        "top": 380,
+        "width": 80,
+        "x": 108,
+        "y": 380
+      },
+      "text": "Mã"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 188,
+        "right": 308,
+        "top": 380,
+        "width": 120,
+        "x": 188,
+        "y": 380
+      },
+      "text": "Giá"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 308,
+        "right": 438,
+        "top": 380,
+        "width": 130,
+        "x": 308,
+        "y": 380
+      },
+      "text": "Số nhà, tên đường"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 438,
+        "right": 598,
+        "top": 380,
+        "width": 160,
+        "x": 438,
+        "y": 380
+      },
+      "text": "Xã phường quận"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 598,
+        "right": 688,
+        "top": 380,
+        "width": 90,
+        "x": 598,
+        "y": 380
+      },
+      "text": "Loại BĐS"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 688,
+        "right": 828,
+        "top": 380,
+        "width": 140,
+        "x": 688,
+        "y": 380
+      },
+      "text": "Kết cấu"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 828,
+        "right": 988,
+        "top": 380,
+        "width": 160,
+        "x": 828,
+        "y": 380
+      },
+      "text": "Diện tích"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 988,
+        "right": 1108,
+        "top": 380,
+        "width": 120,
+        "x": 988,
+        "y": 380
+      },
+      "text": "Vị trí"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 1108,
+        "right": 1208,
+        "top": 380,
+        "width": 100,
+        "x": 1108,
+        "y": 380
+      },
+      "text": "Hướng"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 1208,
+        "right": 1268,
+        "top": 380,
+        "width": 60,
+        "x": 1208,
+        "y": 380
+      },
+      "text": "SĐT"
+    },
+    {
+      "box": {
+        "bottom": 424,
+        "height": 44,
+        "left": 1268,
+        "right": 1408,
+        "top": 380,
+        "width": 140,
+        "x": 1268,
+        "y": 380
+      },
+      "text": "Hành động"
+    }
+  ],
+  "primary": "rgb(5, 136, 240)",
+  "rows": [
+    124,
+    104,
+    108,
+    104,
+    108
+  ],
+  "table": {
+    "bottom": 1008,
+    "height": 628,
+    "left": 108,
+    "right": 1408,
+    "top": 380,
+    "width": 1300,
+    "x": 108,
+    "y": 380
+  },
+  "title": {
+    "bottom": 336,
+    "height": 32,
+    "left": 108,
+    "right": 332.7421875,
+    "top": 304,
+    "width": 224.7421875,
+    "x": 108,
+    "y": 304
+  },
+  "viewport": [
+    1440,
+    1024
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "empty": {
+    "bottom": 1008,
+    "height": 628,
+    "left": 108,
+    "right": 1408,
+    "top": 380,
+    "width": 1300,
+    "x": 108,
+    "y": 380
+  },
+  "filter": {
+    "bottom": 280,
+    "height": 170,
+    "left": 108,
+    "right": 1408,
+    "top": 110,
+    "width": 1300,
+    "x": 108,
+    "y": 110
+  },
+  "heading": {
+    "bottom": 336,
+    "height": 32,
+    "left": 108,
+    "right": 332.7421875,
+    "top": 304,
+    "width": 224.7421875,
+    "x": 108,
+    "y": 304
+  },
+  "scrollWidth": 1440,
+  "viewport": [
+    1440,
+    1024
+  ]
+}

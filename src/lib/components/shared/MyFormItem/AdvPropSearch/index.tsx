@@ -6,10 +6,9 @@ import {
   Space,
 } from "antd";
 
-import { History, MapPin, Search } from "lucide-react";
+import { History, List, MapPin, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SpeechToText } from "@/lib/components/shared/SpeechToText";
-import AreaSelector, { type AreaSelection } from "@/lib/components/shared/AreaSelector";
 import "./adv-prop-search.css";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { usePropStore } from "@/lib/stored";
@@ -30,24 +29,7 @@ type SuggestItem = {
 };
 
 const SearchAreaIcon = () => (
-  <svg
-    width="23"
-    height="23"
-    viewBox="0 0 23 23"
-    fill="none"
-    aria-hidden="true"
-  >
-    <circle cx="11.5" cy="11.5" r="11.5" fill="#2563EB" />
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M4.798 7.799a.6.6 0 0 1 .6-.6h6.395a.6.6 0 1 1 0 1.2H5.398a.6.6 0 0 1-.6-.6Zm0 3.198a.6.6 0 0 1 .6-.6h6.395a.6.6 0 1 1 0 1.2H5.398a.6.6 0 0 1-.6-.6Zm0 3.197a.6.6 0 0 1 .6-.6h6.395a.6.6 0 1 1 0 1.2H5.398a.6.6 0 0 1-.6-.6Z"
-      fill="#fff"
-    />
-    <circle cx="3.299" cy="7.799" r=".799" fill="#fff" />
-    <circle cx="3.299" cy="10.997" r=".799" fill="#fff" />
-    <circle cx="3.299" cy="14.194" r=".799" fill="#fff" />
-  </svg>
+  <span className="adv-prop-search-area-icon" aria-hidden="true"><List size={16} /></span>
 );
 
 export const AdvPropSearch = ({
@@ -59,7 +41,6 @@ export const AdvPropSearch = ({
   const [openDropdown, setOpenDropdown] = useState(false);
   const [suggestItems, setSuggestItems] = useState<SuggestItem[]>([]);
   const [recentItems, setRecentItems] = useState<SuggestItem[]>([]);
-  const [areaSelectorOpen, setAreaSelectorOpen] = useState(false);
 
   const searchWatch = Form.useWatch("search", form);
   const transTypeWatch = Form.useWatch("TransType", form);
@@ -131,26 +112,7 @@ export const AdvPropSearch = ({
     setRecentItems(items);
   }, [recentData]);
 
-  const handleAreaApply = (selection: AreaSelection) => {
-    const address = [
-      selection.houseNumber,
-      selection.street,
-      selection.ward,
-      selection.district,
-      selection.province,
-    ]
-      .filter(Boolean)
-      .join(", ");
-
-    form.setFieldValue("search", address);
-    setAreaSelectorOpen(false);
-    setOpenDropdown(false);
-    form.submit();
-  };
-
-  const dropdownContent = areaSelectorOpen ? (
-    <AreaSelector onApply={handleAreaApply} />
-  ) : (
+  const dropdownContent = (
     <div
       className="adv-prop-search-dropdown-panel"
     >
@@ -206,15 +168,14 @@ export const AdvPropSearch = ({
       <div
         className="adv-prop-search-dropdown-bottom"
       >
-        <Space
+        <button
+          type="button"
+          disabled
           className="adv-prop-search-area-action"
-          onClick={() => {
-            setAreaSelectorOpen(true);
-          }}
         >
           <SearchAreaIcon />
           <span>Chọn khu vực (thành phố, quận huyện, phường, xã...)</span>
-        </Space>
+        </button>
       </div>
     </div>
   );
@@ -224,13 +185,12 @@ export const AdvPropSearch = ({
       open={openDropdown}
       onOpenChange={(nextOpen) => {
         setOpenDropdown(nextOpen);
-        if (!nextOpen) setAreaSelectorOpen(false);
       }}
       trigger={["click"]}
       overlayClassName="adv-prop-search-dropdown"
       dropdownRender={() => dropdownContent}
       overlayStyle={{
-        width: areaSelectorOpen ? 384 : "min(916px, calc(100vw - 32px))",
+        width: "min(760px, calc(100vw - 32px))",
       }}
     >
       <Form.Item name="search" noStyle>

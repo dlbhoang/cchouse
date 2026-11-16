@@ -1,0 +1,44 @@
+[
+  {
+    "path": "/login",
+    "status": 200,
+    "redirect": null,
+    "fixture_header": null
+  },
+  {
+    "path": "/admin/property?TransType=1",
+    "status": 307,
+    "redirect": "http://localhost:3003/login?TransType=1&callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fproperty%3FTransType%3D1",
+    "fixture_header": null
+  },
+  {
+    "path": "/admin/config/news",
+    "status": 307,
+    "redirect": "http://localhost:3003/login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fconfig%2Fnews",
+    "fixture_header": null
+  },
+  {
+    "path": "/admin/config/address-manager",
+    "status": 307,
+    "redirect": "http://localhost:3003/login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fconfig%2Faddress-manager",
+    "fixture_header": null
+  },
+  {
+    "path": "/admin/config/agency-manager",
+    "status": 307,
+    "redirect": "http://localhost:3003/login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fconfig%2Fagency-manager",
+    "fixture_header": null
+  },
+  {
+    "path": "/api/auth/session",
+    "status": 200,
+    "redirect": null,
+    "fixture_header": null
+  },
+  {
+    "path": "/assets/admin/sidebar-logo.png",
+    "status": 200,
+    "redirect": null,
+    "fixture_header": null
+  }
+]

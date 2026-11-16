@@ -12,7 +12,7 @@
   font-weight: 500;
   line-height: 16px;
   color: #0a0a0a;
-  text-align: center;
+  text-align: left;
 }
 
 /* ---- Loại tin ---- */
@@ -25,19 +25,19 @@
   color: #0a0a0a;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 /* ---- Hình ảnh ---- */
 .news-thumbnail, .news-thumb-placeholder {
   width: 48px; max-width: 48px; height: 40px; border-radius: 6px;
-  object-fit: cover; display: block; margin: 0 auto;
+  object-fit: cover; display: block; margin: 0;
 }
 .news-thumbnail-button {
   display: block;
   width: 48px;
   height: 40px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   overflow: hidden;
   border: 0;

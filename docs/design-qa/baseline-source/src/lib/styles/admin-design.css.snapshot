@@ -1,0 +1,287 @@
+/* Scoped to the four coordinated Admin routes. Browser chrome in Figma is
+   reference context, not part of the application header. */
+.admin-design-shell {
+  color: var(--admin-text);
+  font-family: var(--admin-font);
+  background: var(--admin-background);
+}
+
+.admin-design-content {
+  min-width: 0;
+}
+
+.admin-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: var(--admin-muted, #737373);
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.property-empty-state {
+  min-height: max(320px, calc(100dvh - 396px));
+  padding: 16px;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+}
+
+.property-empty-illustration {
+  position: relative;
+  width: 186px;
+  height: 163px;
+}
+
+.property-empty-illustration > img {
+  position: absolute;
+  inset: 0 auto auto 0;
+}
+
+.property-empty-illustration > img:last-child {
+  top: 27px;
+  left: 48px;
+}
+
+.admin-design-shell :is(button, a, input, [role="combobox"]):focus-visible {
+  outline: 2px solid var(--admin-brand);
+  outline-offset: 2px;
+}
+
+.admin-design-shell .property-add-button,
+.admin-design-shell .property-add-icon-button {
+  background: var(--admin-brand);
+}
+
+.admin-design-shell .property-add-button {
+  gap: 8px;
+  padding-inline: 16px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.admin-design-shell .news-sidebar [data-sidebar="menu-button"][data-active="true"] {
+  background: var(--admin-selected);
+  color: var(--admin-text);
+}
+
+.admin-design-shell:has(:is(.property-page-content, .news-listing)) .news-sidebar [data-sidebar="menu-button"][data-active="true"] {
+  background: var(--admin-brand);
+  color: white;
+}
+
+.admin-design-shell .property-add-button:hover,
+.admin-design-shell .property-add-icon-button:hover {
+  background: var(--admin-brand-hover);
+}
+
+.admin-design-shell .news-listing {
+  min-height: calc(100dvh - 110px);
+}
+
+.admin-design-shell .news-listing .ant-breadcrumb {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.admin-design-shell .news-filter-floating-field .news-filter-floating-label {
+  top: -8px;
+  transform: none;
+  padding: 0 4px;
+  background: white;
+  color: var(--admin-muted);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.admin-design-shell .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within) .ant-select-selection-placeholder,
+.admin-design-shell .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within) .ant-picker-input > input::placeholder {
+  color: var(--admin-subtle) !important;
+}
+
+.admin-design-shell .news-filter-floating-field:not(.news-filter-floating-field--filled):not(:focus-within) .news-source-dropdown-text {
+  opacity: 1;
+}
+
+.admin-design-shell .news-data-panel--empty {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: visible;
+  border: 0;
+  box-shadow: none;
+}
+
+.admin-design-shell .news-data-panel--empty .news-type-tabs-bar {
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+}
+
+.admin-design-shell .news-table--empty {
+  display: flex;
+  flex: 1;
+}
+
+.admin-design-shell .news-empty-state {
+  flex: 1;
+  min-height: 300px;
+  gap: 32px;
+  color: var(--admin-muted);
+  font-weight: 400;
+}
+
+.admin-design-shell .news-empty-state-icon {
+  width: 128px;
+  height: 128px;
+}
+
+.address-manager-page {
+  height: calc(100dvh - 110px);
+}
+
+.address-manager-toolbar {
+  padding: 24px 0 16px 8px;
+}
+
+.address-manager-columns {
+  padding: 8px 0 0 8px;
+}
+
+.address-manager-column-header {
+  min-height: 60px;
+  background: var(--admin-section);
+}
+
+.address-manager-column-header p {
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.address-manager-row {
+  min-height: 80px;
+}
+
+.address-manager-row-name {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.address-manager-row-detail {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.agency-manager-page {
+  padding: 0 0 0 8px;
+}
+
+@media (min-width: 1281px) {
+  .admin-design-shell .property-page-content {
+    min-height: calc(100dvh - 110px);
+    margin: 0 0 0 8px;
+    padding: 16px;
+    background: var(--admin-surface);
+  }
+
+  .admin-design-shell :is(.property-filter-list-card, .property-page-header, .property-table-area) {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .admin-design-shell .property-table-shell .ant-table-thead > tr > th {
+    height: 44px;
+    padding: 12px;
+    background: #f5f5f5;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+  }
+
+  .admin-design-shell .property-table-shell .ant-table-tbody > tr:not(.ant-table-measure-row) > td {
+    height: 124px;
+    padding: 12px;
+    vertical-align: middle;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-design-shell .news-listing {
+    min-height: calc(100dvh - 190px);
+  }
+
+  .address-manager-page {
+    height: auto;
+    min-height: calc(100dvh - 190px);
+    overflow: visible;
+  }
+
+  .address-manager-toolbar {
+    flex-wrap: wrap;
+    padding: 8px 0 16px;
+  }
+
+  .address-manager-toolbar h1 {
+    white-space: normal;
+  }
+
+  .address-manager-toolbar > div {
+    flex-basis: 100%;
+    padding-left: 0;
+  }
+
+  .address-manager-mode-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .address-manager-mode-bar > [dir] {
+    align-self: flex-end;
+  }
+
+  .address-manager-columns {
+    flex: none;
+    height: 65dvh;
+    padding: 12px 0;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+
+  .address-manager-columns > div {
+    flex: 0 0 min(85vw, 360px);
+    scroll-snap-align: start;
+  }
+
+  .address-manager-row-actions {
+    opacity: 1;
+  }
+
+  .agency-manager-page {
+    padding: 0;
+  }
+
+  .agency-manager-search-bar {
+    gap: 12px;
+    padding: 24px 12px 12px;
+  }
+
+  .agency-manager-search-filters {
+    flex-basis: 100%;
+    gap: 12px;
+  }
+
+  .agency-manager-search-bar > div:last-child {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .agency-manager-search-filters > div {
+    min-width: 0;
+  }
+}

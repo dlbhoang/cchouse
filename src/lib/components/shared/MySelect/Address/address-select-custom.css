@@ -5,6 +5,23 @@
   box-sizing: border-box;
 }
 
+.property-address-options.ant-select-dropdown {
+  z-index: 1200;
+}
+
+.property-address-action-icon {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.property-address-dropdown-footer > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .agency-manager-area-trigger.property-custom-dropdown-trigger {
   position: relative !important;
   display: flex !important;

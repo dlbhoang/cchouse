@@ -1,0 +1,269 @@
+[
+  {
+    "route": "address",
+    "width": 390,
+    "height": 844,
+    "columns": {
+      "bottom": 930.59375,
+      "height": 548.59375,
+      "left": 12,
+      "right": 378,
+      "top": 382,
+      "width": 366,
+      "x": 12,
+      "y": 382
+    },
+    "scroll": 390
+  },
+  {
+    "route": "address",
+    "width": 768,
+    "height": 1024,
+    "columns": {
+      "bottom": 991.59375,
+      "height": 665.59375,
+      "left": 84,
+      "right": 752,
+      "top": 326,
+      "width": 668,
+      "x": 84,
+      "y": 326
+    },
+    "scroll": 768
+  },
+  {
+    "route": "address",
+    "width": 1024,
+    "height": 768,
+    "columns": {
+      "bottom": 752,
+      "height": 506,
+      "left": 84,
+      "right": 1008,
+      "top": 246,
+      "width": 924,
+      "x": 84,
+      "y": 246
+    },
+    "scroll": 1024
+  },
+  {
+    "route": "news",
+    "width": 390,
+    "height": 844,
+    "filter": {
+      "bottom": 480,
+      "height": 312,
+      "left": 12,
+      "right": 378,
+      "top": 168,
+      "width": 366,
+      "x": 12,
+      "y": 168
+    },
+    "scroll": 390,
+    "title": {
+      "bottom": 158,
+      "height": 64,
+      "left": 12,
+      "right": 378,
+      "top": 94,
+      "width": 366,
+      "x": 12,
+      "y": 94
+    }
+  },
+  {
+    "route": "news",
+    "width": 768,
+    "height": 1024,
+    "filter": {
+      "bottom": 386,
+      "height": 216,
+      "left": 84,
+      "right": 752,
+      "top": 170,
+      "width": 668,
+      "x": 84,
+      "y": 170
+    },
+    "scroll": 768,
+    "title": {
+      "bottom": 158,
+      "height": 64,
+      "left": 84,
+      "right": 752,
+      "top": 94,
+      "width": 668,
+      "x": 84,
+      "y": 94
+    }
+  },
+  {
+    "route": "news",
+    "width": 1024,
+    "height": 768,
+    "filter": {
+      "bottom": 384,
+      "height": 216,
+      "left": 84,
+      "right": 1008,
+      "top": 168,
+      "width": 924,
+      "x": 84,
+      "y": 168
+    },
+    "scroll": 1024,
+    "title": {
+      "bottom": 158,
+      "height": 64,
+      "left": 84,
+      "right": 1008,
+      "top": 94,
+      "width": 924,
+      "x": 84,
+      "y": 94
+    }
+  },
+  {
+    "route": "news",
+    "width": 1440,
+    "height": 1024,
+    "filter": {
+      "bottom": 240,
+      "height": 72,
+      "left": 84,
+      "right": 1424,
+      "top": 168,
+      "width": 1340,
+      "x": 84,
+      "y": 168
+    },
+    "scroll": 1440,
+    "title": {
+      "bottom": 158,
+      "height": 64,
+      "left": 84,
+      "right": 1424,
+      "top": 94,
+      "width": 1340,
+      "x": 84,
+      "y": 94
+    }
+  },
+  {
+    "route": "property",
+    "width": 390,
+    "height": 844,
+    "empty": {
+      "bottom": 672.25,
+      "height": 448,
+      "left": 16,
+      "right": 374,
+      "top": 224.25,
+      "width": 358,
+      "x": 16,
+      "y": 224.25
+    },
+    "heading": {
+      "bottom": 183.25,
+      "height": 22.5,
+      "left": 16,
+      "right": 184.5546875,
+      "top": 160.75,
+      "width": 168.5546875,
+      "x": 16,
+      "y": 160.75
+    },
+    "scroll": 390
+  },
+  {
+    "route": "property",
+    "width": 768,
+    "height": 1024,
+    "empty": {
+      "bottom": 974.75,
+      "height": 628,
+      "left": 88,
+      "right": 748,
+      "top": 346.75,
+      "width": 660,
+      "x": 88,
+      "y": 346.75
+    },
+    "heading": {
+      "bottom": 312.5,
+      "height": 22.5,
+      "left": 88,
+      "right": 256.5546875,
+      "top": 290,
+      "width": 168.5546875,
+      "x": 88,
+      "y": 290
+    },
+    "scroll": 768
+  },
+  {
+    "route": "property",
+    "width": 1024,
+    "height": 768,
+    "empty": {
+      "bottom": 718.75,
+      "height": 372,
+      "left": 88,
+      "right": 1004,
+      "top": 346.75,
+      "width": 916,
+      "x": 88,
+      "y": 346.75
+    },
+    "heading": {
+      "bottom": 312.5,
+      "height": 22.5,
+      "left": 88,
+      "right": 256.5546875,
+      "top": 290,
+      "width": 168.5546875,
+      "x": 88,
+      "y": 290
+    },
+    "scroll": 1024
+  },
+  {
+    "route": "property",
+    "width": 1440,
+    "height": 1024,
+    "empty": {
+      "bottom": 1008,
+      "height": 628,
+      "left": 108,
+      "right": 1408,
+      "top": 380,
+      "width": 1300,
+      "x": 108,
+      "y": 380
+    },
+    "heading": {
+      "bottom": 336,
+      "height": 32,
+      "left": 108,
+      "right": 332.7421875,
+      "top": 304,
+      "width": 224.7421875,
+      "x": 108,
+      "y": 304
+    },
+    "scroll": 1440
+  },
+  {
+    "route": "agency",
+    "width": 1024,
+    "height": 768,
+    "filterWidths": [
+      443,
+      443,
+      898
+    ],
+    "scroll": 1024
+  }
+]

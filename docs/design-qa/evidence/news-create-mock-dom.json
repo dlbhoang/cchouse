@@ -1,0 +1,24 @@
+{
+  "font": "18px",
+  "lineHeight": "28px",
+  "rect": {
+    "bottom": 887,
+    "height": 750,
+    "left": 144,
+    "right": 1296,
+    "top": 137,
+    "width": 1152,
+    "x": 144,
+    "y": 137
+  },
+  "title": {
+    "bottom": 181,
+    "height": 28,
+    "left": 168,
+    "right": 301.546875,
+    "top": 153,
+    "width": 133.546875,
+    "x": 168,
+    "y": 153
+  }
+}

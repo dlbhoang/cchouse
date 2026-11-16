@@ -10,7 +10,7 @@ import {
   Switch,
   Typography,
 } from "antd";
-import { Check, ChevronDown, RefreshCw, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 import { CombineAddress } from "@/lib/core/utils/myFormat";
 import { useAdminContext } from "@/lib/stored";
@@ -56,6 +56,8 @@ type Props = {
   triggerClassName?: string;
   triggerPlaceholder?: string;
   agencyManagerMode?: boolean;
+  inline?: boolean;
+  onApply?: () => void;
 };
 
 export const AddressSelectCustom = ({
@@ -74,6 +76,8 @@ export const AddressSelectCustom = ({
   triggerClassName,
   triggerPlaceholder,
   agencyManagerMode = false,
+  inline = false,
+  onApply,
 }: Props) => {
   const { districts, propType } = useAdminContext();
   const provinceWatch = Form.useWatch(nameProvince, form);
@@ -81,6 +85,8 @@ export const AddressSelectCustom = ({
   const wardWatch = Form.useWatch(nameWard, form);
   const streetWatch = Form.useWatch(nameStreet, form);
   const addressWatch = Form.useWatch(nameAddressNumber, form);
+  const parcelWatch = Form.useWatch(nameLandParcel, form);
+  const mapSheetWatch = Form.useWatch(nameMapSheet, form);
   const isNewAddressWatch = Form.useWatch(nameIsNewAddress, form);
   const selectedPropTypeIds = Form.useWatch("PropTypeIds", form);
   const selectedPropTypeIdList = Array.isArray(selectedPropTypeIds)
@@ -107,6 +113,7 @@ export const AddressSelectCustom = ({
   const handleApply = () => {
     form.submit();
     setOpen(false);
+    onApply?.();
   };
 
   useEffect(() => {
@@ -162,9 +169,10 @@ export const AddressSelectCustom = ({
             <Form.Item name={nameIsNewAddress} valuePropName="checked" noStyle>
               <Switch
                 size="small"
-                onChange={() =>
-                  form.resetFields([nameDistrict, nameWard, nameStreet])
-                }
+                checked={isNewAddressWatch}
+                onChange={(value) => {
+                  form.setFieldsValue({ [nameIsNewAddress]: value, [nameDistrict]: undefined, [nameWard]: undefined, [nameStreet]: undefined });
+                }}
               />
             </Form.Item>
           </div>
@@ -173,11 +181,14 @@ export const AddressSelectCustom = ({
         <AddressField label="Tỉnh/Thành phố">
           <Form.Item name={nameProvince} className="property-address-field-item" noStyle>
             <ProvinceSelect
+              value={provinceWatch}
               className="property-address-field-select"
+              popupClassName="property-address-options"
+              getPopupContainer={inline ? (trigger) => trigger.parentElement! : undefined}
               allowClear={false}
               suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
               placeholder={mapMode ? "" : "Chọn"}
-              onChange={() => form.resetFields([nameDistrict, nameWard, nameStreet])}
+              onChange={(value) => { form.setFieldsValue({ [nameProvince]: value, [nameDistrict]: undefined, [nameWard]: undefined, [nameStreet]: undefined }); }}
             />
           </Form.Item>
         </AddressField>
@@ -186,12 +197,15 @@ export const AddressSelectCustom = ({
           <AddressField label="Quận/Huyện">
             <Form.Item name={nameDistrict} className="property-address-field-item" noStyle>
               <DistrictSelect
+                value={districtWatch}
                 className="property-address-field-select"
+              popupClassName="property-address-options"
+              getPopupContainer={inline ? (trigger) => trigger.parentElement! : undefined}
                 allowClear={false}
                 suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
                 placeholder={mapMode ? "" : "Chọn"}
                 parentVal={provinceWatch}
-                onChange={() => form.resetFields([nameWard, nameStreet])}
+                onChange={(value) => { form.setFieldsValue({ [nameDistrict]: value, [nameWard]: undefined, [nameStreet]: undefined }); }}
               />
             </Form.Item>
           </AddressField>
@@ -200,13 +214,16 @@ export const AddressSelectCustom = ({
         <AddressField label="Phường/Xã">
           <Form.Item name={nameWard} className="property-address-field-item" noStyle>
             <WardSelect
+              value={wardWatch}
               className="property-address-field-select"
+              popupClassName="property-address-options"
+              getPopupContainer={inline ? (trigger) => trigger.parentElement! : undefined}
               allowClear={false}
               suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
               placeholder={mapMode ? "" : "Chọn"}
               parentVal={wardParentVal}
               isNew={isNewAddressWatch}
-              onChange={() => form.resetFields([nameStreet])}
+              onChange={(value) => { form.setFieldsValue({ [nameWard]: value, [nameStreet]: undefined }); }}
             />
           </Form.Item>
         </AddressField>
@@ -214,7 +231,11 @@ export const AddressSelectCustom = ({
         <AddressField label="Đường/Phố">
           <Form.Item name={nameStreet} className="property-address-field-item" noStyle>
             <StreetSelect
+              value={streetWatch}
+              onChange={(value) => form.setFieldValue(nameStreet, value)}
               className="property-address-field-select"
+              popupClassName="property-address-options"
+              getPopupContainer={inline ? (trigger) => trigger.parentElement! : undefined}
               allowClear={false}
               suffixIcon={<ChevronDown size={16} strokeWidth={1.8} />}
               placeholder={mapMode ? "" : "Chọn"}
@@ -227,7 +248,7 @@ export const AddressSelectCustom = ({
         {(!isHiddenField || agencyManagerMode) && !isLandSelected && (
           <AddressField label="Số nhà">
             <Form.Item name={nameAddressNumber} className="property-address-field-item" noStyle>
-              <Input className="property-address-field-input" placeholder={mapMode ? "" : "Nhập"} />
+              <Input value={addressWatch} onChange={(event) => form.setFieldValue(nameAddressNumber, event.target.value)} className="property-address-field-input" placeholder={mapMode ? "" : "Nhập"} />
             </Form.Item>
           </AddressField>
         )}
@@ -237,14 +258,14 @@ export const AddressSelectCustom = ({
             <Col span={12}>
               <AddressField label="Thửa đất">
                 <Form.Item name={nameLandParcel} className="property-address-field-item" noStyle>
-                  <Input className="property-address-field-input" placeholder="Nhập" />
+                  <Input value={parcelWatch} onChange={(event) => form.setFieldValue(nameLandParcel, event.target.value)} className="property-address-field-input" placeholder="Nhập" />
                 </Form.Item>
               </AddressField>
             </Col>
             <Col span={12}>
               <AddressField label="Tờ bản đồ">
                 <Form.Item name={nameMapSheet} className="property-address-field-item" noStyle>
-                  <Input className="property-address-field-input" placeholder="Nhập" />
+                  <Input value={mapSheetWatch} onChange={(event) => form.setFieldValue(nameMapSheet, event.target.value)} className="property-address-field-input" placeholder="Nhập" />
                 </Form.Item>
               </AddressField>
             </Col>
@@ -280,11 +301,7 @@ export const AddressSelectCustom = ({
             handleApply();
           }}
         >
-          {mapMode || agencyManagerMode ? (
-            <RefreshCw className="property-drawer-reset-icon" size={16} strokeWidth={2} />
-          ) : (
-            <span className="property-drawer-reset-icon">↺</span>
-          )}
+          <img src="/assets/admin/filter-reset.svg" alt="" aria-hidden="true" className="property-address-action-icon" />
           Đặt lại
         </Button>
         {mapMode || agencyManagerMode ? (
@@ -297,7 +314,7 @@ export const AddressSelectCustom = ({
             }`}
             onClick={handleApply}
           >
-            <Check className="property-drawer-check-icon" size={16} strokeWidth={2} />
+            <img src="/assets/admin/filter-apply.svg" alt="" aria-hidden="true" className="property-address-action-icon" />
             Áp dụng
           </Button>
         ) : (
@@ -322,13 +339,15 @@ export const AddressSelectCustom = ({
             }}
             onClick={handleApply}
           >
-            <span className="property-drawer-check-icon">✓</span>
+            <img src="/assets/admin/filter-apply.svg" alt="" aria-hidden="true" className="property-address-action-icon" />
             Áp dụng
           </button>
         )}
       </div>
     </div>
   );
+
+  if (inline) return dropdownRender();
 
   return (
     <Dropdown

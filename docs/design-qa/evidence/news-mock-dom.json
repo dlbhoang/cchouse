@@ -1,0 +1,109 @@
+{
+  "documentWidth": 1440,
+  "filter": {
+    "bottom": 240,
+    "height": 72,
+    "left": 84,
+    "right": 1424,
+    "top": 168,
+    "width": 1340,
+    "x": 84,
+    "y": 168
+  },
+  "headers": [
+    {
+      "height": 44,
+      "text": "Mã tin",
+      "width": 83.0625
+    },
+    {
+      "height": 44,
+      "text": "Loại tin",
+      "width": 119.0859375
+    },
+    {
+      "height": 44,
+      "text": "Hình ảnh",
+      "width": 93.0703125
+    },
+    {
+      "height": 44,
+      "text": "Tiêu đề",
+      "width": 284.2109375
+    },
+    {
+      "height": 44,
+      "text": "Nguồn/ Người đăng",
+      "width": 155.1171875
+    },
+    {
+      "height": 44,
+      "text": "Lượt xem",
+      "width": 87.0625
+    },
+    {
+      "height": 44,
+      "text": "Ngày ra tin",
+      "width": 117.0859375
+    },
+    {
+      "height": 44,
+      "text": "Trạng thái",
+      "width": 104.078125
+    },
+    {
+      "height": 44,
+      "text": "Người duyệt",
+      "width": 160.1171875
+    },
+    {
+      "height": 44,
+      "text": "Chức năng",
+      "width": 105.109375
+    }
+  ],
+  "heading": {
+    "bottom": 158,
+    "height": 64,
+    "left": 84,
+    "right": 1424,
+    "top": 94,
+    "width": 1340,
+    "x": 84,
+    "y": 94
+  },
+  "pagination": {
+    "bottom": 1095,
+    "height": 60,
+    "left": 84,
+    "right": 1424,
+    "top": 1035,
+    "width": 1340,
+    "x": 84,
+    "y": 1035
+  },
+  "table": {
+    "bottom": 1009,
+    "height": 671,
+    "left": 100,
+    "right": 1408,
+    "top": 338,
+    "width": 1308,
+    "x": 100,
+    "y": 338
+  },
+  "tabs": {
+    "bottom": 322,
+    "height": 72,
+    "left": 84,
+    "right": 1424,
+    "top": 250,
+    "width": 1340,
+    "x": 84,
+    "y": 250
+  },
+  "viewport": [
+    1440,
+    1024
+  ]
+}

@@ -26,7 +26,7 @@ import {
 } from "@/lib/components/shared/MySelect";
 import { ETransType } from "@/lib/core/enum";
 import { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import { hasAdvancedFilters } from "./activeFilters";
+import { additionalFilterSummary, hasAdvancedFilters } from "./activeFilters";
 import { HIDDEN_FIELDS } from "./config";
 import "./property-filter.css";
 
@@ -44,6 +44,7 @@ export const MobileView = ({
   mapMode = false,
 }: MobileViewProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const additionalFilters = additionalFilterSummary(model);
   const searchParams = useSearchParams();
 
   const handleOpenDrawer = () => setIsDrawerOpen(true);
@@ -83,12 +84,14 @@ export const MobileView = ({
           onClick={handleOpenDrawer}
           type="button"
           variant={"outline"}
-          className={`w-8 h-8 ${mapMode ? "map-mobile-filter-trigger" : ""} ${mapMode && hasAdvancedFilters(model) ? "is-active" : ""}`}
+          className={`relative w-8 h-8 ${mapMode ? "map-mobile-filter-trigger" : ""} ${mapMode && hasAdvancedFilters(model) ? "is-active" : ""}`}
           aria-expanded={isDrawerOpen}
           aria-haspopup="dialog"
-          aria-label="Lọc thêm"
+          aria-label={additionalFilters.length ? `Lọc thêm, ${additionalFilters.length} bộ lọc đã chọn` : "Lọc thêm"}
+          title={additionalFilters.join('\n') || undefined}
         >
           <ListFilterPlus />
+          {additionalFilters.length > 0 && <span className="property-more-count property-more-count-mobile">{additionalFilters.length}</span>}
         </Button>
       </div>
 
@@ -105,14 +108,14 @@ export const MobileView = ({
             <Button
               type="button"
               variant="outline"
-              className={mapMode ? "min-w-0 flex-1" : "w-full"}
+              className="min-w-0 flex-1"
               onClick={handleRefreshWithClose}
             >
               Đặt lại
             </Button>
             <Button
               type="button"
-              className={mapMode ? "min-w-0 flex-1" : "w-full"}
+              className="min-w-0 flex-1"
               onClick={handleApply}
             >
               Áp dụng

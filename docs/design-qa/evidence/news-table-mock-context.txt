@@ -1,0 +1,1254 @@
+const assetPathPrefix = "https://www.figma.com/api/mcp/asset/53f025f7-3ced-48d1-b7e2-6ed879143742";
+const imgImg = `${assetPathPrefix}/56d0b.png`;
+const imgIconSearch = `${assetPathPrefix}/3e546.svg`;
+const imgIconSearch1 = `${assetPathPrefix}/4abac.svg`;
+
+export default function Container() {
+  return (
+    <div className="bg-[var(--text\/bg,#f5f5f5)] content-stretch flex flex-col items-start justify-center p-[16px] relative size-full" data-node-id="2420:136784" data-name="Container">
+      <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136785" data-name="Cards">
+        <div className="bg-[var(--background,white)] border border-[var(--border,#e5e5e5)] border-solid content-stretch flex flex-[1_0_0] flex-col h-[671px] items-start min-w-px overflow-clip relative rounded-[var(--radius-md,8px)]" data-node-id="2420:136786" data-name="Table">
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:136787" data-name="Header">
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0 w-[83px]" data-node-id="2420:136788" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136789" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136790">
+                  Mã tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0 w-[119px]" data-node-id="2420:136791" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136792" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136793">
+                  Loại tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0 w-[93px]" data-node-id="2420:136794" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136795" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136796">
+                  Hỉnh ảnh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0 w-[284px]" data-node-id="2420:136797" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136798" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136799">
+                  Tiêu đề
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0" data-node-id="2420:136800" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136801" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136802">
+                  Nguồn/ Người đăng
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0" data-node-id="2420:136803" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136804" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136805">
+                  Lượt xem
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0 w-[117px]" data-node-id="2420:136806" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136807" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136808">
+                  Ngày ra tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0 w-[104px]" data-node-id="2420:136809" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136810" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136811">
+                  Trạng thái
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative shrink-0 w-[160px]" data-node-id="2420:136812" data-name="Table header">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136813" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136814">
+                  Người duyệt
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2\,5,10px)] items-center p-[12px] relative rounded-[var(--rounded-md,6px)] shrink-0 w-[105px]" data-node-id="2420:136815" data-name="Wrapper">
+              <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="2420:136816" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136817">
+                  Chức năng
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:136818" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:136819" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136820" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136821">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[119px]" data-node-id="2420:136822" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136823" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136824">
+                  Phong thủy
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:136825" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136826" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:136827" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[284px]" data-node-id="2420:136828" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136829" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136830">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:136831" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:136831;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative self-stretch shrink-0 w-[155px]" data-node-id="2420:136832" data-name="Table header">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] gap-[4px] items-start justify-center leading-[var(--leading\/5,20px)] min-h-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] tracking-[var(--tracking\/normal,0px)] w-full" data-node-id="2420:136833" data-name="Text">
+                <p className="overflow-hidden relative shrink-0 text-[14px] text-ellipsis w-full whitespace-nowrap" data-node-id="2420:136834">
+                  Viết bài
+                </p>
+                <p className="relative shrink-0 text-[length:var(--size\/sm,14px)] w-full" data-node-id="2420:136835">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[87px]" data-node-id="2420:136836" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136837" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136838">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[117px]" data-node-id="2420:136839" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136840" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136841">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[8px] items-start justify-center p-[12px] relative self-stretch shrink-0" data-node-id="2420:136842" data-name="Table - Cell">
+              <div className="bg-[var(--brand\/blue\/100,#dbeafe)] content-stretch flex gap-[4px] h-[22px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I2420:136842;2020:114967" data-name="Tag_status">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--brand\/blue\/500,#3c82f6)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I2420:136842;2020:114967;2020:114940">
+                  Chờ duyệt
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:136843" data-name="Table header" />
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:136846" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:136847">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136848" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136848;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136849" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136849;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136850" data-name="Row">
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136851">
+              <div className="content-stretch flex gap-[var(--gap-2,8px)] h-full items-center p-[12px] relative shrink-0 w-[83px]" data-name="Table header">
+                <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136852" data-name="Text">
+                  <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136853">
+                    451341
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136854">
+              <div className="content-stretch flex gap-[var(--gap-2,8px)] h-full items-center p-[12px] relative shrink-0 w-[119px]" data-name="Table header">
+                <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136855" data-name="Text">
+                  <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136856">
+                    Thiết kế - nội thất
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136857">
+              <div className="content-stretch flex gap-[var(--gap-2,8px)] h-full items-center p-[12px] relative shrink-0 w-[93px]" data-name="Table header">
+                <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136858" data-name="Text">
+                  <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:136859" data-name="Img">
+                    <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                      <div className="absolute bg-white inset-0 rounded-[6px]" />
+                      <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                        <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136860">
+              <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] h-full items-start justify-center p-[12px] relative shrink-0 w-[284px]" data-name="Table header">
+                <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136861" data-name="Text">
+                  <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136862">
+                    <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                    <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                  </p>
+                </div>
+                <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:136863" data-name="Button">
+                  <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:136863;1839:94170">
+                    Xem tin
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136864">
+              <div className="content-stretch flex flex-col h-full items-start justify-center p-[12px] relative shrink-0 w-[155px]" data-name="Table header">
+                <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] gap-[4px] items-start justify-center leading-[var(--leading\/5,20px)] min-h-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] tracking-[var(--tracking\/normal,0px)] w-full" data-node-id="2420:136865" data-name="Text">
+                  <p className="overflow-hidden relative shrink-0 text-[14px] text-ellipsis w-full whitespace-nowrap" data-node-id="2420:136866">
+                    Chia sẻ
+                  </p>
+                  <p className="relative shrink-0 text-[length:var(--size\/sm,14px)] w-full" data-node-id="2420:136867">
+                    Phạm Văn Anh
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136868">
+              <div className="content-stretch flex gap-[var(--gap-2,8px)] h-full items-center p-[12px] relative shrink-0 w-[87px]" data-name="Table header">
+                <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136869" data-name="Text">
+                  <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136870">
+                    234
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136871">
+              <div className="content-stretch flex gap-[var(--gap-2,8px)] h-full items-center p-[12px] relative shrink-0 w-[117px]" data-name="Table header">
+                <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136872" data-name="Text">
+                  <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136873">
+                    <span className="leading-[var(--leading\/5,20px)]">
+                      {`26/05/2026 `}
+                      <br aria-hidden />
+                    </span>
+                    <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136874">
+              <div className="content-stretch flex flex-col gap-[8px] h-full items-start justify-center p-[12px] relative shrink-0" data-name="Table - Cell">
+                <div className="bg-[var(--brand\/blue\/100,#dbeafe)] content-stretch flex gap-[4px] h-[22px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I2420:136874;2020:114967" data-name="Tag_status">
+                  <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--brand\/blue\/500,#3c82f6)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I2420:136874;2020:114967;2020:114940">
+                    Chờ duyệt
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136875">
+              <div className="content-stretch flex gap-[var(--gap-2,8px)] h-full items-center px-[16px] py-[var(--p-2,8px)] relative shrink-0 w-[160px]" data-name="Table header" />
+            </div>
+            <div className="flex flex-row items-center self-stretch" data-node-id="2420:136878">
+              <div className="content-stretch flex h-full items-center p-[var(--p-2,8px)] relative shrink-0 w-[105px]" data-name="Table header">
+                <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:136879">
+                  <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136880" data-name="Button">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136880;604:51" data-name="icon/search">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                    </div>
+                  </div>
+                  <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136881" data-name="Button">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136881;604:51" data-name="icon/search">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:136882" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:136883" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136884" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136885">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[119px]" data-node-id="2420:136886" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136887" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136888">
+                  Bất động sản
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:136889" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136890" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:136891" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[284px]" data-node-id="2420:136892" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136893" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136894">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:136895" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:136895;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative self-stretch shrink-0 w-[155px]" data-node-id="2420:136896" data-name="Table header">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] gap-[4px] items-start justify-center leading-[var(--leading\/5,20px)] min-h-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] tracking-[var(--tracking\/normal,0px)] w-full" data-node-id="2420:136897" data-name="Text">
+                <p className="overflow-hidden relative shrink-0 text-[14px] text-ellipsis w-full whitespace-nowrap" data-node-id="2420:136898">
+                  Viết bài
+                </p>
+                <p className="relative shrink-0 text-[length:var(--size\/sm,14px)] w-full" data-node-id="2420:136899">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[87px]" data-node-id="2420:136900" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136901" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136902">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[117px]" data-node-id="2420:136903" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136904" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136905">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[8px] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[104px]" data-node-id="2420:136906" data-name="Table - Cell">
+              <div className="bg-[var(--brand\/green\/100,#dcfce7)] content-stretch flex gap-[4px] h-[22px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I2420:136906;2020:114967" data-name="Tag_status">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--brand\/green\/500,#22c55d)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I2420:136906;2020:114967;2020:114945">
+                  Đã duyệt
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:136907" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136908" data-name="Text">
+                <div className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136909">
+                  <p className="leading-[var(--leading\/5,20px)] mb-0">Phạm Văn Anh</p>
+                  <p>
+                    <span className="leading-[var(--leading\/5,20px)]">
+                      {`26/05/2026 `}
+                      <br aria-hidden />
+                    </span>
+                    <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:136910" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:136911">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136912" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136912;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136913" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136913;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:136914" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:136915" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136916" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136917">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[119px]" data-node-id="2420:136918" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136919" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136920">
+                  Tài chính
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:136921" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136922" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:136923" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[284px]" data-node-id="2420:136924" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136925" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136926">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:136927" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:136927;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative self-stretch shrink-0 w-[155px]" data-node-id="2420:136928" data-name="Table header">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] gap-[4px] items-start justify-center leading-[var(--leading\/5,20px)] min-h-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] tracking-[var(--tracking\/normal,0px)] w-full" data-node-id="2420:136929" data-name="Text">
+                <p className="overflow-hidden relative shrink-0 text-[14px] text-ellipsis w-full whitespace-nowrap" data-node-id="2420:136930">
+                  Viết bài
+                </p>
+                <p className="relative shrink-0 text-[length:var(--size\/sm,14px)] w-full" data-node-id="2420:136931">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[87px]" data-node-id="2420:136932" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136933" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136934">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[117px]" data-node-id="2420:136935" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136936" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136937">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[8px] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[104px]" data-node-id="2420:136938" data-name="Table - Cell">
+              <div className="bg-[var(--brand\/green\/100,#dcfce7)] content-stretch flex gap-[4px] h-[22px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I2420:136938;2020:114967" data-name="Tag_status">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--brand\/green\/500,#22c55d)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I2420:136938;2020:114967;2020:114945">
+                  Đã duyệt
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:136939" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136940" data-name="Text">
+                <div className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136941">
+                  <p className="leading-[var(--leading\/5,20px)] mb-0">Phạm Văn Anh</p>
+                  <p>
+                    <span className="leading-[var(--leading\/5,20px)]">
+                      {`26/05/2026 `}
+                      <br aria-hidden />
+                    </span>
+                    <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:136942" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:136943">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136944" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136944;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136945" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136945;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:136946" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:136947" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136948" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136949">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[119px]" data-node-id="2420:136950" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136951" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136952">
+                  Pháp lý nhà đất
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:136953" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136954" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:136955" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[284px]" data-node-id="2420:136956" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136957" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136958">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:136959" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:136959;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative self-stretch shrink-0 w-[155px]" data-node-id="2420:136960" data-name="Table header">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] gap-[4px] items-start justify-center leading-[var(--leading\/5,20px)] min-h-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] tracking-[var(--tracking\/normal,0px)] w-full" data-node-id="2420:136961" data-name="Text">
+                <p className="overflow-hidden relative shrink-0 text-[14px] text-ellipsis w-full whitespace-nowrap" data-node-id="2420:136962">
+                  Chia sẻ
+                </p>
+                <p className="relative shrink-0 text-[length:var(--size\/sm,14px)] w-full" data-node-id="2420:136963">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[87px]" data-node-id="2420:136964" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136965" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136966">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[117px]" data-node-id="2420:136967" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136968" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136969">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[8px] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[104px]" data-node-id="2420:136970" data-name="Table - Cell">
+              <div className="bg-[var(--brand\/green\/100,#dcfce7)] content-stretch flex gap-[4px] h-[22px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I2420:136970;2020:114967" data-name="Tag_status">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--brand\/green\/500,#22c55d)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I2420:136970;2020:114967;2020:114945">
+                  Đã duyệt
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:136971" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136972" data-name="Text">
+                <div className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:136973">
+                  <p className="leading-[var(--leading\/5,20px)] mb-0">Phạm Văn Anh</p>
+                  <p>
+                    <span className="leading-[var(--leading\/5,20px)]">
+                      {`26/05/2026 `}
+                      <br aria-hidden />
+                    </span>
+                    <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:136974" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:136975">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136976" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136976;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:136977" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:136977;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:136978" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:136979" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136980" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136981">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[119px]" data-node-id="2420:136982" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136983" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136984">
+                  Phong thủy
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:136985" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136986" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:136987" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[284px]" data-node-id="2420:136988" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:136989" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:136990">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:136991" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:136991;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col items-start justify-center p-[12px] relative self-stretch shrink-0 w-[155px]" data-node-id="2420:136992" data-name="Table header">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] gap-[4px] items-start justify-center leading-[var(--leading\/5,20px)] min-h-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] tracking-[var(--tracking\/normal,0px)] w-full" data-node-id="2420:136993" data-name="Text">
+                <p className="overflow-hidden relative shrink-0 text-[14px] text-ellipsis w-full whitespace-nowrap" data-node-id="2420:136994">
+                  Chia sẻ
+                </p>
+                <p className="relative shrink-0 text-[length:var(--size\/sm,14px)] w-full" data-node-id="2420:136995">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[87px]" data-node-id="2420:136996" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:136997" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:136998">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[117px]" data-node-id="2420:136999" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137000" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137001">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[8px] items-start justify-center p-[12px] relative self-stretch shrink-0" data-node-id="2420:137002" data-name="Table - Cell">
+              <div className="bg-[var(--brand\/blue\/100,#dbeafe)] content-stretch flex gap-[4px] h-[22px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I2420:137002;2020:114967" data-name="Tag_status">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--brand\/blue\/500,#3c82f6)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I2420:137002;2020:114967;2020:114940">
+                  Chờ duyệt
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137003" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] h-[60px] items-center min-w-px relative" data-node-id="2420:137004" data-name="Text" />
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:137006" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:137007">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137008" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137008;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137009" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137009;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:137010" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:137011" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137012" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137013">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:137014" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137015" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137016">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[119px]" data-node-id="2420:137017" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137018" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:137019" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center p-[12px] relative self-stretch shrink-0 w-[284px]" data-node-id="2420:137020" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:137021" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:137022">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:137023" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:137023;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[101px]" data-node-id="2420:137024" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137025" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137026">
+                  Chia sẻ
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[122px]" data-node-id="2420:137027" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137028" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137029">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center p-[12px] relative self-stretch shrink-0 w-[119px]" data-node-id="2420:137030" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137031" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137032">
+                  Phong thủy
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[117px]" data-node-id="2420:137033" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137034" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137035">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137036" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137037" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137038">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[147px]" data-node-id="2420:137039" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137040" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137041">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:137042" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:137043">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137044" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137044;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137045" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137045;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:137046" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:137047" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137048" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137049">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[95px]" data-node-id="2420:137050" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137051" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137052">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:137053" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137054" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:137055" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center px-[16px] py-[var(--p-2,8px)] relative shrink-0 w-[324px]" data-node-id="2420:137056" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:137057" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:137058">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:137059" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:137059;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137060" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137061" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137062">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[140px]" data-node-id="2420:137063" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137064" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137065">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137066" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137067" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137068">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-start px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[147px]" data-node-id="2420:137069" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137070" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137071">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:137072" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:137073">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137074" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137074;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137075" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137075;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:137076" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:137077" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137078" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137079">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[95px]" data-node-id="2420:137080" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137081" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137082">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:137083" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137084" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:137085" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center px-[16px] py-[var(--p-2,8px)] relative shrink-0 w-[324px]" data-node-id="2420:137086" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:137087" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:137088">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:137089" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:137089;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137090" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137091" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137092">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[140px]" data-node-id="2420:137093" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137094" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137095">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137096" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137097" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137098">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-start px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[147px]" data-node-id="2420:137099" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137100" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137101">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:137102" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:137103">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137104" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137104;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137105" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137105;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:137106" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:137107" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137108" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137109">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[95px]" data-node-id="2420:137110" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137111" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137112">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:137113" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137114" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:137115" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center px-[16px] py-[var(--p-2,8px)] relative shrink-0 w-[324px]" data-node-id="2420:137116" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:137117" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:137118">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:137119" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:137119;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137120" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137121" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137122">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[140px]" data-node-id="2420:137123" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137124" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137125">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137126" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137127" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137128">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-start px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[147px]" data-node-id="2420:137129" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137130" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137131">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:137132" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:137133">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137134" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137134;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137135" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137135;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:137136" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:137137" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137138" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137139">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[95px]" data-node-id="2420:137140" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137141" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137142">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:137143" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137144" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:137145" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center px-[16px] py-[var(--p-2,8px)] relative shrink-0 w-[324px]" data-node-id="2420:137146" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:137147" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:137148">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:137149" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:137149;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137150" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137151" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137152">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[140px]" data-node-id="2420:137153" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137154" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137155">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137156" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137157" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137158">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-start px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[147px]" data-node-id="2420:137159" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137160" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137161">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:137162" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:137163">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137164" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137164;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137165" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137165;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="border-[var(--border,#e5e5e5)] border-b-[length:var(--border-b,1px)] border-solid content-stretch flex items-start relative shrink-0 w-full" data-node-id="2420:137166" data-name="Row">
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[83px]" data-node-id="2420:137167" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137168" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137169">
+                  451341
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[95px]" data-node-id="2420:137170" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137171" data-name="Text">
+                <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/4,16px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/xs,12px)] text-center tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137172">
+                  234
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[93px]" data-node-id="2420:137173" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137174" data-name="Text">
+                <div className="h-[40px] relative rounded-[6px] shrink-0 w-[48px]" data-node-id="2420:137175" data-name="Img">
+                  <div aria-hidden className="absolute inset-0 pointer-events-none rounded-[6px]">
+                    <div className="absolute bg-white inset-0 rounded-[6px]" />
+                    <div className="absolute inset-0 overflow-hidden rounded-[6px]">
+                      <img alt="" className="absolute h-full left-[-13.87%] max-w-none top-[1.25%] w-[125.66%]" src={imgImg} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start justify-center px-[16px] py-[var(--p-2,8px)] relative shrink-0 w-[324px]" data-node-id="2420:137176" data-name="Table header">
+              <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="2420:137177" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)]" data-node-id="2420:137178">
+                  <span className="leading-[var(--leading\/5,20px)]">{`Hạ Tầng Giao Thông Hiện Đại Góp Phần Định Hình Diện Mạo... `}</span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--brand\/blue\/600,#2463eb)]">Xem thêm</span>
+                </p>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[12px] py-[4px] relative rounded-[8px] shrink-0" data-node-id="2420:137179" data-name="Button">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I2420:137179;1839:94170">
+                  Xem tin
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137180" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137181" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137182">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[140px]" data-node-id="2420:137183" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137184" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137185">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[160px]" data-node-id="2420:137186" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137187" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--text\/main,#0a0a0a)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="2420:137188">
+                  Phạm Văn Anh
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[var(--gap-2,8px)] items-start px-[16px] py-[var(--p-2,8px)] relative self-stretch shrink-0 w-[147px]" data-node-id="2420:137189" data-name="Table header">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="2420:137190" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-pre-wrap" data-node-id="2420:137191">
+                  <span className="leading-[var(--leading\/5,20px)]">
+                    {`26/05/2026 `}
+                    <br aria-hidden />
+                  </span>
+                  <span className="leading-[var(--leading\/5,20px)] text-[color:var(--text\/subtle,#a1a1aa)]">08:48:44</span>
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex items-center p-[var(--p-2,8px)] relative self-stretch shrink-0 w-[105px]" data-node-id="2420:137192" data-name="Table header">
+              <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="2420:137193">
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137194" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137194;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+                  </div>
+                </div>
+                <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[8px] h-[40px] items-center justify-center px-[12px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="2420:137195" data-name="Button">
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I2420:137195;604:51" data-name="icon/search">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

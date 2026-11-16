@@ -1,0 +1,92 @@
+  ▲ Next.js 14.2.35
+  - Environments: .env
+
+   Creating an optimized production build ...
+ ⚠ Failed to download the stylesheet for https://fonts.googleapis.com/css2?family=Figtree:wght@300..900&display=swap. Skipped optimizing this font.
+ ⚠ Failed to download the stylesheet for https://fonts.googleapis.com/css2?family=Inter:wght@300..900&display=swap. Skipped optimizing this font.
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/53) ...
+   Generating static pages (13/53) 
+   Generating static pages (26/53) 
+   Generating static pages (39/53) 
+ ✓ Generating static pages (53/53)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ƒ /                                    176 B          88.6 kB
+├ ƒ /_not-found                          176 B          88.6 kB
+├ ƒ /admin                               12.5 kB         281 kB
+├ ƒ /admin/activity                      7.4 kB          684 kB
+├ ƒ /admin/apartment                     3.42 kB         705 kB
+├ ƒ /admin/apartment/add                 604 B           646 kB
+├ ƒ /admin/apartment/unit                6.01 kB         732 kB
+├ ƒ /admin/apartment/unit/[id]           454 B           656 kB
+├ ƒ /admin/apartment/unit/add            346 B           656 kB
+├ ƒ /admin/config/address                21.9 kB         634 kB
+├ ƒ /admin/config/address-conversion     176 B          88.6 kB
+├ ƒ /admin/config/address-manager        32 kB           204 kB
+├ ƒ /admin/config/agency-manager         18.3 kB         478 kB
+├ ƒ /admin/config/banner                 5.77 kB         136 kB
+├ ƒ /admin/config/branch                 6.41 kB         683 kB
+├ ƒ /admin/config/document               21.6 kB         355 kB
+├ ƒ /admin/config/error-monitor          10.1 kB         120 kB
+├ ƒ /admin/config/news                   22.7 kB         997 kB
+├ ƒ /admin/config/news/add               5.29 kB         850 kB
+├ ƒ /admin/config/news/edit/[id]         7.91 kB         880 kB
+├ ƒ /admin/config/notifications          4.08 kB         643 kB
+├ ƒ /admin/config/notifications/[id]     19.6 kB         288 kB
+├ ƒ /admin/config/propType               5.41 kB         501 kB
+├ ƒ /admin/config/recruitment            6.28 kB         692 kB
+├ ƒ /admin/config/recruitment/[id]       22.6 kB         342 kB
+├ ƒ /admin/config/recruitment/add        4.68 kB         626 kB
+├ ƒ /admin/config/recruitment/edit/[id]  4.74 kB         626 kB
+├ ƒ /admin/config/role                   4.45 kB         490 kB
+├ ƒ /admin/customer                      16.5 kB         702 kB
+├ ƒ /admin/customer/website              10.8 kB         696 kB
+├ ƒ /admin/customer/website/[id]         30.1 kB         559 kB
+├ ƒ /admin/dashboard/consignment         20.2 kB         621 kB
+├ ƒ /admin/dashboard/overview            129 kB          812 kB
+├ ƒ /admin/dashboard/report-spam         13.1 kB         654 kB
+├ ƒ /admin/dataLog                       3.14 kB         672 kB
+├ ƒ /admin/feed                          943 B           764 kB
+├ ƒ /admin/feed/[id]                     251 B           708 kB
+├ ƒ /admin/feed/add                      252 B           708 kB
+├ ƒ /admin/feed/pricing                  6.6 kB          684 kB
+├ ƒ /admin/feed/website                  707 B           755 kB
+├ ƒ /admin/hoa-hong-nha-ban              176 B          88.6 kB
+├ ƒ /admin/hoa-hong-nha-thue             176 B          88.6 kB
+├ ƒ /admin/map                           18.3 kB         663 kB
+├ ƒ /admin/marketing                     176 B          88.6 kB
+├ ƒ /admin/prop-transfer                 18.6 kB         563 kB
+├ ƒ /admin/property                      24.9 kB         820 kB
+├ ƒ /admin/property/[id]                 176 B          88.6 kB
+├ ƒ /admin/property/add                  176 B          88.6 kB
+├ ƒ /admin/property/propCompare          7.82 kB         273 kB
+├ ƒ /admin/propTemp                      20 kB           697 kB
+├ ƒ /admin/rule                          10.5 kB         462 kB
+├ ƒ /admin/sim                           12.6 kB         527 kB
+├ ƒ /admin/su-dung                       176 B          88.6 kB
+├ ƒ /admin/trang-phuc                    176 B          88.6 kB
+├ ƒ /admin/userAdmin                     18.7 kB         710 kB
+├ ƒ /admin/userAdmin/[id]                19.4 kB         718 kB
+├ ƒ /admin/userAdmin/add                 18.1 kB         596 kB
+├ ƒ /admin/userAdmin/edit/[id]           2.03 kB         641 kB
+├ ƒ /admin/userAdmin/leave-request       9.78 kB         554 kB
+├ ƒ /admin/verify-property               12.6 kB         565 kB
+├ ƒ /api/auth/[...nextauth]              0 B                0 B
+├ ƒ /api/client-errors                   0 B                0 B
+├ ƒ /api/proxy/[...path]                 0 B                0 B
+└ ƒ /login                               17.5 kB         686 kB
++ First Load JS shared by all            88.5 kB
+  ├ chunks/2117-48c32f35c152ed26.js      31.8 kB
+  ├ chunks/fd9d1056-d78dc9f57a5877a7.js  53.6 kB
+  └ other shared chunks (total)          3 kB
+
+
+ƒ Middleware                             79.2 kB
+
+ƒ  (Dynamic)  server-rendered on demand
+

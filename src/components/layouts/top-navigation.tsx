@@ -111,7 +111,7 @@ const documentItem: NavigationItem = {
   description: AppRoutes.document.name,
 };
 
-export function TopNavigation() {
+export function TopNavigation({ designTheme = false }: { designTheme?: boolean }) {
   const router = useRouter();
   const currentPath = useCurrentPath();
   const { data: session } = useSession();
@@ -123,15 +123,17 @@ export function TopNavigation() {
   );
 
   const menuItems = [...propertyItems, ...filteredNavigationData, ...mapItems];
+  const iconClassName = designTheme ? "size-6 mr-2" : "w-4 h-4 mr-2";
 
   return (
-    <NavigationMenu viewport={false} className="hidden lg:block">
+    <NavigationMenu viewport={false} className={designTheme ? "admin-top-navigation hidden min-[1400px]:block" : "hidden lg:block"}>
       <NavigationMenuList>
         {menuItems.map((item) => {
-          const isActive = isMenuGroupActive(
+          const isActive = (designTheme && isPathActive(currentPath, item.url)) || isMenuGroupActive(
             currentPath,
             item.items?.map((subItem) => ({ url: subItem.url })) ?? []
           );
+          const title = designTheme && item.title === "Tin đăng" ? "Đăng tin" : item.title;
 
           // Filter sub-items based on user role
           const accessibleSubItems =
@@ -154,8 +156,8 @@ export function TopNavigation() {
                     href={singleItem.url}
                     className="flex flex-row items-center font-medium"
                   >
-                    {item.icon && <item.icon className="w-4 h-4 mr-2" />}
-                    <span className="text-black">{item.title}</span>
+                    {item.icon && <item.icon className={iconClassName} />}
+                    <span className="text-black">{title}</span>
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -171,16 +173,16 @@ export function TopNavigation() {
                   // asChild
                 >
                   <Link href={item.url} className="flex items-center">
-                    {item.icon && <item.icon className="w-4 h-4 mr-2" />}
-                    {item.title}
+                    {item.icon && <item.icon className={iconClassName} />}
+                    {title}
                   </Link>
                 </NavigationMenuTrigger>
               ) : (
                 <NavigationMenuTrigger
                   className={isActive ? "bg-accent text-accent-foreground" : ""}
                 >
-                  {item.icon && <item.icon className="w-4 h-4 mr-2" />}
-                  {item.title}
+                  {item.icon && <item.icon className={iconClassName} />}
+                  {title}
                 </NavigationMenuTrigger>
               )}
               <NavigationMenuContent>
@@ -228,11 +230,12 @@ export function TopNavigation() {
 
         <NavigationMenuItem className={`rounded-md hover:bg-accent`}>
           <Button
-            variant="outline"
+            variant={designTheme ? "ghost" : "outline"}
+            className={designTheme ? "admin-ward-lookup" : undefined}
             onClick={() => setOpenWardLookup(true)}
             // size={'sm'}
           >
-            <Search />
+            {designTheme ? <FileSearch2 className="size-6" /> : <Search />}
             Tra cứu hành chính
           </Button>
         </NavigationMenuItem>

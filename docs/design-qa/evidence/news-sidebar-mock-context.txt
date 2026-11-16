@@ -1,0 +1,57 @@
+const assetPathPrefix = "https://www.figma.com/api/mcp/asset/4ea2427a-defe-496b-bec2-3449b5bee4da";
+const imgImage2 = `${assetPathPrefix}/6afd2.png`;
+const imgLucideHouse = `${assetPathPrefix}/0e6db.svg`;
+const imgLucideBuilding2 = `${assetPathPrefix}/bb87a.svg`;
+const imgLucideSquarePen = `${assetPathPrefix}/32ca6.svg`;
+const imgLucideBookUser = `${assetPathPrefix}/5d82b.svg`;
+
+export default function Menu() {
+  return (
+    <div className="bg-[var(--bg\/surface,white)] border-[var(--text\/border,#e5e5e5)] border-r border-solid content-stretch flex flex-col items-center px-[12px] py-[16px] relative size-full" data-node-id="2420:137197" data-name="Menu">
+      <div className="content-stretch flex flex-col gap-[24px] items-center overflow-clip relative shrink-0 w-full" data-node-id="2420:137198" data-name="navbar-nav">
+        <div className="h-[50px] relative shrink-0 w-[44px]" data-node-id="2420:137200" data-name="image 2">
+          <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage2} />
+        </div>
+        <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full" data-node-id="2420:137559">
+          <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[10px] h-[44px] items-center justify-center px-[16px] py-[8px] relative rounded-[8px] shrink-0 w-full" data-node-id="2420:137560" data-name="Menu Item">
+            <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="2420:137561">
+              <div className="relative shrink-0 size-[24px]" data-node-id="2420:137562" data-name="lucide/house">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHouse} />
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[10px] h-[44px] items-center justify-center px-[16px] py-[8px] relative rounded-[3px] shrink-0 w-full" data-node-id="2420:137574" data-name="Menu Item">
+            <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="2420:137575">
+              <div className="relative shrink-0 size-[24px]" data-node-id="2420:137576" data-name="lucide/building-2">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideBuilding2} />
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[10px] h-[44px] items-center justify-center px-[16px] py-[8px] relative rounded-[3px] shrink-0 w-full" data-node-id="2420:137584" data-name="Menu Item">
+            <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="2420:137585">
+              <div className="relative shrink-0 size-[24px]" data-node-id="2420:137586" data-name="lucide/square-pen">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideSquarePen} />
+              </div>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[10px] h-[44px] items-center justify-center px-[16px] py-[8px] relative rounded-[3px] shrink-0 w-full" data-node-id="2420:137589" data-name="Menu Item">
+            <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="2420:137590">
+              <div className="relative shrink-0 size-[24px]" data-node-id="2420:137591" data-name="lucide/book-user">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideBookUser} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+The generated code contains image and SVG URL constants, e.g. const image = `${assetPathPrefix}/<asset file name>`, where assetPathPrefix is declared once at the top of the code and every asset URL interpolates it. These URLs are temporary download sources and expire after 7 days. Download each asset into the project with curl -L, then replace its URL in the generated code with a reference to the downloaded asset. Never use the temporary URLs as runtime image sources.

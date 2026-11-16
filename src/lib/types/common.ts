@@ -28,6 +28,7 @@ export type SelectType = {
   showSearch?: boolean;
   className?: string;
   popupClassName?: string;
+  getPopupContainer?: SelectProps["getPopupContainer"];
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
   builtinPlacements?: SelectProps["builtinPlacements"];
   listHeight?: number;

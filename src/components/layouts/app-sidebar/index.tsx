@@ -33,10 +33,12 @@ export function AppSidebar({
           />
         ) : state === "collapsed" ? (
           <Image
-            src="/logo.png"
+            src={isNewsPage ? "/assets/admin/sidebar-logo.png" : "/logo.png"}
             alt="cchouse logo"
             width={isNewsPage ? 44 : 30}
-            height={isNewsPage ? 44 : 30}
+            height={isNewsPage ? 50 : 30}
+            className={isNewsPage ? "object-cover" : undefined}
+            style={isNewsPage ? { width: 44, height: 50, maxWidth: "none", flexShrink: 0 } : undefined}
           />
         ) : (
           <Image
@@ -48,7 +50,7 @@ export function AppSidebar({
           />
         )}
       </SidebarHeader>
-      <SidebarContent className={isNewsPage ? "pt-2" : undefined}>
+      <SidebarContent className={isNewsPage ? "pt-0" : undefined}>
         <NavMain items={navigationData} />
       </SidebarContent>
       <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>

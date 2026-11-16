@@ -1,0 +1,63 @@
+{
+  "baseline": {
+    "errors": [
+      "17"
+    ],
+    "warnings": [
+      "43"
+    ],
+    "shown_diagnostics": [
+      "src/app/admin/apartment/page.tsx:19:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/app/admin/config/notifications/[id]/page.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE",
+      "src/components/layouts/app-sidebar/nav-main.tsx:35:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/layouts/top-navigation.tsx:107:7 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/layouts/top-navigation.tsx:115:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/ui/form-field/street-cbx.tsx:40:10 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/ui/form-field/ward-cbx.tsx:47:10 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/form/index.tsx:41:7 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx:32:10 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx:32:19 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/modal/preview/index.tsx:28:11 lint/correctness/noUnusedVariables",
+      "src/lib/components/admin/branch/table/index.tsx:22:42 lint/correctness/noUnusedVariables",
+      "src/lib/components/admin/customer/filter/index.tsx:45:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/filter/index.tsx:46:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/form/requirement/index.tsx:24:7 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/form/requirement/index.tsx:36:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/form/requirement/index.tsx:40:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/feed/form/addEdit/index.tsx:6:9 lint/correctness/noUnusedImports  FIXABLE",
+      "src/lib/components/admin/feed/form/addEdit/index.tsx:94:11 lint/correctness/noUnusedVariables",
+      "src/types/next-auth.d.ts:1:8 lint/correctness/noUnusedImports  FIXABLE"
+    ]
+  },
+  "responsive": {
+    "errors": [
+      "17"
+    ],
+    "warnings": [
+      "43"
+    ],
+    "shown_diagnostics": [
+      "src/app/admin/apartment/page.tsx:19:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/app/admin/config/notifications/[id]/page.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE",
+      "src/components/layouts/app-sidebar/nav-main.tsx:35:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/layouts/top-navigation.tsx:107:7 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/layouts/top-navigation.tsx:115:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/ui/form-field/street-cbx.tsx:40:10 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/components/ui/form-field/ward-cbx.tsx:47:10 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/form/index.tsx:41:7 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx:32:10 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx:32:19 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/apartment-unit/modal/preview/index.tsx:28:11 lint/correctness/noUnusedVariables",
+      "src/lib/components/admin/branch/table/index.tsx:22:42 lint/correctness/noUnusedVariables",
+      "src/lib/components/admin/customer/filter/index.tsx:45:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/filter/index.tsx:46:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/form/requirement/index.tsx:24:7 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/form/requirement/index.tsx:36:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/customer/form/requirement/index.tsx:40:9 lint/correctness/noUnusedVariables  FIXABLE",
+      "src/lib/components/admin/happyBirthday/index.tsx:4:8 lint/correctness/noUnusedImports  FIXABLE",
+      "src/lib/components/admin/news/filter/FloatingField.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE",
+      "src/types/next-auth.d.ts:1:8 lint/correctness/noUnusedImports  FIXABLE"
+    ]
+  },
+  "same_shown_diagnostics": false
+}

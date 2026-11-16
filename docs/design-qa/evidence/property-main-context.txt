@@ -1,0 +1,1885 @@
+const assetPathPrefix = "https://www.figma.com/api/mcp/asset/12e31c83-f6d0-4485-8e2b-50eed75b8b55";
+const imgLiChevronDown = `${assetPathPrefix}/fc9be.svg`;
+const imgLiMic = `${assetPathPrefix}/ec0bc.svg`;
+const imgLiChevronDown1 = `${assetPathPrefix}/f2357.svg`;
+const imgIconSearch = `${assetPathPrefix}/aee0d.svg`;
+const imgIconPlus = `${assetPathPrefix}/3293a.svg`;
+const imgLiChevronDown2 = `${assetPathPrefix}/90817.svg`;
+const imgIconSearch1 = `${assetPathPrefix}/6257e.svg`;
+const imgLucideBookUser = `${assetPathPrefix}/91486.svg`;
+const imgLucideSquarePen = `${assetPathPrefix}/d22e6.svg`;
+const imgLucideBuilding2 = `${assetPathPrefix}/d3a21.svg`;
+const imgLucideUserRoundPlus = `${assetPathPrefix}/23b80.svg`;
+const imgLucideHousePlus = `${assetPathPrefix}/c408b.svg`;
+const imgLucideBell = `${assetPathPrefix}/caa47.svg`;
+const imgLucideHouse = `${assetPathPrefix}/1b8eb.svg`;
+const imgEllipse2824 = `${assetPathPrefix}/a5304.png`;
+const imgImage2 = `${assetPathPrefix}/6afd2.png`;
+const imgLucidePanelRight = `${assetPathPrefix}/5a647.svg`;
+const imgLucideChevronDown = `${assetPathPrefix}/728d4.svg`;
+const imgLucideLkey = `${assetPathPrefix}/61b21.svg`;
+const imgLucideSquarePen1 = `${assetPathPrefix}/78fe6.svg`;
+const imgLucideBookUser1 = `${assetPathPrefix}/c4f3d.svg`;
+const imgLucideMapPinned = `${assetPathPrefix}/c78d1.svg`;
+const imgLiFileSearchCorner = `${assetPathPrefix}/ccb97.svg`;
+const imgGroup1000004098 = `${assetPathPrefix}/5ecfa.svg`;
+const imgGroup1000004099 = `${assetPathPrefix}/9500e.svg`;
+const imgGroup1000004100 = `${assetPathPrefix}/1aa7b.svg`;
+const imgGroup1000004097 = `${assetPathPrefix}/f8082.svg`;
+const imgLucideChevronDown1 = `${assetPathPrefix}/35e65.svg`;
+const imgLucideHouse1 = `${assetPathPrefix}/0e6db.svg`;
+const imgIconSearch2 = `${assetPathPrefix}/a47e1.svg`;
+const imgLiHistory = `${assetPathPrefix}/c967d.svg`;
+const imgLiStickyNote = `${assetPathPrefix}/bbcf4.svg`;
+const imgLiImage = `${assetPathPrefix}/796c9.svg`;
+const imgLucidePhone = `${assetPathPrefix}/6949c.svg`;
+const imgLiShoppingCart = `${assetPathPrefix}/0cd6b.svg`;
+const imgLiCopy = `${assetPathPrefix}/f086e.svg`;
+const imgLiCirclePlus = `${assetPathPrefix}/d2797.svg`;
+const imgLiHistory1 = `${assetPathPrefix}/9045f.svg`;
+const imgLucidePhone1 = `${assetPathPrefix}/c4568.svg`;
+const imgLiHistory2 = `${assetPathPrefix}/5248a.svg`;
+const imgLucidePhone2 = `${assetPathPrefix}/e24b2.svg`;
+const imgLucidePhone3 = `${assetPathPrefix}/6e737.svg`;
+const imgLiImage1 = `${assetPathPrefix}/bc450.svg`;
+const imgLucidePhone4 = `${assetPathPrefix}/f5369.svg`;
+const imgVector1 = `${assetPathPrefix}/6bafa.svg`;
+const imgVector458 = `${assetPathPrefix}/0c8b7.svg`;
+const imgVector459 = `${assetPathPrefix}/06a7f.svg`;
+const imgLucideChevronDown2 = `${assetPathPrefix}/ee0fe.svg`;
+const imgLucideChevronLeft = `${assetPathPrefix}/7ade3.svg`;
+const imgLucideChevronsLeft = `${assetPathPrefix}/faa16.svg`;
+const imgLucideChevronRight = `${assetPathPrefix}/7bfa9.svg`;
+const imgLucideChevronsRight = `${assetPathPrefix}/9a8e2.svg`;
+
+type TableCellProps = {
+  className?: string;
+  type?: "Title";
+};
+
+function TableCell({ className, type = "Title" }: TableCellProps) {
+  return (
+    <div className={className || "bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative w-[240px]"} data-node-id="379:32675">
+      <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="379:32673">
+        <p className="leading-[var(--line-height\/text-sm,20px)]">Mã</p>
+      </div>
+    </div>
+  );
+}
+
+type MuaBanTableRowProps = {
+  className?: string;
+  property1?: "Header";
+};
+
+function MuaBanTableRow({ className, property1 = "Header" }: MuaBanTableRowProps) {
+  return (
+    <div className={className || "border-[var(--text\\/border,#e5e5e5)] border-b border-solid content-stretch flex items-center overflow-clip relative"} data-node-id="639:34529">
+      <TableCell className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[80px]" />
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[120px]" data-node-id="637:34606" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I637:34606;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Giá</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[130px]" data-node-id="637:34609" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I637:34609;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Số nhà, tên đường</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[160px]" data-node-id="637:34612" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I637:34612;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Xã phường quận</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[90px]" data-node-id="637:34615" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I637:34615;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Loại BĐS</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-node-id="637:34618" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I637:34618;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Kết cấu</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[160px]" data-node-id="637:34621" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I637:34621;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Diện tích</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[120px]" data-node-id="637:34624" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I637:34624;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Vị trí</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[100px]" data-node-id="638:34627" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I638:34627;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Hướng</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-node-id="638:34630" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] text-center" data-node-id="I638:34630;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">SĐT</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f5f5] content-stretch flex h-[44px] items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-node-id="638:34633" data-name="Table - Cell">
+        <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] text-center" data-node-id="I638:34633;379:32673">
+          <p className="leading-[var(--line-height\/text-sm,20px)]">Hành động</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type SearchBarProps = {
+  className?: string;
+  type?: "Mua bán BĐS";
+};
+
+function SearchBar({ className, type = "Mua bán BĐS" }: SearchBarProps) {
+  return (
+    <div className={className || "bg-[var(--bg\\/surface,white)] border border-[var(--neutral\\/gray-2,#fafafa)] border-solid content-stretch drop-shadow-[0px_0px_2px_rgba(0,0,0,0.1)] flex flex-col gap-[16px] items-start justify-center px-[16px] py-[24px] relative rounded-[8px] w-[1300px]"} data-node-id="160:37611">
+      <div className="border border-[var(--border\/default,#e5e5e5)] border-solid content-stretch flex gap-[16px] items-center overflow-clip pb-[10px] pt-[16px] px-[8px] relative rounded-[8px] shrink-0 w-full" data-node-id="135:37549" data-name="Search">
+        <div className="content-stretch flex flex-[1_0_0] items-center justify-between min-w-px relative" data-node-id="135:37550" data-name="Search">
+          <div className="content-stretch flex flex-[1_0_0] gap-[16px] items-center min-w-px relative" data-node-id="201:10246" data-name="Group_filter_left">
+            <div className="bg-[var(--neutral\/gray-3,#e5e5e5)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[40px] h-[40px] items-center p-[12px] relative rounded-[10px] shrink-0 w-[200px]" data-node-id="135:37551" data-name="Combobox">
+              <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="I135:37551;130:13932" data-name="Input_Body">
+                <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I135:37551;130:13933" data-name="search_frame_content">
+                  <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I135:37551;130:13934">
+                    Mua bán
+                  </p>
+                </div>
+                <div className="relative shrink-0 size-[16px]" data-node-id="I135:37551;677:54387" data-name="li:chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown} />
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="982:55718" data-name="Search">
+              <div className="relative shrink-0 size-[24px]" data-node-id="982:55658" data-name="li:mic">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiMic} />
+              </div>
+              <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[#1c242d] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="135:37552">
+                Tìm kiếm bất động sản...
+              </p>
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="201:10109" data-name="Group_filter_right">
+            <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[40px] h-[40px] items-center p-[12px] relative rounded-[10px] shrink-0 w-[200px]" data-node-id="201:10110" data-name="Combobox">
+              <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="I201:10110;104:27248" data-name="Input_Body">
+                <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I201:10110;104:27240" data-name="search_frame_content">
+                  <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I201:10110;104:27241">
+                    Khu vực
+                  </p>
+                </div>
+                <div className="relative shrink-0 size-[16px]" data-node-id="I201:10110;677:53286" data-name="li:chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown1} />
+                </div>
+              </div>
+            </div>
+            <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[40px] h-[40px] items-center p-[12px] relative rounded-[10px] shrink-0 w-[200px]" data-node-id="201:10111" data-name="Combobox">
+              <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="I201:10111;130:13932" data-name="Input_Body">
+                <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I201:10111;130:13933" data-name="search_frame_content">
+                  <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I201:10111;130:13934">
+                    Đang bán
+                  </p>
+                </div>
+                <div className="relative shrink-0 size-[16px]" data-node-id="I201:10111;677:54387" data-name="li:chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown} />
+                </div>
+              </div>
+              <div className="[word-break:break-word] absolute bg-[var(--neutral\/white,white)] content-stretch flex font-normal gap-[4px] items-center justify-center left-[11px] not-italic px-[4px] top-[-9px] whitespace-nowrap" data-node-id="I201:10111;130:13936" data-name="search_frame_title">
+                <p className="font-['Inter:Regular'] leading-[var(--line-height\/text-xs,16px)] relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)]" data-node-id="I201:10111;130:13937">
+                  Trạng thái
+                </p>
+                <p className="font-[family-name:var(--font-family\/text,'Inter:Regular')] leading-[var(--line-height\/text-2xs,16px)] relative shrink-0 text-[color:var(--icon\/destructive,#ef4444)] text-[length:var(--font-sizes\/text-2xs,10px)]" data-node-id="I201:10111;390:39853">
+                  *
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="201:10652" data-name="Button_right">
+          <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[16px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="625:46019" data-name="Button">
+            <div className="relative shrink-0 size-[16px]" data-node-id="I625:46019;604:35" data-name="icon/search">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch} />
+            </div>
+            <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-base,24px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-base,16px)] whitespace-nowrap" data-node-id="I625:46019;602:57">
+              Tìm kiếm
+            </p>
+          </div>
+          <div className="flex flex-row items-center self-stretch" data-node-id="4969:225113">
+            <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex h-full items-center justify-center p-[12px] relative rounded-[10px] shrink-0 w-[40px]" data-name="Button">
+              <div className="relative shrink-0 size-[16px]" data-node-id="I4969:225113;927:54238" data-name="icon/plus">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconPlus} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="content-stretch flex gap-[16px] items-center px-[8px] relative shrink-0 w-[1268px]" data-node-id="135:37554" data-name="Filter">
+        <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="135:37555" data-name="Group_filter">
+          <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[40px] h-[40px] items-center p-[12px] relative rounded-[10px] shrink-0 w-[200px]" data-node-id="135:37556" data-name="Combobox">
+            <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="I135:37556;104:27248" data-name="Input_Body">
+              <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I135:37556;104:27240" data-name="search_frame_content">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I135:37556;104:27241">
+                  Vị trí
+                </p>
+              </div>
+              <div className="relative shrink-0 size-[16px]" data-node-id="I135:37556;677:53286" data-name="li:chevron-down">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown1} />
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex flex-[1_0_0] gap-[40px] h-[40px] items-center min-w-px p-[12px] relative rounded-[10px]" data-node-id="135:37557" data-name="Combobox">
+            <div className="content-stretch flex flex-[1_0_0] items-center justify-between min-w-px relative" data-node-id="I135:37557;111:2417" data-name="Input_Body">
+              <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I135:37557;111:2418" data-name="search_frame_content">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I135:37557;111:2419">
+                  Khoảng giá
+                </p>
+              </div>
+              <div className="flex flex-row items-center self-stretch" data-node-id="I135:37557;111:2451">
+                <div className="border-[var(--text\/subtle,#a1a1aa)] border-l border-solid content-stretch flex gap-[4px] h-full items-center pl-[8px] relative shrink-0">
+                  <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic overflow-hidden relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-sm,14px)] text-ellipsis whitespace-nowrap" data-node-id="I135:37557;111:2452">
+                    <p className="leading-[var(--line-height\/text-sm,20px)] overflow-hidden text-[14px] text-ellipsis">Tỷ</p>
+                  </div>
+                  <div className="relative shrink-0 size-[16px]" data-node-id="I135:37557;677:54334" data-name="li:chevron-down">
+                    <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown2} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex flex-[1_0_0] gap-[40px] h-[40px] items-center min-w-px p-[12px] relative rounded-[10px]" data-node-id="135:37558" data-name="Combobox">
+            <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="I135:37558;104:27248" data-name="Input_Body">
+              <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I135:37558;104:27240" data-name="search_frame_content">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I135:37558;104:27241">
+                  Diện tích
+                </p>
+              </div>
+              <div className="relative shrink-0 size-[16px]" data-node-id="I135:37558;677:53286" data-name="li:chevron-down">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown1} />
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[40px] h-[40px] items-center p-[12px] relative rounded-[10px] shrink-0 w-[200px]" data-node-id="2278:124636" data-name="Combobox">
+            <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="I2278:124636;104:27248" data-name="Input_Body">
+              <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I2278:124636;104:27240" data-name="search_frame_content">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I2278:124636;104:27241">
+                  Hướng
+                </p>
+              </div>
+              <div className="relative shrink-0 size-[16px]" data-node-id="I2278:124636;677:53286" data-name="li:chevron-down">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown1} />
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--text\/white,white)] border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex gap-[40px] h-[40px] items-center p-[12px] relative rounded-[10px] shrink-0 w-[200px]" data-node-id="135:37559" data-name="Combobox">
+            <div className="content-stretch flex flex-[1_0_0] gap-[8px] items-center min-w-px relative" data-node-id="I135:37559;104:27248" data-name="Input_Body">
+              <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-w-px relative" data-node-id="I135:37559;104:27240" data-name="search_frame_content">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[color:var(--text\/subtle,#a1a1aa)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I135:37559;104:27241">
+                  Loại BĐS
+                </p>
+              </div>
+              <div className="relative shrink-0 size-[16px]" data-node-id="I135:37559;677:53286" data-name="li:chevron-down">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiChevronDown1} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[4px] items-center relative shrink-0 w-[170px]" data-node-id="135:37560" data-name="Button_right">
+          <div className="bg-[var(--text\/white,white)] border border-[var(--brand\/main,#0688f0)] border-solid content-stretch flex flex-[1_0_0] gap-[8px] items-center justify-center min-w-px px-[16px] py-[8px] relative rounded-[10px]" data-node-id="625:46596" data-name="Button">
+            <div className="relative shrink-0 size-[16px]" data-node-id="I625:46596;604:43" data-name="icon/search">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch1} />
+            </div>
+            <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-base,24px)] not-italic relative shrink-0 text-[color:var(--brand\/main,#0688f0)] text-[length:var(--font-sizes\/text-base,16px)] whitespace-nowrap" data-node-id="I625:46596;602:73">
+              Lọc thêm
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LucideBookUser({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="98:25166" data-name="lucide/book-user">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideBookUser} />
+    </div>
+  );
+}
+
+function LucideSquarePen({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="98:25159" data-name="lucide/square-pen">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideSquarePen} />
+    </div>
+  );
+}
+
+function LucideBuilding2({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="98:25162" data-name="lucide/building-2">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideBuilding2} />
+    </div>
+  );
+}
+
+function LucideUserRoundPlus({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="98:25152" data-name="lucide/user-round-plus">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideUserRoundPlus} />
+    </div>
+  );
+}
+
+function LucideHousePlus({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="98:25167" data-name="lucide/house-plus">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHousePlus} />
+    </div>
+  );
+}
+
+function LucideBell({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="98:25165" data-name="lucide/bell">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideBell} />
+    </div>
+  );
+}
+
+function LucideHouse({ className }: { className?: string }) {
+  return (
+    <div className={className || "relative size-[24px]"} data-node-id="98:25163" data-name="lucide/house">
+      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHouse} />
+    </div>
+  );
+}
+
+export default function MhDanhSachMuaBanBds({ className }: { className?: string }) {
+  return (
+    <div className={className || "bg-[var(--bg\\/base,#fbfbfd)] h-[1024px] overflow-clip relative w-[1440px]"} data-node-id="214:48004" data-name="MH: Danh sách mua bán BĐS">
+      <div className="absolute bg-[var(--bg\/surface,white)] content-stretch flex items-center justify-between left-[68px] pl-[12px] pr-[24px] py-[16px] top-0 w-[1372px]" data-node-id="640:57110" data-name="Topbar">
+        <div className="content-stretch flex items-center relative shrink-0" data-node-id="I640:57110;98:2534" data-name="Item_tab">
+          <div className="bg-[var(--bg\/surface,white)] content-stretch flex items-start px-[16px] py-[8px] relative shrink-0" data-node-id="I640:57110;100:26235" data-name="menubar item">
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;100:26235;100:26184" data-name="Item">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I640:57110;100:26235;100:26203" data-name="lucide/panel-right">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePanelRight} />
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--legacy\/brand-blue\/light\/l-50,#eff6ff)] content-stretch flex items-start p-[8px] relative rounded-[4px] shrink-0" data-node-id="I640:57110;100:26279" data-name="menubar item">
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;100:26279;100:26215" data-name="Item">
+              <LucideHouse className="relative shrink-0 size-[24px]" />
+              <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I640:57110;100:26279;100:26312">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[length:var(--font-sizes\/text-sm,14px)] text-black whitespace-nowrap" data-node-id="I640:57110;100:26279;100:26217">
+                  Mua bán
+                </p>
+                <div className="relative shrink-0 size-[12px]" data-node-id="I640:57110;100:26279;100:26218" data-name="lucide/chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronDown} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--bg\/surface,white)] content-stretch flex items-start p-[8px] relative shrink-0" data-node-id="I640:57110;100:26243" data-name="menubar item">
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;100:26243;100:26184" data-name="Item">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I640:57110;100:26243;100:26203" data-name="lucide/lkey">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideLkey} />
+              </div>
+              <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I640:57110;100:26243;100:26288">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[length:var(--font-sizes\/text-sm,14px)] text-black whitespace-nowrap" data-node-id="I640:57110;100:26243;100:26186">
+                  Cho thuê
+                </p>
+                <div className="relative shrink-0 size-[12px]" data-node-id="I640:57110;100:26243;100:26210" data-name="lucide/chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronDown} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--bg\/surface,white)] content-stretch flex items-start p-[8px] relative shrink-0" data-node-id="I640:57110;100:26251" data-name="menubar item">
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;100:26251;100:26184" data-name="Item">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I640:57110;100:26251;100:26203" data-name="lucide/square-pen">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideSquarePen1} />
+              </div>
+              <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I640:57110;100:26251;100:26288">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[length:var(--font-sizes\/text-sm,14px)] text-black whitespace-nowrap" data-node-id="I640:57110;100:26251;100:26186">
+                  Đăng tin
+                </p>
+                <div className="relative shrink-0 size-[12px]" data-node-id="I640:57110;100:26251;100:26210" data-name="lucide/chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronDown} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--bg\/surface,white)] content-stretch flex items-start p-[8px] relative shrink-0" data-node-id="I640:57110;100:26261" data-name="menubar item">
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;100:26261;100:26184" data-name="Item">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I640:57110;100:26261;100:26203" data-name="lucide/book-user">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideBookUser1} />
+              </div>
+              <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I640:57110;100:26261;100:26288">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[length:var(--font-sizes\/text-sm,14px)] text-black whitespace-nowrap" data-node-id="I640:57110;100:26261;100:26186">
+                  Khách hàng
+                </p>
+                <div className="relative shrink-0 size-[12px]" data-node-id="I640:57110;100:26261;100:26210" data-name="lucide/chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronDown} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--bg\/surface,white)] content-stretch flex items-start p-[8px] relative shrink-0" data-node-id="I640:57110;100:26270" data-name="menubar item">
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;100:26270;100:26184" data-name="Item">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I640:57110;100:26270;100:26203" data-name="lucide/map-pinned">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideMapPinned} />
+              </div>
+              <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I640:57110;100:26270;100:26288">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[length:var(--font-sizes\/text-sm,14px)] text-black whitespace-nowrap" data-node-id="I640:57110;100:26270;100:26186">
+                  Bản đồ
+                </p>
+                <div className="relative shrink-0 size-[12px]" data-node-id="I640:57110;100:26270;100:26210" data-name="lucide/chevron-down">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronDown} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="bg-[var(--bg\/surface,white)] content-stretch flex items-start p-[8px] relative shrink-0" data-node-id="I640:57110;600:129326" data-name="menubar item">
+            <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;600:129326;100:26184" data-name="Item">
+              <div className="relative shrink-0 size-[24px]" data-node-id="I640:57110;600:129326;100:26203" data-name="li:file-search-corner">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiFileSearchCorner} />
+              </div>
+              <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I640:57110;600:129326;100:26288">
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-sm,20px)] not-italic relative shrink-0 text-[length:var(--font-sizes\/text-sm,14px)] text-black whitespace-nowrap" data-node-id="I640:57110;600:129326;100:26186">
+                  Tra cứu hành chính
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="content-stretch flex gap-[32px] items-center relative shrink-0" data-node-id="I640:57110;98:2555">
+          <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-node-id="I640:57110;98:2556" data-name="Action">
+            <div className="relative shrink-0 size-[40px]" data-node-id="I640:57110;98:2557">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup1000004098} />
+            </div>
+            <div className="h-[40.059px] relative shrink-0 w-[40px]" data-node-id="I640:57110;98:2561">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup1000004099} />
+            </div>
+            <div className="relative shrink-0 size-[40px]" data-node-id="I640:57110;98:2565">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup1000004100} />
+            </div>
+            <div className="relative shrink-0 size-[40px]" data-node-id="I640:57110;98:2568">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgGroup1000004097} />
+            </div>
+          </div>
+          <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I640:57110;98:2571" data-name="User">
+            <div className="grid-cols-[max-content] grid-rows-[max-content] inline-grid leading-[0] place-items-start relative shrink-0" data-node-id="I640:57110;98:2572">
+              <div className="col-1 ml-0 mt-0 relative row-1 size-[46px]" data-node-id="I640:57110;98:2573">
+                <img alt="" className="absolute block inset-0 max-w-none size-full" height="46" src={imgEllipse2824} width="46" />
+              </div>
+            </div>
+            <div className="[word-break:break-word] content-stretch flex flex-col font-[family-name:var(--font-family\/text,'Inter:Semi_Bold')] font-semibold gap-px items-start not-italic relative shrink-0 w-[92px]" data-node-id="I640:57110;98:2574" data-name="Name">
+              <p className="leading-[var(--line-height\/text-sm,20px)] relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] w-full" data-node-id="I640:57110;98:2575">
+                Đỗ Văn An
+              </p>
+              <p className="leading-[var(--line-height\/text-xs,16px)] relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-full" data-node-id="I640:57110;98:2576">
+                290915SVH172
+              </p>
+            </div>
+            <div className="relative shrink-0 size-[20px]" data-node-id="I640:57110;100:26319" data-name="lucide/chevron-down">
+              <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronDown1} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="absolute bg-[var(--bg\/surface,white)] content-stretch drop-shadow-[8px_0px_8px_rgba(0,0,0,0.05)] flex flex-col h-[1024px] items-center left-0 px-[12px] py-[16px] top-0" data-node-id="129:11136" data-name="Menu/collapse">
+        <div className="content-stretch flex flex-col gap-[24px] items-center overflow-clip relative shrink-0 w-full" data-node-id="I129:11136;100:25549" data-name="navbar-nav">
+          <div className="h-[50px] relative shrink-0 w-[44px]" data-node-id="I129:11136;100:26105" data-name="image 2">
+            <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImage2} />
+          </div>
+          <div className="content-stretch flex flex-col gap-[16px] items-start relative shrink-0 w-full" data-node-id="I129:11136;100:25911">
+            <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[10px] items-center justify-center px-[16px] py-[8px] relative rounded-[3px] shrink-0 w-full" data-node-id="I129:11136;100:25912" data-name="Menu Item">
+              <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="I129:11136;100:25913">
+                <div className="relative shrink-0 size-[24px]" data-node-id="I129:11136;100:25914" data-name="lucide/house">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideHouse1} />
+                </div>
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[10px] items-center justify-center px-[16px] py-[8px] relative rounded-[3px] shrink-0 w-full" data-node-id="I129:11136;100:25926" data-name="Menu Item">
+              <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="I129:11136;100:25927">
+                <LucideBuilding2 className="relative shrink-0 size-[24px]" />
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[10px] items-center justify-center px-[16px] py-[8px] relative rounded-[3px] shrink-0 w-full" data-node-id="I129:11136;100:25936" data-name="Menu Item">
+              <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="I129:11136;100:25937">
+                <LucideSquarePen className="relative shrink-0 size-[24px]" />
+              </div>
+            </div>
+            <div className="content-stretch flex gap-[10px] items-center justify-center px-[16px] py-[8px] relative rounded-[3px] shrink-0 w-full" data-node-id="I129:11136;100:25941" data-name="Menu Item">
+              <div className="content-stretch flex gap-[10px] items-center relative shrink-0" data-node-id="I129:11136;100:25942">
+                <LucideBookUser className="relative shrink-0 size-[24px]" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="absolute content-stretch flex flex-col h-[946px] items-start left-[68px] pl-[24px] pr-[16px] pt-[16px] top-[78px] w-[1372px]" data-node-id="640:58947" data-name="Page_data">
+        <div className="bg-[var(--bg\/surface,white)] content-stretch flex flex-[1_0_0] flex-col items-start min-h-px p-[16px] relative w-full" data-node-id="129:11137" data-name="Page_data_detail">
+          <SearchBar className="bg-[var(--bg\/surface,white)] border border-[var(--neutral\/gray-2,#fafafa)] border-solid content-stretch drop-shadow-[0px_0px_2px_rgba(0,0,0,0.1)] flex flex-col gap-[16px] items-start justify-center px-[16px] py-[24px] relative rounded-[8px] shrink-0 w-[1300px]" />
+          <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-h-px relative w-full" data-node-id="129:11149" data-name="Data">
+            <div className="content-stretch flex items-start justify-between pb-[16px] pt-[24px] relative shrink-0 w-[1300px]" data-node-id="129:11150" data-name="Tab_bar">
+              <div className="[word-break:break-word] content-stretch flex flex-[1_0_0] flex-col gap-[8px] items-start justify-center min-w-px not-italic relative whitespace-nowrap" data-node-id="398:30155" data-name="Title">
+                <p className="font-[family-name:var(--font-family\/text,'Inter:Bold')] font-bold leading-[var(--line-height\/text-2xl,32px)] relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-2xl,24px)]" data-node-id="129:11151">
+                  QUẢN LÝ NHÀ BÁN
+                </p>
+                <div className="content-stretch flex items-center leading-[0] relative shrink-0 text-[0px] text-black" data-node-id="2297:132089" data-name="Noi_dung_tim_kiem">
+                  <p className="font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal relative shrink-0" data-node-id="2296:132087">
+                    <span className="leading-[var(--line-height\/text-sm,20px)] text-[14px]">{`Hiện có `}</span>
+                    <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px] text-[14px]">10</span>
+                    <span className="leading-[var(--line-height\/text-sm,20px)] text-[14px]">{` bất động sản được tìm kiếm theo:`}</span>
+                  </p>
+                  <p className="font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium relative shrink-0" data-node-id="2297:132088">
+                    <span className="leading-[var(--line-height\/text-sm,20px)] text-[14px]">{` Đang bán, giá dưới 10 tỷ, từ 50m`}</span>
+                    <span className="font-['Inter:Medium'] leading-[20px] text-[9.030000000000001px]">2</span>
+                    <span className="leading-[var(--line-height\/text-sm,20px)] text-[14px]">{` - 100m`}</span>
+                    <span className="font-['Inter:Medium'] leading-[20px] text-[9.030000000000001px]">2</span>
+                  </p>
+                </div>
+              </div>
+              <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex gap-[8px] items-center justify-center px-[16px] py-[8px] relative rounded-[10px] shrink-0" data-node-id="633:47573" data-name="Button">
+                <div className="relative shrink-0 size-[16px]" data-node-id="I633:47573;604:35" data-name="icon/search">
+                  <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgIconSearch2} />
+                </div>
+                <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-base,24px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-base,16px)] whitespace-nowrap" data-node-id="I633:47573;602:57">
+                  Thêm mới
+                </p>
+              </div>
+            </div>
+            <div className="content-stretch flex flex-[1_0_0] flex-col items-start min-h-px overflow-clip relative" data-node-id="640:76368">
+              <div className="border border-[var(--text\/border,#e5e5e5)] border-solid content-stretch flex flex-[1_0_0] flex-col items-start min-h-px overflow-clip relative rounded-[8px] w-[1300px]" data-node-id="129:11167" data-name="table_mua_ban">
+                <MuaBanTableRow className="border-[var(--text\/border,#e5e5e5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" />
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;639:36322" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;639:36322;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">41906</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;639:36322;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;639:36322;638:39995;379:32684;2642:79887" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;639:36322;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">49.5 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;639:36322;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 471 Triệu/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:36322;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">1 Hoa Cau</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;639:36322;638:40036;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;639:36322;638:40036;3267:120279" data-name="li:sticky-note">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiStickyNote} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:36322;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Cầu Kiệu</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;639:36322;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường 7, Quận Phú Nhuận (cũ)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;639:36322;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:36322;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">1 hầm, trệt, lửng, 4 lầu, sân thượng</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;639:36322;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:36322;638:40063;379:32684;3116:163648" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;639:36322;638:40092;379:32678">
+                            <p className="mb-0 text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">105m² (7x19)m</span>
+                            </p>
+                            <p className="mb-0 text-[14px]">
+                              <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px]">{`DTCN: `}</span>
+                              <span className="font-['Inter:Regular'] font-normal leading-[20px]">105.4m² (7x19)m</span>
+                            </p>
+                            <p className="text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DT sàn:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">502.1 m²</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:36322;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Hẻm</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I129:11167;639:36322;638:40110;379:32685" data-name="Tag_group">
+                          <div className="bg-[var(--text\/main,#0a0a0a)] content-stretch flex h-[20px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I129:11167;639:36322;638:40110;379:32685;166:74452" data-name="Tag_status">
+                            <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I129:11167;639:36322;638:40110;379:32685;166:74452;166:74448">
+                              Căn góc hẻm
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:36322;638:40122;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:36322;638:40122;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;639:36322;638:40122;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Tây Nam</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;639:36322;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;639:36322;638:40157;638:40168" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:36322;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;639:36322;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:36322;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:36322;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:36322;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;639:38723" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;639:38723;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">42206</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;639:38723;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;639:38723;638:39995;638:39994" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;639:38723;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">50 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;639:38723;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 634 Triệu/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:38723;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">76A-76B-78 Nguyễn Cư Trinh</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:38723;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Bến Thành</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;639:38723;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường Phạm Ngũ Lão, Quận 1 (cũ)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;639:38723;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:38723;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Trệt, 4 lầu</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;639:38723;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:38723;638:40063;379:32684;3116:163650" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;639:38723;638:40092;379:32678">
+                            <p className="mb-0 text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">78.85m² (8.3x9.5)m</span>
+                            </p>
+                            <p className="text-[14px]">
+                              <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px]">{`DTCN: `}</span>
+                              <span className="font-['Inter:Regular'] font-normal leading-[20px]">57.6m² (8.3x9.5)m</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;639:38723;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;639:38723;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;639:38723;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Mặt tiền</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell" />
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;639:38723;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;639:38723;638:40157;638:40168" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;639:38723;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;639:38723;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:38723;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:38723;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;639:38723;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;640:41137" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:41137;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">41782</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:41137;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:41137;638:39995;638:39994" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:41137;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">87 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:41137;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 363 Triệu/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:41137;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">371/5-7 Hai Bà Trưng</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:41137;638:40036;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:41137;638:40036;3267:120279" data-name="li:sticky-note">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiStickyNote} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:41137;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Võ Thị Sáu (Phường 8)</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:41137;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường Võ Thị Sáu (Phường 8), Quận 3</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:41137;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:41137;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Trệt, lửng, mái che, thang</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;640:41137;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:41137;638:40063;379:32684;3116:163652" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;640:41137;638:40092;379:32678">
+                            <p className="mb-0 text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">239.6m² (11.2x22)m</span>
+                            </p>
+                            <p className="text-[14px]">
+                              <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px]">{`DTCN: `}</span>
+                              <span className="font-['Inter:Regular'] font-normal leading-[20px]">142.6m² (6.73x21.77)m</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:41137;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Hẻm 10m</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I129:11167;640:41137;638:40110;379:32685" data-name="Tag_group">
+                          <div className="bg-[var(--text\/main,#0a0a0a)] content-stretch flex h-[20px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I129:11167;640:41137;638:40110;379:32685;166:74452" data-name="Tag_status">
+                            <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I129:11167;640:41137;638:40110;379:32685;166:74452;166:74448">
+                              Căn góc hẻm
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:41137;638:40122;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:41137;638:40122;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:41137;638:40122;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Đông Nam</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;640:41137;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:41137;638:40157;640:43539" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone1} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:41137;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;640:41137;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:41137;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:41137;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:41137;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;640:43614" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:43614;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">43308</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:43614;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:43614;638:39995;379:32684;2642:80080" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory2} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:43614;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">280 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:43614;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 444 Triệu/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:43614;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">119 Trần Bình Trọng</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:43614;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Chợ Quán</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:43614;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường 2, Quận 5 (cũ)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:43614;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:43614;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Trệt</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;640:43614;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:43614;638:40063;379:32684;3116:163654" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;640:43614;638:40092;379:32678">
+                            <p className="text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">630m² (21x30)m</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:43614;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Mặt tiền</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:43614;638:40122;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:43614;638:40122;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:43614;638:40122;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Đông Bắc</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;640:43614;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:43614;638:40157;640:43613" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone2} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:43614;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;640:43614;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:43614;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:43614;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:43614;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;640:46017" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:46017;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">41960</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:46017;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:46017;638:39995;638:39994" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:46017;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">1500 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:46017;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 1 Tỷ/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:46017;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">142-144-146-148-150 Lý Tự Trọng</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:46017;638:40036;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:46017;638:40036;3267:120279" data-name="li:sticky-note">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiStickyNote} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:46017;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Bến Thành</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:46017;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường Bến Thành, Quận 1 (cũ)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:46017;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:46017;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Trệt, 2 lầu</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;640:46017;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:46017;638:40063;379:32684;3116:163656" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;640:46017;638:40092;379:32678">
+                            <p className="mb-0 text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">1440m² (24x60)m</span>
+                            </p>
+                            <p className="font-['Inter:Regular'] font-normal leading-[20px] mb-0 text-[14px] text-[color:var(--brand\/main,#0688f0)]">MH: 30m</p>
+                            <p className="mb-0 text-[14px]">
+                              <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px]">{`DTCN: `}</span>
+                              <span className="font-['Inter:Regular'] font-normal leading-[20px]">1250m² (24x60)m</span>
+                            </p>
+                            <p className="font-['Inter:Regular'] font-normal leading-[20px] text-[14px] text-[color:var(--brand\/main,#0688f0)]">MH: 30m</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:46017;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:46017;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:46017;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Mặt tiền (1 chiều)</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex gap-[4px] items-center relative shrink-0" data-node-id="I129:11167;640:46017;638:40110;379:32685" data-name="Tag_group">
+                          <div className="bg-[var(--text\/main,#0a0a0a)] content-stretch flex h-[20px] items-center justify-center px-[10px] py-[2px] relative rounded-[10px] shrink-0" data-node-id="I129:11167;640:46017;638:40110;379:32685;166:74452" data-name="Tag_status">
+                            <p className="[word-break:break-word] font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium leading-[var(--line-height\/text-xs,16px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--font-sizes\/text-xs,12px)] whitespace-nowrap" data-node-id="I129:11167;640:46017;638:40110;379:32685;166:74452;166:74448">
+                              Căn góc MT
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell" />
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;640:46017;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:46017;638:40157;640:46016" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone3} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:46017;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;640:46017;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:46017;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:46017;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:46017;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;640:48420" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:48420;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">41814</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:48420;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:48420;638:39995;638:39994" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:48420;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">37 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:48420;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 386 Triệu/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:48420;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">141 Đề Thám</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:48420;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Cầu Ông Lãnh</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:48420;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường Cô Giang, Quận 1 (cũ)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:48420;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:48420;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Trệt, 1 lầu</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;640:48420;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:48420;638:40063;638:40074" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;640:48420;638:40092;379:32678">
+                            <p className="mb-0 text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">95.89m² (4.3x22.3)m</span>
+                            </p>
+                            <p className="text-[14px]">
+                              <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px]">{`DTCN: `}</span>
+                              <span className="font-['Inter:Regular'] font-normal leading-[20px]">96.1m² (4.3x22.3)m</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:48420;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:48420;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:48420;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Mặt tiền</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell" />
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;640:48420;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:48420;638:40157;640:48419" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone3} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:48420;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;640:48420;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:48420;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:48420;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:48420;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;640:50721" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:50721;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">41698</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:50721;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:50721;638:39995;638:39994" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:50721;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">43 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:50721;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 131 Triệu/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:50721;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">70 Hưng Phú</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:50721;638:40036;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:50721;638:40036;3267:120279" data-name="li:sticky-note">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiStickyNote} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:50721;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Tân Hoà</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:50721;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường 8, Quận 8 (cũ)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:50721;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:50721;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Trệt, 4 lầu</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;640:50721;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:50721;638:40063;638:40074" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;640:50721;638:40092;379:32678">
+                            <p className="mb-0 text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">329m² (6.4x25)m</span>
+                            </p>
+                            <p className="mb-0 text-[14px]">
+                              <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px]">{`DTCN: `}</span>
+                              <span className="font-['Inter:Regular'] font-normal leading-[20px]">329m² (6.4x25)m</span>
+                            </p>
+                            <p className="font-['Inter:Regular'] font-normal leading-[20px] mb-0 text-[14px] text-[color:var(--brand\/main,#0688f0)]">MH: 20m</p>
+                            <p className="text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DT sàn:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">649m²</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:50721;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:50721;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:50721;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Mặt tiền</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell" />
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;640:50721;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:50721;638:40157;859:54339" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone4} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:50721;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;640:50721;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:50721;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:50721;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:50721;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="border-[var(--text\/bg,#f5f5f5)] border-b border-solid content-stretch flex items-center overflow-clip relative shrink-0" data-node-id="I129:11167;640:53122" data-name="Mua bán - Table - Row">
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:39995">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[80px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:39995;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:39995;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:53122;638:39995;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">40954</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:53122;638:39995;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:53122;638:39995;638:39994" data-name="li:history">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiHistory1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40027">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:40027;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:40027;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:53122;638:40027;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">13.5 Tỷ</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:53122;638:40027;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">~ 274 Triệu/m²</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40036">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[130px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:40036;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:40036;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:53122;638:40036;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">84/28 Hoà Hưng</p>
+                          </div>
+                        </div>
+                        <div className="content-stretch flex items-center relative shrink-0 size-[24px]" data-node-id="I129:11167;640:53122;638:40036;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:53122;638:40036;3267:120279" data-name="li:sticky-note">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiStickyNote} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40045">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:40045;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:40045;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:53122;638:40045;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Phường Tân Hưng</p>
+                          </div>
+                        </div>
+                        <div className="[word-break:break-word] flex flex-col font-['Inter:Regular'] font-normal justify-center leading-[0] min-w-full not-italic relative shrink-0 text-[color:var(--text\/muted,#737373)] text-[length:var(--font-sizes\/text-xs,12px)] w-[min-content]" data-node-id="I129:11167;640:53122;638:40045;379:32679">
+                          <p className="leading-[var(--line-height\/text-xs,16px)]">Phường 13, Quận 10 (cũ)</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40054">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[90px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:40054;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:40054;2111:125283">
+                          <div className="[word-break:break-word] flex flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] not-italic relative shrink-0 text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)] whitespace-nowrap" data-node-id="I129:11167;640:53122;638:40054;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Nhà phố</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40063">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:40063;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:40063;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:53122;638:40063;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Trệt, 3 lầu, sân thượng</p>
+                          </div>
+                        </div>
+                        <div className="bg-[var(--brand\/main,#0688f0)] content-stretch flex items-center justify-center relative rounded-[99px] shrink-0 size-[24px]" data-node-id="I129:11167;640:53122;638:40063;379:32684" data-name="Image">
+                          <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:53122;638:40063;638:40074" data-name="li:image">
+                            <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiImage1} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40092">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[160px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:40092;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:40092;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Medium')] font-medium justify-center leading-[0] min-w-px not-italic relative text-[0px] text-[color:var(--text\/main,#0a0a0a)]" data-node-id="I129:11167;640:53122;638:40092;379:32678">
+                            <p className="mb-0 text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DTTT:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">49.22m² (4.2x11.72)m</span>
+                            </p>
+                            <p className="mb-0 text-[14px]">
+                              <span className="font-['Inter:Semi_Bold'] font-semibold leading-[20px]">{`DTCN: `}</span>
+                              <span className="font-['Inter:Regular'] font-normal leading-[20px]">61m² (4.2x12)m</span>
+                            </p>
+                            <p className="text-[14px]">
+                              <span className="[word-break:break-word] font-['Inter:Semi_Bold'] font-semibold leading-[20px] not-italic">DT sàn:</span>
+                              <span className="leading-[var(--line-height\/text-sm,20px)]">{` `}</span>
+                              <span className="[word-break:break-word] font-['Inter:Regular'] font-normal leading-[20px] not-italic">207m²</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40110">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[120px]" data-name="Table - Cell">
+                      <div className="content-stretch flex flex-[1_0_0] flex-col gap-[2px] items-start min-w-px relative" data-node-id="I129:11167;640:53122;638:40110;379:32683">
+                        <div className="content-stretch flex items-center relative shrink-0 w-full" data-node-id="I129:11167;640:53122;638:40110;2111:125283">
+                          <div className="[word-break:break-word] flex flex-[1_0_0] flex-col font-[family-name:var(--font-family\/text,'Inter:Regular')] font-normal justify-center leading-[0] min-w-px not-italic relative text-[color:var(--text\/main,#0a0a0a)] text-[length:var(--font-sizes\/text-sm,14px)]" data-node-id="I129:11167;640:53122;638:40110;379:32678">
+                            <p className="leading-[var(--line-height\/text-sm,20px)]">Hẻm 3m</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40122">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center p-[12px] relative shrink-0 w-[100px]" data-name="Table - Cell" />
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40157">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[60px]" data-name="Table - Cell">
+                      <div className="content-stretch flex items-center relative shrink-0" data-node-id="I129:11167;640:53122;638:40157;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[24px]" data-node-id="I129:11167;640:53122;638:40157;638:40168" data-name="lucide/phone">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucidePhone} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-row items-center self-stretch" data-node-id="I129:11167;640:53122;638:40134">
+                    <div className="bg-white content-stretch flex gap-[8px] h-full items-center justify-center p-[12px] relative shrink-0 w-[140px]" data-name="Table - Cell">
+                      <div className="content-stretch flex gap-[8px] items-center relative shrink-0" data-node-id="I129:11167;640:53122;638:40134;379:32682" data-name="Icon">
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:53122;638:40134;638:40149" data-name="li:shopping-cart">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiShoppingCart} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:53122;638:40134;638:40152" data-name="li:copy">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCopy} />
+                        </div>
+                        <div className="relative shrink-0 size-[16px]" data-node-id="I129:11167;640:53122;638:40134;638:40155" data-name="li:circle-plus">
+                          <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLiCirclePlus} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute content-stretch drop-shadow-[0px_4px_2px_rgba(0,0,0,0.25)] flex flex-col items-center left-[1077px] top-[36px]" data-node-id="I129:11167;1042:66010" data-name="Tooltip">
+                  <div className="bg-[var(--text\/muted,#737373)] content-stretch flex flex-col gap-[var(--gap-2,8px)] items-start mb-[-1px] px-[var(--px-3,12px)] py-[var(--py-2,8px)] relative rounded-[var(--radius-md,8px)] shrink-0 w-full" data-node-id="I129:11167;1042:66010;859:53383" data-name="Tooltip">
+                    <div className="content-stretch flex items-center justify-center relative shrink-0" data-node-id="I129:11167;1042:66010;859:53384" data-name="Text">
+                      <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Regular')] font-[var(--weight\/normal,400)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--text\/white,white)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="I129:11167;1042:66010;859:53385">
+                        Tiêu dùng
+                      </p>
+                    </div>
+                  </div>
+                  <div className="h-[5px] relative shrink-0 w-[10px]" data-node-id="I129:11167;1042:66010;859:53386">
+                    <div className="absolute inset-[0_11.3%_6.63%_11.3%]">
+                      <img alt="" className="block max-w-none size-full" src={imgVector1} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute bg-[var(--text\/bg,#f5f5f5)] content-stretch flex flex-col gap-[4px] h-[517px] items-center overflow-clip right-px top-[43px] w-[14px]" data-node-id="640:90463" data-name="Scroll bar">
+                <div className="flex h-[12px] items-center justify-center relative shrink-0 w-[14px]" data-node-id="I640:90463;379:35927">
+                  <div className="-rotate-90 -scale-y-100 flex-none">
+                    <div className="h-[14px] relative w-[12px]">
+                      <div className="absolute inset-[10.56%_16.41%_10.56%_0]">
+                        <img alt="" className="block max-w-none size-full" src={imgVector458} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex flex-[1_0_0] items-start min-h-px relative" data-node-id="I640:90463;379:35928">
+                  <div className="bg-[var(--text\/border,#e5e5e5)] h-[105px] relative rounded-[20px] shrink-0 w-[10px]" data-node-id="I640:90463;379:35929" />
+                </div>
+                <div className="flex h-[12px] items-center justify-center relative shrink-0 w-[14px]" data-node-id="I640:90463;379:35930">
+                  <div className="-scale-y-100 flex-none rotate-90">
+                    <div className="h-[14px] relative w-[12px]">
+                      <div className="absolute inset-[10.56%_16.41%_10.56%_0]">
+                        <img alt="" className="block max-w-none size-full" src={imgVector459} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white content-stretch flex gap-[var(--gap-2,8px)] items-center py-[12px] relative shrink-0 w-[1300px]" data-node-id="640:55376" data-name="Panigation">
+              <div className="content-stretch flex flex-[1_0_0] items-center min-w-px relative" data-node-id="I640:55376;560:45986" data-name="Text">
+                <p className="[word-break:break-word] flex-[1_0_0] font-[family-name:var(--family\/sans,'Inter:Regular')] font-[var(--weight\/normal,400)] leading-[var(--leading\/5,20px)] min-w-px not-italic overflow-hidden relative text-[14px] text-[color:var(--muted-foreground,#737373)] text-ellipsis tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="I640:55376;560:45987">
+                  0 trên 68 hàng được chọn.
+                </p>
+              </div>
+              <div className="content-stretch flex gap-[var(--gap-8,32px)] items-center relative shrink-0" data-node-id="I640:55376;560:45988">
+                <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center relative shrink-0" data-node-id="I640:55376;560:45989">
+                  <div className="content-stretch flex items-end pr-[var(--ml-2,8px)] relative shrink-0" data-node-id="I640:55376;560:45990" data-name="Text">
+                    <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--foreground,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="I640:55376;560:45991">
+                      Hàng trên trang
+                    </p>
+                  </div>
+                  <div className="bg-[var(--background,white)] border-[length:var(--border-width,1px)] border-[var(--border,#e5e5e5)] border-solid content-stretch drop-shadow-[0px_1px_1px_rgba(0,0,0,0.1)] flex h-[36px] items-center justify-between px-[var(--px-3,12px)] py-[var(--py-2,8px)] relative rounded-[var(--radius-md,8px)] shrink-0 w-[80px]" data-node-id="I640:55376;560:45992" data-name="Select">
+                    <div className="content-stretch flex items-center relative shrink-0" data-node-id="I640:55376;560:45993" data-name="Text">
+                      <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Regular')] font-[var(--weight\/normal,400)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--foreground,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="I640:55376;560:45994">
+                        10
+                      </p>
+                    </div>
+                    <div className="content-stretch flex items-center justify-end relative shrink-0" data-node-id="I640:55376;560:45995" data-name="Icon">
+                      <div className="relative shrink-0 size-[16px]" data-node-id="I640:55376;560:45996" data-name="lucide/chevron-down">
+                        <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronDown2} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="content-stretch flex items-end pr-[var(--ml-2,8px)] relative shrink-0" data-node-id="I640:55376;560:45997" data-name="Text">
+                  <p className="[word-break:break-word] font-[family-name:var(--family\/sans,'Inter:Medium')] font-[var(--weight\/medium,500)] leading-[var(--leading\/5,20px)] not-italic relative shrink-0 text-[color:var(--foreground,#0a0a0a)] text-[length:var(--size\/sm,14px)] tracking-[var(--tracking\/normal,0px)] whitespace-nowrap" data-node-id="I640:55376;560:45998">
+                    Trang 1 trong 10
+                  </p>
+                </div>
+                <div className="content-stretch flex gap-[var(--gap-2,8px)] items-center relative shrink-0" data-node-id="I640:55376;560:45999">
+                  <div className="bg-[var(--background,white)] border-[length:var(--border-width,1px)] border-[var(--border,#e5e5e5)] border-solid content-stretch flex flex-col items-center justify-center opacity-[calc(var(--opacity-50,50)/100)] px-[var(--px-3,12px)] relative rounded-[var(--radius-md,8px)] shrink-0 size-[32px]" data-node-id="I640:55376;560:46000" data-name="Buttons">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="I640:55376;560:46001" data-name="lucide/chevron-left">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronLeft} />
+                    </div>
+                  </div>
+                  <div className="bg-[var(--background,white)] border-[length:var(--border-width,1px)] border-[var(--border,#e5e5e5)] border-solid content-stretch flex flex-col items-center justify-center opacity-[calc(var(--opacity-50,50)/100)] px-[var(--px-3,12px)] relative rounded-[var(--radius-md,8px)] shrink-0 size-[32px]" data-node-id="I640:55376;560:46002" data-name="Buttons">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="I640:55376;560:46003" data-name="lucide/chevrons-left">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronsLeft} />
+                    </div>
+                  </div>
+                  <div className="bg-[var(--background,white)] border-[length:var(--border-width,1px)] border-[var(--border,#e5e5e5)] border-solid content-stretch flex flex-col items-center justify-center px-[var(--px-3,12px)] relative rounded-[var(--radius-md,8px)] shrink-0 size-[32px]" data-node-id="I640:55376;560:46004" data-name="Buttons">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="I640:55376;560:46005" data-name="lucide/chevron-right">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronRight} />
+                    </div>
+                  </div>
+                  <div className="bg-[var(--background,white)] border-[length:var(--border-width,1px)] border-[var(--border,#e5e5e5)] border-solid content-stretch flex flex-col items-center justify-center px-[var(--px-3,12px)] relative rounded-[var(--radius-md,8px)] shrink-0 size-[32px]" data-node-id="I640:55376;560:46006" data-name="Buttons">
+                    <div className="relative shrink-0 size-[16px]" data-node-id="I640:55376;560:46007" data-name="lucide/chevrons-right">
+                      <img alt="" className="absolute block inset-0 max-w-none size-full" src={imgLucideChevronsRight} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+SUPER CRITICAL: The generated React+Tailwind code MUST be converted to match the target project's technology stack and styling system.
+1. Analyze the target codebase to identify: technology stack, styling approach, component patterns, and design tokens
+2. Convert React syntax to the target framework/library
+3. Transform all Tailwind classes to the target styling system while preserving exact visual design
+4. Follow the project's existing patterns and conventions
+DO NOT install any Tailwind as a dependency unless the user instructs you to do so.
+
+Node ids have been added to the code as data attributes, e.g. `data-node-id="1:2"`.
+These styles are contained in the design: Body/SM/Medium: Font(family: "Font family/Text", style: Medium, size: Font sizes/text-sm, weight: 500, lineHeight: Line height/text-sm, letterSpacing: 0), Body/SM/Semi bold: Font(family: "Font family/Text", style: Semi Bold, size: Font sizes/text-sm, weight: 600, lineHeight: Line height/text-sm, letterSpacing: 0), Body/XS/Semi bold: Font(family: "Font family/Text", style: Semi Bold, size: Font sizes/text-xs, weight: 600, lineHeight: Line height/text-xs, letterSpacing: 0), Body/SM/Regular: Font(family: "Font family/Text", style: Regular, size: Font sizes/text-sm, weight: 400, lineHeight: Line height/text-sm, letterSpacing: 0), Body/XS/Regular: Font(family: "Inter", style: Regular, size: Font sizes/text-xs, weight: 400, lineHeight: Line height/text-xs, letterSpacing: 0), Body/2xs/Regular: Font(family: "Font family/Text", style: Regular, size: Font sizes/text-2xs, weight: 400, lineHeight: Line height/text-2xs, letterSpacing: 0), Button/MD: Font(family: "Font family/Text", style: Medium, size: Font sizes/text-base, weight: 500, lineHeight: Line height/text-base, letterSpacing: 0), Header/H1: Font(family: "Font family/Text", style: Bold, size: Font sizes/text-2xl, weight: 700, lineHeight: Line height/text-2xl, letterSpacing: 0), Body/XS/Medium: Font(family: "Font family/Text", style: Medium, size: Font sizes/text-xs, weight: 500, lineHeight: Line height/text-xs, letterSpacing: 0), Text-sm/Regular: Font(family: "family/sans", style: Regular, size: size/sm, weight: weight/normal, lineHeight: leading/5, letterSpacing: tracking/normal), Text-sm/Medium: Font(family: "family/sans", style: Medium, size: size/sm, weight: weight/medium, lineHeight: leading/5, letterSpacing: tracking/normal), Box Shadow/shadow-xs: Effect(type: DROP_SHADOW, color: #0000001A, offset: (0, 1), radius: 2, spread: 0).
+Component descriptions: The following components have usage descriptions or documentation links defined in Figma. These descriptions provide important context about the intended usage, best practices, and any constraints for each component. Follow these guidelines when implementing or using these components.
+
+## Menu/collapse
+**Node ID:** 21:41923
+
+Responsive collapse with adjustable menu height. Adjust scroller height to change menu height, if height of menu higher than scroller height, then it will be scrollable
+The generated code contains image and SVG URL constants, e.g. const image = `${assetPathPrefix}/<asset file name>`, where assetPathPrefix is declared once at the top of the code and every asset URL interpolates it. These URLs are temporary download sources and expire after 7 days. Download each asset into the project with curl -L, then replace its URL in the generated code with a reference to the downloaded asset. Never use the temporary URLs as runtime image sources.

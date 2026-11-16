@@ -1,0 +1,200 @@
+[
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+    "timestamp": "2026-11-16T15:15:52.136Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+    "timestamp": "2026-11-16T15:15:52.136Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: DatePicker] `popupClassName` is deprecated. Please use `classNames.popup.root` instead.",
+    "timestamp": "2026-11-16T15:15:52.136Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: DatePicker] `clearIcon` is deprecated. Please use `allowClear={{ clearIcon: React.ReactNode }}` instead.",
+    "timestamp": "2026-11-16T15:15:52.137Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: `clearIcon` will be removed in future. Please use `allowClear` instead.",
+    "timestamp": "2026-11-16T15:15:52.137Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `popupClassName` is deprecated. Please use `classNames.popup.root` instead.",
+    "timestamp": "2026-11-16T15:15:52.142Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `dropdownMatchSelectWidth` is deprecated. Please use `popupMatchSelectWidth` instead.",
+    "timestamp": "2026-11-16T15:15:52.142Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+    "timestamp": "2026-11-16T15:15:52.143Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `onDropdownVisibleChange` is deprecated. Please use `onOpenChange` instead.",
+    "timestamp": "2026-11-16T15:15:52.143Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: `onSearch` should work with `showSearch` instead of use alone.",
+    "timestamp": "2026-11-16T15:15:52.143Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper \n    at div\n    at Compact (webpack-internal:///(app-pages-browser)/./node_modules/antd/es/space/Compact.js:",
+    "timestamp": "2026-11-16T15:15:52.144Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously later calls tries to update the component. Move this work to useEffect instead.%s \n    at TableBase (webpack-internal:///(app-pages-browser)/./src/lib/components/shared/TableBase/index.tsx:26:11)\n    at div\n    at PropertyTable (",
+    "timestamp": "2026-11-16T15:15:52.145Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead.",
+    "timestamp": "2026-11-16T15:15:52.145Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Form.Item] A `Form.Item` with a `name` prop must have a single child element. For information on how to render more complex form items, see https://u.ant.design/complex-form-item.",
+    "timestamp": "2026-11-16T15:15:52.145Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Card] `bordered` is deprecated. Please use `variant` instead.",
+    "timestamp": "2026-11-16T15:15:52.145Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: InputNumber] `addonAfter` is deprecated. Please use `Space.Compact` instead.",
+    "timestamp": "2026-11-16T15:15:52.146Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+    "timestamp": "2026-11-16T15:16:08.929Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+    "timestamp": "2026-11-16T15:17:04.449Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+    "timestamp": "2026-11-16T15:17:04.799Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+    "timestamp": "2026-11-16T15:17:38.731Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+    "timestamp": "2026-11-16T15:17:45.417Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `popupClassName` is deprecated. Please use `classNames.popup.root` instead.",
+    "timestamp": "2026-11-16T15:17:46.294Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+    "timestamp": "2026-11-16T15:17:46.299Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `dropdownMatchSelectWidth` is deprecated. Please use `popupMatchSelectWidth` instead.",
+    "timestamp": "2026-11-16T15:17:46.337Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+    "timestamp": "2026-11-16T15:17:46.337Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Select] `onDropdownVisibleChange` is deprecated. Please use `onOpenChange` instead.",
+    "timestamp": "2026-11-16T15:17:46.337Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: `onSearch` should work with `showSearch` instead of use alone.",
+    "timestamp": "2026-11-16T15:17:46.347Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: %s is deprecated in StrictMode. %s was passed an instance of %s which is inside StrictMode. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node%s findDOMNode findDOMNode DomWrapper \n    at div\n    at Compact (webpack-internal:///(app-pages-browser)/./node_modules/antd/es/space/Compact.js:",
+    "timestamp": "2026-11-16T15:17:46.481Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Modal] `destroyOnClose` is deprecated. Please use `destroyOnHidden` instead.",
+    "timestamp": "2026-11-16T15:18:07.026Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: Dropdown] `dropdownRender` is deprecated. Please use `popupRender` instead.",
+    "timestamp": "2026-11-16T15:18:08.785Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: DatePicker] `popupClassName` is deprecated. Please use `classNames.popup.root` instead.",
+    "timestamp": "2026-11-16T15:18:08.797Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: [antd: DatePicker] `clearIcon` is deprecated. Please use `allowClear={{ clearIcon: React.ReactNode }}` instead.",
+    "timestamp": "2026-11-16T15:18:08.797Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  },
+  {
+    "level": "error",
+    "message": "Warning: `clearIcon` will be removed in future. Please use `allowClear` instead.",
+    "timestamp": "2026-11-16T15:18:08.800Z",
+    "url": "webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js"
+  }
+]

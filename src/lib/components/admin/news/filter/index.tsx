@@ -97,10 +97,12 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
       filled={isFilledValue(sourceTypeWatch) || isFilledValue(sourceLabel) || sourceOpen}
     >
       <Dropdown
+        open={sourceOpen}
         menu={{
           items: sourceMenuItems,
           selectedKeys: sourceTypeWatch ? [sourceTypeWatch] : [],
           onClick: ({ key }) => {
+            setSourceOpen(false);
             const chosen = sourceMenuItems.find((item) => item.key === key);
             setSourceLabel(chosen?.label);
             form.setFieldValue("SourceType", key as "write" | "share");
@@ -122,6 +124,19 @@ const NewsFilter = ({ model, onSubmit, extra }: Props) => {
         )}
       >
         <div
+          role="button"
+          tabIndex={0}
+          aria-label="Nguồn"
+          aria-haspopup="menu"
+          aria-expanded={sourceOpen}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              setSourceOpen((open) => !open);
+            } else if (event.key === "Escape") {
+              setSourceOpen(false);
+            }
+          }}
           className={`news-source-dropdown ${sourceOpen ? "news-source-dropdown--open" : ""}`}
         >
           <span

@@ -1,0 +1,142 @@
+TAP version 13
+# Subtest: valid article passes
+ok 1 - valid article passes
+  ---
+  duration_ms: 2.439917
+  type: 'test'
+  ...
+# Subtest: NewsTypeId is required
+ok 2 - NewsTypeId is required
+  ---
+  duration_ms: 0.398584
+  type: 'test'
+  ...
+# Subtest: SourceType is required
+ok 3 - SourceType is required
+  ---
+  duration_ms: 0.141542
+  type: 'test'
+  ...
+# Subtest: Title is required
+ok 4 - Title is required
+  ---
+  duration_ms: 0.120375
+  type: 'test'
+  ...
+# Subtest: Summary is required
+ok 5 - Summary is required
+  ---
+  duration_ms: 0.279583
+  type: 'test'
+  ...
+# Subtest: Content is required
+ok 6 - Content is required
+  ---
+  duration_ms: 0.095875
+  type: 'test'
+  ...
+# Subtest: empty editor content "" is blocked
+ok 7 - empty editor content "" is blocked
+  ---
+  duration_ms: 0.470125
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p><br></p>" is blocked
+ok 8 - empty editor content "<p><br></p>" is blocked
+  ---
+  duration_ms: 0.10525
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>&nbsp;</p>" is blocked
+ok 9 - empty editor content "<p>&nbsp;</p>" is blocked
+  ---
+  duration_ms: 0.577583
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>&\#160;</p>" is blocked
+ok 10 - empty editor content "<p>&\#160;</p>" is blocked
+  ---
+  duration_ms: 0.717417
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>&\#xA0;</p>" is blocked
+ok 11 - empty editor content "<p>&\#xA0;</p>" is blocked
+  ---
+  duration_ms: 0.244917
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>   </p>" is blocked
+ok 12 - empty editor content "<p>   </p>" is blocked
+  ---
+  duration_ms: 0.086834
+  type: 'test'
+  ...
+# Subtest: missing image is blocked
+ok 13 - missing image is blocked
+  ---
+  duration_ms: 0.11625
+  type: 'test'
+  ...
+# Subtest: failed image is blocked
+ok 14 - failed image is blocked
+  ---
+  duration_ms: 0.10275
+  type: 'test'
+  ...
+# Subtest: uploading image is blocked
+ok 15 - uploading image is blocked
+  ---
+  duration_ms: 0.092708
+  type: 'test'
+  ...
+# Subtest: shared article requires a source
+ok 16 - shared article requires a source
+  ---
+  duration_ms: 0.106792
+  type: 'test'
+  ...
+# Subtest: shared article with a source passes
+ok 17 - shared article with a source passes
+  ---
+  duration_ms: 0.09625
+  type: 'test'
+  ...
+# Subtest: title over 150 is blocked
+ok 18 - title over 150 is blocked
+  ---
+  duration_ms: 0.121292
+  type: 'test'
+  ...
+# Subtest: summary over 350 is blocked
+ok 19 - summary over 350 is blocked
+  ---
+  duration_ms: 0.094542
+  type: 'test'
+  ...
+# Subtest: title 150 and summary 350 are allowed
+ok 20 - title 150 and summary 350 are allowed
+  ---
+  duration_ms: 0.093041
+  type: 'test'
+  ...
+# Subtest: redacts secrets, email addresses and query strings
+ok 21 - redacts secrets, email addresses and query strings
+  ---
+  duration_ms: 3.896375
+  type: 'test'
+  ...
+# Subtest: authenticated ingestion, validation, manager-only listing, pagination and persistence
+ok 22 - authenticated ingestion, validation, manager-only listing, pagination and persistence
+  ---
+  duration_ms: 218.1555
+  type: 'test'
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 937.945875

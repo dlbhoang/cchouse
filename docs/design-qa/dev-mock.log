@@ -1,0 +1,326 @@
+  ▲ Next.js 14.2.35
+  - Local:        http://127.0.0.1:3003
+  - Network:      http://127.0.0.1:3003
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 2.3s
+ ○ Compiling /api/auth/[...nextauth] ...
+ ✓ Compiled /api/auth/[...nextauth] in 1064ms (319 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/auth/session 200 in 1562ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ ○ Compiling /api/proxy/[...path] ...
+ ✓ Compiled /api/proxy/[...path] in 583ms (320 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 1393ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 2215ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 2391ms
+ GET /api/proxy/Me/SaveProps 200 in 2397ms
+ GET /api/proxy/Me/SaveCustomers 200 in 2426ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 2441ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 69ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 39ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 18ms
+ GET /api/proxy/Me/SaveCustomers 200 in 86ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 94ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 97ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 273ms
+ GET /api/proxy/Me/SaveProps 200 in 295ms
+ GET /api/proxy/Property?ProvinceId=1&DistrictId=1&WardId=1&StreetId=1&TransType=1&Status=1&pageSize=10 200 in 34ms
+ GET /api/proxy/Property/Meta?ProvinceId=1&DistrictId=1&WardId=1&StreetId=1&TransType=1&Status=1&pageSize=10 200 in 16ms
+ GET /api/proxy/Me/SaveCustomers 200 in 92ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 95ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 100ms
+ GET /api/proxy/Me/SaveProps 200 in 98ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 271ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 15ms
+ GET /api/proxy/Ward?DistrictId=1&pageIndex=1&pageSize=10000 200 in 25ms
+ GET /api/proxy/Street?DistrictId=1&pageIndex=1&pageSize=10000 200 in 26ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 17ms
+ GET /api/proxy/Ward?DistrictId=1&pageIndex=1&pageSize=10000 200 in 15ms
+ GET /api/proxy/Street?DistrictId=1&pageIndex=1&pageSize=10000 200 in 18ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 105ms
+ GET /api/proxy/Ward?DistrictId=1&pageIndex=1&pageSize=10000 200 in 156ms
+ GET /api/proxy/Street?DistrictId=1&pageIndex=1&pageSize=10000 200 in 168ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 98ms
+ GET /api/proxy/Street?DistrictId=1&pageIndex=1&pageSize=10000 200 in 133ms
+ GET /api/proxy/Ward?DistrictId=1&pageIndex=1&pageSize=10000 200 in 135ms
+ ✓ Compiled /src/middleware in 315ms (199 modules)
+ ○ Compiling /admin/property ...
+ ✓ Compiled /api/auth/[...nextauth] in 14s (4862 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/auth/session 200 in 8068ms
+ GET /api/auth/session 200 in 3494ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 14182ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 226ms
+ GET /api/auth/session 200 in 192ms
+ GET /api/auth/session 200 in 165ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 136ms
+ GET /api/auth/session 200 in 136ms
+ GET /api/proxy/Property/Meta?TransType=1&Status=1&pageSize=10 200 in 2042ms
+ GET /api/proxy/Property?TransType=1&Status=1&pageSize=10 200 in 1629ms
+ GET /api/auth/session 200 in 44ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 9ms
+ ○ Compiling / ...
+ ✓ Compiled / in 2s (4866 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/proxy/Me/CountUnReadNoti 200 in 2275ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 2275ms
+ GET /api/proxy/Me/SaveCustomers 200 in 2276ms
+ GET /api/proxy/Me/SaveProps 200 in 2280ms
+ GET / 307 in 2325ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 90ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 92ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 2393ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 8.4s (4897 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/proxy/Me/CountUnReadNoti 200 in 2459ms
+ GET /api/proxy/Property?TransType=1&Status=1&pageSize=10 200 in 2362ms
+ GET /login 307 in 10452ms
+ GET /api/proxy/Me/SaveProps 200 in 2558ms
+ GET /api/proxy/Me/SaveCustomers 200 in 2411ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 2578ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 2419ms
+ GET /api/proxy/Property/Meta?TransType=1&Status=1&pageSize=10 200 in 82ms
+ GET /admin/property 200 in 3052ms
+ GET /api/auth/session 200 in 111ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 138ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 253ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 255ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 285ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 200ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 269ms
+ GET /api/proxy/Utils/EnumList 200 in 190ms
+ GET /api/proxy/Me/managed-users 200 in 206ms
+ GET /api/proxy/Lookup/user-admin 200 in 236ms
+ GET /api/proxy/Utils/Config 200 in 158ms
+ ○ Compiling /api/client-errors ...
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 2230ms
+ ✓ Compiled /api/client-errors in 6.2s (2678 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/proxy/Property?TransType=1&Status=1&pageSize=10 200 in 685ms
+ GET /api/proxy/Property/Meta?TransType=1&Status=1&pageSize=10 200 in 686ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 7698ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 7704ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 6953ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 787ms
+ GET /api/proxy/Me/SaveCustomers 200 in 4555ms
+ GET /api/proxy/Me/SaveProps 200 in 812ms
+ GET /api/proxy/Me/SaveProps 200 in 7198ms
+ GET /api/proxy/Me/SaveCustomers 200 in 892ms
+ POST /api/client-errors 201 in 8733ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=20 200 in 2318ms
+ GET /api/auth/session 200 in 1334ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 1565ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 1602ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 200 in 2682ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 1647ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 424ms
+ GET /api/proxy/Utils/Config 200 in 154ms
+ GET /api/proxy/Utils/EnumList 200 in 158ms
+ GET /api/proxy/Me/managed-users 200 in 183ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 190ms
+ POST /api/client-errors 201 in 166ms
+ GET /api/proxy/Lookup/user-admin 200 in 244ms
+ POST /api/client-errors 201 in 157ms
+ POST /api/client-errors 201 in 168ms
+ POST /api/client-errors 201 in 174ms
+ POST /api/client-errors 201 in 192ms
+ POST /api/client-errors 201 in 186ms
+ POST /api/client-errors 201 in 173ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 69ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 84ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 23ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 25ms
+ GET /api/proxy/Me/SaveProps 200 in 105ms
+ GET /api/proxy/Me/SaveCustomers 200 in 133ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 134ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 13ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 15ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 61ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 31ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 135ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 138ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 162ms
+ GET /api/proxy/Me/SaveProps 200 in 167ms
+ GET /api/proxy/Me/SaveCustomers 200 in 171ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 45ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 21ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 114ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 118ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 120ms
+ GET /api/proxy/Me/SaveCustomers 200 in 119ms
+ GET /api/proxy/Me/SaveProps 200 in 122ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 21ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 15ms
+ GET /api/proxy/Property?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 45ms
+ GET /api/proxy/Property/Meta?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 50ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=false 200 in 49ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=false 200 in 46ms
+ GET /api/proxy/Property?TransType=1&Status=1&pageSize=10 200 in 100ms
+ GET /api/proxy/Property/Meta?TransType=1&Status=1&pageSize=10 200 in 19ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 168ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 160ms
+ GET /api/proxy/Me/SaveProps 200 in 160ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 159ms
+ GET /api/proxy/Me/SaveCustomers 200 in 158ms
+ GET /api/proxy/Property?TransType=1&Status=1&pageSize=10 200 in 506ms
+ GET /api/proxy/Property/Meta?TransType=1&Status=1&pageSize=10 200 in 533ms
+ GET /api/proxy/Me/SaveCustomers 200 in 652ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 671ms
+ GET /api/proxy/Me/SaveProps 200 in 711ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 11ms
+ ✓ Compiled in 2.3s (4880 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 335ms
+ GET /api/auth/session 200 in 25ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 15ms
+ ✓ Compiled in 2.6s (4906 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 118ms
+ GET /api/auth/session 200 in 25ms
+ GET /api/auth/session 200 in 10ms
+ ✓ Compiled in 2.1s (4880 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 110ms
+ ✓ Compiled in 1672ms (4893 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 100ms
+ ✓ Compiled in 2.7s (4904 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 132ms
+ ✓ Compiled in 478ms (2243 modules)
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 23ms
+ ○ Compiling /api/proxy/[...path] ...
+ ✓ Compiled /api/proxy/[...path] in 992ms (2640 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/proxy/Property?TransType=1&Status=1&pageSize=10 200 in 1116ms
+ GET /api/proxy/Me/SaveCustomers 200 in 1196ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 1199ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 1396ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 1393ms
+ GET /api/proxy/Me/SaveProps 200 in 1394ms
+ GET /admin/property?TransType=1&Status=1 200 in 890ms
+ GET /api/proxy/Property/Meta?TransType=1&Status=1&pageSize=10 200 in 862ms
+ ✓ Compiled /api/auth/[...nextauth] in 435ms (2642 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 706ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 702ms
+ GET /api/auth/session 200 in 719ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 754ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 752ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 766ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 68ms
+ GET /api/proxy/Utils/Config 200 in 92ms
+ GET /api/proxy/Utils/EnumList 200 in 96ms
+ GET /api/proxy/Me/managed-users 200 in 236ms
+ GET /api/proxy/Lookup/user-admin 200 in 597ms
+ ○ Compiling /api/client-errors ...
+ ✓ Compiled /api/client-errors in 1200ms (2651 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ POST /api/client-errors 201 in 1620ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 1630ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 1457ms
+ GET /api/proxy/Me/SaveCustomers 200 in 1082ms
+ GET /api/proxy/Me/SaveProps 200 in 1556ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 47ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 48ms
+ GET /api/auth/session 200 in 52ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 200 in 77ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 78ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 88ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 89ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=20 200 in 199ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 1724ms
+ GET /api/proxy/Utils/Config 200 in 54ms
+ GET /api/proxy/Utils/EnumList 200 in 57ms
+ POST /api/client-errors 201 in 85ms
+ GET /api/proxy/Me/managed-users 200 in 99ms
+ POST /api/client-errors 201 in 78ms
+ POST /api/client-errors 201 in 85ms
+ GET /api/proxy/Lookup/user-admin 200 in 151ms
+ POST /api/client-errors 201 in 65ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 235ms
+ POST /api/client-errors 201 in 75ms
+ POST /api/client-errors 201 in 61ms
+ POST /api/client-errors 201 in 64ms
+ GET /api/proxy/Property?TransType=1&Status=1&pageSize=10 200 in 50ms
+ GET /api/proxy/Property/Meta?TransType=1&Status=1&pageSize=10 200 in 50ms
+ GET /api/auth/session 200 in 49ms
+ ✓ Compiled in 1092ms (4894 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 135ms
+ GET /admin/property?TransType=1&Status=1&_rsc=8u94g 200 in 137ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 28ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 59ms
+ ✓ Compiled in 1066ms (4907 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/property?TransType=1&Status=1&_rsc=8u94g 200 in 110ms
+ GET /admin/property?pageIndex=1&pageSize=30&Status=1&TransType=1&_rsc=8u94g 200 in 111ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=false 200 in 112ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=false 200 in 52ms
+ GET /api/proxy/Property?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 49ms
+ GET /api/proxy/Property/Meta?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 19ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 137ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 145ms
+ GET /api/proxy/Me/SaveCustomers 200 in 125ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 133ms
+ GET /api/proxy/Me/SaveProps 200 in 142ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 55ms
+ GET /api/proxy/District?ProvinceId=1&pageIndex=1&pageSize=10000 200 in 15ms
+ GET /api/proxy/Property?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 78ms
+ GET /api/proxy/Property/Meta?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 80ms
+ GET /api/proxy/Me/SaveCustomers 200 in 195ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 220ms
+ GET /api/proxy/Me/SaveProps 200 in 229ms
+ GET /api/proxy/Property?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 1087ms
+ GET /api/proxy/Me/SaveCustomers 200 in 1180ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 1231ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 1260ms
+ GET /api/proxy/Me/SaveProps 200 in 1224ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 1221ms
+ GET /api/proxy/Property/Meta?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 94ms
+ GET /api/auth/session 200 in 55ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 64ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/proxy/Property?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 50ms
+ GET /api/proxy/Property/Meta?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 25ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 117ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 117ms
+ GET /api/proxy/Me/SaveCustomers 200 in 279ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 294ms
+ GET /api/proxy/Me/SaveProps 200 in 302ms
+ GET /api/proxy/Property?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 191ms
+ GET /api/proxy/Property/Meta?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 200ms
+ GET /api/proxy/Me/SaveProps 200 in 278ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 282ms
+ GET /api/proxy/Me/SaveCustomers 200 in 283ms
+ GET /api/auth/session 200 in 48ms
+ ○ Compiling /login ...
+ ✓ Compiled /login in 16.6s (2668 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]

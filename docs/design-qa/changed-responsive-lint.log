@@ -1,0 +1,25 @@
+src/lib/components/admin/news/listing/index.tsx:100:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable handleInputConfirm is unused.
+  
+     98 │   };
+     99 │ 
+  > 100 │   const handleInputConfirm = async () => {
+        │         ^^^^^^^^^^^^^^^^^^
+    101 │     if (newTag?.trim()) {
+    102 │       await newsTypeApi.add({ Name: newTag.trim() });
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend handleInputConfirm with an underscore.
+  
+     98  98 │     };
+     99  99 │   
+    100     │ - ··const·handleInputConfirm·=·async·()·=>·{
+        100 │ + ··const·_handleInputConfirm·=·async·()·=>·{
+    101 101 │       if (newTag?.trim()) {
+    102 102 │         await newsTypeApi.add({ Name: newTag.trim() });
+  
+
+Checked 2 files in 100ms. No fixes applied.
+Found 1 warning.

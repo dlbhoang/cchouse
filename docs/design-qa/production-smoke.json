@@ -1,0 +1,30 @@
+[
+  {
+    "path": "/admin/property?TransType=1",
+    "status": 307
+  },
+  {
+    "path": "/admin/config/news",
+    "status": 307
+  },
+  {
+    "path": "/admin/config/address-manager",
+    "status": 307
+  },
+  {
+    "path": "/admin/config/agency-manager",
+    "status": 307
+  },
+  {
+    "path": "/assets/admin/news-empty-figma.svg",
+    "status": 200
+  },
+  {
+    "path": "/assets/admin/property-empty-documents.svg",
+    "status": 200
+  },
+  {
+    "path": "/assets/admin/property-empty-search.svg",
+    "status": 200
+  }
+]

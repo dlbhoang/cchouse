@@ -24,7 +24,7 @@ const RenderArea = ({
         )}
         {(width ?? 0) > 0 && (length ?? 0) > 0 && ` (${width}x${length})m`}
       </div>
-      {backSide && <span style={{ color: '#1677ff' }}>MH: {backSide}m</span>}
+      {(backSide ?? 0) > 0 && <span style={{ color: '#1677ff' }}>MH: {backSide}m</span>}
     </Space>
   );
 };

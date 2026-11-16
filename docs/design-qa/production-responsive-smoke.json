@@ -1,0 +1,37 @@
+[
+  {
+    "path": "/admin/property?TransType=1",
+    "status": 307,
+    "location": "http://localhost:3003/login?TransType=1&callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fproperty%3FTransType%3D1"
+  },
+  {
+    "path": "/admin/config/news",
+    "status": 307,
+    "location": "http://localhost:3003/login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fconfig%2Fnews"
+  },
+  {
+    "path": "/admin/config/address-manager",
+    "status": 307,
+    "location": "http://localhost:3003/login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fconfig%2Faddress-manager"
+  },
+  {
+    "path": "/admin/config/agency-manager",
+    "status": 307,
+    "location": "http://localhost:3003/login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fconfig%2Fagency-manager"
+  },
+  {
+    "path": "/assets/admin/news-empty-figma.svg",
+    "status": 200,
+    "contentType": "image/svg+xml"
+  },
+  {
+    "path": "/assets/admin/property-empty-documents.svg",
+    "status": 200,
+    "contentType": "image/svg+xml"
+  },
+  {
+    "path": "/assets/admin/property-empty-search.svg",
+    "status": 200,
+    "contentType": "image/svg+xml"
+  }
+]

@@ -834,7 +834,7 @@
   color: #1f2937;
   font-size: 18px;
   font-weight: 700;
-  letter-spacing: 0.2px;
+  letter-spacing: 0;
   line-height: 1.25;
   text-transform: uppercase;
 }
@@ -2298,17 +2298,17 @@
     margin-left: 20px;
   }
 
-  .property-table-area .ant-table table col:nth-child(1) { width: 68px !important; }
-  .property-table-area .ant-table table col:nth-child(2) { width: 100px !important; }
-  .property-table-area .ant-table table col:nth-child(3) { width: 145px !important; }
-  .property-table-area .ant-table table col:nth-child(4) { width: 194px !important; }
-  .property-table-area .ant-table table col:nth-child(5) { width: 88px !important; }
+  .property-table-area .ant-table table col:nth-child(1) { width: 80px !important; }
+  .property-table-area .ant-table table col:nth-child(2) { width: 120px !important; }
+  .property-table-area .ant-table table col:nth-child(3) { width: 130px !important; }
+  .property-table-area .ant-table table col:nth-child(4) { width: 160px !important; }
+  .property-table-area .ant-table table col:nth-child(5) { width: 90px !important; }
   .property-table-area .ant-table table col:nth-child(6) { width: 140px !important; }
-  .property-table-area .ant-table table col:nth-child(7) { width: 130px !important; }
-  .property-table-area .ant-table table col:nth-child(8) { width: 127px !important; }
-  .property-table-area .ant-table table col:nth-child(9) { width: 80px !important; }
-  .property-table-area .ant-table table col:nth-child(10) { width: 82px !important; }
-  .property-table-area .ant-table table col:nth-child(11) { width: 112px !important; }
+  .property-table-area .ant-table table col:nth-child(7) { width: 160px !important; }
+  .property-table-area .ant-table table col:nth-child(8) { width: 120px !important; }
+  .property-table-area .ant-table table col:nth-child(9) { width: 100px !important; }
+  .property-table-area .ant-table table col:nth-child(10) { width: 60px !important; }
+  .property-table-area .ant-table table col:nth-child(11) { width: 140px !important; }
 
   .property-page-header {
     margin-top: 24px;

@@ -1,0 +1,37 @@
+{
+  "heading": {
+    "bottom": 238,
+    "height": 32,
+    "left": 92,
+    "right": 480.9921875,
+    "top": 206,
+    "width": 388.9921875,
+    "x": 92,
+    "y": 206
+  },
+  "pageScrollHeight": 946,
+  "panel": {
+    "bottom": 930,
+    "height": 668,
+    "left": 92,
+    "right": 1424,
+    "top": 262,
+    "width": 1332,
+    "x": 92,
+    "y": 262
+  },
+  "search": {
+    "bottom": 182,
+    "height": 88,
+    "left": 92,
+    "right": 1424,
+    "top": 94,
+    "width": 1332,
+    "x": 92,
+    "y": 94
+  },
+  "viewport": [
+    1440,
+    946
+  ]
+}

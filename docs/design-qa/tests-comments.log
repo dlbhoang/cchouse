@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: counts a range as one criterion and excludes filters outside the More dialog
+ok 1 - counts a range as one criterion and excludes filters outside the More dialog
+  ---
+  duration_ms: 2.308417
+  type: 'test'
+  ...
+# Subtest: resolves selected labels and counts a multi-select as one criterion
+ok 2 - resolves selected labels and counts a multi-select as one criterion
+  ---
+  duration_ms: 0.293458
+  type: 'test'
+  ...
+# Subtest: includes staff, dates and active checkboxes; ignores empty and false values
+ok 3 - includes staff, dates and active checkboxes; ignores empty and false values
+  ---
+  duration_ms: 0.2115
+  type: 'test'
+  ...
+# Subtest: inline area selector clears dependent IDs and applies the existing form once
+ok 4 - inline area selector clears dependent IDs and applies the existing form once
+  ---
+  duration_ms: 4.559875
+  type: 'test'
+  ...
+# Subtest: existing region button retains its dropdown presentation
+ok 5 - existing region button retains its dropdown presentation
+  ---
+  duration_ms: 0.660166
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 505.136583

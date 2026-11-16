@@ -1,0 +1,107 @@
+{
+  "querySubmitted": true,
+  "selectedFields": [
+    "ProvinceId",
+    "DistrictId",
+    "WardId",
+    "StreetId"
+  ],
+  "viewports": [
+    {
+      "documentWidth": 1024,
+      "filter": {
+        "bottom": 228,
+        "height": 136,
+        "left": 96,
+        "right": 996,
+        "top": 92,
+        "width": 900,
+        "x": 96,
+        "y": 92
+      },
+      "header": {
+        "bottom": 64,
+        "height": 64,
+        "left": 68,
+        "right": 1024,
+        "top": 0,
+        "width": 956,
+        "x": 68,
+        "y": 0
+      },
+      "width": 1024
+    },
+    {
+      "documentWidth": 1280,
+      "filter": {
+        "bottom": 228,
+        "height": 136,
+        "left": 96,
+        "right": 1252,
+        "top": 92,
+        "width": 1156,
+        "x": 96,
+        "y": 92
+      },
+      "header": {
+        "bottom": 64,
+        "height": 64,
+        "left": 68,
+        "right": 1280,
+        "top": 0,
+        "width": 1212,
+        "x": 68,
+        "y": 0
+      },
+      "width": 1280
+    },
+    {
+      "documentWidth": 1366,
+      "filter": {
+        "bottom": 230,
+        "height": 138,
+        "left": 104,
+        "right": 1338,
+        "top": 92,
+        "width": 1234,
+        "x": 104,
+        "y": 92
+      },
+      "header": {
+        "bottom": 64,
+        "height": 64,
+        "left": 68,
+        "right": 1366,
+        "top": 0,
+        "width": 1298,
+        "x": 68,
+        "y": 0
+      },
+      "width": 1366
+    },
+    {
+      "documentWidth": 1440,
+      "filter": {
+        "bottom": 230,
+        "height": 138,
+        "left": 104,
+        "right": 1412,
+        "top": 92,
+        "width": 1308,
+        "x": 104,
+        "y": 92
+      },
+      "header": {
+        "bottom": 64,
+        "height": 64,
+        "left": 68,
+        "right": 1440,
+        "top": 0,
+        "width": 1372,
+        "x": 68,
+        "y": 0
+      },
+      "width": 1440
+    }
+  ]
+}
