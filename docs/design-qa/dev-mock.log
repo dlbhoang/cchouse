@@ -2699,3 +2699,1188 @@ debug-enabled [ 0, [ 'debug-enabled' ] ]
  GET /api/auth/session 200 in 272ms
  GET /api/auth/session 200 in 221ms
  GET /api/auth/session 200 in 87ms
+ GET /api/auth/session 200 in 57ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/proxy/Property?TransType=1&ProvinceId=1&pageIndex=1&pageSize=20&Status=1 200 in 44ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 139ms
+ GET /api/proxy/Me/SaveCustomers 200 in 142ms
+ GET /api/proxy/Property/GetCoordinates?TransType=1&ProvinceId=1&pageIndex=1&pageSize=10000&Status=1 200 in 232ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 321ms
+ GET /api/proxy/Me/SaveProps 200 in 355ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 479ms
+ GET /api/proxy/Property?TransType=1&ProvinceId=1&pageIndex=1&pageSize=20&Status=1 200 in 66ms
+ GET /api/proxy/Me/SaveCustomers 200 in 108ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 113ms
+ GET /api/proxy/Me/SaveProps 200 in 139ms
+ GET /api/proxy/Property/GetCoordinates?TransType=1&ProvinceId=1&pageIndex=1&pageSize=10000&Status=1 200 in 239ms
+ GET /api/auth/session 200 in 40ms
+ GET /api/auth/session 200 in 37ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/proxy/Property?TransType=1&ProvinceId=1&pageIndex=1&pageSize=20&Status=1 200 in 60ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 149ms
+ GET /api/proxy/Me/SaveCustomers 200 in 137ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 147ms
+ GET /api/proxy/Me/SaveProps 200 in 151ms
+ GET /api/proxy/Property/GetCoordinates?TransType=1&ProvinceId=1&pageIndex=1&pageSize=10000&Status=1 200 in 204ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 317ms
+ GET /api/proxy/Property?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 27ms
+ GET /api/proxy/Property/Meta?pageIndex=1&pageSize=30&Status=1&TransType=1 200 in 12ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 71ms
+ GET /api/proxy/Me/SaveCustomers 200 in 75ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 82ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 84ms
+ GET /api/proxy/Me/SaveProps 200 in 304ms
+ GET /api/proxy/Property?TransType=1&ProvinceId=1&pageIndex=1&pageSize=20&Status=1 200 in 32ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 98ms
+ GET /api/proxy/Me/SaveProps 200 in 103ms
+ GET /api/proxy/Me/SaveCustomers 200 in 100ms
+ GET /api/proxy/Property/GetCoordinates?TransType=1&ProvinceId=1&pageIndex=1&pageSize=10000&Status=1 200 in 338ms
+ POST /api/proxy/AdminAuth/Logout 405 in 17ms
+ GET /api/auth/csrf 200 in 17ms
+ POST /api/client-errors 201 in 27ms
+ POST /api/auth/signout 200 in 11ms
+ GET /login 200 in 46ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/providers 200 in 30ms
+ GET /api/auth/csrf 200 in 11ms
+NEXT_PUBLIC_API_URL = http://localhost:5224/api
+ POST /api/auth/callback/credentials? 200 in 688ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /admin/property?TransType=1 200 in 30ms
+ GET /api/auth/session 200 in 44ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 45ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 52ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 120ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 125ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 131ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/proxy/Utils/Config 200 in 40ms
+ GET /api/proxy/Utils/EnumList 200 in 44ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 135ms
+ GET /api/proxy/Me/managed-users 200 in 64ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 46ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 41ms
+ GET /api/proxy/Lookup/user-admin 200 in 175ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 82ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 99ms
+ GET /api/proxy/Me/SaveProps 200 in 98ms
+ GET /api/proxy/Me/SaveCustomers 200 in 88ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 105ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=20 200 in 72ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 200 in 71ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 71ms
+ GET /api/proxy/Utils/Config 200 in 58ms
+ GET /api/proxy/Utils/EnumList 200 in 58ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 105ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 81ms
+ POST /api/client-errors 201 in 33ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 83ms
+ GET /api/proxy/Me/managed-users 200 in 88ms
+ POST /api/client-errors 201 in 45ms
+ POST /api/client-errors 201 in 41ms
+ POST /api/client-errors 201 in 38ms
+ POST /api/client-errors 201 in 42ms
+ POST /api/client-errors 201 in 36ms
+ POST /api/client-errors 201 in 33ms
+ POST /api/client-errors 201 in 20ms
+ GET /api/proxy/Lookup/user-admin 200 in 146ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 20ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 21ms
+ POST /api/proxy/AdminAuth/Logout 405 in 16ms
+ GET /api/auth/csrf 200 in 16ms
+ POST /api/client-errors 201 in 23ms
+ POST /api/auth/signout 200 in 8ms
+ GET /login 200 in 35ms
+ GET /api/auth/session 200 in 53ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/providers 200 in 22ms
+ GET /api/auth/csrf 200 in 7ms
+NEXT_PUBLIC_API_URL = http://localhost:5224/api
+ POST /api/auth/callback/credentials? 200 in 2314ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /admin/property?TransType=1 200 in 32ms
+ GET /api/auth/session 200 in 46ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 57ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 90ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 97ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 101ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 74ms
+ GET /api/proxy/Utils/Config 200 in 20ms
+ GET /api/proxy/Utils/EnumList 200 in 32ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 82ms
+ GET /api/proxy/Me/managed-users 200 in 67ms
+ POST /api/client-errors 201 in 35ms
+ GET /api/proxy/Me/CountUnReadNoti 200 in 67ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 200 in 70ms
+ GET /api/proxy/Me/SaveProps 200 in 65ms
+ GET /api/proxy/Lookup/user-admin 200 in 143ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 62ms
+ GET /api/proxy/Me/SaveCustomers 200 in 55ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 55ms
+ GET /api/auth/session 200 in 59ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 27ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=20 200 in 127ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 88ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 81ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 63ms
+ GET /api/proxy/Utils/Config 200 in 48ms
+ GET /api/proxy/Utils/EnumList 200 in 58ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 91ms
+ POST /api/client-errors 201 in 53ms
+ GET /api/proxy/Me/managed-users 200 in 92ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 200 in 215ms
+ POST /api/client-errors 201 in 56ms
+ POST /api/client-errors 201 in 34ms
+ POST /api/client-errors 201 in 36ms
+ POST /api/client-errors 201 in 30ms
+ POST /api/client-errors 201 in 31ms
+ POST /api/client-errors 201 in 10ms
+ GET /api/proxy/Lookup/user-admin 200 in 158ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 19ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 24ms
+ POST /api/proxy/AdminAuth/Logout 405 in 15ms
+ GET /api/auth/csrf 200 in 16ms
+ POST /api/client-errors 201 in 22ms
+ POST /api/auth/signout 200 in 11ms
+ GET /login 200 in 35ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 9ms
+ GET / 307 in 1499ms
+ GET /login 307 in 136ms
+ GET /admin/property 200 in 122ms
+ GET /api/auth/session 200 in 127ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 164ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 165ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 753ms
+ GET /api/proxy/Utils/EnumList 200 in 40ms
+ GET /api/proxy/Utils/Config 200 in 23ms
+ POST /api/client-errors 201 in 20ms
+ GET /api/proxy/Me/managed-users 200 in 697ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 43ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 37ms
+ GET /api/proxy/Me/SaveProps 404 in 26ms
+ GET /api/proxy/Lookup/user-admin 200 in 760ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 907ms
+ GET /api/proxy/Me/SaveCustomers 200 in 99ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 404 in 24ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 21ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 159ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 1085ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 55ms
+ GET /api/proxy/Utils/Config 200 in 67ms
+ GET /api/proxy/Utils/EnumList 200 in 74ms
+ POST /api/client-errors 201 in 120ms
+ GET /api/proxy/Me/managed-users 200 in 151ms
+ GET /api/auth/session 200 in 47ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 110ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 1428ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 200 in 355ms
+ GET /api/proxy/Lookup/user-admin 200 in 279ms
+ POST /api/client-errors 201 in 35ms
+ POST /api/client-errors 201 in 32ms
+ POST /api/client-errors 201 in 26ms
+ POST /api/client-errors 201 in 47ms
+ POST /api/client-errors 201 in 49ms
+ POST /api/client-errors 201 in 29ms
+ POST /api/client-errors 201 in 12ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 200 in 535ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 41ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 99ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 200 in 801ms
+ GET /api/proxy/UserAdmin?Status=1&pageIndex=1&pageSize=500 200 in 1465ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=20 404 in 27ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 82ms
+ GET /api/proxy/Me/SaveProps 404 in 91ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 102ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 105ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 33ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 200 in 148ms
+ GET /api/proxy/Me/SaveCustomers 200 in 158ms
+ POST /api/client-errors 201 in 35ms
+ GET /api/proxy/Me/SaveProps 404 in 42ms
+ GET /api/auth/session 200 in 138ms
+ GET /api/auth/session 200 in 101ms
+ GET /api/auth/session 200 in 49ms
+ GET /api/auth/session 200 in 50ms
+ GET /api/auth/session 200 in 53ms
+ GET /api/auth/session 200 in 115ms
+ GET /api/auth/session 200 in 47ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 38ms
+ GET /api/auth/session 200 in 42ms
+ GET /api/auth/session 200 in 43ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 36ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 48ms
+ GET /api/auth/session 200 in 33ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 92ms
+ GET /api/auth/session 200 in 41ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/auth/session 200 in 41ms
+ GET /api/auth/session 200 in 39ms
+ GET /api/auth/session 200 in 33ms
+ GET /api/auth/session 200 in 39ms
+ GET /api/auth/session 200 in 33ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 33ms
+ GET /api/auth/session 200 in 40ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 36ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 155ms
+ GET /api/auth/session 200 in 51ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 21ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 34ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 49ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 25ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 47ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 82ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 24ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 33ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 21ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 543ms
+ GET /api/auth/session 200 in 351ms
+ GET /api/auth/session 200 in 360ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 42ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 37ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 36ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 7ms
+ GET /api/auth/session 200 in 6ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 9ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 2.6s (5032 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /admin/kpi 404 in 351ms
+ GET /api/auth/session 200 in 64ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 61ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/auth/session 200 in 120ms
+ GET /api/auth/session 200 in 69ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 206ms
+ GET /api/auth/session 200 in 21ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 39ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 88ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 46ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 52ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 67ms
+ GET /api/auth/session 200 in 10ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 196ms
+ GET /api/auth/session 200 in 47ms
+ GET /api/auth/session 200 in 47ms
+ GET /api/auth/session 200 in 29ms
+ GET /api/auth/session 200 in 9ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 48ms
+ GET /api/auth/session 200 in 16ms
+ GET /api/auth/session 200 in 53ms
+ GET /api/auth/session 200 in 11ms
+ GET /login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2F 307 in 231ms
+ GET /admin/property 200 in 554ms
+ ○ Compiling /api/proxy/[...path] ...
+ ✓ Compiled /api/proxy/[...path] in 1604ms (2738 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/auth/session 200 in 2054ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 2068ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 1901ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 2330ms
+ GET /api/proxy/Utils/EnumList 200 in 58ms
+ GET /api/proxy/Utils/Config 200 in 21ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 2501ms
+ GET /api/proxy/Me/managed-users 401 in 427ms
+ GET /api/proxy/Lookup/user-admin 401 in 755ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 2832ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 777ms
+ ✓ Compiled /api/client-errors in 436ms (2747 modules)
+debug-enabled [ 0, [ 'debug-enabled' ] ]
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 1151ms
+ GET /api/proxy/Me/SaveProps 404 in 828ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 1155ms
+ POST /api/client-errors 201 in 1274ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 401 in 851ms
+ GET /api/proxy/Me/SaveCustomers 401 in 854ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 404 in 62ms
+ GET /api/auth/session 200 in 59ms
+ GET /api/proxy/UserAdmin?Status=1&pageIndex=1&pageSize=500 401 in 94ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 85ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 101ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 133ms
+ GET /api/auth/csrf 200 in 97ms
+ POST /api/client-errors 201 in 164ms
+ GET /api/proxy/Utils/Config 200 in 157ms
+ GET /api/proxy/Utils/EnumList 200 in 173ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 178ms
+ GET /api/proxy/Me/managed-users 401 in 226ms
+ GET /api/proxy/Lookup/user-admin 401 in 254ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 269ms
+ POST /api/client-errors 201 in 217ms
+ POST /api/client-errors 201 in 230ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 281ms
+ POST /api/client-errors 201 in 193ms
+ POST /api/client-errors 201 in 150ms
+ POST /api/client-errors 201 in 185ms
+ POST /api/client-errors 201 in 189ms
+ POST /api/client-errors 201 in 161ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 140ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 132ms
+ POST /api/client-errors 201 in 161ms
+ GET /api/auth/session 200 in 104ms
+ GET /api/auth/csrf 200 in 87ms
+ POST /api/auth/signout 200 in 98ms
+ GET /api/auth/session 200 in 51ms
+ GET /api/auth/csrf 200 in 61ms
+ GET /api/auth/csrf 200 in 33ms
+ GET /api/auth/csrf 200 in 18ms
+ GET /api/auth/csrf 200 in 25ms
+ GET /api/auth/csrf 200 in 27ms
+ GET /api/auth/csrf 200 in 15ms
+ GET /api/auth/csrf 200 in 19ms
+ GET /api/auth/csrf 200 in 24ms
+ GET /api/auth/csrf 200 in 34ms
+ GET /api/auth/csrf 200 in 21ms
+ GET /api/auth/csrf 200 in 14ms
+ POST /api/auth/signout 200 in 42ms
+ POST /api/auth/signout 200 in 43ms
+ POST /api/auth/signout 200 in 43ms
+ POST /api/auth/signout 200 in 45ms
+ GET /api/auth/session 200 in 50ms
+ GET /admin/property 200 in 53ms
+ POST /api/auth/signout 200 in 306ms
+ POST /api/auth/signout 200 in 440ms
+ POST /api/auth/signout 200 in 442ms
+ POST /api/auth/signout 200 in 439ms
+ POST /api/auth/signout 200 in 436ms
+ POST /api/auth/signout 200 in 191ms
+ POST /api/auth/signout 200 in 26ms
+ POST /api/auth/signout 200 in 36ms
+ GET /api/auth/session 200 in 39ms
+ GET /api/auth/session 200 in 32ms
+ GET /admin/property 200 in 61ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 46ms
+ GET /api/auth/session 200 in 58ms
+ GET /api/auth/session 200 in 60ms
+ GET /api/auth/session 200 in 36ms
+ GET /api/auth/session 200 in 32ms
+ GET /api/auth/session 200 in 44ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 35ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 39ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 25ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 51ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 54ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 111ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 113ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 122ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 116ms
+ GET /api/proxy/Utils/EnumList 200 in 64ms
+ GET /api/proxy/Utils/Config 200 in 50ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 165ms
+ GET /api/proxy/Lookup/user-admin 401 in 101ms
+ GET /api/proxy/Me/managed-users 401 in 105ms
+ POST /api/client-errors 201 in 86ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 60ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 63ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 66ms
+ GET /api/proxy/Me/SaveProps 404 in 73ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 401 in 142ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 404 in 102ms
+ GET /api/proxy/Me/SaveCustomers 401 in 115ms
+ GET /api/proxy/UserAdmin?Status=1&pageIndex=1&pageSize=500 401 in 131ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 133ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 119ms
+ GET /api/auth/csrf 200 in 63ms
+ POST /api/client-errors 201 in 113ms
+ GET /api/auth/session 200 in 110ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 82ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 124ms
+ GET /api/proxy/Utils/Config 200 in 136ms
+ GET /api/proxy/Utils/EnumList 200 in 168ms
+ GET /api/auth/csrf 200 in 73ms
+ GET /api/proxy/Lookup/user-admin 401 in 231ms
+ GET /api/proxy/Me/managed-users 401 in 231ms
+ POST /api/client-errors 201 in 200ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 259ms
+ GET /api/auth/session 200 in 104ms
+ POST /api/client-errors 201 in 77ms
+ POST /api/auth/signout 200 in 73ms
+ POST /api/client-errors 201 in 101ms
+ POST /api/client-errors 201 in 94ms
+ POST /api/client-errors 201 in 99ms
+ POST /api/client-errors 201 in 106ms
+ GET /api/auth/csrf 200 in 49ms
+ POST /api/client-errors 201 in 79ms
+ GET /api/auth/session 200 in 67ms
+ GET /api/auth/csrf 200 in 26ms
+ POST /api/client-errors 201 in 77ms
+ GET /api/auth/csrf 200 in 19ms
+ GET /api/auth/csrf 200 in 81ms
+ GET /api/auth/csrf 200 in 36ms
+ GET /api/auth/csrf 200 in 16ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 55ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 58ms
+ GET /api/proxy/Me/SaveProps 404 in 60ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 66ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 401 in 84ms
+ GET /api/proxy/Me/SaveCustomers 401 in 88ms
+ GET /api/auth/csrf 200 in 41ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 47ms
+ GET /api/auth/csrf 200 in 16ms
+ GET /api/auth/csrf 200 in 34ms
+ GET /api/auth/csrf 200 in 16ms
+ GET /api/auth/csrf 200 in 17ms
+ GET /api/auth/csrf 200 in 12ms
+ GET /api/auth/csrf 200 in 14ms
+ POST /api/auth/signout 200 in 35ms
+ POST /api/auth/signout 200 in 37ms
+ POST /api/auth/signout 200 in 38ms
+ POST /api/auth/signout 200 in 38ms
+ GET /api/auth/session 200 in 45ms
+ POST /api/auth/signout 200 in 44ms
+ POST /api/auth/signout 200 in 37ms
+ POST /api/auth/signout 200 in 38ms
+ POST /api/auth/signout 200 in 40ms
+ POST /api/auth/signout 200 in 68ms
+ POST /api/auth/signout 200 in 49ms
+MissingCSRF: CSRF token was missing during an action signout. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js:45:11)
+    at AuthInternal (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/index.js:78:100)
+    at async Auth (webpack-internal:///(rsc)/./node_modules/@auth/core/index.js:130:34)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57228
+    at async eT.execute (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46851)
+    at async eT.handle (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:58760)
+    at async doRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1576:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1496:28)
+    at async DevServer.renderPageComponent (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1962:32)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:818:17)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:359:24)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:383:13)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  type: 'MissingCSRF',
+  kind: 'signIn'
+} []
+ GET /admin/property 200 in 144ms
+MissingCSRF: CSRF token was missing during an action signout. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js:45:11)
+    at AuthInternal (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/index.js:78:100)
+    at async Auth (webpack-internal:///(rsc)/./node_modules/@auth/core/index.js:130:34)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57228
+    at async eT.execute (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46851)
+    at async eT.handle (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:58760)
+    at async doRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1576:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1496:28)
+    at async DevServer.renderPageComponent (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1962:32)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:818:17)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:359:24)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:383:13)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  type: 'MissingCSRF',
+  kind: 'signIn'
+} []
+MissingCSRF: CSRF token was missing during an action signout. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js:45:11)
+    at AuthInternal (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/index.js:78:100)
+    at async Auth (webpack-internal:///(rsc)/./node_modules/@auth/core/index.js:130:34)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57228
+    at async eT.execute (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46851)
+    at async eT.handle (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:58760)
+    at async doRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1576:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1496:28)
+    at async DevServer.renderPageComponent (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1962:32)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:818:17)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:359:24)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:383:13)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  type: 'MissingCSRF',
+  kind: 'signIn'
+} []
+MissingCSRF: CSRF token was missing during an action signout. Read more at https://errors.authjs.dev#missingcsrf
+    at validateCSRF (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/actions/callback/oauth/csrf-token.js:45:11)
+    at AuthInternal (webpack-internal:///(rsc)/./node_modules/@auth/core/lib/index.js:78:100)
+    at async Auth (webpack-internal:///(rsc)/./node_modules/@auth/core/index.js:130:34)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:57228
+    at async eT.execute (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:46851)
+    at async eT.handle (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/compiled/next-server/app-route.runtime.dev.js:6:58760)
+    at async doRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1366:42)
+    at async cacheEntry.responseCache.get.routeKind (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1576:40)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1496:28)
+    at async DevServer.renderPageComponent (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1924:24)
+    at async DevServer.renderToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:1962:32)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:818:17)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:359:24)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:383:13)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  type: 'MissingCSRF',
+  kind: 'signIn'
+} []
+ POST /api/client-errors 401 in 139ms
+ GET /api/auth/session 200 in 172ms
+ GET /api/auth/session 200 in 47ms
+ GET /api/auth/session 200 in 49ms
+ GET /api/auth/session 200 in 38ms
+ GET /api/auth/session 200 in 36ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 40ms
+ GET /api/auth/session 200 in 33ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 24ms
+ GET /api/auth/session 200 in 24ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 172ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 134ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 230ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 236ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 246ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 183ms
+ GET /api/proxy/Utils/EnumList 200 in 91ms
+ GET /api/proxy/Utils/Config 200 in 50ms
+ GET /api/proxy/Lookup/user-admin 401 in 120ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 230ms
+ GET /api/proxy/Me/managed-users 401 in 132ms
+ POST /api/client-errors 201 in 99ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 74ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 78ms
+ GET /api/proxy/Me/SaveProps 404 in 81ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 401 in 112ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 61ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 404 in 103ms
+ GET /api/proxy/Me/SaveCustomers 401 in 169ms
+ GET /api/proxy/UserAdmin?Status=1&pageIndex=1&pageSize=500 401 in 129ms
+ GET /api/auth/session 200 in 134ms
+ GET /api/auth/csrf 200 in 109ms
+ POST /api/client-errors 201 in 150ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 84ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 187ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 123ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 132ms
+ GET /api/proxy/Utils/EnumList 200 in 129ms
+ GET /api/proxy/Utils/Config 200 in 154ms
+ GET /api/proxy/Lookup/user-admin 401 in 186ms
+ POST /api/client-errors 201 in 207ms
+ GET /api/proxy/Me/managed-users 401 in 202ms
+ GET /api/auth/session 200 in 165ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 232ms
+ GET /api/auth/csrf 200 in 101ms
+ POST /api/auth/signout 200 in 141ms
+ POST /api/client-errors 201 in 137ms
+ POST /api/client-errors 201 in 134ms
+ POST /api/client-errors 201 in 147ms
+ POST /api/client-errors 201 in 151ms
+ POST /api/client-errors 201 in 172ms
+ POST /api/client-errors 201 in 130ms
+ GET /api/auth/csrf 200 in 62ms
+ GET /api/auth/session 200 in 114ms
+ POST /api/client-errors 401 in 75ms
+ GET /api/auth/csrf 200 in 31ms
+ GET /api/auth/csrf 200 in 15ms
+ GET /api/auth/csrf 200 in 19ms
+ GET /api/auth/csrf 200 in 18ms
+ GET /api/auth/csrf 200 in 13ms
+ GET /api/auth/csrf 200 in 21ms
+ GET /api/auth/csrf 200 in 50ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 65ms
+ GET /api/proxy/Me/SaveProps 404 in 103ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 106ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 77ms
+ GET /api/proxy/Me/SaveCustomers 401 in 132ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 401 in 135ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 63ms
+ GET /api/auth/csrf 200 in 42ms
+ GET /api/auth/csrf 200 in 35ms
+ GET /api/auth/csrf 200 in 20ms
+ GET /api/auth/csrf 200 in 18ms
+ GET /api/auth/csrf 200 in 8ms
+ POST /api/auth/signout 200 in 37ms
+ POST /api/auth/signout 200 in 42ms
+ POST /api/auth/signout 200 in 43ms
+ POST /api/auth/signout 200 in 44ms
+ GET /api/auth/session 200 in 54ms
+ POST /api/auth/signout 200 in 56ms
+ POST /api/auth/signout 200 in 48ms
+ POST /api/auth/signout 200 in 59ms
+ POST /api/auth/signout 200 in 59ms
+ POST /api/auth/signout 200 in 62ms
+ POST /api/auth/signout 200 in 50ms
+ POST /api/auth/signout 200 in 49ms
+ POST /api/auth/signout 200 in 172ms
+ POST /api/auth/signout 200 in 175ms
+ POST /api/auth/signout 200 in 180ms
+ GET /login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fproperty 307 in 238ms
+ GET /api/auth/session 200 in 89ms
+ GET /api/auth/session 200 in 41ms
+ GET /api/auth/session 200 in 38ms
+ GET /login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fproperty 307 in 98ms
+ GET /api/auth/session 200 in 21ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 33ms
+ GET /admin/property 200 in 65ms
+ GET /api/auth/session 200 in 44ms
+ GET /api/auth/session 200 in 62ms
+ GET /api/auth/session 200 in 50ms
+ GET /api/auth/session 200 in 46ms
+ GET /api/auth/session 200 in 39ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 26ms
+ GET /api/auth/session 200 in 24ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 40ms
+ GET /api/auth/session 200 in 33ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 30ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 19ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 56ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 48ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 89ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 92ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 95ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 66ms
+ GET /api/proxy/Utils/EnumList 200 in 193ms
+ GET /api/proxy/Utils/Config 200 in 82ms
+ GET /api/proxy/Me/managed-users 401 in 226ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 284ms
+ GET /api/proxy/Lookup/user-admin 401 in 240ms
+ POST /api/client-errors 201 in 112ms
+ GET /api/proxy/Province?pageIndex=1&pageSize=100 200 in 82ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 77ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 80ms
+ GET /api/proxy/Me/SaveProps 404 in 64ms
+ GET /api/auth/session 200 in 76ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 401 in 131ms
+ GET /api/proxy/Me/Notifications?Status=0&pageIndex=1&pageSize=50 404 in 91ms
+ GET /api/proxy/UserAdmin?Status=1&pageIndex=1&pageSize=500 401 in 110ms
+ GET /api/proxy/Me/SaveCustomers 401 in 119ms
+ GET /api/auth/csrf 200 in 80ms
+ POST /api/client-errors 201 in 123ms
+ GET /api/proxy/District?pageIndex=1&pageSize=1000 200 in 96ms
+ GET /api/proxy/Branch?pageIndex=1&pageSize=100 401 in 126ms
+ GET /api/proxy/UserAdmin/GetUserAdminPublic?managerOnly=true 401 in 137ms
+ GET /api/proxy/Role?pageIndex=1&pageSize=100 401 in 134ms
+ GET /api/proxy/Utils/EnumList 200 in 121ms
+ GET /api/proxy/Utils/Config 200 in 212ms
+ GET /api/auth/session 200 in 108ms
+ POST /api/client-errors 201 in 211ms
+ GET /api/proxy/Me/managed-users 401 in 257ms
+ GET /api/proxy/Lookup/user-admin 401 in 254ms
+ GET /api/auth/csrf 200 in 77ms
+ GET /api/proxy/PropType?pageIndex=1&pageSize=100 200 in 280ms
+ POST /api/auth/signout 200 in 83ms
+ POST /api/client-errors 201 in 103ms
+ POST /api/client-errors 201 in 112ms
+ POST /api/client-errors 201 in 124ms
+ POST /api/client-errors 201 in 117ms
+ POST /api/client-errors 201 in 112ms
+ GET /api/auth/session 200 in 68ms
+ GET /api/auth/csrf 200 in 55ms
+ POST /api/client-errors 401 in 45ms
+ POST /api/client-errors 201 in 88ms
+ GET /api/auth/csrf 200 in 17ms
+ GET /api/auth/csrf 200 in 15ms
+ GET /api/auth/csrf 200 in 18ms
+ GET /api/auth/csrf 200 in 15ms
+ GET /api/auth/csrf 200 in 15ms
+ GET /api/auth/csrf 200 in 16ms
+ GET /api/auth/csrf 200 in 13ms
+ GET /api/auth/csrf 200 in 15ms
+ GET /api/proxy/Me/CountUnReadNoti 404 in 43ms
+ GET /api/proxy/Property?TransType=1&pageSize=10&Status=1 200 in 62ms
+ GET /api/proxy/Me/Notifications?pageIndex=1&pageSize=10 404 in 65ms
+ GET /api/proxy/Me/SaveProps 404 in 67ms
+ GET /api/proxy/Property/Meta?TransType=1&pageSize=10 200 in 34ms
+ GET /api/proxy/Me/GetSaveApartmentUnits 401 in 91ms
+ GET /api/proxy/Me/SaveCustomers 401 in 95ms
+ GET /api/auth/csrf 200 in 20ms
+ GET /api/auth/csrf 200 in 13ms
+ GET /api/auth/csrf 200 in 11ms
+ GET /api/auth/csrf 200 in 7ms
+ POST /api/auth/signout 200 in 15ms
+ GET /api/auth/session 200 in 33ms
+ POST /api/auth/signout 200 in 35ms
+ POST /api/auth/signout 200 in 34ms
+ POST /api/auth/signout 200 in 35ms
+ POST /api/auth/signout 200 in 36ms
+ POST /api/auth/signout 200 in 42ms
+ POST /api/auth/signout 200 in 34ms
+ POST /api/auth/signout 200 in 35ms
+ POST /api/auth/signout 200 in 36ms
+ POST /api/auth/signout 200 in 37ms
+ GET /login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fproperty 200 in 52ms
+ GET /api/auth/session 200 in 519ms
+ POST /api/auth/signout 200 in 34ms
+ POST /api/auth/signout 200 in 35ms
+ POST /api/auth/signout 200 in 35ms
+ POST /api/auth/signout 200 in 35ms
+ GET /api/auth/session 200 in 24ms
+ GET /api/auth/session 200 in 52ms
+ GET /login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fproperty 200 in 69ms
+ GET /api/auth/session 200 in 59ms
+ GET /api/auth/session 200 in 49ms
+ GET /api/auth/session 200 in 43ms
+ GET /api/auth/session 200 in 31ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 27ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 24ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 18ms
+ GET /api/auth/session 200 in 21ms
+ GET /api/auth/session 200 in 17ms
+ GET /api/auth/session 200 in 20ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 28ms
+ GET /api/auth/session 200 in 23ms
+ GET /api/auth/session 200 in 22ms
+ GET /api/auth/session 200 in 14ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 13ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 12ms
+ GET /api/auth/session 200 in 15ms
+ GET /api/auth/session 200 in 11ms
+ GET /api/auth/session 200 in 8ms
+ GET /api/auth/session 200 in 7ms
+ ⨯ Module not found: Error: Can't resolve 'next-flight-client-entry-loader' in '/Users/dlb/cchouse/test/cchouse_admin_website_v2'
+ ⨯ Module not found: Error: Can't resolve 'next-flight-client-entry-loader' in '/Users/dlb/cchouse/test/cchouse_admin_website_v2'
+Error: Cannot find module '@swc/helpers/package.json'
+Require stack:
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/require-hook.js:55:36
+    at Function.resolve (node:internal/modules/helpers:145:19)
+    at createWebpackAliases (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js:129:76)
+    at getBaseWebpackConfig (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js:524:64)
+    at async HotReloaderWebpack.buildFallbackError (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js:553:32)
+    at async DevBundlerService.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/dev-bundler-service.js:25:9)
+    at async DevServer.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:593:9)
+    at async DevServer.renderErrorToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2203:40)
+    at async pipe.req.req (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2056:30)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:374:24)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:383:13)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js'
+  ]
+}
+Error: Cannot find module '@swc/helpers/package.json'
+Require stack:
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/require-hook.js:55:36
+    at Function.resolve (node:internal/modules/helpers:145:19)
+    at createWebpackAliases (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js:129:76)
+    at getBaseWebpackConfig (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js:524:64)
+    at async HotReloaderWebpack.buildFallbackError (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js:553:32)
+    at async DevBundlerService.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/dev-bundler-service.js:25:9)
+    at async DevServer.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:593:9)
+    at async DevServer.renderErrorToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2203:40)
+    at async pipe.req.req (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2056:30)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:395:24)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js'
+  ]
+}
+ ○ Compiling /_not-found ...
+Error: Cannot find module '@swc/helpers/package.json'
+Require stack:
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/require-hook.js:55:36
+    at Function.resolve (node:internal/modules/helpers:145:19)
+    at createWebpackAliases (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js:129:76)
+    at getBaseWebpackConfig (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js:524:64)
+    at async HotReloaderWebpack.buildFallbackError (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js:553:32)
+    at async DevBundlerService.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/dev-bundler-service.js:25:9)
+    at async DevServer.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:593:9)
+    at async DevServer.renderErrorToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2203:40)
+    at async DevServer.renderToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2019:30)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/next-server.js:272:17)
+    at async DevServer.handleRequestImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:818:17)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:359:24)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:383:13)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js'
+  ]
+}
+Error: Cannot find module '@swc/helpers/package.json'
+Require stack:
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js
+- /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js
+    at Function.<anonymous> (node:internal/modules/cjs/loader:1401:15)
+    at /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/require-hook.js:55:36
+    at Function.resolve (node:internal/modules/helpers:145:19)
+    at createWebpackAliases (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js:129:76)
+    at getBaseWebpackConfig (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js:524:64)
+    at async HotReloaderWebpack.buildFallbackError (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js:553:32)
+    at async DevBundlerService.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/dev-bundler-service.js:25:9)
+    at async DevServer.getFallbackErrorComponents (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:593:9)
+    at async DevServer.renderErrorToResponseImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2203:40)
+    at async pipe.req.req (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:2056:30)
+    at async DevServer.pipeImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/base-server.js:922:25)
+    at async /Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:179:21)
+    at async requestHandlerImpl (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js:395:24)
+    at async Server.requestListener (/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js:141:13) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/create-compiler-aliases.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/build/webpack-config.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/dev/hot-reloader-webpack.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-utils/setup-dev-bundler.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/router-server.js',
+    '/Users/dlb/cchouse/test/cchouse_admin_website_v2/node_modules/next/dist/server/lib/start-server.js'
+  ]
+}
+ GET /login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fkpi%2Fgiao-chi-tieu 500 in 107ms
+ GET /login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fkpi%2Fgiao-chi-tieu 500 in 9ms
+[?25h
