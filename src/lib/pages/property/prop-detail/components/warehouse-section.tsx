@@ -20,6 +20,11 @@ const WarehouseSection = ({ data }: Props) => {
   const [totalRow, setTotalRow] = useState(0);
 
   useEffect(() => {
+    if (!data.CustomerPhone) {
+      setPropOfCustomer([]);
+      setTotalRow(0);
+      return;
+    }
     const fetch = async () => {
       setLoading(true);
       try {
@@ -32,6 +37,9 @@ const WarehouseSection = ({ data }: Props) => {
 
         setPropOfCustomer(result.data);
         setTotalRow(result.totalRow ?? 0);
+      } catch {
+        setPropOfCustomer([]);
+        setTotalRow(0);
       } finally {
         setLoading(false);
       }

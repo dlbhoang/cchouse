@@ -288,11 +288,12 @@ const PropertyPage = ({ transType }: Props) => {
           query={addQuery}
         />
         <PropertyDetailDialog
-          open={Boolean(selectedPropId)}
+          open={Boolean(selectedPropId) && !formModalOpen}
           data={selectedProperty}
           loading={detailLoading}
           error={detailError}
           onClose={handleCloseModal}
+          onEdit={() => setFormModalOpen(true)}
         />
       </>
     )

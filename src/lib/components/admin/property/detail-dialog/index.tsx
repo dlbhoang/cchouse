@@ -1,7 +1,8 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Alert as LucideAlert } from "@/lib/components/antd-lucide";
-import {Modal, Spin} from "antd";
-import { X } from "lucide-react";
+import { Spin } from "antd";
+import { ArrowLeft, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, type ReactNode } from "react";
 import ReactPlayer from "react-player";
@@ -15,9 +16,13 @@ import type { IMyUploadFile } from "@/lib/interfaces/custom/IMyUploadFile";
 import type { IPropResponse } from "@/lib/interfaces/Property/IProp";
 import imagesApi from "@/services/api/imagesApi";
 import { fileServices } from "@/services/api/services/fileServices";
+import PropertyMap from "@/lib/pages/property/prop-detail/components/property-map";
+import WarehouseSection from "@/lib/pages/property/prop-detail/components/warehouse-section";
+import { AppRoutes } from "@/lib/core/configs/appRoutes";
+import "@/lib/pages/property/prop-detail/property-detail.css";
 import "./property-detail-dialog.css";
 
-type DetailTab = "overview" | "media" | "phone" | "history";
+type DetailTab = "overview" | "media" | "phone" | "map" | "history";
 
 type Prop = {
   open: boolean;
@@ -25,6 +30,7 @@ type Prop = {
   loading?: boolean;
   error?: boolean;
   onClose: () => void;
+  onEdit?: () => void;
 };
 
 const display = (value: unknown) => {
@@ -78,7 +84,9 @@ const PropertyDetailDialog = ({
   loading = false,
   error = false,
   onClose,
+  onEdit,
 }: Prop) => {
+  const router = useRouter();
   const { data: session } = useSession();
   const [images, setImages] = useState<IMyUploadFile[]>([]);
   const [activeTab, setActiveTab] = useState<DetailTab>("overview");
@@ -151,6 +159,7 @@ const PropertyDetailDialog = ({
     { id: "overview", label: "Tổng quan" },
     { id: "media", label: "Hình ảnh / video" },
     { id: "phone", label: "Điện thoại" },
+    { id: "map", label: "Bản đồ" },
     { id: "history", label: "Lịch sử" },
   ];
 
@@ -160,8 +169,8 @@ const PropertyDetailDialog = ({
       onCancel={onClose}
       footer={null}
       title={null}
-      width={960}
-      centered
+      width={1324}
+      centered={false}
       className="property-detail-dialog-modal"
       rootClassName="property-detail-dialog-root"
       closeIcon={<X size={20} />}
@@ -176,7 +185,8 @@ const PropertyDetailDialog = ({
       ) : data && propAddress ? (
       <div className="property-detail-dialog">
         <header className="property-detail-dialog-header">
-          <h2>CHI TIẾT BẤT ĐỘNG SẢN</h2>
+          <button type="button" onClick={onClose} aria-label="Quay lại danh sách"><ArrowLeft size={22} /></button>
+          <div><h2>Chi tiết bất động sản</h2><span>Mua bán BĐS ／ Chi tiết bất động sản</span></div>
         </header>
 
         <div className="property-detail-dialog-toolbar">
@@ -198,16 +208,16 @@ const PropertyDetailDialog = ({
           </div>
         </div>
 
-        <div className="property-detail-dialog-summary">
+        {activeTab === "overview" && <div className="property-detail-dialog-summary">
           <div><span>Mã BĐS:</span><strong>{data.Id}</strong></div>
           <div><span>Địa chỉ:</span><strong>{display(propAddress.DisplayAddress)}</strong></div>
-        </div>
+        </div>}
 
         <div className="property-detail-dialog-scroll">
           {activeTab === "overview" && (
             <div className="property-detail-dialog-overview">
               <DetailSection
-                title="Thông tin chính"
+                title="Tổng quan bất động sản"
                 fields={[
                   { label: "Trạng thái", value: data.StatusName },
                   { label: "Loại BĐS", value: propAddress.PropTypeName },
@@ -220,7 +230,7 @@ const PropertyDetailDialog = ({
               />
 
               <DetailSection
-                title="Vị trí & Pháp lý"
+                title="Loại hình & Vị trí"
                 fields={[
                   { label: "Đặc điểm", value: propAddress.LocationFeatureName },
                   { label: "Độ rộng đường", value: propAddress.StreetWidth ? `${propAddress.StreetWidth}m` : undefined },
@@ -280,7 +290,7 @@ const PropertyDetailDialog = ({
           )}
 
           {activeTab === "phone" && (
-            <DetailSection title="Thông tin liên hệ">
+            <DetailSection title="Liên hệ">
               <div className="property-detail-dialog-phone">
                 {canViewPhone ? (
                   phones.length ? <RenderPhone phones={phones} /> : <span>Chưa có số điện thoại</span>
@@ -288,6 +298,13 @@ const PropertyDetailDialog = ({
                   <span>SĐT đang bị ẩn, vui lòng liên hệ quản lý</span>
                 )}
               </div>
+              <WarehouseSection data={data} />
+            </DetailSection>
+          )}
+
+          {activeTab === "map" && (
+            <DetailSection title="Bản đồ xem vị trí">
+              <PropertyMap data={data} height={568} />
             </DetailSection>
           )}
 
@@ -299,6 +316,10 @@ const PropertyDetailDialog = ({
             </DetailSection>
           )}
         </div>
+        <footer className="property-detail-dialog-footer">
+          {onEdit && <button type="button" onClick={onEdit}>Chỉnh sửa</button>}
+          <button type="button" onClick={() => router.push(`${AppRoutes.feed.url}/add?propId=${data.Id}`)}>Đăng tin</button>
+        </footer>
       </div>
       ) : null}
     </LucideModal>
