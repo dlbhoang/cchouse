@@ -1,0 +1,19 @@
+{
+  "record": 48966,
+  "edit": {
+    "opened": true,
+    "formFields": 55,
+    "saved": false
+  },
+  "post": {
+    "url": "/admin/feed/add?propId=48966",
+    "navigated": true,
+    "submitted": false
+  },
+  "mobile": {
+    "tabsVisible": 5,
+    "tabsHeight": 48,
+    "horizontalOverflow": false,
+    "auditOverlap": false
+  }
+}

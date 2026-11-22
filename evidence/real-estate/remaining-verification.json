@@ -1,0 +1,28 @@
+{
+  "realHistory": {
+    "propertyId": 48967,
+    "entries": 1,
+    "historyRequestStatus": 200,
+    "renderedCardWidthPx": 1024,
+    "result": "PASS"
+  },
+  "realMap": {
+    "activeSaleCoordinatesFound": 0,
+    "activeRentCoordinatesFound": 0,
+    "otherStatusesWithCoordinatesFound": 0,
+    "result": "UNVERIFIED: no accessible development record has usable GPS coordinates"
+  },
+  "coordinateFallback": {
+    "dataSource": "browser-only response override of property 48966; backend unchanged",
+    "iframeVisible": true,
+    "markerParameterPresent": true,
+    "zoomButtonClicked": true,
+    "beforeAfterMeanPixelDifference": 34.515622065727705,
+    "result": "PASS for rendering and zoom interaction with synthetic coordinates"
+  },
+  "primitives": {
+    "fortyPercentScrim": "PASS: edit dialog computed mask rgba(0, 0, 0, 0.4)",
+    "thirtyPercentScrim": "PASS: history dialog computed mask rgba(0, 0, 0, 0.3)",
+    "tooltip": "PASS: hovering the detail back icon displayed its name"
+  }
+}

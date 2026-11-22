@@ -1,7 +1,7 @@
 "use client";
 import { Collapse as LucideCollapse } from "@/lib/components/antd-lucide";
+import { Table } from "antd";
 
-import { Collapse } from "antd";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import PropertySubTable from "@/lib/components/admin/property/table/subTable";
@@ -12,9 +12,11 @@ import propertyApi from "@/services/api/property/propertyApi";
 
 type Props = {
   data: IPropResponse;
+  defaultExpanded?: boolean;
+  compact?: boolean;
 };
 
-const WarehouseSection = ({ data }: Props) => {
+const WarehouseSection = ({ data, defaultExpanded = false, compact = false }: Props) => {
   const [propOfCustomer, setPropOfCustomer] = useState<IPropResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalRow, setTotalRow] = useState(0);
@@ -53,6 +55,7 @@ const WarehouseSection = ({ data }: Props) => {
       ghost
       size="small"
       className="pd-warehouse"
+      defaultActiveKey={defaultExpanded ? ["warehouse"] : []}
       items={[
         {
           key: "warehouse",
@@ -67,7 +70,23 @@ const WarehouseSection = ({ data }: Props) => {
             </Link>
           ),
           children: (
-            <PropertySubTable data={propOfCustomer} loading={loading} />
+            compact ? <Table
+              rowKey="Id"
+              dataSource={propOfCustomer}
+              loading={loading}
+              pagination={false}
+              scroll={{ x: 900 }}
+              columns={[
+                { title: "Mã", dataIndex: "Id", render: (id: number, record: IPropResponse) => <Link href={`${AppRoutes.property.url}/${id}?TransType=${record.TransType}`}>{id}</Link> },
+                { title: "Giá", dataIndex: "DisplayPrice" },
+                { title: "Địa chỉ", dataIndex: ["PropAddress", "DisplayAddress"] },
+                { title: "Loại BĐS", dataIndex: ["PropAddress", "PropTypeName"] },
+                { title: "Kết cấu", dataIndex: "CustomDisplayStructures" },
+                { title: "Diện tích", dataIndex: "Area", render: (area: number) => area ? `${area}m²` : "—" },
+                { title: "Vị trí", dataIndex: ["PropAddress", "LocationName"] },
+                { title: "Trạng thái", dataIndex: "StatusName" },
+              ]}
+            /> : <PropertySubTable data={propOfCustomer} loading={loading} />
           ),
         },
       ]}

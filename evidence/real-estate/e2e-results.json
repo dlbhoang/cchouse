@@ -1,0 +1,34 @@
+{
+  "record": 48966,
+  "states": {
+    "overview": {
+      "tabActive": "Tổng quan",
+      "contentLength": 680,
+      "empty": false
+    },
+    "phone": {
+      "tabActive": "Điện thoại",
+      "contentLength": 611,
+      "empty": false
+    },
+    "map": {
+      "tabActive": "Bản đồ",
+      "contentLength": 39,
+      "empty": true
+    },
+    "history": {
+      "tabActive": "Lịch sử",
+      "contentLength": 32,
+      "empty": true
+    }
+  },
+  "actions": {
+    "contactReveal": true,
+    "contactHide": true,
+    "relatedRows": 4
+  },
+  "mobile": {
+    "tabsHeight": 48,
+    "overflow": false
+  }
+}

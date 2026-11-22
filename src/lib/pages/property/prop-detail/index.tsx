@@ -60,7 +60,7 @@ const PropertyFormModal = ({
       return;
     }
 
-    setIsEditing(false);
+    setIsEditing(true);
 
     const fetchAccessInfo = async () => {
       setLoading(true);
@@ -137,6 +137,7 @@ const PropertyFormModal = ({
       open={open}
       width="95vw"
       className="property-detail-modal"
+      rootClassName="property-detail-form-root"
       style={{ top: 16, maxWidth: 1400 }}
       styles={{ body: { maxHeight: "calc(100vh - 180px)", overflowY: "auto" } }}
       onCancel={onClose}

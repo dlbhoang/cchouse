@@ -1,13 +1,11 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Alert as LucideAlert } from "@/lib/components/antd-lucide";
-import { Spin } from "antd";
+import { Spin, Tooltip } from "antd";
 import { ArrowLeft, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import { useEffect, useState, type ReactNode } from "react";
 import ReactPlayer from "react-player";
 
-import RenderPhone from "@/lib/components/shared/CustomRender/RenderPhone";
 import HistoryTree from "@/lib/components/shared/HistoryTree";
 import ImagesPreview from "@/lib/components/shared/ImagesPreview";
 import { ETableName } from "@/lib/core/enum";
@@ -17,7 +15,10 @@ import type { IPropResponse } from "@/lib/interfaces/Property/IProp";
 import imagesApi from "@/services/api/imagesApi";
 import { fileServices } from "@/services/api/services/fileServices";
 import PropertyMap from "@/lib/pages/property/prop-detail/components/property-map";
+import ContactSection from "@/lib/pages/property/prop-detail/components/contact-section";
 import WarehouseSection from "@/lib/pages/property/prop-detail/components/warehouse-section";
+import { getEnumName } from "@/lib/pages/property/prop-detail/detail-utils";
+import { useAdminContext } from "@/lib/stored";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import "@/lib/pages/property/prop-detail/property-detail.css";
 import "./property-detail-dialog.css";
@@ -87,17 +88,10 @@ const PropertyDetailDialog = ({
   onEdit,
 }: Prop) => {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { enumList } = useAdminContext();
   const [images, setImages] = useState<IMyUploadFile[]>([]);
   const [activeTab, setActiveTab] = useState<DetailTab>("overview");
   const propAddress = data?.PropAddress;
-  const canViewPhone =
-    Boolean(data) && (
-      [1, 2].includes(session?.user.RoleId ?? 0) ||
-      session?.user.Id === data?.UserAdminId ||
-      !data?.IsHidePhone
-    );
-  const phones = data?.CustomerPhone?.toString().split(",").filter(Boolean) ?? [];
 
   useEffect(() => {
     let active = true;
@@ -185,7 +179,7 @@ const PropertyDetailDialog = ({
       ) : data && propAddress ? (
       <div className="property-detail-dialog">
         <header className="property-detail-dialog-header">
-          <button type="button" onClick={onClose} aria-label="Quay lại danh sách"><ArrowLeft size={22} /></button>
+          <Tooltip title="Quay lại danh sách"><button type="button" onClick={onClose} aria-label="Quay lại danh sách"><ArrowLeft size={22} /></button></Tooltip>
           <div><h2>Chi tiết bất động sản</h2><span>Mua bán BĐS ／ Chi tiết bất động sản</span></div>
         </header>
 
@@ -221,26 +215,28 @@ const PropertyDetailDialog = ({
                 fields={[
                   { label: "Trạng thái", value: data.StatusName },
                   { label: "Loại BĐS", value: propAddress.PropTypeName },
+                  { label: "Tên bất động sản", value: propAddress.PropName },
+                  { label: "Loại đất", value: getEnumName(enumList.UsageLaw, propAddress.UsageLaw) },
+                  { label: "Pháp lý Nhà, đất", value: propAddress.DisplayLaws },
                   { label: "Tình trạng nhà", value: propAddress.StatusUsageName },
                   { label: data.TransType === 2 ? "Giá thuê" : "Giá bán", value: data.DisplayPrice },
-                  { label: "Diện tích", value: data.Area ? `${data.Area}m²` : undefined },
-                  { label: "Vị trí", value: propAddress.LocationName },
-                  { label: "Tên bất động sản", value: propAddress.PropName },
+                  { label: "Pháp lý Nhà, đất", value: propAddress.DisplayLaws },
+                  { label: "Giá thuê", value: propAddress.DisplayPriceForRent },
+                  { label: "Thời gian thuê", value: propAddress.EndTimeRent },
                 ]}
               />
 
               <DetailSection
                 title="Loại hình & Vị trí"
                 fields={[
-                  { label: "Đặc điểm", value: propAddress.LocationFeatureName },
-                  { label: "Độ rộng đường", value: propAddress.StreetWidth ? `${propAddress.StreetWidth}m` : undefined },
-                  { label: "Cách mặt tiền", value: propAddress.DistanceToFont ? `${propAddress.DistanceToFont}m` : undefined },
+                  { label: "Vị trí", value: propAddress.LocationName },
                   { label: "Vị trí đường", value: propAddress.IsOneWay ? "1 chiều" : "2 chiều" },
+                  { label: "Độ rộng đường", value: propAddress.StreetWidth ? `${propAddress.StreetWidth}m` : undefined },
+                  { label: "Đặc điểm", value: propAddress.LocationFeatureName },
                   { label: "Hướng", value: propAddress.DirectionName },
                   { label: "Số lần rẽ", value: propAddress.AlleyTurns },
-                  { label: "Lân cận", value: propAddress.AlleyValues },
-                  { label: "Loại đất", value: propAddress.UsageLaw },
-                  { label: "Pháp lý nhà, đất", value: propAddress.DisplayLaws },
+                  { label: "Lần rẽ 1", value: propAddress.AlleyValues?.[0] },
+                  { label: "Lần rẽ 2", value: propAddress.AlleyValues?.[1] },
                 ]}
               />
 
@@ -264,8 +260,6 @@ const PropertyDetailDialog = ({
                   { label: "Nội thất", value: data.Furniture },
                   { label: "Trang thiết bị", value: data.DisplayEquipments },
                   { label: "Tiện ích", value: data.DisplayUtilities },
-                  { label: "Giá thuê", value: propAddress.DisplayPriceForRent },
-                  { label: "Thời gian thuê", value: propAddress.EndTimeRent },
                 ]}
               />
 
@@ -291,20 +285,17 @@ const PropertyDetailDialog = ({
 
           {activeTab === "phone" && (
             <DetailSection title="Liên hệ">
-              <div className="property-detail-dialog-phone">
-                {canViewPhone ? (
-                  phones.length ? <RenderPhone phones={phones} /> : <span>Chưa có số điện thoại</span>
-                ) : (
-                  <span>SĐT đang bị ẩn, vui lòng liên hệ quản lý</span>
-                )}
+              <div className="property-detail property-detail-dialog-phone">
+                <ContactSection data={data} />
+                <div className="pd-contact-row"><span className="pd-label">Hoa hồng</span><span className="pd-value">{display(data.Commission) || "—"}</span></div>
+                <WarehouseSection data={data} defaultExpanded compact />
               </div>
-              <WarehouseSection data={data} />
             </DetailSection>
           )}
 
           {activeTab === "map" && (
             <DetailSection title="Bản đồ xem vị trí">
-              <PropertyMap data={data} height={568} />
+              <div className="property-detail"><PropertyMap data={data} height={568} /></div>
             </DetailSection>
           )}
 
