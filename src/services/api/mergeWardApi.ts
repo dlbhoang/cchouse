@@ -18,8 +18,8 @@ export type IMergeWardRequest = { OldWardId: number; NewWardId: number; Descript
 const url = "MergeWard";
 
 const mergeWardApi = {
-  get() {
-    return axiosClient.get<any, IListData<IMergeWard>>(url, { params: { pageIndex: 1, pageSize: 10000 } });
+  get(newWardId?: number) {
+    return axiosClient.get<any, IListData<IMergeWard>>(url, { params: { pageIndex: 1, pageSize: 10000, NewWardId: newWardId } });
   },
   add(data: IMergeWardRequest) {
     return axiosClient.post(url, data);
