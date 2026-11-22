@@ -1,0 +1,122 @@
+{
+  "Property history": {
+    "panel_xywh": {
+      "figma": [
+        337,
+        59,
+        765,
+        890
+      ],
+      "chrome": [
+        337,
+        59,
+        766,
+        443
+      ]
+    },
+    "first_accent_xy": {
+      "figma": [
+        588,
+        199
+      ],
+      "chrome": [
+        588,
+        200
+      ]
+    }
+  },
+  "Note history": {
+    "panel_xywh": {
+      "figma": [
+        337,
+        59,
+        765,
+        630
+      ],
+      "chrome": [
+        337,
+        59,
+        766,
+        630
+      ]
+    },
+    "first_accent_xy": {
+      "figma": [
+        588,
+        171
+      ],
+      "chrome": [
+        588,
+        172
+      ]
+    }
+  },
+  "Add note": {
+    "panel_xywh": {
+      "figma": [
+        337,
+        292,
+        765,
+        396
+      ],
+      "chrome": [
+        337,
+        291,
+        766,
+        398
+      ]
+    }
+  },
+  "Image history": {
+    "panel_xywh": {
+      "figma": [
+        183,
+        48,
+        1149,
+        932
+      ],
+      "chrome": [
+        183,
+        48,
+        1150,
+        629
+      ]
+    },
+    "first_accent_xy": {
+      "figma": [
+        447,
+        188
+      ],
+      "chrome": [
+        446,
+        189
+      ]
+    }
+  },
+  "Video history": {
+    "panel_xywh": {
+      "figma": [
+        183,
+        48,
+        1149,
+        932
+      ],
+      "chrome": [
+        183,
+        48,
+        1150,
+        415
+      ]
+    },
+    "first_accent_xy": {
+      "figma": [
+        447,
+        188
+      ],
+      "chrome": [
+        446,
+        189
+      ]
+    }
+  }
+}

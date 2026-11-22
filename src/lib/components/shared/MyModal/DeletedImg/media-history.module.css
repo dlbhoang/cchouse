@@ -1,0 +1,91 @@
+.dialog {
+  --history-body-max-height: min(815px, calc(100dvh - 184px));
+}
+.added {
+  --event-color: #17a34a;
+  --event-border: #17a34a;
+}
+.removed {
+  --event-color: #dc3e42;
+  --event-border: #dc3e42;
+}
+.added + .removed {
+  margin-top: 28px;
+}
+.added h3,
+.removed h3 {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin: 8px 0 6px;
+  color: var(--event-color);
+  font-size: 14px;
+  font-weight: 600;
+}
+.media {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(134px, 150px));
+  gap: 16px;
+}
+.tile {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--event-border);
+  border-radius: 8px;
+}
+.thumbnail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 104px;
+  padding-block: 4px;
+  background: white;
+  color: inherit;
+}
+button.thumbnail {
+  cursor: pointer;
+}
+.thumbnail video,
+.thumbnail [class~="ant-image"],
+.thumbnail [class~="ant-image-img"] {
+  height: 100%;
+  max-width: 100%;
+  width: 96px;
+  object-fit: contain;
+}
+.duration {
+  position: absolute;
+  inset-inline-start: 6px;
+  bottom: 6px;
+  padding: 2px 6px;
+  border-radius: 20px;
+  background: #a1a1aa;
+  color: white;
+}
+.caption {
+  padding: 8px;
+  line-height: 20px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.removed .caption {
+  color: var(--admin-subtle, #a1a1aa);
+}
+.caption small {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@media (min-width: 1244px) {
+  .dialog {
+    inset-inline-start: 38px;
+  }
+}
+@media (min-width: 761px) {
+  .dialog .entry {
+    grid-template-columns: 1fr auto minmax(0, calc(100% - 240px));
+  }
+}

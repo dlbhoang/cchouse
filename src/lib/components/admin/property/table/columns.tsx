@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { sendGTMEvent } from "@next/third-parties/google";
-import { Space, Tag, Tooltip, Typography } from "antd";
+import { Dropdown, Space, Tag, Tooltip, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import {
   CirclePlusIcon,
@@ -54,6 +54,7 @@ type Props = {
   handleOpenVideo: (val: string) => void;
   handleOpenContact: (id: number) => void;
   handleOpenHistory: (id: number) => void;
+  handleOpenMediaHistory: (record: IPropResponse, video: boolean) => void;
   handleOpenDetail: (id: number) => void;
 };
 
@@ -65,6 +66,7 @@ const columns = ({
   handleOpenVideo,
   handleOpenContact,
   handleOpenHistory,
+  handleOpenMediaHistory,
   handleOpenDetail,
 }: // eslint-disable-next-line sonarjs/cognitive-complexity
 Props): ColumnsType<IPropResponse> => {
@@ -175,22 +177,20 @@ Props): ColumnsType<IPropResponse> => {
                 </>
               )
             )}
-            {record.Note && (
-              <NoteModal
-                  readOnly
-                title={`Mã BĐS: ${record?.Id}`}
-                historyId={record.Id}
-                value={record.Note}
-                handleChange={async (note) => {
-                  await propertyApi.quickUpdate({
-                    Id: record?.Id,
-                    Note: note ?? "",
-                  });
+            <NoteModal
+              title={`Mã BĐS: ${record?.Id}`}
+              historyId={record.Id}
+              address={record.PropAddress.DisplayAddress}
+              value={record.Note}
+              handleChange={async (note) => {
+                await propertyApi.quickUpdate({
+                  Id: record?.Id,
+                  Note: note ?? "",
+                });
 
-                  mutate(propertyApi.mutateKey);
-                }}
-              />
-            )}
+                mutate(propertyApi.mutateKey);
+              }}
+            />
           </Space>
         );
       },
@@ -286,6 +286,20 @@ Props): ColumnsType<IPropResponse> => {
                   <VideoIcon />
                 </Button>
               )}
+              <Dropdown
+                trigger={["click"]}
+                menu={{
+                  items: [
+                    { key: "image", label: "Lịch sử hình ảnh", icon: <ImageIcon size={16} /> },
+                    { key: "video", label: "Lịch sử video", icon: <VideoIcon size={16} /> },
+                  ],
+                  onClick: ({ key }) => handleOpenMediaHistory(record, key === "video"),
+                }}
+              >
+                <Button type="button" size="icon-sm" variant="ghost" aria-label="Lịch sử hình ảnh và video">
+                  <HistoryIcon />
+                </Button>
+              </Dropdown>
             </Space>
           </Space>
         );

@@ -105,7 +105,7 @@ const PropAddEdit = ({
   const [mode, setMode] = useState<"full" | "quick">("full");
   // const [showPhone, setShowPhone] = useState(false);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [openDeletedImg, setOpenDeletedImg] = useState(false);
+  const [mediaHistory, setMediaHistory] = useState<"image" | "video">();
 
   const [preview, setPreview] = useState(false);
   const [openGeocode, setOpenGeocode] = useState(false);
@@ -478,6 +478,7 @@ const PropAddEdit = ({
                     showTitle
                     title={`Mã BĐS: ${model.Id}`}
                     historyId={model.Id}
+                    address={model.PropAddress.DisplayAddress}
                     value={model.Note}
                     handleChange={async (note) => {
                       await propertyApi.quickUpdate({
@@ -485,6 +486,7 @@ const PropAddEdit = ({
                         Note: note ?? "",
                       });
 
+                      form.setFieldValue("Note", note ?? "");
                       mutate(propertyApi.mutateKey);
                     }}
                   />
@@ -515,17 +517,9 @@ const PropAddEdit = ({
               title={`7. Hình ảnh / tài liệu (${imagesWatch?.length ?? 0}/20)`}
               extra={
                 model && (
-                  <>
-                    <Button type="link" onClick={() => setOpenDeletedImg(true)}>
-                      Lịch sử hình ảnh
-                    </Button>
-                    <DeletedImgModal
-                      contentId={model.Id}
-                      TableName={ETableName.Property}
-                      isOpen={openDeletedImg}
-                      onClose={() => setOpenDeletedImg(false)}
-                    />
-                  </>
+                  <Button type="link" onClick={() => setMediaHistory("image")}>
+                    Lịch sử hình ảnh
+                  </Button>
                 )
               }
             >
@@ -565,7 +559,14 @@ const PropAddEdit = ({
             </MyCard>
           </Col>
           <Col {...colResponsive}>
-            <MyCard title="8. Video (dung lượng <= 20MB)">
+            <MyCard
+              title="8. Video (dung lượng <= 20MB)"
+              extra={model && (
+                <Button type="link" onClick={() => setMediaHistory("video")}>
+                  Lịch sử video
+                </Button>
+              )}
+            >
               <Form.Item
                 name="Video"
                 valuePropName="fileList"
@@ -601,6 +602,18 @@ const PropAddEdit = ({
           </Col>
         </Row>
       </Card>
+      {model && mediaHistory && (
+        <DeletedImgModal
+          isOpen
+          contentId={model.Id}
+          TableName={ETableName.Property}
+          video={mediaHistory === "video"}
+          recordLabel={`Mã BĐS: ${model.Id}${model.PropAddress.DisplayAddress ? ` - Địa chỉ: ${model.PropAddress.DisplayAddress}` : ""}`}
+          createdBy={model.CreatedBy}
+          createdDate={model.CreatedDate}
+          onClose={() => setMediaHistory(undefined)}
+        />
+      )}
       {inModal ? (
         <Row
           justify="center"

@@ -1,0 +1,1842 @@
+{
+  "tests": {
+    "Authorization": {
+      "status": "PASS",
+      "actual": "Direct History API rejected unauthenticated access with HTTP 401. The protected property page redirected to login.",
+      "evidence": [
+        "01-authorization.png"
+      ]
+    },
+    "Login": {
+      "status": "PASS",
+      "actual": "The Chrome session reached the protected property table.",
+      "evidence": [
+        "02-authenticated.png"
+      ]
+    },
+    "Fixture setup": {
+      "status": "VERIFIED",
+      "actual": "Created disposable test property 48971, uploaded two images and a video to development storage, then edited its price and removed one image.",
+      "evidence": []
+    },
+    "Property history": {
+      "status": "PASS",
+      "actual": "History HTTP 200. UI count, first date, editor and field matched 2 API entries on record 48971.",
+      "evidence": [
+        "03-property-history.png"
+      ]
+    },
+    "Note history": {
+      "status": "PASS",
+      "actual": "NoteOnly=true returned HTTP 200. UI count and first entry matched 12 note audit entries on record 48966.",
+      "evidence": [
+        "04-note-history.png"
+      ]
+    },
+    "Empty": {
+      "status": "PASS",
+      "actual": "Real note history request returned HTTP 200 with an empty array.",
+      "evidence": [
+        "05-empty.png"
+      ]
+    },
+    "Image removals": {
+      "status": "PASS",
+      "actual": "1 removed images matched the real API.",
+      "evidence": [
+        "07-image-history.png"
+      ]
+    },
+    "image history": {
+      "status": "PASS",
+      "actual": "Both IsVideo=false endpoint requests returned HTTP 200. UI totals matched 1 current and 1 removed files on record 48971.",
+      "evidence": [
+        "07-image-history.png"
+      ]
+    },
+    "Image preview": {
+      "status": "PASS",
+      "actual": "The image preview decoded and displayed the real file.",
+      "evidence": [
+        "08-image-preview.png"
+      ]
+    },
+    "video history": {
+      "status": "PASS",
+      "actual": "Both IsVideo=true endpoint requests returned HTTP 200. UI totals matched 1 current and 0 removed files on record 48971.",
+      "evidence": [
+        "09-video-history.png"
+      ]
+    },
+    "Video playback": {
+      "status": "PASS",
+      "actual": "The real video decoded and currentTime advanced during playback.",
+      "evidence": [
+        "10-video-playback.png"
+      ]
+    },
+    "Test note cleanup": {
+      "status": "VERIFIED",
+      "actual": "Restore PUT HTTP 200. The audit trail preserves test and restore entries.",
+      "evidence": []
+    },
+    "Add note and persistence": {
+      "status": "PASS",
+      "actual": "QuickUpdate HTTP 200 and NoteOnly history HTTP 200 after full reload. The unique note matched the API and UI on test record 48971. Original note restored after evidence capture.",
+      "evidence": [
+        "11-add-note.png",
+        "12-note-submitted.png",
+        "13-note-persisted.png"
+      ]
+    },
+    "Loading, error and retry": {
+      "status": "PASS",
+      "actual": "Held one real History request to observe loading, then aborted its transport. Retry reached the real API, returned HTTP 200, and rendered its result. No response was mocked.",
+      "evidence": [
+        "14-loading.png",
+        "15-network-error.png",
+        "16-retry.png"
+      ]
+    },
+    "Disposable fixture cleanup": {
+      "status": "VERIFIED",
+      "actual": "Test property 48971 soft-delete returned HTTP 200. Uploaded test media and audit history may remain in development storage.",
+      "evidence": []
+    },
+    "Logout": {
+      "status": "PASS",
+      "actual": "Logout cleared the session and the protected route redirected back to login.",
+      "evidence": [
+        "17-logout.png"
+      ]
+    },
+    "Console and network": {
+      "status": "VERIFIED",
+      "actual": "0 uncaught/browser console errors, 0 unexpected same-origin API responses of HTTP 400 or higher and 0 unexpected API transport failures.",
+      "evidence": []
+    },
+    "image filters and empty": {
+      "status": "PASS",
+      "actual": "Both real read requests returned HTTP 200 with the correct IsVideo and IsDeleted flags and empty arrays.",
+      "evidence": [
+        "07-image-history-empty.png"
+      ]
+    },
+    "video filters and empty": {
+      "status": "PASS",
+      "actual": "Both real read requests returned HTTP 200 with the correct IsVideo and IsDeleted flags and empty arrays.",
+      "evidence": [
+        "09-video-history-empty.png"
+      ]
+    }
+  },
+  "traffic": [
+    {
+      "path": "/api/proxy/PropType",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Province",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Role",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Branch",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Branch",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/UserAdmin/GetUserAdminPublic",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Role",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/PropType",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Province",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/Config",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/EnumList",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/managed-users",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/CountUnReadNoti",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Lookup/user-admin",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/District",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveProps",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveCustomers",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/GetSaveApartmentUnits",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/Meta",
+      "query": {
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48965",
+        "TableName": "tblProp",
+        "NoteOnly": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48966",
+        "TableName": "tblProp",
+        "NoteOnly": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48962",
+        "TableName": "tblProp",
+        "NoteOnly": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48962",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48957",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48965",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48957",
+        "TableName": "tblProp",
+        "NoteOnly": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48966",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "2",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "3",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "2"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "2",
+        "TransType": "2"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "3",
+        "TransType": "2"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48966",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48965",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48962",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48957",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48962",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "method": "POST",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images/Upload",
+      "method": "POST",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images/Upload",
+      "method": "POST",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images/Video",
+      "method": "POST",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48971",
+      "method": "PUT",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48971",
+      "method": "PUT",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Branch",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/UserAdmin/GetUserAdminPublic",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Role",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Province",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/PropType",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/managed-users",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/EnumList",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/Config",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Lookup/user-admin",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/CountUnReadNoti",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/District",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveProps",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveCustomers",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/GetSaveApartmentUnits",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/Meta",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48971",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48966",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48971",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48971",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48971/QuickUpdate",
+      "query": {},
+      "method": "PUT",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/UserAdmin/GetUserAdminPublic",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Role",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Province",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/PropType",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Branch",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/Config",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/EnumList",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/managed-users",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/CountUnReadNoti",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveProps",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/GetSaveApartmentUnits",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Lookup/user-admin",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveCustomers",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/District",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/Meta",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/48971",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Branch",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/UserAdmin/GetUserAdminPublic",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/PropType",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Role",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Province",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/EnumList",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Utils/Config",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/managed-users",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/CountUnReadNoti",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveProps",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/GetSaveApartmentUnits",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/SaveCustomers",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Me/Notifications",
+      "query": {
+        "Status": "0"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/District",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Lookup/user-admin",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property/Meta",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": true
+    },
+    {
+      "path": "/api/proxy/Property/48971",
+      "method": "DELETE",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Property",
+      "query": {
+        "Status": "1",
+        "TransType": "1"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/AdminAuth/Logout",
+      "query": {},
+      "method": "POST",
+      "status": 200,
+      "controlledFault": false
+    }
+  ],
+  "failedRequests": [
+    {
+      "path": "/api/proxy/History",
+      "query": {
+        "InstanceId": "48971",
+        "TableName": "tblProp",
+        "NoteOnly": "true"
+      },
+      "error": "net::ERR_FAILED",
+      "controlledFault": true
+    }
+  ],
+  "fileStatuses": [
+    {
+      "kind": "media",
+      "status": 206
+    },
+    {
+      "kind": "media",
+      "status": 206
+    },
+    {
+      "kind": "media",
+      "status": 206
+    },
+    {
+      "kind": "media",
+      "status": 206
+    }
+  ],
+  "dimensions": {
+    "03-property-history": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "04-note-history": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "05-empty": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "07-image-history": {
+      "width": 1152,
+      "left": 144,
+      "right": 1296,
+      "viewport": 1440
+    },
+    "08-image-preview": {
+      "width": 1440,
+      "left": 0,
+      "right": 1440,
+      "viewport": 1440
+    },
+    "09-video-history": {
+      "width": 1152,
+      "left": 144,
+      "right": 1296,
+      "viewport": 1440
+    },
+    "10-video-playback": {
+      "width": 750,
+      "left": 345,
+      "right": 1095,
+      "viewport": 1440
+    },
+    "11-add-note": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "12-note-submitted": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "13-note-persisted": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "14-loading": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "15-network-error": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    },
+    "16-retry": {
+      "width": 768,
+      "left": 336,
+      "right": 1104,
+      "viewport": 1440
+    }
+  },
+  "consoleErrors": 0,
+  "buildChecks": {
+    "Frontend build and standalone copy": true,
+    "API build": true,
+    "Frontend regression tests (41)": true,
+    "Backend regression tests (90)": true
+  },
+  "overall": "PASS",
+  "emptyMediaRun": [
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48965",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48957",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48962",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "false"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "false",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    },
+    {
+      "path": "/api/proxy/Images",
+      "query": {
+        "ContentId": "48966",
+        "TableName": "0",
+        "IsVideo": "true",
+        "IsDeleted": "true"
+      },
+      "method": "GET",
+      "status": 200,
+      "controlledFault": false
+    }
+  ],
+  "fixtureInventory": [
+    {
+      "id": "48971",
+      "path": "/admin/property?TransType=1&Status=1&pageSize=40",
+      "property": 2,
+      "notes": 0,
+      "images": 1,
+      "removed": 1,
+      "videos": 1,
+      "removedVideos": 0
+    },
+    {
+      "id": "48962",
+      "path": "/admin/property?TransType=1&Status=1&pageSize=40",
+      "property": 0,
+      "notes": 0,
+      "images": 0,
+      "removed": 0,
+      "videos": 0,
+      "removedVideos": 0
+    },
+    {
+      "id": "48965",
+      "path": "/admin/property?TransType=1&Status=1&pageSize=40",
+      "property": 0,
+      "notes": 0,
+      "images": 0,
+      "removed": 0,
+      "videos": 0,
+      "removedVideos": 0
+    },
+    {
+      "id": "48957",
+      "path": "/admin/property?TransType=1&Status=1&pageSize=40",
+      "property": 0,
+      "notes": 0,
+      "images": 0,
+      "removed": 0,
+      "videos": 0,
+      "removedVideos": 0
+    },
+    {
+      "id": "48966",
+      "path": "/admin/property?TransType=1&Status=1&pageSize=40",
+      "property": 0,
+      "notes": 12,
+      "images": 0,
+      "removed": 0,
+      "videos": 0,
+      "removedVideos": 0
+    }
+  ],
+  "screenshotSha256": {
+    "01-authorization.png": "a294a0564205a6045cd02651dc9c966afec984056ec896174dab281ab0ceb727",
+    "02-authenticated.png": "4bb99c195b9dd51e31c9030876e02e94b9258940622da5cf35118be9013fd964",
+    "03-property-history.png": "2d6a139bb08bc7e600855fe8d6167dc2c5f250bdd299c474cad24b97c8dfc268",
+    "04-note-history.png": "2c4043625df9b4a2fc410d9746099e2780f60a114edf8fdba211fa87a704a8cf",
+    "05-empty.png": "6c4178993e785929f2db3ce4fe1aa4218634cdb813dcc0b1e93941b7496c769b",
+    "07-image-history-empty.png": "6275cbacbb54efb8899c88e38710b18cfba5c33767fb8eb1a1a8784c4cae0408",
+    "07-image-history.png": "1e598e9a5a1a151dc5a2d8ffebfd27792c1077e32a26c01bb3bef425dd8e385e",
+    "08-image-preview.png": "95b5d91da1216a86f2931e1d5f0047b1d95ec57de85366bd09ba2d31cd941695",
+    "09-video-history-empty.png": "5835a5be2f1e11617ba5e5f90247dcf798341e2ac4a2039764b657a80bb0e1c2",
+    "09-video-history.png": "5e5a731155ba11e6dae33bdcb910ac6e1dea732f4090f3669323e15d751886b8",
+    "10-video-playback.png": "64abf711ce7a50241482cc4d44259576123b7caf3cc051e4ebf373c79d3a9da6",
+    "11-add-note.png": "179bbca2c5793c5618bbaf0e967fedfa51064a87010e318a30b8352bd5ee36ff",
+    "12-note-submitted.png": "46acde6cd09ef6fcd39c8088fa3a843af392c5a1085dde0c34ac584c4c6fb9dc",
+    "13-note-persisted.png": "80c02ef0e255e9a86a75e4ef9eafebf63c8764697340192b263974bcc1c1f733",
+    "14-loading.png": "55dbdb4b956b6f64b6926eb2e22460393bde859d8ad40e3a4859f95ea20d418c",
+    "15-network-error.png": "3416b6db4398d7d892f6f04431ebbfb56e7a19bd1828456443b5168b637317e7",
+    "16-retry.png": "93a52ca6ea5128f5282abd3ff8f40967386ff536970cd9a285b2add8f7670984",
+    "17-logout.png": "fa67bb03ef01cc4221be1e122225feee5d34b97d17d066ba31a5ee03f22e2050"
+  }
+}

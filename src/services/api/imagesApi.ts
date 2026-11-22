@@ -28,6 +28,7 @@ const imagesApi = {
     ContentId: number;
     TableName: ETableName;
     IsDeleted?: boolean;
+    IsVideo?: boolean;
     IsPublished?: boolean;
   }) {
     return axiosClient.get<any, IListData<IFileUploadResponse>>(`${url}`, {

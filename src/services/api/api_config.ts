@@ -72,6 +72,6 @@ axiosClient.interceptors.response.use(
     } else if (error?.response?.data?.data) {
       NotiBase("error", message);
     } else NotiBase("error", message);
-    return Promise.reject(error.response);
+    return Promise.reject(error.response ?? error);
   },
 );

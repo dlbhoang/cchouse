@@ -107,8 +107,8 @@ const columns = ({
           <NoteModal
                   readOnly
             value={r[reqType]?.Note ?? ""}
-            handleChange={(note) => {
-              customerApi.updateRequirement(r.Id, {
+            handleChange={async (note) => {
+              await customerApi.updateRequirement(r.Id, {
                 Id: r[reqType]?.Id ?? 0,
                 Note: note ?? "",
               });

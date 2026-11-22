@@ -19,6 +19,7 @@ export interface IHistory {
   UserAdmin: IUserAdminPublic;
 }
 interface IHistoryDetails {
+  Id?: number;
   ColumnName: string;
   ColumnNameVietnamese: string;
   OldValue: string;

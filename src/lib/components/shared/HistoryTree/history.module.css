@@ -1,0 +1,173 @@
+.dialog[class] [class~="ant-modal-content"] {
+  padding: 0;
+  font-family: Inter, sans-serif;
+  color: #0a0a0a;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: none;
+}
+.dialog[class] [class~="ant-modal-header"] {
+  margin: 0;
+  padding: 16px 56px 16px 24px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.dialog[class] [class~="ant-modal-title"] {
+  color: inherit;
+  text-transform: none;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 28px;
+}
+.dialog[class] [class~="ant-modal-close"] {
+  top: 12px;
+  inset-inline-end: 20px;
+  color: #0a0a0a;
+}
+.dialog[class] [class~="ant-modal-close"] svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+}
+.dialog[class] [class~="ant-modal-body"] {
+  max-height: var(--history-body-max-height, min(773px, calc(100dvh - 180px)));
+  overflow: auto;
+  padding: 24px;
+}
+.dialog[class] [class~="ant-modal-footer"] {
+  margin: 0;
+  padding: 16px 24px;
+  border-top: 1px solid var(--admin-border, #e5e5e5);
+}
+.noteHistory {
+  --history-body-max-height: min(468px, calc(100dvh - 190px));
+}
+.noteAction[class] {
+  height: 40px;
+  min-width: 100px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: none;
+}
+.noteEditor {
+  min-height: 188px;
+}
+.noteEditor textarea[class] {
+  padding: 12px;
+  border-radius: 10px;
+  line-height: 20px;
+}
+.noteEditor [data-count]::after {
+  margin-top: 4px;
+  color: #a1a1aa;
+  font-size: 12px;
+  line-height: 16px;
+}
+@media (min-height: 650px) {
+  .addNote[class] {
+    margin-top: -44px;
+  }
+}
+.subtitle,
+.metadata {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  margin-top: 8px;
+}
+.metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 40px;
+}
+.metadata > div {
+  min-width: 172px;
+}
+.metadata span {
+  font-weight: 400;
+  color: var(--admin-muted, #737373);
+  margin-right: 8px;
+}
+.entries {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-height: 500px;
+  overflow: auto;
+}
+.dialog .entries {
+  max-height: none;
+  overflow: visible;
+}
+.entry {
+  display: grid;
+  grid-template-columns: 1fr auto minmax(0, calc(100% - 228px));
+  gap: 16px;
+  align-items: start;
+}
+.date,
+.time {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.date span {
+  display: block;
+  color: var(--admin-subtle, #a1a1aa);
+}
+.card {
+  min-width: 0;
+  padding: 24px 20px;
+  border-inline-start: 4px solid #0688f0;
+  border-radius: 0 14px 14px 0;
+  background: #f5f5f5;
+  box-shadow: 0 1px 3px #0000001a;
+}
+.actor {
+  margin: 0 0 6px;
+  font-size: 16px;
+  line-height: 24px;
+}
+.actor strong {
+  font-weight: 600;
+}
+.change {
+  display: grid;
+  grid-template-columns: minmax(0, 140px) minmax(0, 100px) 24px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  font-size: 14px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
+.change + .change {
+  margin-top: 6px;
+}
+.change > span:first-child {
+  color: var(--admin-muted, #737373);
+}
+.change [class~="ant-typography"] {
+  margin-bottom: 0;
+  white-space: pre-wrap;
+}
+@media (max-width: 760px) {
+  .entry {
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+  .card {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 460px) {
+  .change {
+    grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+    gap: 8px;
+  }
+  .change > span:first-child {
+    grid-column: 1 / -1;
+  }
+}

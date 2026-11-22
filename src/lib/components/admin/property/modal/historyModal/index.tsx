@@ -1,11 +1,8 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
-import { Descriptions, Divider, Space, Tag, Typography } from "antd";
-
 import HistoryTree from "@/lib/components/shared/HistoryTree";
+import styles from "@/lib/components/shared/HistoryTree/history.module.css";
 import { FormatDate } from "@/lib/core/utils/myFormat";
-import { IPropResponse } from "@/lib/interfaces/Property/IProp";
-
-const { Text } = Typography;
+import type { IPropResponse } from "@/lib/interfaces/Property/IProp";
 
 type Props = {
   isModalOpen: boolean;
@@ -13,57 +10,35 @@ type Props = {
   handleCancel: () => void;
 };
 
-const HistoryModel = ({ isModalOpen, model, handleCancel }: Props) => {
-  return (
-    <LucideModal
-      title={
-        <Space>
-          <Tag>{`Mã: ${model?.Id}`}</Tag>
-          Lịch sử bất động sản
-        </Space>
-      }
-      // maskClosable={false}
-      open={isModalOpen}
-      width={600}
-      footer={null}
-      onCancel={() => {
-        handleCancel();
-        console.log(model);
-      }}
-    >
-      <Descriptions size="small">
-        <Descriptions.Item label="Người nhập" span={1.5}>
-          {model?.CreatedBy}
-        </Descriptions.Item>
-        <Descriptions.Item label="Ngày nhập">
-          {FormatDate(model?.CreatedDate)}
-        </Descriptions.Item>
-        <Descriptions.Item label="Người cập nhật">
-          {model?.UpdatedBy || "—"}
-        </Descriptions.Item>
-        <Descriptions.Item label="Ngày cập nhật">
-          {FormatDate(model?.UpdatedDate) || "—"}
-        </Descriptions.Item>
-      </Descriptions>
-      <Divider style={{ marginTop: 5, marginBottom: 5 }} />
-      <Text
-        style={{
-          marginTop: 10,
-          marginBottom: 15,
-          display: "block",
-        }}
-        strong
-      >
-        Lịch sử thay đổi
-      </Text>
-      {model && (
-        <HistoryTree
-          instanceId={model.Id}
-          TableName="tblProp"
-        />
-      )}
-    </LucideModal>
-  );
-};
+const HistoryModel = ({ isModalOpen, model, handleCancel }: Props) => (
+  <LucideModal
+    className={styles.dialog}
+    title={
+      <>
+        LỊCH SỬ BẤT ĐỘNG SẢN
+        {model && (
+          <>
+            <div className={styles.subtitle}>
+              Mã BĐS: {model.Id}
+              {model.PropAddress?.DisplayAddress && ` - Địa chỉ: ${model.PropAddress.DisplayAddress}`}
+            </div>
+            <div className={styles.metadata}>
+              <div><span>Ngày nhập:</span>{FormatDate(model.CreatedDate).replaceAll("-", "/") || "—"}</div>
+              <div><span>Người nhập:</span>{model.CreatedBy || "—"}</div>
+            </div>
+          </>
+        )}
+      </>
+    }
+    open={isModalOpen}
+    width={768}
+    style={{ top: 59 }}
+    styles={{ mask: { background: "rgba(0,0,0,0.3)" } }}
+    footer={null}
+    onCancel={handleCancel}
+  >
+    {model && isModalOpen && <HistoryTree instanceId={model.Id} TableName="tblProp" />}
+  </LucideModal>
+);
 
 export default HistoryModel;

@@ -1,245 +1,140 @@
-import { Modal as LucideModal } from "@/lib/components/antd-lucide";
-import {Image, Input, ModalProps, Space, Tabs, TabsProps, Tooltip, Typography, Button, Badge} from "antd";
-import { useEffect, useState } from "react";
-import HistoryTree from "@/lib/components/shared/HistoryTree";
+import { Alert, Button, Input, Tooltip } from "antd";
+import type { ModalProps } from "antd";
+import { SquarePen, StickyNote } from "lucide-react";
+import { useState } from "react";
+import { useSWRConfig } from "swr";
 
-const { TextArea } = Input;
-const { Text } = Typography;
+import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+import HistoryTree from "@/lib/components/shared/HistoryTree";
+import styles from "@/lib/components/shared/HistoryTree/history.module.css";
 
 type Props = {
   value: string;
   tableName?: string;
   showTitle?: boolean;
   historyId?: number;
-  handleChange: (note?: string) => void;
+  address?: string;
+  handleChange?: (note?: string) => void | Promise<void>;
   readOnly?: boolean;
   noteCount?: number;
 };
 
-const getInitials = (name: string) =>
-  name
-    .split(" ")
-    .slice(-2)
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
-
 const NoteModal = ({
   value,
-  tableName,
+  tableName = "tblProp",
   showTitle,
   historyId,
+  address,
   handleChange,
   readOnly = false,
   noteCount,
+  title,
   ...props
 }: Props & ModalProps) => {
-  const [note, setNote] = useState(value);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [adding, setAdding] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [screen, setScreen] = useState<"history" | "add" | null>(null);
+  const [note, setNote] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveFailed, setSaveFailed] = useState(false);
+  const { mutate } = useSWRConfig();
+  const editing = screen === "add";
+  const subtitle = address ? <>{title} - Địa chỉ: {address}</> : title;
 
-  const isReadOnly = readOnly || (!!value?.trim() && !!historyId);
-  const showHistory = isReadOnly && !adding;
+  const open = () => {
+    setNote(value ?? "");
+    setSaveFailed(false);
+    setScreen(historyId || readOnly ? "history" : "add");
+  };
 
-  const [activeTab, setActiveTab] = useState(showHistory ? "2" : "1");
-
-  const historyTab: TabsProps["items"] = historyId
-    ? [
-        {
-          key: "2",
-          label: (
-            <Space size={6}>
-              <span>Lịch sử ghi chú</span>
-              {noteCount !== undefined && (
-                <Badge
-                  count={noteCount}
-                  style={{
-                    backgroundColor: "#EAF3DE",
-                    color: "#3B6D11",
-                    fontSize: 11,
-                    fontWeight: 500,
-                    boxShadow: "none",
-                  }}
-                />
-              )}
-            </Space>
-          ),
-          children: (
-            <HistoryTree
-              refresh={activeTab === "2"}
-              instanceId={historyId}
-              TableName={tableName || "tblProp"}
-              noteOnly
-            />
-          ),
-        },
-      ]
-    : [];
-
-  const items: TabsProps["items"] = showHistory
-    ? historyTab
-    : [
-        {
-          key: "1",
-          label: "Ghi chú nội bộ",
-          children: (
-            <TextArea
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              rows={5}
-              placeholder="Nhập ghi chú nội bộ..."
-              style={{ resize: "none" }}
-            />
-          ),
-        },
-        ...historyTab,
-      ];
-
-  const handleOk = async () => {
+  const save = async () => {
+    if (!handleChange) return;
+    setSaving(true);
+    setSaveFailed(false);
     try {
-      setConfirmLoading(true);
-      handleChange(note);
+      await handleChange(note);
+      if (historyId) {
+        await mutate(
+          (key) => Array.isArray(key) && key[0] === "history" && key[1] === tableName && key[2] === historyId,
+          undefined,
+          { revalidate: true },
+        );
+      }
+      setScreen(historyId ? "history" : null);
+    } catch {
+      setSaveFailed(true);
     } finally {
-      setConfirmLoading(false);
-      setAdding(false);
-      setOpen(false);
+      setSaving(false);
     }
   };
 
-  const handleCancel = () => {
-    if (adding) {
-      setAdding(false);
-      setNote(value);
-      setActiveTab("2");
-    } else {
-      setOpen(false);
-    }
+  const add = () => {
+    setNote(historyId ? "" : value);
+    setSaveFailed(false);
+    setScreen("add");
   };
-
-  useEffect(() => {
-    setNote(value);
-  }, [value]);
-
-  useEffect(() => {
-    setActiveTab(showHistory ? "2" : "1");
-  }, [showHistory]);
-
-  const modalTitle = (
-    <Space align="center" size={10}>
-      <div
-        style={{
-          width: 34,
-          height: 34,
-          borderRadius: 8,
-          background: "#EAF3DE",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#3B6D11",
-          fontSize: 16,
-          flexShrink: 0,
-        }}
-      >
-        📝
-      </div>
-      <div style={{ lineHeight: 1.3 }}>
-        <div style={{ fontWeight: 500, fontSize: 15 }}>
-          {(props.title as string) || "Ghi chú"}
-        </div>
-        {noteCount !== undefined && (
-          <div style={{ fontSize: 12, color: "#888", fontWeight: 400 }}>
-            {noteCount} ghi chú nội bộ
-          </div>
-        )}
-      </div>
-    </Space>
-  );
-
-  const footerReadOnly = (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <Button
-        type="primary"
-        icon={<span style={{ fontSize: 16, lineHeight: 1 }}>+</span>}
-        style={{
-          background: "#639922",
-          borderColor: "#639922",
-          fontWeight: 500,
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
-        }}
-        onClick={() => {
-          setNote("");
-          setAdding(true);
-          setActiveTab("1");
-        }}
-      >
-        Thêm ghi chú mới
-      </Button>
-      <Button onClick={() => setOpen(false)}>Đóng</Button>
-    </div>
-  );
-
-  const footerEdit = (
-    <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
-      <Button onClick={handleCancel}>{adding ? "Hủy" : "Đóng"}</Button>
-      <Button
-        type="primary"
-        loading={confirmLoading}
-        onClick={handleOk}
-        style={{ background: "#639922", borderColor: "#639922" }}
-      >
-        Cập nhật
-      </Button>
-    </div>
-  );
 
   return (
     <>
-      <Tooltip title="Ghi chú">
-        <Space onClick={() => setOpen(true)} style={{ cursor: "pointer" }}>
-          <Image src="/stickynote.png" alt="Icon" width={15} preview={false} />
-          {showTitle && "Lịch sử"}
-        </Space>
+      <Tooltip title={noteCount === undefined ? "Ghi chú" : `${noteCount} ghi chú nội bộ`}>
+        <Button
+          type="text"
+          size="small"
+          aria-label="Lịch sử ghi chú"
+          icon={<StickyNote size={15} />}
+          onClick={open}
+        >
+          {showTitle ? "Lịch sử" : undefined}
+        </Button>
       </Tooltip>
-
       <LucideModal
         {...props}
-        title={modalTitle}
-        open={open}
-        confirmLoading={confirmLoading}
-        width={600}
-        onCancel={handleCancel}
-        footer={showHistory ? footerReadOnly : footerEdit}
-        styles={{
-          header: {
-            borderBottom: "1px solid #f0f0f0",
-            paddingBottom: 12,
-            marginBottom: 0,
-          },
-          body: { padding: "0 24px" },
-          footer: {
-            borderTop: "1px solid #f0f0f0",
-            background: "#fafafa",
-            borderRadius: "0 0 8px 8px",
-            padding: "12px 24px",
-          },
-        }}
+        className={[styles.dialog, editing ? styles.addNote : styles.noteHistory, props.className].filter(Boolean).join(" ")}
+        open={screen !== null}
+        centered={editing}
+        style={editing ? undefined : { top: 59 }}
+        styles={{ mask: { background: "rgba(0,0,0,0.3)" } }}
+        width={768}
+        closable={!saving}
+        keyboard={!saving}
+        maskClosable={!saving}
+        onCancel={() => setScreen(editing && historyId ? "history" : null)}
+        title={
+          <>
+            {editing ? "THÊM GHI CHÚ NỘI BỘ" : "LỊCH SỬ GHI CHÚ"}
+            {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+          </>
+        }
+        footer={handleChange ? (
+          <Button
+            type="primary"
+            className={styles.noteAction}
+            icon={<SquarePen size={16} />}
+            loading={saving}
+            disabled={editing && Boolean(historyId) && !note.trim()}
+            onClick={editing ? save : add}
+          >
+            {editing && !historyId ? "Cập nhật" : "Thêm"}
+          </Button>
+        ) : null}
       >
-        <Tabs
-          activeKey={activeTab}
-          items={items}
-          onChange={setActiveTab}
-          style={{ marginTop: 4 }}
-          tabBarStyle={{ marginBottom: 12 }}
-        />
+        {editing ? (
+          <div className={styles.noteEditor}>
+            <Input.TextArea
+              aria-label="Nội dung ghi chú"
+              value={note}
+              onChange={(event) => setNote(event.target.value)}
+              maxLength={1000}
+              showCount={{ formatter: ({ count, maxLength }) => `${count}/${maxLength} kí tự` }}
+              disabled={saving}
+              placeholder="Nhập ghi chú nội bộ..."
+              style={{ height: 168, resize: "none" }}
+            />
+            {saveFailed && <Alert type="error" showIcon message="Không lưu được ghi chú. Vui lòng thử lại." />}
+          </div>
+        ) : historyId && screen === "history" ? (
+          <HistoryTree instanceId={historyId} TableName={tableName} noteOnly />
+        ) : (
+          <div style={{ whiteSpace: "pre-wrap" }}>{value || "Chưa có ghi chú"}</div>
+        )}
       </LucideModal>
     </>
   );

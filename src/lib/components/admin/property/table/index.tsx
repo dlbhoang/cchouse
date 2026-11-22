@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { mutate } from "swr";
 import ImagesPreview from "@/lib/components/shared/ImagesPreview";
+import { DeletedImgModal } from "@/lib/components/shared/MyModal";
 import { openVideoModal } from "@/lib/components/shared/MyModal/Video";
 import TableBase from "@/lib/components/shared/TableBase";
 import { ETableName } from "@/lib/core/enum";
@@ -61,6 +62,7 @@ export const PropertyTable = ({
   const [selectedData, setSeletedData] = useState<IPropResponse>();
   const [openContact, setOpenContact] = useState<boolean>(false);
   const [openHistory, setOpenHistory] = useState<boolean>(false);
+  const [mediaHistory, setMediaHistory] = useState<{ record: IPropResponse; video: boolean }>();
 
   const cols: ColumnsType<IPropResponse> = columns({
     userSession: session?.user,
@@ -91,6 +93,7 @@ export const PropertyTable = ({
       setOpenHistory(true);
       setSeletedData(data?.data?.find((x) => x.Id === id));
     },
+    handleOpenMediaHistory: (record, video) => setMediaHistory({ record, video }),
     handleOpenDetail: (id: number) => {
       onOpenDetail?.(id);
     },
@@ -165,7 +168,7 @@ export const PropertyTable = ({
           <TableBase
             bordered={false}
             tableLayout="fixed"
-            loading={isLoading || isValidating}
+            loading={isLoading}
             total={Array.isArray(data?.data) ? data.data.length : 0}
             searchOptions={searchOptions}
             data={(Array.isArray(data?.data) ? data.data : []).filter(
@@ -180,7 +183,7 @@ export const PropertyTable = ({
           <TableBase
             bordered={false}
             tableLayout="fixed"
-            loading={isLoading || isValidating}
+            loading={isLoading}
             total={data?.totalRow || 0}
             searchOptions={searchOptions}
             data={data?.data || []}
@@ -206,6 +209,19 @@ export const PropertyTable = ({
             model={selectedData}
           />
         </>
+      )}
+
+      {mediaHistory && (
+        <DeletedImgModal
+          isOpen
+          contentId={mediaHistory.record.Id}
+          TableName={ETableName.Property}
+          video={mediaHistory.video}
+          recordLabel={`Mã BĐS: ${mediaHistory.record.Id}${mediaHistory.record.PropAddress.DisplayAddress ? ` - Địa chỉ: ${mediaHistory.record.PropAddress.DisplayAddress}` : ""}`}
+          createdBy={mediaHistory.record.CreatedBy}
+          createdDate={mediaHistory.record.CreatedDate}
+          onClose={() => setMediaHistory(undefined)}
+        />
       )}
 
       <ImagesPreview

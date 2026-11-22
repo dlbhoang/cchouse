@@ -58,9 +58,7 @@ const columns = ({
               <NoteModal
                   readOnly
                 title={`Mã BĐS: ${record?.Id}`}
-                historyId={record.Id}
                 value={record.Note}
-                handleChange={async (note) => {}}
               />
             )}
           </Space>
