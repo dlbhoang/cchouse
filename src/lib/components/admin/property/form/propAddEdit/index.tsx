@@ -1,4 +1,5 @@
 "use client";
+import { generateUUID } from "@/lib/uuid";
 import { InputNumber as LucideInputNumber } from "@/lib/components/antd-lucide";
 import {
   Button,
@@ -107,7 +108,7 @@ const PropAddEdit = ({
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [mediaHistory, setMediaHistory] = useState<"image" | "video">();
 
-  const createRequestId = useRef(crypto.randomUUID());
+  const createRequestId = useRef<string>(generateUUID());
   const [preview, setPreview] = useState(false);
   const [openGeocode, setOpenGeocode] = useState(false);
   const [previewData, setPreviewData] = useState<IPropRequest>();
