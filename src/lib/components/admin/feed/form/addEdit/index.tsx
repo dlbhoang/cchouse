@@ -3,7 +3,7 @@ import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Alert as LucideAlert } from "@/lib/components/antd-lucide";
 import {Select as LucideSelect, DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
 
-import {Alert, Button, Card, Checkbox, Col, Divider, Form, Image, Input, Radio, Row, Segmented, Space, Tag, Typography, UploadFile} from "antd";
+import {Button, Card, Checkbox, Col, Divider, Form, Image, Input, Radio, Row, Segmented, Space, Tag, Typography, UploadFile} from "antd";
 import dayjs from "dayjs";
 import { ImageIcon, Eye } from "lucide-react";
 import dynamic from "next/dynamic";
@@ -33,7 +33,6 @@ import {
 } from "@/lib/core/utils/myFormat";
 import { useFetchImages } from "@/lib/hooks";
 import { IMyUploadFile } from "@/lib/interfaces/custom/IMyUploadFile";
-import { useAdminContext } from "@/lib/stored";
 import feedApi from "@/services/api/feed/feedApi";
 import { IFeedRequest, IFeedResponse } from "@/services/api/feed/IFeed";
 import imagesApi from "@/services/api/imagesApi";
@@ -91,7 +90,6 @@ type FormState = {
   showPropImages: boolean;
 };
 const AddEditForm = ({ model }: Props) => {
-  const { smallScreen } = useAdminContext();
   const router = useRouter();
   const isUpdate = (model?.Id ?? 0) > 0;
   const [state, setState] = useState<FormState>({

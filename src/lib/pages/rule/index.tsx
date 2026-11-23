@@ -3,7 +3,7 @@ import { Result as LucideResult } from "@/lib/components/antd-lucide";
 
 import {Upload as LucideUpload } from "lucide-react";
 import type { UploadFile, UploadProps} from "antd";
-import { Button, Result, Upload } from "antd";
+import { Button, Upload } from "antd";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 

@@ -1,0 +1,23 @@
+TAP version 13
+# Subtest: reverse conversion keeps the chosen ward on number edits and submits collapsed fields
+not ok 1 - reverse conversion keeps the chosen ward on number edits and submits collapsed fields
+  ---
+  duration_ms: 43347.496125
+  type: 'test'
+  location: '/Users/dlb/cchouse/test/cchouse_admin_website_v2/tests/property-address.test.cjs:7:1'
+  failureType: 'testCodeFailure'
+  error: 'page.waitForFunction: Timeout 30000ms exceeded.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TimeoutError'
+  stack: |-
+    TestContext.<anonymous> (/Users/dlb/cchouse/test/cchouse_admin_website_v2/tests/property-address.test.cjs:78:14)
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 43891.498125

@@ -1,0 +1,250 @@
+TAP version 13
+# Subtest: counts a range as one criterion and excludes filters outside the More dialog
+ok 1 - counts a range as one criterion and excludes filters outside the More dialog
+  ---
+  duration_ms: 1.264542
+  type: 'test'
+  ...
+# Subtest: resolves selected labels and counts a multi-select as one criterion
+ok 2 - resolves selected labels and counts a multi-select as one criterion
+  ---
+  duration_ms: 0.282916
+  type: 'test'
+  ...
+# Subtest: includes staff, dates and active checkboxes; ignores empty and false values
+ok 3 - includes staff, dates and active checkboxes; ignores empty and false values
+  ---
+  duration_ms: 0.148958
+  type: 'test'
+  ...
+# Subtest: inline area selector clears dependent IDs and applies the existing form once
+ok 4 - inline area selector clears dependent IDs and applies the existing form once
+  ---
+  duration_ms: 5.812833
+  type: 'test'
+  ...
+# Subtest: existing region button retains its dropdown presentation
+ok 5 - existing region button retains its dropdown presentation
+  ---
+  duration_ms: 1.299041
+  type: 'test'
+  ...
+# Subtest: fixtures require development and an explicit server opt-in
+ok 6 - fixtures require development and an explicit server opt-in
+  ---
+  duration_ms: 0.694042
+  type: 'test'
+  ...
+# Subtest: property pagination exposes unique populated rows across pages
+ok 7 - property pagination exposes unique populated rows across pages
+  ---
+  duration_ms: 0.40575
+  type: 'test'
+  ...
+# Subtest: fixture rows have the nested values required by the actual property columns
+ok 8 - fixture rows have the nested values required by the actual property columns
+  ---
+  duration_ms: 0.153542
+  type: 'test'
+  ...
+# Subtest: explicit empty search can exercise the actual empty component
+ok 9 - explicit empty search can exercise the actual empty component
+  ---
+  duration_ms: 0.25225
+  type: 'test'
+  ...
+# Subtest: news category filtering preserves selected types
+ok 10 - news category filtering preserves selected types
+  ---
+  duration_ms: 0.132625
+  type: 'test'
+  ...
+# Subtest: old/new address scenarios maintain linked wards and streets
+ok 11 - old/new address scenarios maintain linked wards and streets
+  ---
+  duration_ms: 0.348125
+  type: 'test'
+  ...
+# Subtest: unrelated endpoints retain the normal proxy path
+ok 12 - unrelated endpoints retain the normal proxy path
+  ---
+  duration_ms: 0.171667
+  type: 'test'
+  ...
+# Subtest: authenticated local QA read returns fixtures without contacting backend
+ok 13 - authenticated local QA read returns fixtures without contacting backend
+  ---
+  duration_ms: 52.936166
+  type: 'test'
+  ...
+# Subtest: QA write is blocked before reaching backend
+ok 14 - QA write is blocked before reaching backend
+  ---
+  duration_ms: 14.982541
+  type: 'test'
+  ...
+# Subtest: QA mode does not provide mock records without an authenticated session
+ok 15 - QA mode does not provide mock records without an authenticated session
+  ---
+  duration_ms: 20.972167
+  type: 'test'
+  ...
+# Subtest: production ignores the QA flag and preserves normal proxy forwarding
+ok 16 - production ignores the QA flag and preserves normal proxy forwarding
+  ---
+  duration_ms: 15.342
+  type: 'test'
+  ...
+# Subtest: groups file additions and removals from the same edit and orders newest first
+ok 17 - groups file additions and removals from the same edit and orders newest first
+  ---
+  duration_ms: 3.653125
+  type: 'test'
+  ...
+# Subtest: valid article passes
+ok 18 - valid article passes
+  ---
+  duration_ms: 5.572292
+  type: 'test'
+  ...
+# Subtest: NewsTypeId is required
+ok 19 - NewsTypeId is required
+  ---
+  duration_ms: 0.241833
+  type: 'test'
+  ...
+# Subtest: SourceType is required
+ok 20 - SourceType is required
+  ---
+  duration_ms: 0.087
+  type: 'test'
+  ...
+# Subtest: Title is required
+ok 21 - Title is required
+  ---
+  duration_ms: 0.078083
+  type: 'test'
+  ...
+# Subtest: Summary is required
+ok 22 - Summary is required
+  ---
+  duration_ms: 0.174375
+  type: 'test'
+  ...
+# Subtest: Content is required
+ok 23 - Content is required
+  ---
+  duration_ms: 0.065167
+  type: 'test'
+  ...
+# Subtest: empty editor content "" is blocked
+ok 24 - empty editor content "" is blocked
+  ---
+  duration_ms: 0.168
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p><br></p>" is blocked
+ok 25 - empty editor content "<p><br></p>" is blocked
+  ---
+  duration_ms: 0.055542
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>&nbsp;</p>" is blocked
+ok 26 - empty editor content "<p>&nbsp;</p>" is blocked
+  ---
+  duration_ms: 0.38875
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>&\#160;</p>" is blocked
+ok 27 - empty editor content "<p>&\#160;</p>" is blocked
+  ---
+  duration_ms: 0.476459
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>&\#xA0;</p>" is blocked
+ok 28 - empty editor content "<p>&\#xA0;</p>" is blocked
+  ---
+  duration_ms: 0.14425
+  type: 'test'
+  ...
+# Subtest: empty editor content "<p>   </p>" is blocked
+ok 29 - empty editor content "<p>   </p>" is blocked
+  ---
+  duration_ms: 0.052125
+  type: 'test'
+  ...
+# Subtest: missing image is blocked
+ok 30 - missing image is blocked
+  ---
+  duration_ms: 0.062
+  type: 'test'
+  ...
+# Subtest: failed image is blocked
+ok 31 - failed image is blocked
+  ---
+  duration_ms: 0.058375
+  type: 'test'
+  ...
+# Subtest: uploading image is blocked
+ok 32 - uploading image is blocked
+  ---
+  duration_ms: 0.052042
+  type: 'test'
+  ...
+# Subtest: shared article requires a source
+ok 33 - shared article requires a source
+  ---
+  duration_ms: 0.0595
+  type: 'test'
+  ...
+# Subtest: shared article with a source passes
+ok 34 - shared article with a source passes
+  ---
+  duration_ms: 0.053583
+  type: 'test'
+  ...
+# Subtest: title over 150 is blocked
+ok 35 - title over 150 is blocked
+  ---
+  duration_ms: 0.062041
+  type: 'test'
+  ...
+# Subtest: summary over 350 is blocked
+ok 36 - summary over 350 is blocked
+  ---
+  duration_ms: 0.0505
+  type: 'test'
+  ...
+# Subtest: title 150 and summary 350 are allowed
+ok 37 - title 150 and summary 350 are allowed
+  ---
+  duration_ms: 0.052834
+  type: 'test'
+  ...
+# Subtest: reverse conversion keeps the chosen ward on number edits and submits collapsed fields
+ok 38 - reverse conversion keeps the chosen ward on number edits and submits collapsed fields
+  ---
+  duration_ms: 2458.581916
+  type: 'test'
+  ...
+# Subtest: zero rear width does not append a visible zero to the dimensions
+ok 39 - zero rear width does not append a visible zero to the dimensions
+  ---
+  duration_ms: 17.794875
+  type: 'test'
+  ...
+# Subtest: positive rear width remains visible
+ok 40 - positive rear width remains visible
+  ---
+  duration_ms: 1.385334
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3327.23925

@@ -98,7 +98,7 @@ const NewsTypeTabs = ({
     });
   };
 
-  const handleInputConfirm = async () => {
+  const _handleInputConfirm = async () => {
     if (newTag?.trim()) {
       await newsTypeApi.add({ Name: newTag.trim() });
       mutate(newsTypeApi.mutateKey);

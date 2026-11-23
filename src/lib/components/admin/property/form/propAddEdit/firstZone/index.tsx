@@ -27,17 +27,17 @@ type Props = {
   isFull: boolean;
 };
 
-const colFullResponsive = {
+const _colFullResponsive = {
   xs: 24,
   lg: 12,
 };
 
-const colQuickResponsive = {
+const _colQuickResponsive = {
   xs: 24,
 };
 
 const FirstZone = ({ model, form, isFull }: Props) => {
-  const router = useRouter();
+  const _router = useRouter();
   const LocationWatch = Form.useWatch(["PropAddress", "Location"], form);
 
   const transType = form.getFieldValue("TransType");

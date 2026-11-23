@@ -1,0 +1,6 @@
+{
+  "auth": true,
+  "detail": "http://localhost:3003/admin/property/48975",
+  "edit": false,
+  "browserBack": "http://localhost:3003/admin/property?TransType=1"
+}

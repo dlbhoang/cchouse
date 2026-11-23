@@ -38,7 +38,7 @@ import SecondZone from "./secondZone";
 
 const hiddenFields = ["Id", "Status", "Video", ["Contact", "Id"]];
 
-const colFullResponsive = {
+const _colFullResponsive = {
   xs: 24,
   lg: 12,
 };

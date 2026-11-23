@@ -1,5 +1,5 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
-import {Button, Space, Divider, Typography} from "antd";
+import {Button, Space, Typography} from "antd";
 import { Eye, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";

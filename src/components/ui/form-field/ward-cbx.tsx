@@ -44,7 +44,7 @@ const WardCbxField = ({
 }) => {
   const label = "Phường / Xã";
 
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState<IWardResponse[]>([]);
   const form = useFormContext();

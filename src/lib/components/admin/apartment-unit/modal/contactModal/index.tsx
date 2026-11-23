@@ -29,7 +29,7 @@ type Props = {
 const ContactModal = ({ isModalOpen, model, handleCancel }: Props) => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [showMap, setShowMap] = useState<boolean>(false);
+  const [_showMap, _setShowMap] = useState<boolean>(false);
 
   const [propOfCustomer, setPropOfCustomer] = useState<
     IApartmentUnitResponse[]

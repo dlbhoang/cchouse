@@ -1,0 +1,38 @@
+{
+  "loginUrl": "http://localhost:3003/admin/property?TransType=1",
+  "detailUrl": "http://localhost:3003/admin/property/48975",
+  "headings": [
+    "Chi tiết bất động sản",
+    "Tổng quan bất động sản",
+    "Loại hình & Vị trí",
+    "Diện tích & Hiện trạng",
+    "Trang bị & Tiện ích",
+    "Ghi chú nội bộ"
+  ],
+  "buttons": [
+    "Bất động sản",
+    "Căn hộ",
+    "Tin đăng",
+    "Kiểm duyệt",
+    "Khách hàng",
+    "Tổ chức & Nhân sự",
+    "Quản lý nội dung",
+    "Cài đặt khác",
+    "Báo cáo thống kê",
+    "Toggle Sidebar",
+    "Mua bán ",
+    "Cho thuê ",
+    "Tin đăng ",
+    "Khách hàng ",
+    "Bản đồ ",
+    "Tra cứu hành chính",
+    "Tổng quan",
+    "Hình ảnh / video",
+    "Điện thoại",
+    "Bản đồ",
+    "Lịch sử",
+    "Chỉnh sửa",
+    "Đăng tin"
+  ],
+  "body": "Bất động sản\nCăn hộ\nCài đặt ảnh\nTin đăng\nKiểm duyệt\nKhách hàng\nTổ chức & Nhân sự\nQuản lý nội dung\nCài đặt khác\nBáo cáo thống kê\nToggle Sidebar\nMua bán\nCho thuê\nTin đăng\nKhách hàng\nBản đồ\nTra cứu hành chính\nLập Trình Viên\n290915SVH174\nChi tiết bất động sản\nMua bán BĐS ／ Chi tiết bất động sản\nTổng quan\nHình ảnh / video\nĐiện thoại\nBản đồ\nLịch sử\nNgười nhập: Lập Trình Viên\nNgày nhập: 23-11-2026\nMã BĐS:\n48975\nĐịa chỉ:\nE2E-2311-130, Cách Mạng Tháng 8, Phường Bảy Hiền, Đơn vị cấp xã 2025 của Hồ Chí Minh, Hồ Chí Minh\nTổng quan bất động sản\nTrạng thái\nĐang bán\nLoại BĐS\nNhà phố\nTên bất động sản\n—\nLoại đất\n--\nPháp lý Nhà, đất\nSổ hồng\nTình trạng nhà\nĐể trống\nGiá bán\n5,00 Tỷ\nPháp lý Nhà, đất\nSổ hồng\nGiá thuê\n—\nThời gian thuê\n—\nLoại hình & Vị trí\nVị trí\nMặt tiền\nVị trí đường\n2 chiều\nĐộ rộng đường\n—\nĐặc điểm\n—\nHướng\n—\nSố lần rẽ\n—\nLần rẽ 1\n—\nLần rẽ 2\n—\nDiện tích & Hiện trạng\nChiều rộng\n5m\nChiều dài\n12m\nMặt hậu\n—\nHiện trạng\ntrệt\nTổng DTCN\n—\nTổng DT sàn\n—\nTrang bị & Tiện ích\nSố phòng\n—\nSố toilet\n—\nNội thất\n—\nTrang thiết bị\n—\nTiện ích\n—\nGhi chú nội bộ\nNội dung\nTên đường thứ hai: Lê Lợi\nChỉnh sửa\nĐăng tin"
+}

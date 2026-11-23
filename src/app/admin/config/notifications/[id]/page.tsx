@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import NotiDetailPage from "@/lib/pages/config/notifications/detail";
 
 type Props = {

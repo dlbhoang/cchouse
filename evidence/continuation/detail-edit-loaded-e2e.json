@@ -1,0 +1,7 @@
+{
+  "auth": true,
+  "editForm": true,
+  "secondStreet": "",
+  "secondNumber": "",
+  "browserBack": "http://localhost:3003/admin/property?TransType=1"
+}

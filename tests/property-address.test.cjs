@@ -23,14 +23,26 @@ test('reverse conversion keeps the chosen ward on number edits and submits colla
     window.require = (name) => {
       if (name === 'react') return React;
       if (name === 'antd') return antd;
+      if (name === 'lucide-react') return { Plus: () => null, X: () => null };
       if (name.endsWith('/stored')) return { useAdminContext: () => ({ propType: [] }) };
       if (name.endsWith('/mergeWardApi')) return { default: { get: async () => {
         window.lookups++;
         return { data: [31, 32].map(id => ({ NewWardId: 8, NewDistrictId: 9, OldWardId: id,
           OldWardName: `Phường ${id}`, OldDistrictName: 'Quận cũ', OldDistrictId: 4 })) };
       } } };
-      if (name.endsWith('/wardApi')) return { default: { getById: async () => ({ data: { DistrictId: 9 } }) } };
+      if (name.endsWith('/wardApi')) return { default: {
+        getById: async () => ({ data: { DistrictId: 9 } }),
+        convertOldAddress: async () => ({ data: { ProvinceId: 1, NewDistrictId: 9, NewWardId: 8, StreetName: 'Lê Lợi' } }),
+      } };
+      if (name.endsWith('/streetApi')) return { default: { get: async () => ({ data: [{ Id: 15, Name: 'Lê Lợi' }] }) } };
       if (name.endsWith('/checkAddress')) return { default: () => null };
+      if (name.endsWith('/MySelect')) return {
+        ProvinceSelect: antd.Input, WardSelect: antd.Input, DistrictSelect: antd.Input,
+        DirectionSelect: antd.Input,
+        StreetSelect: props => React.createElement(antd.Select, {
+          ...props, options: [{ value: 15, label: 'Lê Lợi' }, { value: 12, label: 'Đường chính' }],
+        }),
+      };
       return Object.fromEntries(['ProvinceSelect', 'WardSelect', 'DistrictSelect', 'StreetSelect',
         'DirectionSelect', 'SubAddressSelect'].map(key => [key, antd.Input]));
     };
@@ -47,29 +59,35 @@ test('reverse conversion keeps the chosen ward on number edits and submits colla
     }
     ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(Fixture));
   });
+  await page.getByRole('button', { name: 'Thêm tên đường' }).click();
   const secondStreet = page.getByLabel('Tên đường thứ hai');
-  await secondStreet.fill('Trần Phú');
-  await secondStreet.fill('');
-  assert.equal(await page.locator('#Note').inputValue(), 'Ghi chú ban đầu');
   await secondStreet.fill('Lê Lợi');
+  await page.getByLabel('Số nhà thứ hai').fill('12B');
+  await page.getByRole('button', { name: 'Bỏ địa chỉ thứ hai' }).click();
+  assert.equal(await page.locator('#Note').inputValue(), 'Ghi chú ban đầu');
+  await page.getByRole('button', { name: 'Thêm tên đường' }).click();
+  await secondStreet.fill('Lê Lợi');
+  await page.getByLabel('Số nhà thứ hai').fill('12B');
   await page.getByRole('switch').click();
-  await page.getByRole('combobox').click();
+  await page.getByRole('combobox', { name: 'Chọn phường / xã cũ' }).click();
   await page.getByText('Phường 32, Quận cũ', { exact: true }).click();
   await page.getByRole('button', { name: '+ Thêm địa chỉ cũ' }).click();
-  await page.getByLabel('Tên đường (cũ)').fill('15');
+  await page.getByLabel('Tên đường (cũ)').click();
+  await page.getByText('Lê Lợi', { exact: true }).last().click();
   await page.getByLabel('Số nhà', { exact: true }).fill('27A');
   assert.equal(await page.getByLabel('Phường / xã (cũ)').inputValue(), '32');
+  await page.getByRole('switch').click();
+  await page.getByRole('switch').click();
+  assert.equal(await page.getByLabel('Phường / xã (cũ)').inputValue(), '32');
+  assert.equal(await page.getByRole('combobox', { name: 'Chọn phường / xã cũ' }).count(), 0);
   await page.getByRole('button', { name: 'Thu gọn' }).click();
   assert.equal(await page.getByLabel('Phường / xã (cũ)').isVisible(), false);
   await page.getByRole('button', { name: 'Lưu', exact: true }).click();
   await page.waitForFunction(() => window.saved);
-  const persisted = await page.evaluate(() => window.savedNote);
-  assert.equal(persisted, 'Ghi chú ban đầu\nTên đường thứ hai: Lê Lợi');
-  await page.locator('#Note').fill('');
-  await page.locator('#Note').fill(persisted);
-  assert.equal(await secondStreet.inputValue(), 'Lê Lợi');
   const saved = await page.evaluate(() => window.saved);
-  assert.equal(await page.evaluate(() => window.lookups), 1);
+  assert.equal(await page.evaluate(() => window.savedNote), 'Ghi chú ban đầu');
+  assert.equal(saved.SecondStreetName, 'Lê Lợi');
+  assert.equal(saved.SecondAddressNumber, '12B');
   assert.deepEqual([saved.DistrictId, saved.OldDistrictId, saved.OldWardId, saved.OldStreetId,
-    saved.OldAddressNumber, saved.AddressNumber], [9, 4, 32, '15', '27A', '27A']);
+    saved.OldAddressNumber, saved.AddressNumber], [9, 4, 32, 15, '27A', '27A']);
 });

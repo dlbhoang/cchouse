@@ -1,5 +1,4 @@
 import { Pagination as LucidePagination } from "@/lib/components/antd-lucide";
-import { Pagination } from "antd";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { baseFilter } from "@/lib/core/configs/appConst";
 import { objToQueryString } from "@/lib/core/utils/app-func";

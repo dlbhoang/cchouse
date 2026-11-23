@@ -19,7 +19,7 @@ export const BranchTable = ({
   onPageIndexChange,
 }: Props) => {
   // const router = useRouter();
-  const { data, isLoading, isValidating, mutate } =
+  const { data, isLoading, isValidating } =
     branchApi.useGet(searchOptions);
 
   const cols: ColumnsType<IBranchResponse> = columns({

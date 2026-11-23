@@ -1,5 +1,4 @@
 "use client";
-import { Alert as LucideAlert } from "@/lib/components/antd-lucide";
 
 import {Button, ConfigProvider} from "antd";
 import dynamic from "next/dynamic";
@@ -8,12 +7,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import PropertyFilter from "@/lib/components/admin/property/filter";
 import { PropListMap } from "@/lib/components/admin/property/propListMap";
-import PropertyDetailDialog from "@/lib/components/admin/property/detail-dialog";
 import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import { hasMapCoordinates } from "@/lib/core/utils/map-coordinates";
 import type { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import type { IPropAdminMap, IPropResponse } from "@/lib/interfaces/Property/IProp";
+import type { IPropAdminMap } from "@/lib/interfaces/Property/IProp";
 import { useAdminContext } from "@/lib/stored";
 import propertyApi from "@/services/api/property/propertyApi";
 import { MapServices } from "@/services/api/services/mapServices";
@@ -92,8 +90,6 @@ const MapPage = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const [detail, setDetail] = useState<IPropResponse>();
-  const [detailError, setDetailError] = useState(false);
   const [polygon, setPolygon] = useState<any[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<IPropAdminMap>();
   const [isResultsOpen, setIsResultsOpen] = useState(true);
@@ -132,39 +128,14 @@ const MapPage = () => {
   );
   const mapPoints: IPropAdminMap[] =
     mockProperties ?? (Array.isArray(points?.data) ? points.data : []);
-  const mockDetail = isMockMode
-    ? mapReviewFixtures.find((item) => item.Id === Number(propertyId))
-    : undefined;
-
   useEffect(() => {
-    let active = true;
-    const fetchDetail = async () => {
-      setDetail(undefined);
-      setDetailError(false);
-      if (!propertyId) {
-        return;
-      }
-      if (isMockMode) {
-        if (mockDetail) setDetail(mockDetail);
-        else setDetailError(true);
-        return;
-      }
-      try {
-        const id = Number(propertyId);
-        if (!Number.isSafeInteger(id) || id <= 0)
-          throw new Error("Invalid property ID");
-        const response = await propertyApi.getById(id);
-        if (!response.data?.Id) throw new Error("Property not found");
-        if (active) setDetail(response.data);
-      } catch {
-        if (active) setDetailError(true);
-      }
-    };
-    fetchDetail();
-    return () => {
-      active = false;
-    };
-  }, [isMockMode, mockDetail, propertyId]);
+    if (!propertyId) return;
+    const id = Number(propertyId);
+    if (!Number.isSafeInteger(id) || id <= 0) return;
+    const params = new URLSearchParams(searchParams?.toString() ?? "");
+    params.delete("PropertyId");
+    router.replace(`/admin/property/${id}?${new URLSearchParams({ returnTo: `${pathname}?${params}` })}`);
+  }, [propertyId, pathname, router, searchParams]);
 
   useEffect(() => {
     let active = true;
@@ -219,12 +190,6 @@ const MapPage = () => {
     router.push(`${pathname}?${query.toString()}`);
   };
 
-  const closeDetail = () => {
-    const nextParams = new URLSearchParams(searchParams?.toString() ?? "");
-    nextParams.delete("PropertyId");
-    router.replace(`${pathname}?${nextParams.toString()}`, { scroll: false });
-  };
-
   const hasCoordinates = mapPoints.some(({ PropAddress }) =>
     hasMapCoordinates(PropAddress),
   );
@@ -234,8 +199,8 @@ const MapPage = () => {
   };
   const openPropertyDetail = (item: IPropAdminMap) => {
     const params = new URLSearchParams(searchParams?.toString() ?? "");
-    params.set("PropertyId", item.Id.toString());
-    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+    params.delete("PropertyId");
+    router.push(`/admin/property/${item.Id}?${new URLSearchParams({ returnTo: `${pathname}?${params}` })}`);
   };
   const focusedProperty = selectedProperty
     ? (mapPoints.find(
@@ -274,15 +239,6 @@ const MapPage = () => {
             mapMode
           />
         </div>
-        {detailError && (
-          <LucideAlert
-            type="error"
-            showIcon
-            message="Không tải được chi tiết bất động sản. Vui lòng thử lại."
-            closable
-            onClose={closeDetail}
-          />
-        )}
 
         <section
           className={`admin-map-workspace ${isResultsOpen ? "is-results-open" : "is-results-closed"}`}
@@ -340,11 +296,6 @@ const MapPage = () => {
             {isResultsOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
           </button>
         </section>
-        <PropertyDetailDialog
-          open={Boolean(detail)}
-          data={detail}
-          onClose={closeDetail}
-        />
       </main>
     </ConfigProvider>
   );

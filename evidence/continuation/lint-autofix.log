@@ -1,0 +1,85 @@
+src/lib/components/admin/apartment-unit/modal/preview/index.tsx:28:11 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable propType is unused.
+  
+    26 │   console.log("model preview", model);
+    27 │ 
+  > 28 │   const { propType, enumList } = useAdminContext();
+       │           ^^^^^^^^
+    29 │   const { PaymentMethod, ApartmentUnitType } = enumList;
+    30 │   const [apartment, setApartment] = useState<IApartmentResponse>();
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/branch/table/index.tsx:22:42 lint/correctness/noUnusedVariables ━━━━━━━━━━━
+
+  ! This variable mutate is unused.
+  
+    20 │ }: Props) => {
+    21 │   // const router = useRouter();
+  > 22 │   const { data, isLoading, isValidating, mutate } =
+       │                                          ^^^^^^
+    23 │     branchApi.useGet(searchOptions);
+    24 │ 
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/feed/form/addEdit/index.tsx:94:11 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable smallScreen is unused.
+  
+    92 │ };
+    93 │ const AddEditForm = ({ model }: Props) => {
+  > 94 │   const { smallScreen } = useAdminContext();
+       │           ^^^^^^^^^^^
+    95 │   const router = useRouter();
+    96 │   const isUpdate = (model?.Id ?? 0) > 0;
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/news/newItem/index.tsx:11:9 lint/correctness/noUnusedVariables ━━━━━━━━━━━━
+
+  ! This variable Meta is unused.
+  
+    10 │ const { Text, Paragraph } = Typography;
+  > 11 │ const { Meta } = Card;
+       │         ^^^^
+    12 │ type Props = {
+    13 │   item: INewsResponse;
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/property/table/limit-access-table/subCols.tsx:9:9 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable Text is unused.
+  
+     7 │ import { IPropCheckAddress } from "@/lib/interfaces/Property/IProp";
+     8 │ 
+   > 9 │ const { Text } = Typography;
+       │         ^^^^
+    10 │ 
+    11 │ export const subCols: ColumnsType<IPropCheckAddress> = [
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/pages/hidden/image-cloud/table/index.tsx:28:17 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable session is unused.
+  
+    26 │   handleMutate,
+    27 │ }: Props) => {
+  > 28 │   const { data: session } = useSession();
+       │                 ^^^^^^^
+    29 │ 
+    30 │   return (
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+Checked 713 files in 314ms. Fixed 33 files.
+Found 6 warnings.

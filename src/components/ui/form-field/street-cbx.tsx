@@ -37,7 +37,7 @@ const StreetCbxField = ({
 }) => {
   const label = "Đường";
 
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const [data, setData] = useState<IStreetResponse[]>([]);
   const form = useFormContext();
 

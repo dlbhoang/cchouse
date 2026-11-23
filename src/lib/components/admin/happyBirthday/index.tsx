@@ -1,7 +1,6 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Result as LucideResult } from "@/lib/components/antd-lucide";
 
-import {Modal} from "antd";
 import dayjs from "dayjs";
 import { CakeIcon, Gift } from "lucide-react";
 import { useSession } from "next-auth/react";

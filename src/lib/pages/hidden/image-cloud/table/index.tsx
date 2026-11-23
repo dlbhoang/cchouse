@@ -1,4 +1,3 @@
-import { useSession } from "next-auth/react";
 import TableBase from "@/lib/components/shared/TableBase";
 import type { ISearchOptions } from "@/lib/interfaces/filter/ISearchOptions";
 import type { IImageCloud } from "@/services/api/image-cloud/model";
@@ -25,7 +24,6 @@ const ImageCloudTable = ({
   handleRequestModal,
   handleMutate,
 }: Props) => {
-  const { data: session } = useSession();
 
   return (
     <TableBase

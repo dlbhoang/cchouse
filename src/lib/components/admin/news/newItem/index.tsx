@@ -8,7 +8,6 @@ import { FormatDateTime } from "@/lib/core/utils/myFormat";
 import type { INewsResponse } from "@/services/api/news/INews";
 
 const { Text, Paragraph } = Typography;
-const { Meta } = Card;
 type Props = {
   item: INewsResponse;
   onPreview: (item: INewsResponse) => void;

@@ -337,3 +337,18 @@
   .property-detail-dialog-phone > .pd-contact-row,
   .property-detail-dialog-phone > .pd-warehouse { grid-column: 1; grid-row: auto; }
 }
+
+/* The route owns scrolling; detail content is no longer sized to a modal. */
+.property-detail-page { width: 100%; min-width: 0; background: white; }
+.property-detail-page .property-detail-dialog { height: auto; max-height: none; }
+.property-detail-page .property-detail-dialog-scroll { overflow: visible; max-height: none; }
+.property-detail-page .property-detail-dialog-footer { position: sticky; bottom: 0; background: white; z-index: 2; }
+@media (max-width: 767px) {
+  .property-detail-page .property-detail-dialog-header { padding: 16px; }
+  .property-detail-page .property-detail-dialog-header h2 { font-size: 20px; }
+  .property-detail-page .property-detail-dialog-toolbar { padding: 0 16px; flex-wrap: wrap; }
+  .property-detail-page .property-detail-dialog-tabs { overflow-x: auto; max-width: 100%; }
+  .property-detail-page .property-detail-dialog-tabs button { white-space: nowrap; }
+  .property-detail-page .property-detail-dialog-summary,
+  .property-detail-page .property-detail-dialog-grid { grid-template-columns: 1fr; }
+}

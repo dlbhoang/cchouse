@@ -1,0 +1,110 @@
+
+> cchouse-antd@0.1.0 build
+> npm i && next build && bun copy-files.ts
+
+
+up to date, audited 892 packages in 46s
+
+189 packages are looking for funding
+  run `npm fund` for details
+
+25 vulnerabilities (8 moderate, 14 high, 3 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+  ▲ Next.js 14.2.35
+  - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/53) ...
+   Generating static pages (13/53) 
+   Generating static pages (26/53) 
+   Generating static pages (39/53) 
+ ✓ Generating static pages (53/53)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+┌ ƒ /                                    172 B          88.6 kB
+├ ƒ /_not-found                          172 B          88.6 kB
+├ ƒ /admin                               12.5 kB         281 kB
+├ ƒ /admin/activity                      7.48 kB         684 kB
+├ ƒ /admin/apartment                     3.43 kB         704 kB
+├ ƒ /admin/apartment/add                 606 B           646 kB
+├ ƒ /admin/apartment/unit                6.17 kB         730 kB
+├ ƒ /admin/apartment/unit/[id]           462 B           658 kB
+├ ƒ /admin/apartment/unit/add            354 B           658 kB
+├ ƒ /admin/config/address                21.8 kB         635 kB
+├ ƒ /admin/config/address-conversion     172 B          88.6 kB
+├ ƒ /admin/config/address-manager        32.1 kB         204 kB
+├ ƒ /admin/config/agency-manager         18.2 kB         479 kB
+├ ƒ /admin/config/banner                 5.78 kB         136 kB
+├ ƒ /admin/config/branch                 6.47 kB         683 kB
+├ ƒ /admin/config/document               21.7 kB         355 kB
+├ ƒ /admin/config/error-monitor          10.1 kB         120 kB
+├ ƒ /admin/config/news                   22.7 kB         998 kB
+├ ƒ /admin/config/news/add               5.31 kB         851 kB
+├ ƒ /admin/config/news/edit/[id]         7.92 kB         881 kB
+├ ƒ /admin/config/notifications          4.08 kB         642 kB
+├ ƒ /admin/config/notifications/[id]     20.2 kB         304 kB
+├ ƒ /admin/config/propType               5.41 kB         503 kB
+├ ƒ /admin/config/recruitment            6.34 kB         692 kB
+├ ƒ /admin/config/recruitment/[id]       25 kB           342 kB
+├ ƒ /admin/config/recruitment/add        4.68 kB         626 kB
+├ ƒ /admin/config/recruitment/edit/[id]  4.75 kB         626 kB
+├ ƒ /admin/config/role                   4.45 kB         491 kB
+├ ƒ /admin/customer                      15.5 kB         701 kB
+├ ƒ /admin/customer/website              10.8 kB         695 kB
+├ ƒ /admin/customer/website/[id]         32.4 kB         559 kB
+├ ƒ /admin/dashboard/consignment         20.2 kB         622 kB
+├ ƒ /admin/dashboard/overview            129 kB          813 kB
+├ ƒ /admin/dashboard/report-spam         13.2 kB         655 kB
+├ ƒ /admin/dataLog                       3.23 kB         671 kB
+├ ƒ /admin/feed                          946 B           764 kB
+├ ƒ /admin/feed/[id]                     254 B           707 kB
+├ ƒ /admin/feed/add                      255 B           707 kB
+├ ƒ /admin/feed/pricing                  6.67 kB         683 kB
+├ ƒ /admin/feed/website                  711 B           755 kB
+├ ƒ /admin/hoa-hong-nha-ban              172 B          88.6 kB
+├ ƒ /admin/hoa-hong-nha-thue             172 B          88.6 kB
+├ ƒ /admin/map                           8.88 kB         643 kB
+├ ƒ /admin/marketing                     172 B          88.6 kB
+├ ƒ /admin/prop-transfer                 3.35 kB         556 kB
+├ ƒ /admin/property                      5.39 kB         821 kB
+├ ƒ /admin/property/[id]                 24.7 kB         788 kB
+├ ƒ /admin/property/add                  172 B          88.6 kB
+├ ƒ /admin/property/propCompare          7.83 kB         273 kB
+├ ƒ /admin/propTemp                      15.5 kB         692 kB
+├ ƒ /admin/rule                          10.5 kB         463 kB
+├ ƒ /admin/sim                           12.6 kB         528 kB
+├ ƒ /admin/su-dung                       172 B          88.6 kB
+├ ƒ /admin/trang-phuc                    172 B          88.6 kB
+├ ƒ /admin/userAdmin                     18.7 kB         710 kB
+├ ƒ /admin/userAdmin/[id]                21.6 kB         718 kB
+├ ƒ /admin/userAdmin/add                 18 kB           597 kB
+├ ƒ /admin/userAdmin/edit/[id]           7.1 kB          641 kB
+├ ƒ /admin/userAdmin/leave-request       9.78 kB         556 kB
+├ ƒ /admin/verify-property               5.86 kB         567 kB
+├ ƒ /api/auth/[...nextauth]              0 B                0 B
+├ ƒ /api/client-errors                   0 B                0 B
+├ ƒ /api/proxy/[...path]                 0 B                0 B
+└ ƒ /login                               18 kB           675 kB
++ First Load JS shared by all            88.5 kB
+  ├ chunks/2117-48c32f35c152ed26.js      31.8 kB
+  ├ chunks/fd9d1056-d78dc9f57a5877a7.js  53.6 kB
+  └ other shared chunks (total)          3.01 kB
+
+
+ƒ Middleware                             79.2 kB
+
+ƒ  (Dynamic)  server-rendered on demand
+
+sh: bun: command not found

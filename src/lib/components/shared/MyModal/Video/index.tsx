@@ -1,7 +1,6 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Video } from "lucide-react";
 
-import { Modal} from 'antd';
 import ReactPlayer from 'react-player';
 
 import { NotiBase } from '../../NotiBase';

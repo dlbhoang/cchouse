@@ -9,7 +9,7 @@ type Props = {
   id: number;
 };
 const ApartmentDetail = ({ id }: Props) => {
-  const [loading, setLoading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const [data, setData] = useState<IApartmentResponse>();
 
   useEffect(() => {

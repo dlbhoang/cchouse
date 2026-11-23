@@ -899,7 +899,7 @@ const WardLookupDialog = ({
                             <span className="mr-2 text-[#0588F0]">•</span>
                             <span className="font-semibold">{searchByNewAddress ? "Địa chỉ cũ: " : "Phường/Xã mới: "}</span>
                             {searchByNewAddress
-                              ? ward.MergedFrom.join(", ")
+                              ? (ward.MergedFrom ?? []).join(", ")
                               : ward.IsAmbiguous
                                 ? `${ward.WardName} (chưa xác định duy nhất)`
                                 : ward.ConvertedAddress ?? ward.WardName}

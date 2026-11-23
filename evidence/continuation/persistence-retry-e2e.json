@@ -1,0 +1,14 @@
+{
+  "loginStatus": 200,
+  "first": {
+    "status": 200,
+    "id": 48976,
+    "message": "Thêm dữ liệu thành công"
+  },
+  "retry": {
+    "status": 400,
+    "id": 48976,
+    "message": "Thêm dữ liệu thất bại, BĐS đã tồn tại"
+  },
+  "noDuplicate": true
+}

@@ -6,7 +6,6 @@ import RenderArea from "@/lib/components/shared/CustomRender/RenderArea";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import { IPropCheckAddress } from "@/lib/interfaces/Property/IProp";
 
-const { Text } = Typography;
 
 export const subCols: ColumnsType<IPropCheckAddress> = [
   {

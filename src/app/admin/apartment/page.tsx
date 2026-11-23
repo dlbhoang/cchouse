@@ -16,7 +16,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ searchParams }: Props) {
-  const sParams = await searchParams;
+  const _sParams = await searchParams;
 
   return (
     <>

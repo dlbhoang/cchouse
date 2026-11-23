@@ -1,7 +1,7 @@
 import { Popconfirm as LucidePopconfirm } from "@/lib/components/antd-lucide";
 import {Facebook } from "lucide-react";
 
-import { Popconfirm, Space, Switch, Tag, Tooltip, Typography} from "antd";
+import { Space, Switch, Tag, Tooltip, Typography} from "antd";
 import type { TagProps } from "antd/lib";
 import type { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";

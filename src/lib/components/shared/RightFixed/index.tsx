@@ -9,10 +9,10 @@ const RightFixed = ({
   children: ReactNode;
   visible: boolean;
 }) => {
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [scrollTop, setScrollTop] = useState(0);
+  const [isScrolling, _setIsScrolling] = useState(false);
+  const [scrollTop, _setScrollTop] = useState(0);
   const screens = useBreakpoint();
-  let timerId: NodeJS.Timeout;
+  let _timerId: NodeJS.Timeout;
   // const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
   //   setScrollTop(event.currentTarget.scrollTop);
   //   setIsScrolling(true);

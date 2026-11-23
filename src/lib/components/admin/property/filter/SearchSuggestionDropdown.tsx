@@ -90,8 +90,8 @@ export const SearchSuggestionDropdown = ({
   if (!open) return null;
 
   const ROW_H = 32;
-  const HEADER_TOP = 24;
-  const LIST_TOP = 53;
+  const _HEADER_TOP = 24;
+  const _LIST_TOP = 53;
 
   return (
     <div

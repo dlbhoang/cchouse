@@ -1,0 +1,30 @@
+MSBuild version 17.8.49+7806cbf7b for .NET
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-gwg2-r3hj-4w44
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j3p4-wp97-rph4
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j9gm-c75j-xc9q
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-jjfr-hcj7-qf5w
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-rxmq-m78w-7wmc
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-v76p-62qx-wwq2
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-wmxv-xphr-5c9g
+/Users/dlb/cchouse/test/cchouse_api_core_v2/Shared.Domain/Shared.Domain.csproj : warning NU1903: Package 'AutoMapper' 14.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+  Shared.Domain -> /Users/dlb/cchouse/test/cchouse_api_core_v2/Shared.Domain/bin/Debug/net8.0/Shared.Domain.dll
+  Shared.Infrastructure -> /Users/dlb/cchouse/test/cchouse_api_core_v2/Shared.Infrastructure/bin/Debug/net8.0/Shared.Infrastructure.dll
+  cchouse.Domain -> /Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/bin/Debug/net8.0/cchouse.Domain.dll
+  cchouse.Application -> /Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Application/bin/Debug/net8.0/cchouse.Application.dll
+  cchouse.Infrastructure -> /Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Infrastructure/bin/Debug/net8.0/cchouse.Infrastructure.dll
+  cchouse.api -> /Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.api/bin/Debug/net8.0/cchouse.api.dll
+
+Build succeeded.
+
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-gwg2-r3hj-4w44
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j3p4-wp97-rph4
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j9gm-c75j-xc9q
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-jjfr-hcj7-qf5w
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-rxmq-m78w-7wmc
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-v76p-62qx-wwq2
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-wmxv-xphr-5c9g
+/Users/dlb/cchouse/test/cchouse_api_core_v2/Shared.Domain/Shared.Domain.csproj : warning NU1903: Package 'AutoMapper' 14.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+    8 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.88

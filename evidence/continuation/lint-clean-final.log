@@ -1,0 +1,5 @@
+
+> cchouse-antd@0.1.0 lint
+> biome lint --error-on-warnings ./src
+
+Checked 713 files in 153ms. No fixes applied.

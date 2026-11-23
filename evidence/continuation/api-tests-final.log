@@ -1,0 +1,107 @@
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-gwg2-r3hj-4w44 [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j3p4-wp97-rph4 [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j9gm-c75j-xc9q [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-jjfr-hcj7-qf5w [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-rxmq-m78w-7wmc [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-v76p-62qx-wwq2 [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-wmxv-xphr-5c9g [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/Shared.Domain/Shared.Domain.csproj : warning NU1903: Package 'AutoMapper' 14.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x [/Users/dlb/cchouse/test/cchouse_api_core_v2/tests/NewsWorkflowSmoke/NewsSmoke.csproj]
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-gwg2-r3hj-4w44
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j3p4-wp97-rph4
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-j9gm-c75j-xc9q
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-jjfr-hcj7-qf5w
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-rxmq-m78w-7wmc
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1903: Package 'SixLabors.ImageSharp' 3.1.7 has a known high severity vulnerability, https://github.com/advisories/GHSA-v76p-62qx-wwq2
+/Users/dlb/cchouse/test/cchouse_api_core_v2/cchouse.Domain/cchouse.Domain.csproj : warning NU1902: Package 'SixLabors.ImageSharp' 3.1.7 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-wmxv-xphr-5c9g
+/Users/dlb/cchouse/test/cchouse_api_core_v2/Shared.Domain/Shared.Domain.csproj : warning NU1903: Package 'AutoMapper' 14.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x
+PASS Query binding GetNewss.GetNewssQuery.CreatedBy
+PASS Query binding GetNewss.GetNewssQuery.NewsTypeIds
+PASS Query binding CountNews.CountNewsQuery.CreatedBy
+PASS Query binding CountNews.CountNewsQuery.NewsTypeIds
+PASS Hidden -> Approve
+PASS Stored status Hidden -> Approve
+PASS Hidden -> Reject
+PASS Stored status Hidden -> Reject
+PASS Hidden -> Hidden
+PASS Stored status Hidden -> Hidden
+PASS Hidden -> Show
+PASS Stored status Hidden -> Show
+PASS Restore visibility preserves original approval metadata
+PASS Hidden -> Expire
+PASS Stored status Hidden -> Expire
+PASS Edit legacy Hidden without approval metadata
+PASS Show -> Approve
+PASS Stored status Show -> Approve
+PASS Show -> Reject
+PASS Stored status Show -> Reject
+PASS Show -> Hidden
+PASS Stored status Show -> Hidden
+PASS Show -> Show
+PASS Stored status Show -> Show
+PASS Show -> Expire
+PASS Stored status Show -> Expire
+PASS Edit legacy Show without approval metadata
+PASS Pending -> Approve
+PASS Stored status Pending -> Approve
+PASS Approval audit metadata
+PASS Pending -> Reject
+PASS Stored status Pending -> Reject
+PASS Rejection audit metadata
+PASS Pending -> Hidden
+PASS Stored status Pending -> Hidden
+PASS Pending -> Show
+PASS Stored status Pending -> Show
+PASS Pending -> Expire
+PASS Stored status Pending -> Expire
+PASS Edit legacy Pending without approval metadata
+PASS Rejected -> Approve
+PASS Stored status Rejected -> Approve
+PASS Rejected -> Reject
+PASS Stored status Rejected -> Reject
+PASS Rejected -> Hidden
+PASS Stored status Rejected -> Hidden
+PASS Rejected -> Show
+PASS Stored status Rejected -> Show
+PASS Rejected -> Expire
+PASS Stored status Rejected -> Expire
+PASS Edit legacy Rejected without approval metadata
+PASS Expired -> Approve
+PASS Stored status Expired -> Approve
+PASS Expired -> Reject
+PASS Stored status Expired -> Reject
+PASS Expired -> Hidden
+PASS Stored status Expired -> Hidden
+PASS Expired -> Show
+PASS Stored status Expired -> Show
+PASS Expired -> Expire
+PASS Stored status Expired -> Expire
+PASS Edit legacy Expired without approval metadata
+PASS Approved metadata locks edit in Show
+PASS Approved metadata locks edit in Hidden
+PASS Approved metadata locks edit in Expired
+PASS Approved metadata locks edit in Rejected
+PASS Approved metadata locks edit in Pending
+PASS Rejected -> edit -> Pending
+PASS Add valid news
+PASS Reject add with missing category
+PASS Missing record EditNewsCommand
+PASS Missing record ApproveNewsCommand
+PASS Missing record RejectNewsCommand
+PASS Missing record HiddenNewsCommand
+PASS Missing record ShowNewsCommand
+PASS Missing record ExpireNewsCommand
+PASS Required add fields
+PASS Summary max 350
+PASS Reject reason required
+PASS Shared add requires source
+PASS Shared edit requires source
+PASS Add title max 150
+PASS Edit title max 150
+PASS Author filter
+PASS Single category filter
+PASS Multiple category filter
+PASS Source filter
+PASS Status filter
+PASS Date range includes end of day
+PASS Count uses combined filters
+RESULT 90 passed, 0 failed

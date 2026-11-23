@@ -104,7 +104,7 @@ const mapItems: NavigationItem[] = [
 ];
 
 // Add document as a standalone item
-const documentItem: NavigationItem = {
+const _documentItem: NavigationItem = {
   title: "Văn bản",
   url: AppRoutes.document.url,
   icon: () => <FileSearch2 className="w-4 h-4 mr-1 text-black" />,
@@ -112,7 +112,7 @@ const documentItem: NavigationItem = {
 };
 
 export function TopNavigation({ designTheme = false }: { designTheme?: boolean }) {
-  const router = useRouter();
+  const _router = useRouter();
   const currentPath = useCurrentPath();
   const { data: session } = useSession();
   const [openWardLookup, setOpenWardLookup] = useState(false);

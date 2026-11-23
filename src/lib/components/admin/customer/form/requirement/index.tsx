@@ -21,7 +21,7 @@ type Props = {
   itemName: "BuyingRequirement" | "RentingRequirement";
 };
 
-const labelCheckbox = "Chi tiết";
+const _labelCheckbox = "Chi tiết";
 
 const RequirementCard = ({ title, form, itemName }: Props) => {
   const provinceIdWatch = Form.useWatch("ProvinceId", form);
@@ -33,11 +33,11 @@ const RequirementCard = ({ title, form, itemName }: Props) => {
   const rules: Rule[] | undefined =
     hasArea ? [{ required: true }] : undefined;
 
-  const switchValueToBoolean = (val?: number) => {
+  const _switchValueToBoolean = (val?: number) => {
     return { checked: val !== undefined && val !== 2 };
   };
 
-  const switchBooleanToValue = (checked: boolean) => {
+  const _switchBooleanToValue = (checked: boolean) => {
     if (itemName === "BuyingRequirement") return checked ? 0 : 2;
     return checked ? 1 : 2;
   };

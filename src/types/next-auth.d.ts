@@ -1,9 +1,10 @@
-import { IUserAdminResponse } from '@/services/api/userAdmin/IUserAdmin';
+import type { DefaultSession } from "next-auth";
 
 declare module 'next-auth' {
+  interface User extends IUserLogged {}
   interface Session {
     token: string;
-    user: IUserLogged;
+    user: IUserLogged & DefaultSession["user"];
   }
 }
 

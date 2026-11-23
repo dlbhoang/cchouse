@@ -1,0 +1,9 @@
+{
+  "auth": true,
+  "Hình ảnh / video": true,
+  "Điện thoại": true,
+  "Bản đồ": true,
+  "Lịch sử": true,
+  "Tổng quan": true,
+  "postRoute": "http://localhost:3003/admin/feed/add?propId=48975"
+}

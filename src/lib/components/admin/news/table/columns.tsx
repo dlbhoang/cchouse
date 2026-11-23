@@ -2,7 +2,6 @@ import type { ColumnsType } from "antd/lib/table";
 import dayjs from "dayjs";
 import { EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import NewsConfirmButton from "../confirm";
 import { AppRoutes } from "@/lib/core/configs/appRoutes";
 import type { INewsResponse } from "@/services/api/news/INews";

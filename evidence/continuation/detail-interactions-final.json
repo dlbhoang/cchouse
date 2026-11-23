@@ -1,0 +1,7 @@
+{
+  "loginUrl": "http://localhost:3003/login",
+  "session": false,
+  "detailUrl": "http://localhost:3003/login?callbackUrl=http%3A%2F%2Flocalhost%3A3003%2Fadmin%2Fproperty%2F48975",
+  "headingCount": 0,
+  "body": "© Copyright @ 2027 C.C.House. All rights reserved - Since 2015\nXin chào bạn\nĐăng nhập để tiếp tục\nEmail *\nMật khẩu *\nNhớ mật khẩu\nQuên mật khẩu\nĐăng nhập\nChưa có tài khoản? Đăng ký\nQuét mã QR để truy cập\nMỌI CHI TIẾT LIÊN HỆ\n0917 07 17 19 - 0919 70 74 77\nEmail: info@cchouse.vn\nMã số thuế: 0313463662"
+}

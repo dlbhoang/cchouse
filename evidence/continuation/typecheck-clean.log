@@ -1,0 +1,151 @@
+
+> cchouse-antd@0.1.0 type-check
+> tsc --noEmit
+
+src/components/features/leave-request/create/index.tsx(32,66): error TS2339: Property 'ManagedBy' does not exist on type 'User'.
+src/components/features/leave-request/create/index.tsx(94,39): error TS2339: Property 'Avatar' does not exist on type 'User'.
+src/components/features/leave-request/create/index.tsx(98,35): error TS2551: Property 'Name' does not exist on type 'User'. Did you mean 'name'?
+src/components/features/leave-request/create/index.tsx(102,33): error TS2551: Property 'Name' does not exist on type 'User'. Did you mean 'name'?
+src/components/features/leave-request/create/index.tsx(115,16): error TS18048: 'session.user' is possibly 'undefined'.
+src/components/features/leave-request/create/index.tsx(115,30): error TS2339: Property 'RoleName' does not exist on type 'User'.
+src/components/features/leave-request/create/index.tsx(126,16): error TS18048: 'session.user' is possibly 'undefined'.
+src/components/features/leave-request/create/index.tsx(126,30): error TS2339: Property 'Phone' does not exist on type 'User'.
+src/components/features/leave-request/detail-modal.tsx(230,55): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/components/features/leave-request/edit/index.tsx(34,66): error TS2339: Property 'ManagedBy' does not exist on type 'User'.
+src/components/features/leave-request/edit/index.tsx(97,31): error TS2551: Property 'Name' does not exist on type 'User'. Did you mean 'name'?
+src/components/features/leave-request/edit/index.tsx(109,16): error TS18048: 'session.user' is possibly 'undefined'.
+src/components/features/leave-request/edit/index.tsx(109,30): error TS2339: Property 'RoleName' does not exist on type 'User'.
+src/components/features/leave-request/edit/index.tsx(120,16): error TS18048: 'session.user' is possibly 'undefined'.
+src/components/features/leave-request/edit/index.tsx(120,30): error TS2339: Property 'Phone' does not exist on type 'User'.
+src/components/layouts/app-sidebar/nav-main.tsx(34,22): error TS18048: 'session.user' is possibly 'undefined'.
+src/components/layouts/app-sidebar/nav-main.tsx(34,36): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/components/layouts/app-sidebar/nav-main.tsx(35,22): error TS18048: 'session.user' is possibly 'undefined'.
+src/components/layouts/app-sidebar/nav-main.tsx(35,36): error TS2551: Property 'Email' does not exist on type 'User'. Did you mean 'email'?
+src/components/layouts/nav-user.tsx(25,34): error TS2306: File '/Users/dlb/cchouse/test/cchouse_admin_website_v2/src/types/next-auth.d.ts' is not a module.
+src/components/layouts/top-navigation.tsx(119,22): error TS18048: 'session.user' is possibly 'undefined'.
+src/components/layouts/top-navigation.tsx(119,36): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(65,21): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(65,35): error TS2339: Property 'CompanyPhone' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(66,49): error TS2339: Property 'CompanyPhone' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(67,21): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(67,35): error TS2339: Property 'Phone' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(67,72): error TS2339: Property 'Phone' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(68,55): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(68,69): error TS2551: Property 'Name' does not exist on type 'User'. Did you mean 'name'?
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(88,26): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(88,40): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(89,9): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(89,23): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(98,37): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(98,51): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(99,21): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/form/contactZone/index.tsx(99,35): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx(168,30): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx(168,44): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx(169,13): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx(169,27): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/apartment-unit/table/columns.tsx(19,29): error TS2306: File '/Users/dlb/cchouse/test/cchouse_admin_website_v2/src/types/next-auth.d.ts' is not a module.
+src/lib/components/admin/customer/form/customerInfo/index.tsx(161,19): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/customer/form/customerInfo/index.tsx(161,33): error TS2551: Property 'Name' does not exist on type 'User'. Did you mean 'name'?
+src/lib/components/admin/feed/form/addEdit/index.tsx(606,33): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(606,47): error TS2339: Property 'CompanyPhone' does not exist on type 'User'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(609,43): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(609,57): error TS2339: Property 'CompanyPhone' does not exist on type 'User'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(610,21): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(610,35): error TS2339: Property 'CompanyPhone' does not exist on type 'User'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(613,25): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(613,39): error TS2339: Property 'Phone' does not exist on type 'User'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(670,43): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(670,57): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/feed/form/addEdit/index.tsx(697,43): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/form/addEdit/index.tsx(697,57): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/feed/modal/preview/index.tsx(61,36): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/feed/modal/preview/index.tsx(314,48): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/modal/preview/index.tsx(314,62): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/feed/modal/preview/index.tsx(356,43): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/modal/preview/index.tsx(356,57): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/feed/statusTabs/index.tsx(30,25): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/feed/statusTabs/index.tsx(30,39): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/happyBirthday/index.tsx(16,41): error TS2339: Property 'DateOfBirth' does not exist on type 'User'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(85,25): error TS2339: Property 'CompanyPhone' does not exist on type 'User'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(85,39): error TS2339: Property 'Phone' does not exist on type 'User'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(85,46): error TS2339: Property 'Name' does not exist on type 'User'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(138,26): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(138,40): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(139,9): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(139,23): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(148,37): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(148,51): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(149,21): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/form/propAddEdit/contact/index.tsx(149,35): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/property/form/propAddEdit/editInfo/index.tsx(57,57): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/property/modal/contactModal/index.tsx(209,34): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/modal/contactModal/index.tsx(209,48): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/property/modal/contactModal/index.tsx(210,17): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/modal/contactModal/index.tsx(210,31): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/property/propType/table/index.tsx(121,40): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/property/request-access/request-access-form.tsx(45,19): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/request-access/request-access-form.tsx(45,33): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/property/request-access/request-access-form.tsx(55,12): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/property/request-access/request-access-form.tsx(55,26): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/property/request-access/request-access-form.tsx(59,73): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/property/table/columns.tsx(27,29): error TS2306: File '/Users/dlb/cchouse/test/cchouse_admin_website_v2/src/types/next-auth.d.ts' is not a module.
+src/lib/components/admin/property/table/mobile-property-list.tsx(16,29): error TS2306: File '/Users/dlb/cchouse/test/cchouse_admin_website_v2/src/types/next-auth.d.ts' is not a module.
+src/lib/components/admin/propTemp/table/columns.tsx(10,29): error TS2306: File '/Users/dlb/cchouse/test/cchouse_admin_website_v2/src/types/next-auth.d.ts' is not a module.
+src/lib/components/admin/recruitment/form/index.tsx(211,52): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/recruitment/form/index.tsx(211,66): error TS2339: Property 'BranchId' does not exist on type 'User'.
+src/lib/components/admin/sim/table/index.tsx(139,40): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/userAdmin/detail/index.tsx(158,12): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/userAdmin/detail/index.tsx(158,26): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/userAdmin/detail/index.tsx(158,44): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/userAdmin/detail/index.tsx(158,58): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(158,40): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(158,54): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(170,23): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(170,37): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(171,25): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(171,39): error TS2551: Property 'Name' does not exist on type 'User'. Did you mean 'name'?
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(196,58): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/admin/userAdmin/modal/pending-review/index.tsx(196,72): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/components/shared/components/app-upload.tsx(53,51): error TS2339: Property 'token' does not exist on type 'User'.
+src/lib/components/shared/components/app-upload.tsx(54,33): error TS2339: Property 'token' does not exist on type 'User'.
+src/lib/components/shared/components/video-upload.tsx(45,53): error TS2339: Property 'token' does not exist on type 'User'.
+src/lib/components/shared/components/video-upload.tsx(46,35): error TS2339: Property 'token' does not exist on type 'User'.
+src/lib/components/shared/MyFormItem/UploadItem/index.tsx(174,53): error TS2339: Property 'token' does not exist on type 'User'.
+src/lib/components/shared/MyFormItem/UploadItem/index.tsx(175,35): error TS2339: Property 'token' does not exist on type 'User'.
+src/lib/components/shared/MySelect/UserAdmin/UserAdminSelect.tsx(52,47): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/components/shared/MySelect/UserAdmin/UserAdminSelect.tsx(52,61): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/pages/config/document/index.tsx(119,44): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/pages/property/prop-detail/components/contact-section.tsx(25,23): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/property/prop-detail/components/contact-section.tsx(25,37): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/pages/property/prop-detail/components/contact-section.tsx(26,7): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/property/prop-detail/components/contact-section.tsx(26,21): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/pages/property/prop-detail/components/contact-section.tsx(28,42): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/property/prop-detail/components/contact-section.tsx(28,56): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/pages/property/prop-detail/components/contact-section.tsx(28,60): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/property/prop-detail/components/contact-section.tsx(28,74): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/pages/rule/index.tsx(65,24): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/rule/index.tsx(65,38): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/pages/rule/index.tsx(75,25): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/rule/index.tsx(75,39): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/lib/pages/userAdmin/detail/index.tsx(154,17): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/userAdmin/detail/index.tsx(154,31): error TS2551: Property 'Id' does not exist on type 'User'. Did you mean 'id'?
+src/lib/pages/userAdmin/detail/index.tsx(154,49): error TS18048: 'session.user' is possibly 'undefined'.
+src/lib/pages/userAdmin/detail/index.tsx(154,63): error TS2339: Property 'RoleId' does not exist on type 'User'.
+src/middleware.ts(4,16): error TS2349: This expression is not callable.
+  Type 'typeof import("next-auth")' has no call signatures.
+src/services/api/api_config.ts(54,24): error TS2339: Property 'MustChangePassword' does not exist on type 'User'.
+src/services/auth/auth.config.ts(1,15): error TS2305: Module '"next-auth"' has no exported member 'NextAuthConfig'.
+src/services/auth/auth.config.ts(9,18): error TS7031: Binding element 'auth' implicitly has an 'any' type.
+src/services/auth/auth.config.ts(9,35): error TS7031: Binding element 'nextUrl' implicitly has an 'any' type.
+src/services/auth/auth.config.ts(15,17): error TS7031: Binding element 'token' implicitly has an 'any' type.
+src/services/auth/auth.config.ts(15,24): error TS7031: Binding element 'user' implicitly has an 'any' type.
+src/services/auth/auth.ts(6,10): error TS2305: Module '"next-auth"' has no exported member 'CredentialsSignin'.
+src/services/auth/auth.ts(27,52): error TS2349: This expression is not callable.
+  Type 'typeof import("next-auth")' has no call signatures.
+src/services/auth/auth.ts(100,11): error TS7006: Parameter 'code' implicitly has an 'any' type.
+src/services/auth/auth.ts(100,17): error TS7019: Rest parameter 'message' implicitly has an 'any[]' type.
+src/services/auth/auth.ts(103,10): error TS7006: Parameter 'code' implicitly has an 'any' type.
+src/services/auth/auth.ts(103,16): error TS7019: Rest parameter 'message' implicitly has an 'any[]' type.
+src/services/auth/auth.ts(106,11): error TS7006: Parameter 'code' implicitly has an 'any' type.
+src/services/auth/auth.ts(106,17): error TS7019: Rest parameter 'message' implicitly has an 'any[]' type.

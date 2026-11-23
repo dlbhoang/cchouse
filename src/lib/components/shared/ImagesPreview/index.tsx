@@ -75,7 +75,7 @@ const ImagesPreview = ({
       hide(); // close loading
       setDownload(false);
       message.success("Tải xuống thành công!");
-    } catch (err) {
+    } catch (_err) {
       setDownload(false);
       hide(); // close loading
     }

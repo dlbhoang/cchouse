@@ -134,7 +134,7 @@ const TinyEditor = ({
         try {
           const next = value ?? "";
           if (next) editor.setContent(next);
-        } catch (e) {
+        } catch (_e) {
           // ignore
         }
       }}

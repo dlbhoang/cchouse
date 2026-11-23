@@ -54,15 +54,15 @@ const DistrictCbxField = ({
     "77": "Bà Rịa–Vũng Tàu cũ",
   };
 
-  const options = districts
+  const options = (Array.isArray(districts) ? districts : [])
     .filter((e) => Number(e.ProvinceId) === Number(provinceId))
     .map((e) => ({
       label: e.Name,
       origin: showLegacyOrigin
-        ? legacyOriginByProvinceCode[e.RefKey.match(/^LEGACY2024-(\d+)-/)?.[1] ?? ""]
+        ? legacyOriginByProvinceCode[(e.RefKey ?? "").match(/^LEGACY2024-(\d+)-/)?.[1] ?? ""]
         : undefined,
       displayLabel: showLegacyOrigin
-        ? `${e.Name} — ${legacyOriginByProvinceCode[e.RefKey.match(/^LEGACY2024-(\d+)-/)?.[1] ?? ""] ?? "địa giới cũ"}`
+        ? `${e.Name} — ${legacyOriginByProvinceCode[(e.RefKey ?? "").match(/^LEGACY2024-(\d+)-/)?.[1] ?? ""] ?? "địa giới cũ"}`
         : e.Name,
       value: e.Id,
     }));

@@ -1,0 +1,1181 @@
+src/app/admin/apartment/page.tsx:19:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━
+
+  ! This variable sParams is unused.
+  
+    18 │ export default async function Page({ searchParams }: Props) {
+  > 19 │   const sParams = await searchParams;
+       │         ^^^^^^^
+    20 │ 
+    21 │   return (
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend sParams with an underscore.
+  
+    17 17 │   
+    18 18 │   export default async function Page({ searchParams }: Props) {
+    19    │ - ··const·sParams·=·await·searchParams;
+       19 │ + ··const·_sParams·=·await·searchParams;
+    20 20 │   
+    21 21 │     return (
+  
+
+src/components/layouts/app-sidebar/nav-main.tsx:35:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable userEmail is unused.
+  
+    34 │   const userRoleId = session?.user.RoleId || 0;
+  > 35 │   const userEmail = session?.user.Email ?? null;
+       │         ^^^^^^^^^
+    36 │   const filteredNavigationData = filterNavigationByRole(items, userRoleId);
+    37 │ 
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend userEmail with an underscore.
+  
+     33  33 │   
+     34  34 │     const userRoleId = session?.user.RoleId || 0;
+     35     │ - ··const·userEmail·=·session?.user.Email·??·null;
+         35 │ + ··const·_userEmail·=·session?.user.Email·??·null;
+     36  36 │     const filteredNavigationData = filterNavigationByRole(items, userRoleId);
+     37  37 │   
+  
+
+src/components/layouts/top-navigation.tsx:107:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable documentItem is unused.
+  
+    106 │ // Add document as a standalone item
+  > 107 │ const documentItem: NavigationItem = {
+        │       ^^^^^^^^^^^^
+    108 │   title: "Văn bản",
+    109 │   url: AppRoutes.document.url,
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend documentItem with an underscore.
+  
+    105 105 │   
+    106 106 │   // Add document as a standalone item
+    107     │ - const·documentItem:·NavigationItem·=·{
+        107 │ + const·_documentItem:·NavigationItem·=·{
+    108 108 │     title: "Văn bản",
+    109 109 │     url: AppRoutes.document.url,
+  
+
+src/components/layouts/top-navigation.tsx:115:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable router is unused.
+  
+    114 │ export function TopNavigation({ designTheme = false }: { designTheme?: boolean }) {
+  > 115 │   const router = useRouter();
+        │         ^^^^^^
+    116 │   const currentPath = useCurrentPath();
+    117 │   const { data: session } = useSession();
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend router with an underscore.
+  
+    113 113 │   
+    114 114 │   export function TopNavigation({ designTheme = false }: { designTheme?: boolean }) {
+    115     │ - ··const·router·=·useRouter();
+        115 │ + ··const·_router·=·useRouter();
+    116 116 │     const currentPath = useCurrentPath();
+    117 117 │     const { data: session } = useSession();
+  
+
+src/components/ui/form-field/street-cbx.tsx:40:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable loading is unused.
+  
+    38 │   const label = "Đường";
+    39 │ 
+  > 40 │   const [loading, setLoading] = useState(false);
+       │          ^^^^^^^
+    41 │   const [data, setData] = useState<IStreetResponse[]>([]);
+    42 │   const form = useFormContext();
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend loading with an underscore.
+  
+     38  38 │     const label = "Đường";
+     39  39 │   
+     40     │ - ··const·[loading,·setLoading]·=·useState(false);
+         40 │ + ··const·[_loading,·setLoading]·=·useState(false);
+     41  41 │     const [data, setData] = useState<IStreetResponse[]>([]);
+     42  42 │     const form = useFormContext();
+  
+
+src/components/ui/form-field/ward-cbx.tsx:47:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable loading is unused.
+  
+    45 │   const label = "Phường / Xã";
+    46 │ 
+  > 47 │   const [loading, setLoading] = useState(false);
+       │          ^^^^^^^
+    48 │   const [open, setOpen] = useState(false);
+    49 │   const [data, setData] = useState<IWardResponse[]>([]);
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend loading with an underscore.
+  
+     45  45 │     const label = "Phường / Xã";
+     46  46 │   
+     47     │ - ··const·[loading,·setLoading]·=·useState(false);
+         47 │ + ··const·[_loading,·setLoading]·=·useState(false);
+     48  48 │     const [open, setOpen] = useState(false);
+     49  49 │     const [data, setData] = useState<IWardResponse[]>([]);
+  
+
+src/lib/components/admin/apartment-unit/form/index.tsx:41:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable colFullResponsive is unused.
+  
+    39 │ const hiddenFields = ["Id", "Status", "Video", ["Contact", "Id"]];
+    40 │ 
+  > 41 │ const colFullResponsive = {
+       │       ^^^^^^^^^^^^^^^^^
+    42 │   xs: 24,
+    43 │   lg: 12,
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend colFullResponsive with an underscore.
+  
+     39  39 │   const hiddenFields = ["Id", "Status", "Video", ["Contact", "Id"]];
+     40  40 │   
+     41     │ - const·colFullResponsive·=·{
+         41 │ + const·_colFullResponsive·=·{
+     42  42 │     xs: 24,
+     43  43 │     lg: 12,
+  
+
+src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx:32:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable showMap is unused.
+  
+    30 │   const router = useRouter();
+    31 │   const { data: session } = useSession();
+  > 32 │   const [showMap, setShowMap] = useState<boolean>(false);
+       │          ^^^^^^^
+    33 │ 
+    34 │   const [propOfCustomer, setPropOfCustomer] = useState<
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend showMap with an underscore.
+  
+     30  30 │     const router = useRouter();
+     31  31 │     const { data: session } = useSession();
+     32     │ - ··const·[showMap,·setShowMap]·=·useState<boolean>(false);
+         32 │ + ··const·[_showMap,·setShowMap]·=·useState<boolean>(false);
+     33  33 │   
+     34  34 │     const [propOfCustomer, setPropOfCustomer] = useState<
+  
+
+src/lib/components/admin/apartment-unit/modal/contactModal/index.tsx:32:19 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable setShowMap is unused.
+  
+    30 │   const router = useRouter();
+    31 │   const { data: session } = useSession();
+  > 32 │   const [showMap, setShowMap] = useState<boolean>(false);
+       │                   ^^^^^^^^^^
+    33 │ 
+    34 │   const [propOfCustomer, setPropOfCustomer] = useState<
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend setShowMap with an underscore.
+  
+     30  30 │     const router = useRouter();
+     31  31 │     const { data: session } = useSession();
+     32     │ - ··const·[showMap,·setShowMap]·=·useState<boolean>(false);
+         32 │ + ··const·[showMap,·_setShowMap]·=·useState<boolean>(false);
+     33  33 │   
+     34  34 │     const [propOfCustomer, setPropOfCustomer] = useState<
+  
+
+src/lib/components/admin/apartment-unit/modal/preview/index.tsx:28:11 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable propType is unused.
+  
+    26 │   console.log("model preview", model);
+    27 │ 
+  > 28 │   const { propType, enumList } = useAdminContext();
+       │           ^^^^^^^^
+    29 │   const { PaymentMethod, ApartmentUnitType } = enumList;
+    30 │   const [apartment, setApartment] = useState<IApartmentResponse>();
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/branch/table/index.tsx:22:42 lint/correctness/noUnusedVariables ━━━━━━━━━━━
+
+  ! This variable mutate is unused.
+  
+    20 │ }: Props) => {
+    21 │   // const router = useRouter();
+  > 22 │   const { data, isLoading, isValidating, mutate } =
+       │                                          ^^^^^^
+    23 │     branchApi.useGet(searchOptions);
+    24 │ 
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/customer/filter/index.tsx:45:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable priceFrm is unused.
+  
+    43 │   const [form] = Form.useForm<ICustomerOpts>();
+    44 │   const [counts, setCounts] = useState<ICountItem[]>([]);
+  > 45 │   const priceFrm = Form.useWatch('PriceFrm', form);
+       │         ^^^^^^^^
+    46 │   const priceTo = Form.useWatch('PriceTo', form);
+    47 │   const createdBy = Form.useWatch('CreatedBy', form);
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend priceFrm with an underscore.
+  
+     43  43 │     const [form] = Form.useForm<ICustomerOpts>();
+     44  44 │     const [counts, setCounts] = useState<ICountItem[]>([]);
+     45     │ - ··const·priceFrm·=·Form.useWatch('PriceFrm',·form);
+         45 │ + ··const·_priceFrm·=·Form.useWatch('PriceFrm',·form);
+     46  46 │     const priceTo = Form.useWatch('PriceTo', form);
+     47  47 │     const createdBy = Form.useWatch('CreatedBy', form);
+  
+
+src/lib/components/admin/customer/filter/index.tsx:46:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable priceTo is unused.
+  
+    44 │   const [counts, setCounts] = useState<ICountItem[]>([]);
+    45 │   const priceFrm = Form.useWatch('PriceFrm', form);
+  > 46 │   const priceTo = Form.useWatch('PriceTo', form);
+       │         ^^^^^^^
+    47 │   const createdBy = Form.useWatch('CreatedBy', form);
+    48 │   const wardIds = Form.useWatch('WardIds', form);
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend priceTo with an underscore.
+  
+     44  44 │     const [counts, setCounts] = useState<ICountItem[]>([]);
+     45  45 │     const priceFrm = Form.useWatch('PriceFrm', form);
+     46     │ - ··const·priceTo·=·Form.useWatch('PriceTo',·form);
+         46 │ + ··const·_priceTo·=·Form.useWatch('PriceTo',·form);
+     47  47 │     const createdBy = Form.useWatch('CreatedBy', form);
+     48  48 │     const wardIds = Form.useWatch('WardIds', form);
+  
+
+src/lib/components/admin/customer/form/requirement/index.tsx:24:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable labelCheckbox is unused.
+  
+    22 │ };
+    23 │ 
+  > 24 │ const labelCheckbox = "Chi tiết";
+       │       ^^^^^^^^^^^^^
+    25 │ 
+    26 │ const RequirementCard = ({ title, form, itemName }: Props) => {
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend labelCheckbox with an underscore.
+  
+     22  22 │   };
+     23  23 │   
+     24     │ - const·labelCheckbox·=·"Chi·tiết";
+         24 │ + const·_labelCheckbox·=·"Chi·tiết";
+     25  25 │   
+     26  26 │   const RequirementCard = ({ title, form, itemName }: Props) => {
+  
+
+src/lib/components/admin/customer/form/requirement/index.tsx:36:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable switchValueToBoolean is unused.
+  
+    34 │     hasArea ? [{ required: true }] : undefined;
+    35 │ 
+  > 36 │   const switchValueToBoolean = (val?: number) => {
+       │         ^^^^^^^^^^^^^^^^^^^^
+    37 │     return { checked: val !== undefined && val !== 2 };
+    38 │   };
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend switchValueToBoolean with an underscore.
+  
+     34  34 │       hasArea ? [{ required: true }] : undefined;
+     35  35 │   
+     36     │ - ··const·switchValueToBoolean·=·(val?:·number)·=>·{
+         36 │ + ··const·_switchValueToBoolean·=·(val?:·number)·=>·{
+     37  37 │       return { checked: val !== undefined && val !== 2 };
+     38  38 │     };
+  
+
+src/lib/components/admin/customer/form/requirement/index.tsx:40:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable switchBooleanToValue is unused.
+  
+    38 │   };
+    39 │ 
+  > 40 │   const switchBooleanToValue = (checked: boolean) => {
+       │         ^^^^^^^^^^^^^^^^^^^^
+    41 │     if (itemName === "BuyingRequirement") return checked ? 0 : 2;
+    42 │     return checked ? 1 : 2;
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend switchBooleanToValue with an underscore.
+  
+     38  38 │     };
+     39  39 │   
+     40     │ - ··const·switchBooleanToValue·=·(checked:·boolean)·=>·{
+         40 │ + ··const·_switchBooleanToValue·=·(checked:·boolean)·=>·{
+     41  41 │       if (itemName === "BuyingRequirement") return checked ? 0 : 2;
+     42  42 │       return checked ? 1 : 2;
+  
+
+src/lib/components/admin/feed/form/addEdit/index.tsx:94:11 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable smallScreen is unused.
+  
+    92 │ };
+    93 │ const AddEditForm = ({ model }: Props) => {
+  > 94 │   const { smallScreen } = useAdminContext();
+       │           ^^^^^^^^^^^
+    95 │   const router = useRouter();
+    96 │   const isUpdate = (model?.Id ?? 0) > 0;
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/news/form/index.tsx:49:18 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable e is unused.
+  
+    47 │           const u = new URL(a.href);
+    48 │           return u.hostname.replace(/^www\./, "");
+  > 49 │         } catch (e) {
+       │                  ^
+    50 │           return txt;
+    51 │         }
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend e with an underscore.
+  
+     47  47 │             const u = new URL(a.href);
+     48  48 │             return u.hostname.replace(/^www\./, "");
+     49     │ - ········}·catch·(e)·{
+         49 │ + ········}·catch·(_e)·{
+     50  50 │             return txt;
+     51  51 │           }
+  
+
+src/lib/components/admin/news/form/index.tsx:60:16 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable e is unused.
+  
+    58 │         const u = new URL(last.href);
+    59 │         return u.hostname.replace(/^www\./, "");
+  > 60 │       } catch (e) {
+       │                ^
+    61 │         const txt = (anchors[anchors.length - 1].textContent || "").trim();
+    62 │         if (txt) return txt;
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend e with an underscore.
+  
+     58  58 │           const u = new URL(last.href);
+     59  59 │           return u.hostname.replace(/^www\./, "");
+     60     │ - ······}·catch·(e)·{
+         60 │ + ······}·catch·(_e)·{
+     61  61 │           const txt = (anchors[anchors.length - 1].textContent || "").trim();
+     62  62 │           if (txt) return txt;
+  
+
+src/lib/components/admin/news/form/index.tsx:66:12 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable e is unused.
+  
+    64 │     }
+    65 │     return undefined;
+  > 66 │   } catch (e) {
+       │            ^
+    67 │     return undefined;
+    68 │   }
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend e with an underscore.
+  
+     64  64 │       }
+     65  65 │       return undefined;
+     66     │ - ··}·catch·(e)·{
+         66 │ + ··}·catch·(_e)·{
+     67  67 │       return undefined;
+     68  68 │     }
+  
+
+src/lib/components/admin/news/form/index.tsx:95:12 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable e is unused.
+  
+    93 │     const content = doc.body.innerHTML.trim();
+    94 │     return { title, summary, source, content: content || undefined };
+  > 95 │   } catch (e) {
+       │            ^
+    96 │     return { title: undefined, summary: undefined, source: undefined, content: undefined };
+    97 │   }
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend e with an underscore.
+  
+     93  93 │       const content = doc.body.innerHTML.trim();
+     94  94 │       return { title, summary, source, content: content || undefined };
+     95     │ - ··}·catch·(e)·{
+         95 │ + ··}·catch·(_e)·{
+     96  96 │       return { title: undefined, summary: undefined, source: undefined, content: undefined };
+     97  97 │     }
+  
+
+src/lib/components/admin/news/form/index.tsx:157:16 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable e is unused.
+  
+    155 │           }));
+    156 │         }
+  > 157 │       } catch (e) {
+        │                ^
+    158 │         // ignore fetch errors — leave existing values
+    159 │       }
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend e with an underscore.
+  
+    155 155 │             }));
+    156 156 │           }
+    157     │ - ······}·catch·(e)·{
+        157 │ + ······}·catch·(_e)·{
+    158 158 │           // ignore fetch errors — leave existing values
+    159 159 │         }
+  
+
+src/lib/components/admin/news/form/index.tsx:312:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable handleRemoveThumbnail is unused.
+  
+    310 │   };
+    311 │ 
+  > 312 │   const handleRemoveThumbnail = () => {
+        │         ^^^^^^^^^^^^^^^^^^^^^
+    313 │     setValues((prev) => ({ ...prev, Thumbnail: [] }));
+    314 │   };
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend handleRemoveThumbnail with an underscore.
+  
+    310 310 │     };
+    311 311 │   
+    312     │ - ··const·handleRemoveThumbnail·=·()·=>·{
+        312 │ + ··const·_handleRemoveThumbnail·=·()·=>·{
+    313 313 │       setValues((prev) => ({ ...prev, Thumbnail: [] }));
+    314 314 │     };
+  
+
+src/lib/components/admin/news/listing/index.tsx:101:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable handleInputConfirm is unused.
+  
+     99 │   };
+    100 │ 
+  > 101 │   const handleInputConfirm = async () => {
+        │         ^^^^^^^^^^^^^^^^^^
+    102 │     if (newTag?.trim()) {
+    103 │       await newsTypeApi.add({ Name: newTag.trim() });
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend handleInputConfirm with an underscore.
+  
+     99  99 │     };
+    100 100 │   
+    101     │ - ··const·handleInputConfirm·=·async·()·=>·{
+        101 │ + ··const·_handleInputConfirm·=·async·()·=>·{
+    102 102 │       if (newTag?.trim()) {
+    103 103 │         await newsTypeApi.add({ Name: newTag.trim() });
+  
+
+src/lib/components/admin/news/newItem/index.tsx:11:9 lint/correctness/noUnusedVariables ━━━━━━━━━━━━
+
+  ! This variable Meta is unused.
+  
+    10 │ const { Text, Paragraph } = Typography;
+  > 11 │ const { Meta } = Card;
+       │         ^^^^
+    12 │ type Props = {
+    13 │   item: INewsResponse;
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/admin/property/filter/SearchSuggestionDropdown.tsx:93:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable HEADER_TOP is unused.
+  
+    92 │   const ROW_H = 32;
+  > 93 │   const HEADER_TOP = 24;
+       │         ^^^^^^^^^^
+    94 │   const LIST_TOP = 53;
+    95 │ 
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend HEADER_TOP with an underscore.
+  
+     91  91 │   
+     92  92 │     const ROW_H = 32;
+     93     │ - ··const·HEADER_TOP·=·24;
+         93 │ + ··const·_HEADER_TOP·=·24;
+     94  94 │     const LIST_TOP = 53;
+     95  95 │   
+  
+
+src/lib/components/admin/property/filter/SearchSuggestionDropdown.tsx:94:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable LIST_TOP is unused.
+  
+    92 │   const ROW_H = 32;
+    93 │   const HEADER_TOP = 24;
+  > 94 │   const LIST_TOP = 53;
+       │         ^^^^^^^^
+    95 │ 
+    96 │   return (
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend LIST_TOP with an underscore.
+  
+     92  92 │     const ROW_H = 32;
+     93  93 │     const HEADER_TOP = 24;
+     94     │ - ··const·LIST_TOP·=·53;
+         94 │ + ··const·_LIST_TOP·=·53;
+     95  95 │   
+     96  96 │     return (
+  
+
+src/lib/components/admin/property/form/propAddEdit/firstZone/index.tsx:30:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable colFullResponsive is unused.
+  
+    28 │ };
+    29 │ 
+  > 30 │ const colFullResponsive = {
+       │       ^^^^^^^^^^^^^^^^^
+    31 │   xs: 24,
+    32 │   lg: 12,
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend colFullResponsive with an underscore.
+  
+     28  28 │   };
+     29  29 │   
+     30     │ - const·colFullResponsive·=·{
+         30 │ + const·_colFullResponsive·=·{
+     31  31 │     xs: 24,
+     32  32 │     lg: 12,
+  
+
+src/lib/components/admin/property/form/propAddEdit/firstZone/index.tsx:35:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable colQuickResponsive is unused.
+  
+    33 │ };
+    34 │ 
+  > 35 │ const colQuickResponsive = {
+       │       ^^^^^^^^^^^^^^^^^^
+    36 │   xs: 24,
+    37 │ };
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend colQuickResponsive with an underscore.
+  
+     33  33 │   };
+     34  34 │   
+     35     │ - const·colQuickResponsive·=·{
+         35 │ + const·_colQuickResponsive·=·{
+     36  36 │     xs: 24,
+     37  37 │   };
+  
+
+src/lib/components/admin/property/form/propAddEdit/firstZone/index.tsx:40:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable router is unused.
+  
+    39 │ const FirstZone = ({ model, form, isFull }: Props) => {
+  > 40 │   const router = useRouter();
+       │         ^^^^^^
+    41 │   const LocationWatch = Form.useWatch(["PropAddress", "Location"], form);
+    42 │ 
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend router with an underscore.
+  
+     38  38 │   
+     39  39 │   const FirstZone = ({ model, form, isFull }: Props) => {
+     40     │ - ··const·router·=·useRouter();
+         40 │ + ··const·_router·=·useRouter();
+     41  41 │     const LocationWatch = Form.useWatch(["PropAddress", "Location"], form);
+     42  42 │   
+  
+
+src/lib/components/admin/property/table/limit-access-table/subCols.tsx:9:9 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable Text is unused.
+  
+     7 │ import { IPropCheckAddress } from "@/lib/interfaces/Property/IProp";
+     8 │ 
+   > 9 │ const { Text } = Typography;
+       │         ^^^^
+    10 │ 
+    11 │ export const subCols: ColumnsType<IPropCheckAddress> = [
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/components/shared/ImagesPreview/index.tsx:78:14 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable err is unused.
+  
+    76 │       setDownload(false);
+    77 │       message.success("Tải xuống thành công!");
+  > 78 │     } catch (err) {
+       │              ^^^
+    79 │       setDownload(false);
+    80 │       hide(); // close loading
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend err with an underscore.
+  
+     76  76 │         setDownload(false);
+     77  77 │         message.success("Tải xuống thành công!");
+     78     │ - ····}·catch·(err)·{
+         78 │ + ····}·catch·(_err)·{
+     79  79 │         setDownload(false);
+     80  80 │         hide(); // close loading
+  
+
+src/lib/components/shared/NotiBase/index.tsx:106:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This function NotiItem is unused.
+  
+    104 │ };
+    105 │ 
+  > 106 │ function NotiItem({ opts, onClose }: { opts: NotiOptions; onClose: () => void }) {
+        │          ^^^^^^^^
+    107 │   const duration = opts.duration ?? 4000;
+    108 │   const c = palette[opts.type];
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend NotiItem with an underscore.
+  
+    104 104 │   };
+    105 105 │   
+    106     │ - function·NotiItem({·opts,·onClose·}:·{·opts:·NotiOptions;·onClose:·()·=>·void·})·{
+        106 │ + function·_NotiItem({·opts,·onClose·}:·{·opts:·NotiOptions;·onClose:·()·=>·void·})·{
+    107 107 │     const duration = opts.duration ?? 4000;
+    108 108 │     const c = palette[opts.type];
+  
+
+src/lib/components/shared/NotiBase/index.tsx:18:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This function getContainer is unused.
+  
+    16 │ let activeRoot: ReturnType<typeof createRoot> | null = null;
+    17 │ 
+  > 18 │ function getContainer() {
+       │          ^^^^^^^^^^^^
+    19 │   if (!container) {
+    20 │     container = document.createElement('div');
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend getContainer with an underscore.
+  
+     16  16 │   let activeRoot: ReturnType<typeof createRoot> | null = null;
+     17  17 │   
+     18     │ - function·getContainer()·{
+         18 │ + function·_getContainer()·{
+     19  19 │     if (!container) {
+     20  20 │       container = document.createElement('div');
+  
+
+src/lib/components/shared/RightFixed/index.tsx:12:23 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable setIsScrolling is unused.
+  
+    10 │   visible: boolean;
+    11 │ }) => {
+  > 12 │   const [isScrolling, setIsScrolling] = useState(false);
+       │                       ^^^^^^^^^^^^^^
+    13 │   const [scrollTop, setScrollTop] = useState(0);
+    14 │   const screens = useBreakpoint();
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend setIsScrolling with an underscore.
+  
+    10 10 │     visible: boolean;
+    11 11 │   }) => {
+    12    │ - ··const·[isScrolling,·setIsScrolling]·=·useState(false);
+       12 │ + ··const·[isScrolling,·_setIsScrolling]·=·useState(false);
+    13 13 │     const [scrollTop, setScrollTop] = useState(0);
+    14 14 │     const screens = useBreakpoint();
+  
+
+src/lib/components/shared/RightFixed/index.tsx:13:21 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable setScrollTop is unused.
+  
+    11 │ }) => {
+    12 │   const [isScrolling, setIsScrolling] = useState(false);
+  > 13 │   const [scrollTop, setScrollTop] = useState(0);
+       │                     ^^^^^^^^^^^^
+    14 │   const screens = useBreakpoint();
+    15 │   let timerId: NodeJS.Timeout;
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend setScrollTop with an underscore.
+  
+    11 11 │   }) => {
+    12 12 │     const [isScrolling, setIsScrolling] = useState(false);
+    13    │ - ··const·[scrollTop,·setScrollTop]·=·useState(0);
+       13 │ + ··const·[scrollTop,·_setScrollTop]·=·useState(0);
+    14 14 │     const screens = useBreakpoint();
+    15 15 │     let timerId: NodeJS.Timeout;
+  
+
+src/lib/components/shared/RightFixed/index.tsx:15:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable timerId is unused.
+  
+    13 │   const [scrollTop, setScrollTop] = useState(0);
+    14 │   const screens = useBreakpoint();
+  > 15 │   let timerId: NodeJS.Timeout;
+       │       ^^^^^^^
+    16 │   // const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    17 │   //   setScrollTop(event.currentTarget.scrollTop);
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend timerId with an underscore.
+  
+    13 13 │     const [scrollTop, setScrollTop] = useState(0);
+    14 14 │     const screens = useBreakpoint();
+    15    │ - ··let·timerId:·NodeJS.Timeout;
+       15 │ + ··let·_timerId:·NodeJS.Timeout;
+    16 16 │     // const handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    17 17 │     //   setScrollTop(event.currentTarget.scrollTop);
+  
+
+src/lib/components/shared/tiny-editor/index.tsx:137:18 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable e is unused.
+  
+    135 │           const next = value ?? "";
+    136 │           if (next) editor.setContent(next);
+  > 137 │         } catch (e) {
+        │                  ^
+    138 │           // ignore
+    139 │         }
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend e with an underscore.
+  
+    135 135 │             const next = value ?? "";
+    136 136 │             if (next) editor.setContent(next);
+    137     │ - ········}·catch·(e)·{
+        137 │ + ········}·catch·(_e)·{
+    138 138 │             // ignore
+    139 139 │           }
+  
+
+src/lib/pages/apartment/detail/index.tsx:12:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable loading is unused.
+  
+    10 │ };
+    11 │ const ApartmentDetail = ({ id }: Props) => {
+  > 12 │   const [loading, setLoading] = useState(false);
+       │          ^^^^^^^
+    13 │   const [data, setData] = useState<IApartmentResponse>();
+    14 │ 
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend loading with an underscore.
+  
+    10 10 │   };
+    11 11 │   const ApartmentDetail = ({ id }: Props) => {
+    12    │ - ··const·[loading,·setLoading]·=·useState(false);
+       12 │ + ··const·[_loading,·setLoading]·=·useState(false);
+    13 13 │     const [data, setData] = useState<IApartmentResponse>();
+    14 14 │   
+  
+
+src/lib/pages/hidden/image-cloud/table/index.tsx:28:17 lint/correctness/noUnusedVariables ━━━━━━━━━━
+
+  ! This variable session is unused.
+  
+    26 │   handleMutate,
+    27 │ }: Props) => {
+  > 28 │   const { data: session } = useSession();
+       │                 ^^^^^^^
+    29 │ 
+    30 │   return (
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+
+src/lib/pages/login/login-form/index.tsx:187:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━
+
+  ! This variable openTermsModal is unused.
+  
+    185 │   };
+    186 │ 
+  > 187 │   const openTermsModal = () =>
+        │         ^^^^^^^^^^^^^^
+    188 │     LucideModal.info({
+    189 │       icon: null,
+  
+  i Unused variables are often the result of an incomplete refactoring, typos, or other sources of bugs.
+  
+  i Unsafe fix: If this is intentional, prepend openTermsModal with an underscore.
+  
+    185 185 │     };
+    186 186 │   
+    187     │ - ··const·openTermsModal·=·()·=>
+        187 │ + ··const·_openTermsModal·=·()·=>
+    188 188 │       LucideModal.info({
+    189 189 │         icon: null,
+  
+
+src/app/admin/config/notifications/[id]/page.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × This import is unused.
+  
+    1 │ import type { Metadata } from "next";
+  > 2 │ import { AppRoutes } from "@/lib/core/configs/appRoutes";
+      │        ^^^^^^^^^^^^^
+    3 │ import NotiDetailPage from "@/lib/pages/config/notifications/detail";
+    4 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import type { Metadata } from "next";
+     2    │ - import·{·AppRoutes·}·from·"@/lib/core/configs/appRoutes";
+     3  2 │   import NotiDetailPage from "@/lib/pages/config/notifications/detail";
+     4  3 │   
+  
+
+src/lib/components/admin/feed/form/addEdit/index.tsx:6:9 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × Several of these imports are unused.
+  
+    4 │ import {Select as LucideSelect, DatePicker as LucideDatePicker } from "@/lib/components/antd-lucide";
+    5 │ 
+  > 6 │ import {Alert, Button, Card, Checkbox, Col, Divider, Form, Image, Input, Radio, Row, Segmented, Space, Tag, Typography, UploadFile} from "antd";
+      │         ^^^^^
+    7 │ import dayjs from "dayjs";
+    8 │ import { ImageIcon, Eye } from "lucide-react";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    6 │ import·{Alert,·Button,·Card,·Checkbox,·Col,·Divider,·Form,·Image,·Input,·Radio,·Row,·Segmented,·Space,·Tag,·Typography,·UploadFile}·from·"antd";
+      │         -------                                                                                                                                 
+
+src/lib/components/admin/happyBirthday/index.tsx:4:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × This import is unused.
+  
+    2 │ import {Result as LucideResult } from "@/lib/components/antd-lucide";
+    3 │ 
+  > 4 │ import {Modal} from "antd";
+      │        ^^^^^^^
+    5 │ import dayjs from "dayjs";
+    6 │ import { CakeIcon, Gift } from "lucide-react";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+     2    │ - import·{Result·as·LucideResult·}·from·"@/lib/components/antd-lucide";
+        2 │ + import·{Result·as·LucideResult·}·from·"@/lib/components/antd-lucide";
+     3  3 │   
+     4    │ - import·{Modal}·from·"antd";
+     5  4 │   import dayjs from "dayjs";
+     6  5 │   import { CakeIcon, Gift } from "lucide-react";
+  
+
+src/lib/components/admin/news/filter/FloatingField.tsx:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × These imports are unused.
+  
+  > 1 │ import React, { type ReactNode } from "react";
+      │        ^^^^^
+    2 │ 
+    3 │ export const FloatingField = ({
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·React,·{·type·ReactNode·}·from·"react";
+      │        -------                                
+
+src/lib/components/admin/news/preview/index.tsx:2:24 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × Several of these imports are unused.
+  
+    1 │ import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+  > 2 │ import {Button, Space, Divider, Typography} from "antd";
+      │                        ^^^^^^^
+    3 │ import { Eye, X } from "lucide-react";
+    4 │ import { useRouter } from "next/navigation";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    2 │ import·{Button,·Space,·Divider,·Typography}·from·"antd";
+      │                        ---------                        
+
+src/lib/components/admin/news/table/columns.tsx:5:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × This import is unused.
+  
+    3 │ import { EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
+    4 │ import Link from "next/link";
+  > 5 │ import { useState } from "react";
+      │        ^^^^^^^^^^^^
+    6 │ import NewsConfirmButton from "../confirm";
+    7 │ import { AppRoutes } from "@/lib/core/configs/appRoutes";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+      3   3 │   import { EyeIcon, EyeOffIcon, SquarePenIcon, Trash2Icon } from "lucide-react";
+      4   4 │   import Link from "next/link";
+      5     │ - import·{·useState·}·from·"react";
+      6   5 │   import NewsConfirmButton from "../confirm";
+      7   6 │   import { AppRoutes } from "@/lib/core/configs/appRoutes";
+  
+
+src/lib/components/admin/userWebsite/table/columns.tsx:4:10 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × Several of these imports are unused.
+  
+    2 │ import {Facebook } from "lucide-react";
+    3 │ 
+  > 4 │ import { Popconfirm, Space, Switch, Tag, Tooltip, Typography} from "antd";
+      │          ^^^^^^^^^^
+    5 │ import type { TagProps } from "antd/lib";
+    6 │ import type { ColumnsType } from "antd/lib/table";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    4 │ import·{·Popconfirm,·Space,·Switch,·Tag,·Tooltip,·Typography}·from·"antd";
+      │          ------------                                                     
+
+src/lib/components/shared/MyModal/UpgradeModal/index.tsx:3:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × This import is unused.
+  
+    1 │ import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+    2 │ import {Result as LucideResult } from "@/lib/components/antd-lucide";
+  > 3 │ import {Modal} from 'antd';
+      │        ^^^^^^^
+    4 │ 
+    5 │ export const openUpgradeModal = () =>
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+     2  2 │   import {Result as LucideResult } from "@/lib/components/antd-lucide";
+     3    │ - import·{Modal}·from·'antd';
+     4  3 │   
+     5  4 │   export const openUpgradeModal = () =>
+  
+
+src/lib/components/shared/MyModal/Video/index.tsx:4:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × This import is unused.
+  
+    2 │ import {Video } from "lucide-react";
+    3 │ 
+  > 4 │ import { Modal} from 'antd';
+      │        ^^^^^^^^
+    5 │ import ReactPlayer from 'react-player';
+    6 │ 
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Modal as LucideModal } from "@/lib/components/antd-lucide";
+     2    │ - import·{Video·}·from·"lucide-react";
+        2 │ + import·{Video·}·from·"lucide-react";
+     3  3 │   
+     4    │ - import·{·Modal}·from·'antd';
+     5  4 │   import ReactPlayer from 'react-player';
+     6  5 │   
+  
+
+src/lib/components/shared/TableBase/TableSkeleton.tsx:1:20 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × Several of these imports are unused.
+  
+  > 1 │ import { Skeleton, Space, Table } from "antd";
+      │                    ^^^^^
+    2 │ import type { ColumnsType } from "antd/es/table";
+    3 │ import styles from "./TableSkeleton.module.css";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·{·Skeleton,·Space,·Table·}·from·"antd";
+      │                    -------                    
+
+src/lib/components/shared/pagination/index.tsx:2:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━
+
+  × This import is unused.
+  
+    1 │ import { Pagination as LucidePagination } from "@/lib/components/antd-lucide";
+  > 2 │ import { Pagination } from "antd";
+      │        ^^^^^^^^^^^^^^
+    3 │ import { usePathname, useRouter, useSearchParams } from "next/navigation";
+    4 │ import { baseFilter } from "@/lib/core/configs/appConst";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     1  1 │   import { Pagination as LucidePagination } from "@/lib/components/antd-lucide";
+     2    │ - import·{·Pagination·}·from·"antd";
+     3  2 │   import { usePathname, useRouter, useSearchParams } from "next/navigation";
+     4  3 │   import { baseFilter } from "@/lib/core/configs/appConst";
+  
+
+src/lib/pages/config/news/add/index.tsx:5:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━
+
+  × This import is unused.
+  
+    3 │ import { useRouter } from "next/navigation";
+    4 │ import NewsForm from "@/lib/components/admin/news/form";
+  > 5 │ import { AppRoutes } from "@/lib/core/configs/appRoutes";
+      │        ^^^^^^^^^^^^^
+    6 │ 
+    7 │ const AddNewsPage = () => {
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+     3  3 │   import { useRouter } from "next/navigation";
+     4  4 │   import NewsForm from "@/lib/components/admin/news/form";
+     5    │ - import·{·AppRoutes·}·from·"@/lib/core/configs/appRoutes";
+     6  5 │   
+     7  6 │   const AddNewsPage = () => {
+  
+
+src/lib/pages/login/login-form/index.tsx:4:10 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━
+
+  × Several of these imports are unused.
+  
+    2 │ import {EyeOff, Eye } from "lucide-react";
+    3 │ // LoginForm.tsx
+  > 4 │ import { Modal, Typography, Flex, Input, Button, Checkbox} from "antd";
+      │          ^^^^^
+    5 │ 
+    6 │ import { getSession, signIn } from "next-auth/react";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    4 │ import·{·Modal,·Typography,·Flex,·Input,·Button,·Checkbox}·from·"antd";
+      │          -------                                                       
+
+src/lib/pages/rule/index.tsx:6:18 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Several of these imports are unused.
+  
+    4 │ import {Upload as LucideUpload } from "lucide-react";
+    5 │ import type { UploadFile, UploadProps} from "antd";
+  > 6 │ import { Button, Result, Upload } from "antd";
+      │                  ^^^^^^
+    7 │ import { useSession } from "next-auth/react";
+    8 │ import { useEffect, useState } from "react";
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    6 │ import·{·Button,·Result,·Upload·}·from·"antd";
+      │                  --------                     
+
+src/types/next-auth.d.ts:1:8 lint/correctness/noUnusedImports  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × This import is unused.
+  
+  > 1 │ import { IUserAdminResponse } from '@/services/api/userAdmin/IUserAdmin';
+      │        ^^^^^^^^^^^^^^^^^^^^^^
+    2 │ 
+    3 │ declare module 'next-auth' {
+  
+  i Unused imports might be the result of an incomplete refactoring.
+  
+  i Unsafe fix: Remove the unused imports.
+  
+    1 │ import·{·IUserAdminResponse·}·from·'@/services/api/userAdmin/IUserAdmin';
+      │ -------------------------------------------------------------------------
+
+Checked 713 files in 129ms. No fixes applied.
+Found 15 errors.
+Found 41 warnings.
+lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Some warnings were emitted while running checks.
+  
+

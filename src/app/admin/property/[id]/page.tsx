@@ -1,23 +1,10 @@
-import { redirect } from "next/navigation";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
-import { ETransType } from "@/lib/core/enum";
+import { notFound } from "next/navigation";
+import PropertyDetailPage from "@/lib/pages/property/prop-detail/detail-page";
 
-type Props = {
-  params: Promise<{ id: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
+type Props = { params: { id: string } };
 
-export default async function Page({ params, searchParams }: Props) {
-  const { id } = await params;
-  const sParams = await searchParams;
-  const transType = sParams.TransType
-    ? Number(sParams.TransType)
-    : ETransType.sell;
-
-  const query = new URLSearchParams({
-    TransType: String(transType),
-    openPropId: id,
-  });
-
-  redirect(`${AppRoutes.property.url}?${query.toString()}`);
+export default function Page({ params }: Props) {
+  const id = Number(params.id);
+  if (!Number.isSafeInteger(id) || id <= 0) notFound();
+  return <PropertyDetailPage id={id} />;
 }

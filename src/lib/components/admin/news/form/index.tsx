@@ -46,7 +46,7 @@ const extractSourceFromContent = (html?: string): string | undefined => {
         try {
           const u = new URL(a.href);
           return u.hostname.replace(/^www\./, "");
-        } catch (e) {
+        } catch (_e) {
           return txt;
         }
       }
@@ -57,13 +57,13 @@ const extractSourceFromContent = (html?: string): string | undefined => {
         const last = anchors[anchors.length - 1];
         const u = new URL(last.href);
         return u.hostname.replace(/^www\./, "");
-      } catch (e) {
+      } catch (_e) {
         const txt = (anchors[anchors.length - 1].textContent || "").trim();
         if (txt) return txt;
       }
     }
     return undefined;
-  } catch (e) {
+  } catch (_e) {
     return undefined;
   }
 };
@@ -92,7 +92,7 @@ const parseContentMeta = (html?: string) => {
 
     const content = doc.body.innerHTML.trim();
     return { title, summary, source, content: content || undefined };
-  } catch (e) {
+  } catch (_e) {
     return { title: undefined, summary: undefined, source: undefined, content: undefined };
   }
 };
@@ -154,7 +154,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: P
             Thumbnail: full.Thumbnail ? (fileServices.mapFromString(full.Thumbnail) as any) : prev.Thumbnail,
           }));
         }
-      } catch (e) {
+      } catch (_e) {
         // ignore fetch errors — leave existing values
       }
     })();
@@ -309,7 +309,7 @@ const NewsForm = ({ model, onClose, hideHeader = false, onReject, onApprove }: P
     }));
   };
 
-  const handleRemoveThumbnail = () => {
+  const _handleRemoveThumbnail = () => {
     setValues((prev) => ({ ...prev, Thumbnail: [] }));
   };
 

@@ -25,7 +25,7 @@ const PreviewModal = ({
 }: Props) => {
   console.log("model preview", model);
 
-  const { propType, enumList } = useAdminContext();
+  const { enumList } = useAdminContext();
   const { PaymentMethod, ApartmentUnitType } = enumList;
   const [apartment, setApartment] = useState<IApartmentResponse>();
 

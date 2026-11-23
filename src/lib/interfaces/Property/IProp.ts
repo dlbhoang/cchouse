@@ -23,6 +23,7 @@ export interface IPropAdminMap {
 
 export interface IPropRequest {
   Id: number;
+  ClientRequestId?: string;
 
   TransType: number;
   CustomerType: number;

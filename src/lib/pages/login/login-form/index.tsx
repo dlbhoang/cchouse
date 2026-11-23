@@ -1,7 +1,7 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {EyeOff, Eye } from "lucide-react";
 // LoginForm.tsx
-import { Modal, Typography, Flex, Input, Button, Checkbox} from "antd";
+import { Typography, Flex, Input, Button, Checkbox} from "antd";
 
 import { getSession, signIn } from "next-auth/react";
 import { performLogout } from "@/services/auth/logout";
@@ -184,7 +184,7 @@ const LoginForm = ({ isVisible, onModeChange, onMustChangePassword }: Props) => 
     }
   };
 
-  const openTermsModal = () =>
+  const _openTermsModal = () =>
     LucideModal.info({
       icon: null,
       className: "terms-modal",

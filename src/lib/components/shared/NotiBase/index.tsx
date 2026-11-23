@@ -15,7 +15,7 @@ interface NotiOptions {
 let container: HTMLElement | null = null;
 let activeRoot: ReturnType<typeof createRoot> | null = null;
 
-function getContainer() {
+function _getContainer() {
   if (!container) {
     container = document.createElement('div');
     container.style.cssText = `
@@ -103,7 +103,7 @@ const palette: Record<NotificationType, {
   },
 };
 
-function NotiItem({ opts, onClose }: { opts: NotiOptions; onClose: () => void }) {
+function _NotiItem({ opts, onClose }: { opts: NotiOptions; onClose: () => void }) {
   const duration = opts.duration ?? 4000;
   const c = palette[opts.type];
 

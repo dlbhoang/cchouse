@@ -1,7 +1,6 @@
-import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Alert as LucideAlert } from "@/lib/components/antd-lucide";
 import { Spin, Tooltip } from "antd";
-import { ArrowLeft, X } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import ReactPlayer from "react-player";
@@ -71,7 +70,7 @@ const DetailSection = ({
       <h3>{title}</h3>
       <div className="property-detail-dialog-grid">
         {fields.map((field) => (
-          <DetailField key={field.label} {...field} />
+          <DetailField key={`${field.label}-${fields.indexOf(field)}`} {...field} />
         ))}
         {children}
       </div>
@@ -158,18 +157,7 @@ const PropertyDetailDialog = ({
   ];
 
   return (
-    <LucideModal
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      title={null}
-      width={1324}
-      centered={false}
-      className="property-detail-dialog-modal"
-      rootClassName="property-detail-dialog-root"
-      closeIcon={<X size={20} />}
-      destroyOnClose
-    >
+    <main className="property-detail-page">
       {loading ? (
         <div className="property-detail-dialog-loading"><Spin size="large" /></div>
       ) : error ? (
@@ -189,6 +177,7 @@ const PropertyDetailDialog = ({
               <button
                 key={tab.id}
                 type="button"
+                aria-current={activeTab === tab.id ? "page" : undefined}
                 className={activeTab === tab.id ? "is-active" : ""}
                 onClick={() => setActiveTab(tab.id)}
               >
@@ -205,6 +194,7 @@ const PropertyDetailDialog = ({
         {activeTab === "overview" && <div className="property-detail-dialog-summary">
           <div><span>Mã BĐS:</span><strong>{data.Id}</strong></div>
           <div><span>Địa chỉ:</span><strong>{display(propAddress.DisplayAddress)}</strong></div>
+          {propAddress.SecondStreetName && <div><span>Đường thứ hai:</span><strong>{[propAddress.SecondAddressNumber, propAddress.SecondStreetName].filter(Boolean).join(" ")}</strong></div>}
         </div>}
 
         <div className="property-detail-dialog-scroll">
@@ -313,7 +303,7 @@ const PropertyDetailDialog = ({
         </footer>
       </div>
       ) : null}
-    </LucideModal>
+    </main>
   );
 };
 

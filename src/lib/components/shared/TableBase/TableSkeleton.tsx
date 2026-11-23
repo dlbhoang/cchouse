@@ -1,4 +1,4 @@
-import { Skeleton, Space, Table } from "antd";
+import { Skeleton, Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import styles from "./TableSkeleton.module.css";
 

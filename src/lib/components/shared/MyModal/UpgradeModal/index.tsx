@@ -1,6 +1,5 @@
 import { Modal as LucideModal } from "@/lib/components/antd-lucide";
 import {Result as LucideResult } from "@/lib/components/antd-lucide";
-import {Modal} from 'antd';
 
 export const openUpgradeModal = () =>
   LucideModal.info({

@@ -15,7 +15,7 @@ import {
 import { UploadFile } from "antd/es/upload";
 import { MapPinnedIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { mutate } from "swr";
 import BottomFixed from "@/lib/components/shared/BottomFixed";
 import AppUpload from "@/lib/components/shared/components/app-upload";
@@ -107,6 +107,7 @@ const PropAddEdit = ({
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [mediaHistory, setMediaHistory] = useState<"image" | "video">();
 
+  const createRequestId = useRef(crypto.randomUUID());
   const [preview, setPreview] = useState(false);
   const [openGeocode, setOpenGeocode] = useState(false);
   const [previewData, setPreviewData] = useState<IPropRequest>();
@@ -245,6 +246,7 @@ const PropAddEdit = ({
       );
       const result: IPropRequest = {
         ...item,
+        ClientRequestId: item.Id > 0 ? item.ClientRequestId : createRequestId.current,
         CustomerName:
           item.CustomerType.toString() === "7" ? "Tìm chủ" : item.CustomerName,
         CustomerPhone:
@@ -380,13 +382,14 @@ const PropAddEdit = ({
               </Radio.Group>
             </Col>
           )}
-          <Col {...colResponsive}>
+          <Col span={24}>
             <MyCard title="1. Loại hình / Vị trí">
               <FirstZone form={form} model={model} isFull={mode === "full"} />
             </MyCard>
           </Col>
-          <Col {...colResponsive}>
+          <Col span={24}>
             <MyCard
+              className="property-address-card"
               title="2. Địa chỉ"
               extra={
                 <Button

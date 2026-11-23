@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-23",
+  "environment": "localhost:3003 -> localhost:5224/api; Development db_cchouse_dev",
+  "status": "PARTIAL: persistence verified; create response fails; Figma parity incomplete",
+  "record": {
+    "id": 48975,
+    "marker": "E2E-2311-130",
+    "secondStreet": "Lê Lợi",
+    "retained": true
+  },
+  "checks": {
+    "login": "PASS after fixing missing /api in run.sh",
+    "oldToNew": "PASS: Phường 10 / Quận Tân Bình -> Phường Bảy Hiền; Cách Mạng Tháng 8 and number copied",
+    "newToOld": "PASS: Bảy Hiền offered old wards 12, 11, 10; selected 10",
+    "numberEdit": "PASS: old ward stays selected and old number follows new number",
+    "modeSwitch": "PASS: before/after and Chi tiết/Ngắn gọn; compatible old ward preserved after fix",
+    "validation": "PASS: required fields blocked empty submissions in both address modes",
+    "create": "FAIL response HTTP 400: invalid Firebase PKCS8 key after database write; record 48975 exists. No retry create.",
+    "edit": "PASS PUT /api/Property/48975 HTTP 200",
+    "reopen": "PASS after page reload: both numbers E2E-2311-130, old ward 10/Tân Bình, new ward Bảy Hiền, second street Lê Lợi",
+    "typecheck": "PASS",
+    "targetedBiome": "PASS 3 files",
+    "tests": "PASS 3/3; added mode-toggle preservation assertion",
+    "reactDoctor": "93/100 before final small mode-preservation/layout edits; one complexity warning"
+  },
+  "layoutChanges": [
+    "Full-width property type and address sections",
+    "Five-column old-address row and four-column new-address row on desktop",
+    "Responsive grid, 40px controls, normal-case 12px labels",
+    "Second street hidden until requested or a saved value exists"
+  ],
+  "screenshots": [
+    "01-before-empty.jpg",
+    "02-before-converted.jpg",
+    "03-old-expanded.jpg",
+    "04-after-empty.jpg",
+    "05-second-street.jpg",
+    "06-form-overview.jpg"
+  ],
+  "additionalEvidence": [
+    "06-reopened.jpg",
+    "validation-after.jpg",
+    "comparison-six.jpg"
+  ],
+  "figmaRemaining": [
+    "Current form has separate property-type/location and address sections, unlike Figma combined header",
+    "Converted address remains editable fields plus notice rather than a single summary line",
+    "Expanded old-address capture uses after mode; Figma reference uses before mode with additional old-address fields",
+    "Second street is one note-backed field, not the full second address row with its own house number in Figma",
+    "Floating labels, inline add-street/map icons and exact spacing/colors remain different",
+    "173:10394 is a whole section: overview only, not a pixel-comparable frame"
+  ],
+  "notRun": [
+    "production build after changes",
+    "full repository lint",
+    "mobile E2E after final layout edits"
+  ],
+  "risks": [
+    "Create may appear failed after saving; retry can create duplicate records",
+    "Second street is stored in Note; deleting that labeled note line deletes the value"
+  ]
+}

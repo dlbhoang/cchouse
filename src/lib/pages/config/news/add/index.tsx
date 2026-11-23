@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import NewsForm from "@/lib/components/admin/news/form";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
 
 const AddNewsPage = () => {
   const router = useRouter();

@@ -25,6 +25,8 @@ export interface IPropAddressRequest extends IPropAddressBase {
   EndTimeRentUnit?: string; //FE only
 
   OldAddressNumber: string;
+  SecondStreetName?: string;
+  SecondAddressNumber?: string;
   OldDistrictId: number | null;
   OldWardId: number | null;
   OldStreetId: number | null;
