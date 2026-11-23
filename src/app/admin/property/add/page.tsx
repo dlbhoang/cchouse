@@ -1,37 +1,33 @@
-import { redirect } from "next/navigation";
-import { AppRoutes } from "@/lib/core/configs/appRoutes";
+import type { Metadata } from "next";
+import PropAddEdit from "@/lib/components/admin/property/form/propAddEdit";
 import { ETransType } from "@/lib/core/enum";
 
 type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
+const first = (v: string | string[] | undefined) =>
+  Array.isArray(v) ? v[0] : v;
+
+export const metadata: Metadata = { title: "Thêm bất động sản mới" };
+
 export default async function Page({ searchParams }: Props) {
   const sParams = await searchParams;
-  const transType = sParams.TransType
-    ? Number(sParams.TransType)
+  const transType = first(sParams.TransType)
+    ? Number(first(sParams.TransType))
     : ETransType.sell;
 
-  const query = new URLSearchParams({
-    TransType: String(transType),
-    action: "add",
-  });
-
-  if (sParams.AddressNumber) {
-    query.set("AddressNumber", String(sParams.AddressNumber));
-  }
-  if (sParams.ProvinceId) {
-    query.set("ProvinceId", String(sParams.ProvinceId));
-  }
-  if (sParams.DistrictId) {
-    query.set("DistrictId", String(sParams.DistrictId));
-  }
-  if (sParams.WardId) {
-    query.set("WardId", String(sParams.WardId));
-  }
-  if (sParams.StreetId) {
-    query.set("StreetId", String(sParams.StreetId));
-  }
-
-  redirect(`${AppRoutes.property.url}?${query.toString()}`);
+  return (
+    <PropAddEdit
+      key={transType}
+      transType={transType}
+      query={{
+        AddressNumber: first(sParams.AddressNumber),
+        ProvinceId: first(sParams.ProvinceId),
+        DistrictId: first(sParams.DistrictId),
+        WardId: first(sParams.WardId),
+        StreetId: first(sParams.StreetId),
+      }}
+    />
+  );
 }

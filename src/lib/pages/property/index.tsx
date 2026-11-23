@@ -3,13 +3,11 @@
 import { Plus } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { mutate } from "swr";
 import PropertyFilter from "@/lib/components/admin/property/filter";
 import { PropertyTable } from "@/lib/components/admin/property/table";
 import { ETransType } from "@/lib/core/enum";
 import { objToQueryString } from "@/lib/core/utils/app-func";
 import type { IPropAdminOpts } from "@/lib/interfaces/filter/ISearchOptions";
-import PropertyFormModal from "@/lib/pages/property/prop-detail";
 import propertyApi from "@/services/api/property/propertyApi";
 
 type Props = {
@@ -54,16 +52,7 @@ const PropertyPage = ({ transType }: Props) => {
   const pathname = usePathname();
   const query = useSearchParams();
 
-  const [formModalOpen, setFormModalOpen] = useState(false);
   const [resultsTotal, setResultsTotal] = useState(0);
-  const [addTransType, setAddTransType] = useState(transType);
-  const [addQuery, setAddQuery] = useState<{
-    AddressNumber?: string;
-    ProvinceId?: string;
-    DistrictId?: string;
-    WardId?: string;
-    StreetId?: string;
-  }>();
 
   const searchOptions = useMemo(() => ({
     ...Object.fromEntries(query?.entries() ?? []),
@@ -71,7 +60,7 @@ const PropertyPage = ({ transType }: Props) => {
     pageSize: Number(query?.get("pageSize")) || 10,
   } as any as IPropAdminOpts), [query, transType]);
 
-  const { data: meta, mutate: mutateMeta } = propertyApi.useGetMeta(
+  const { data: meta } = propertyApi.useGetMeta(
     objToQueryString(searchOptions)
   );
 
@@ -90,24 +79,6 @@ const PropertyPage = ({ transType }: Props) => {
     };
   }, [query]);
 
-  const clearModalParams = useCallback(() => {
-    const params = new URLSearchParams(query?.toString() ?? "");
-    params.delete("openPropId");
-    params.delete("action");
-    params.delete("AddressNumber");
-    params.delete("ProvinceId");
-    params.delete("DistrictId");
-    params.delete("WardId");
-    params.delete("StreetId");
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [pathname, query, router]);
-
-  const handleCloseModal = useCallback(() => {
-    setFormModalOpen(false);
-    setAddQuery(undefined);
-    clearModalParams();
-  }, [clearModalParams]);
-
   const handleOpenDetail = useCallback((id: number) => {
     const params = new URLSearchParams({ returnTo: `${pathname}?${query?.toString() ?? ""}` });
     router.push(`/admin/property/${id}?${params}`);
@@ -124,11 +95,15 @@ const PropertyPage = ({ transType }: Props) => {
         StreetId?: string;
       };
     }) => {
-      setAddTransType(opts?.transType ?? transType);
-      setAddQuery(opts?.query);
-      setFormModalOpen(true);
+      const params = new URLSearchParams({
+        TransType: String(opts?.transType ?? transType),
+      });
+      for (const [key, value] of Object.entries(opts?.query ?? {})) {
+        if (value) params.set(key, String(value));
+      }
+      router.push(`/admin/property/add?${params.toString()}`);
     },
-    [transType]
+    [router, transType]
   );
 
   useEffect(() => {
@@ -138,17 +113,19 @@ const PropertyPage = ({ transType }: Props) => {
     }
 
     if (modalParams.isAddAction) {
-      setAddTransType(transType);
-      setAddQuery({
-        AddressNumber: modalParams.addressNumber,
-        ProvinceId: modalParams.provinceId,
-        DistrictId: modalParams.districtId,
-        WardId: modalParams.wardId,
-        StreetId: modalParams.streetId,
+      handleOpenAdd({
+        transType,
+        query: {
+          AddressNumber: modalParams.addressNumber,
+          ProvinceId: modalParams.provinceId,
+          DistrictId: modalParams.districtId,
+          WardId: modalParams.wardId,
+          StreetId: modalParams.streetId,
+        },
       });
-      setFormModalOpen(true);
     }
   }, [
+    handleOpenAdd,
     modalParams.addressNumber,
     modalParams.districtId,
     modalParams.isAddAction,
@@ -227,17 +204,6 @@ const PropertyPage = ({ transType }: Props) => {
                 />
               </div>
         </div>
-
-        <PropertyFormModal
-          open={formModalOpen}
-          onClose={handleCloseModal}
-          onSuccess={() => {
-            mutate(propertyApi.mutateKey);
-            mutateMeta();
-          }}
-          transType={addTransType}
-          query={addQuery}
-        />
 
       </>
     )

@@ -31,7 +31,7 @@ export default async function Page({ searchParams }: Props) {
   return (
     <>
       <FloatBtn
-        href={`?action=add&TransType=${transType}`}
+        href={`/admin/property/add?TransType=${transType}`}
         showAddButton={false}
       />
       <PropertyPage transType={transType} />
